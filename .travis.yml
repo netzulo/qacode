@@ -11,4 +11,5 @@ before_script:
   - bash scripts/qalab-core.sh -h
 
 script:
-  - bash scripts/qalab-core.sh test-unitaries
+  - cd scripts/
+  - bash qalab-core.sh test-unitaries
