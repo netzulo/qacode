@@ -1,0 +1,14 @@
+language: python
+python:
+  - "3.6"
+before_install:
+  - echo "travis before_install"
+intall:
+  - echo "travis install"
+  - pip install -r requirements.txt
+
+before_script:
+  - bash scripts/qalab-core.sh -h
+
+script:
+  - bash scripts/qalab-core.sh test-unitaries
