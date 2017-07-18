@@ -1,6 +1,6 @@
 import unittest, os, logging
 from testconfig import config as cfg # just works when nose command it's launched
-from qalabCore.core.loggers.LoggerManager import LoggerManager
+from qacode.core.loggers.LoggerManager import LoggerManager
 
 class TestConfig(unittest.TestCase):
     '''
@@ -22,9 +22,7 @@ class TestConfig(unittest.TestCase):
         "TESTLINK devkey, optional key: file not found",
         "TEST_UNITARIES url just can be  match with this regular expression : {}"
         ]
-    regexs = [
-        "http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+"
-        ]
+    regexs = ["http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+"]
 
     def test_000_config_exist(self):
         exist = os.path.exists("../configs/settings.example.ini")

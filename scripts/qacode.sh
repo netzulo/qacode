@@ -3,28 +3,28 @@
 # CONFIGURATIONs
 export TEST_NAME=$1
 export TEST_CFG=$2
-export CURR_PATH='.'
+export CURR_PATH='../'
 # -------------------------
 # Library functions
-function qalab-core-fail-not-implemented {
-    echo -e "[qalab-core] : ERROR, function not implemented"
+function qacode-fail-not-implemented {
+    echo -e "[qacode] : ERROR, function not implemented"
     exit 1
 }
 
-function qalab-core-fail {
-    echo -e "[qalab-core] : FAILED execution on path --> $CURR_PATH"
+function qacode-fail {
+    echo -e "[qacode] : FAILED execution on path --> $CURR_PATH"
     exit 1
 }
 
-function qalab-core-end {
-    echo -e "[qalab-core] : finished execution on path --> $CURR_PATH"
+function qacode-end {
+    echo -e "[qacode] : finished execution on path --> $CURR_PATH"
 }
 
 
-function qalab-core-help {
+function qacode-help {
     echo -e "-------------------------------------"
 	echo -e "USAGE: \n"
-	echo -e "  bash qalab-core.sh [-h] [TEST_NAME] [TEST_CFG]"
+	echo -e "  bash qacode.sh [-h] [TEST_NAME] [TEST_CFG]"
 	echo -e "VERSION: "
 	echo -e "  v0.0.0-unstable: still building proyects"
 	echo -e "-------------------------------------\n"
@@ -41,23 +41,23 @@ function qalab-core-help {
     echo -e "  [empty value] : use config file on ./configs/settings.example.ini"
 	echo -e "  [ini file] : specify absolut pathname for ini file"
     echo -e "-------------------------------------"
-    qalab-core-end
+    qacode-end
 }
 
-function qalab-core-test {
+function qacode-test {
 	if [ -n "$TEST_NAME" ]
 	then
-	    echo -e "\e[34m [qalab-core]: Tests starting... \e[92m OK \e[39m"
+	    echo -e "\e[34m [qacode]: Tests starting... \e[92m OK \e[39m"
 	else
-		echo -e "\e[34m [qalab-core]: FAILED at start tests, bad test name provided \e[91m KO \e[39m"
+		echo -e "\e[34m [qacode]: FAILED at start tests, bad test name provided \e[91m KO \e[39m"
 		exit 1
 	fi
 	
 	if [ -n "$TEST_CFG" ]
 	then
-	    echo -e "\e[34m [qalab-core]: Config ready... \e[92m OK \e[39m"
+	    echo -e "\e[34m [qacode]: Config ready... \e[92m OK \e[39m"
 	else
-	    echo -e "\e[34m [qalab-core]: FAILED at read config for test \e[91m KO \e[39m"
+	    echo -e "\e[34m [qacode]: FAILED at read config for test \e[91m KO \e[39m"
 		exit 1
 	fi
 
@@ -65,28 +65,28 @@ function qalab-core-test {
 	
 	if [ $? -eq 0 ]
 	then
-		echo -e "\e[34m [qalab-core]: Tests executed... \e[92m OK \e[39m"
+		echo -e "\e[34m [qacode]: Tests executed... \e[92m OK \e[39m"
 	else
-		echo -e "\e[34m [qalab-core]: FAILED at execute tests \e[91m KO \e[39m"
+		echo -e "\e[34m [qacode]: FAILED at execute tests \e[91m KO \e[39m"
 		exit 1
 	fi
 }
 
 
-function qalab-core-test-select {
-    echo -e "[qalab-core] : Selecting Tests by name--> $TEST_NAME"
+function qacode-test-select {
+    echo -e "[qacode] : Selecting Tests by name--> $TEST_NAME"
     case $TEST_NAME in
 		"help")
-		qalab-core-help
+		qacode-help
 		;;
 		"install")
-		qalab-core-install
+		qacode-install
 		;;
 		"test")
 		TEST_NAME=../tests/
 		;;		
 		"test-unitaries")
-		TEST_NAME=../tests/unitaries
+		TEST_NAME=../tests/unitaries/
 		;;
 		"test-loggers")
 		TEST_NAME=../tests/unitaries/TestLoggerManager.py
@@ -101,15 +101,15 @@ function qalab-core-test-select {
 		TEST_NAME=../tests/functionals/TestBotBase.py
 		;;
 		*)
-		echo -e "[qalab-core] : ERROR, provided test name doesn't exist at library: $TEST_NAME"
-		qalab-core-fail
+		echo -e "[qacode] : ERROR, provided test name doesn't exist at library: $TEST_NAME"
+		qacode-fail
 		;;
 	esac
-	echo -e "[qalab-core] : Selected Tests named--> $TEST_NAME"
-	qalab-core-test
+	echo -e "[qacode] : Selected Tests named--> $TEST_NAME"
+	qacode-test
 }
 
-function qalab-core-install {
+function qacode-install {
 	mkdir -p $CURR_PATH/logs
 
 	if [ $? -eq 0 ]
@@ -132,26 +132,26 @@ function qalab-core-install {
 }
 
 
-function qalab-core {
-	echo -e "[qalab-core] : starting on path --> $CURR_PATH"
+function qacode {
+	echo -e "[qacode] : starting on path --> $CURR_PATH"
 	TEST_NAME=$1
 	TEST_CFG=$2
 
 	if [ "$TEST_NAME" == "-h" ] || [ "$TEST_NAME" == "help" ];
 	then
-		qalab-core-help
+		qacode-help
 	else
 		if [ "$TEST_NAME" == "" ];	then
-			echo -e "[qalab-core] : TEST_NAME can't be empty, no test name provided..."
-			qalab-core-fail
+			echo -e "[qacode] : TEST_NAME can't be empty, no test name provided..."
+			qacode-fail
 		fi
 		if [ "$TEST_CFG" == "" ];	then
-			echo -e "[qalab-core] : $TEST_CFG can be empty, using default config on... $CURR_PATH/configs/settings.example.ini"
+			echo -e "[qacode] : $TEST_CFG can be empty, using default config on... $CURR_PATH/configs/settings.example.ini"
 			TEST_CFG=../configs/settings.example.ini
 		fi
-		qalab-core-test-select
+		qacode-test-select
   fi	
 }
 # -------------------------
 # CONSTRUCTOR
-qalab-core $1 $2
+qacode $1 $2

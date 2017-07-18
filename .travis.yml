@@ -12,4 +12,5 @@ before_script:
 
 script:
   - cd scripts/
-  - bash qalab-core.sh test-unitaries
+  - bash qacode.sh test-loggers
+  - bash qacode.sh test-configs
