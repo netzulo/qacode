@@ -1,4 +1,4 @@
-# QAlab Core  [![qalab-core: Build status ](https://travis-ci.org/netzulo/qalab-core.svg?branch=master)](https://travis-ci.org/netzulo/qalab-core)
+# QAlab Code  [![Build status ](https://travis-ci.org/netzulo/qacode.svg?branch=master)](https://travis-ci.org/netzulo/qacode)
 
 Python library for : **3.6**
 
