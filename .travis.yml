@@ -8,7 +8,7 @@ intall:
   - pip install -r requirements.txt
 
 before_script:
-  - bash scripts/qalab-core.sh -h
+  - bash scripts/qacode.sh -h
 
 script:
   - cd scripts/
