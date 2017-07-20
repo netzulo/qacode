@@ -7,16 +7,14 @@ python:
   - "3.5"
   - "3.6"
 before_install:
-  - echo "travis before_install"
+  - pip freeze
 intall:
-  - echo "travis install"
-  - pip install -r requirements.txt
+  - python setup.py install
 
 before_script:
   - cd qacode/
   - bash scripts/qacode.sh -h
 
 script:
-  - cd qacode/
-  - bash scripts/qacode.sh test-loggers
-  - bash scripts/qacode.sh test-configs
+  - python tests/unitaries/TestConfig.py
+  - python tests/unitaries/TestLoggerManager.py

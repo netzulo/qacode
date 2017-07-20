@@ -11,15 +11,11 @@ Python library for : **3.6**
 pip install qacode
 ```
 
-## Prerequisites ?
+## SETUP.py installation
 
-+ 1. Install python environment manager: `sudo apt-get install mkvirtualenv`
-+ 2. Create virtual environment: `mkvirtualenv qalab-core`
-+ 3. Activate environment ? `workon qalab-core`
-+ 4. Install dependencies (mkvirtual autoinstall dependencies): `pip install -r requirements.txt`
-+ 5. Configure settings.ini file
-+ 6. Download Drivers __(just chrome it's required for now)__ : https://chromedriver.storage.googleapis.com/index.html?path=2.30/
-+ 7. Pass all tests with environment active: `bash qalab-core.sh test`
+```
+python setup.py install
+```
 
 ## Configuration File
 
@@ -53,31 +49,5 @@ url=
 devkey= 
 [TEST_UNITARIES]
 url=http://demoqa.com
-
-```
-
----
-
-## Command Usage
-
-```
-
-USAGE: \n
-  bash qacode.sh [-h] [TEST_NAME] [TEST_CFG]
-VERSION: 
-  v0.0.0-unstable: still building proyects
--------------------------------------
-COMMANDS for TEST_NAME: valid values are
-  install: install pip dependencies
-  help : [-h] Show this help message
-  	test : exec file ./test/
-	test-unitaries : exec file ./test/unitaries/
-	test-loggers: exec file ./test/unitaries/TestLoggerManager.py
-	test-configs: exec file ./test/unitaries/TestConfig.py
-	test-functionals: exec file ./test/functionals/
-	test-bots: exec file ./test/functionals/TestBotBase.py
-COMMANDS for TEST_CFG: valid values are
-    [empty value] : use config file on ./configs/settings.example.ini
-  [ini file] : specify absolut pathname for ini file
 
 ```
