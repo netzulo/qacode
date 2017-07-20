@@ -1,3 +1,7 @@
 logs/*.log
 *.pyc
+# Sonar code metrics
 .sonar/
+# Pypi dependencies
+qacode.egg-info/
+dist/
