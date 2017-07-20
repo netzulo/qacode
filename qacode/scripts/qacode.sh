@@ -147,7 +147,7 @@ function qacode {
 		fi
 		if [ "$TEST_CFG" == "" ];	then
 			echo -e "[qacode] : $TEST_CFG can be empty, using default config on... $CURR_PATH/configs/settings.example.ini"
-			TEST_CFG=../configs/settings.example.ini
+			TEST_CFG=configs/settings.example.ini
 		fi
 		qacode-test-select
   fi	
