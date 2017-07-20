@@ -13,7 +13,6 @@ intall:
 
 before_script:
   - cd qacode/
-  - bash scripts/qacode.sh -h
 
 script:
   - python tests/unitaries/TestConfig.py
