@@ -1,10 +1,10 @@
 import time, unittest
 from testconfig import config as cfg # just works when nose command it's launched
 # TODO: add loggerManager to this class
-from qalabCore.core.bots.BotOptions import BotOptions
-from qalabCore.core.bots.BotBase import BotBase
-from qalabCore.core.testing.TestInfoBase import TestInfoBase
-from qalabCore.core.exceptions.TestAssertionError import TestAssertionError
+from qacode.core.bots.BotOptions import BotOptions
+from qacode.core.bots.BotBase import BotBase
+from qacode.core.testing.TestInfoBase import TestInfoBase
+from qacode.core.exceptions.TestAssertionError import TestAssertionError
 
 class TestInfoBotMultiple(TestInfoBase):
 
