@@ -4,7 +4,7 @@ Created on 04 march 2017
 @author: ntz
 '''
 from selenium.webdriver.common.by import By
-from qalabCore.core.exceptions.CoreException import CoreException
+from qacode.core.exceptions.CoreException import CoreException
 
 class NavBase(object):
     '''
