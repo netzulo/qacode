@@ -1,4 +1,4 @@
-from qalabCore.core.exceptions.CoreException import CoreException
+from qacode.core.exceptions.CoreException import CoreException
 
 
 class PageException(CoreException):

@@ -1,6 +1,6 @@
 import logging
 from testconfig import config as cfg # just works when nose command it's launched
-from qalabCore.core.loggers.LoggerManager import LoggerManager
+from qacode.core.loggers.LoggerManager import LoggerManager
 
 
 class CoreException(Exception):
