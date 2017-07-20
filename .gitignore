@@ -1,7 +1,8 @@
-logs/*.log
+# Python ignores
+*.log
 *.pyc
-# Sonar integration 
+# Sonar code metrics
 .sonar/
-# Pypi integration
-dist/
+# Pypi dependencies
 qacode.egg-info/
+dist/

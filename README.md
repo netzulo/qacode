@@ -1,6 +1,15 @@
-# QAlab Code  [![Build status ](https://travis-ci.org/netzulo/qacode.svg?branch=master)](https://travis-ci.org/netzulo/qacode)
+# QA Code
+
++ **Linux Deploy**: [![Build status ](https://travis-ci.org/netzulo/qacode.svg?branch=master)](https://travis-ci.org/netzulo/qacode)
++ **Windows Deploy**: [![Build status](https://ci.appveyor.com/api/projects/status/rykjetai0968blwt?svg=true)](https://ci.appveyor.com/api/projects/status/rykjetai0968blwt?svg=true)
 
 Python library for : **3.6**
+
+## PIP installation ?
+
+```
+pip install qacode
+```
 
 ## Prerequisites ?
 
@@ -54,7 +63,7 @@ url=http://demoqa.com
 ```
 
 USAGE: \n
-  bash qalab-core.sh [-h] [TEST_NAME] [TEST_CFG]
+  bash qacode.sh [-h] [TEST_NAME] [TEST_CFG]
 VERSION: 
   v0.0.0-unstable: still building proyects
 -------------------------------------
