@@ -8,7 +8,8 @@ intall:
   - pip install -r requirements.txt
 
 before_script:
-  - bash scripts/qalab-core.sh -h
+  - cd scripts/
+  - bash qalab-core.sh -h
 
 script:
   - cd scripts/
