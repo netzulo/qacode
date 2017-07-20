@@ -1,2 +1,7 @@
 logs/*.log
 *.pyc
+# Sonar integration 
+.sonar/
+# Pypi integration
+dist/
+qacode.egg-info/
