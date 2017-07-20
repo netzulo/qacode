@@ -83,22 +83,22 @@ function qacode-test-select {
 		qacode-install
 		;;
 		"test")
-		TEST_NAME=../tests/
+		TEST_NAME=tests/
 		;;		
 		"test-unitaries")
-		TEST_NAME=../tests/unitaries/
+		TEST_NAME=tests/unitaries/
 		;;
 		"test-loggers")
-		TEST_NAME=../tests/unitaries/TestLoggerManager.py
+		TEST_NAME=tests/unitaries/TestLoggerManager.py
 		;;
 		"test-configs")
-		TEST_NAME=../tests/unitaries/TestConfig.py
+		TEST_NAME=tests/unitaries/TestConfig.py
 		;;
 		"test-functionals")
-		TEST_NAME=../tests/functionals
+		TEST_NAME=tests/functionals
 		;;		
 		"test-bots")
-		TEST_NAME=../tests/functionals/TestBotBase.py
+		TEST_NAME=tests/functionals/TestBotBase.py
 		;;
 		*)
 		echo -e "[qacode] : ERROR, provided test name doesn't exist at library: $TEST_NAME"
