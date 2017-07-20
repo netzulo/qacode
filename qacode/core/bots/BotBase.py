@@ -3,9 +3,9 @@ from selenium import webdriver as WebDriver
 from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
 from selenium.webdriver import DesiredCapabilities
 
-from qalabCore.core.bots.modules.NavBase import NavBase
-from qalabCore.core.exceptions.CoreException import CoreException
-from qalabCore.core.loggers.LoggerManager import LoggerManager
+from qacode.core.bots.modules.NavBase import NavBase
+from qacode.core.exceptions.CoreException import CoreException
+from qacode.core.loggers.LoggerManager import LoggerManager
 
 class BotBase(object):
     '''

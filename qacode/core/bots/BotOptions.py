@@ -1,7 +1,7 @@
 import logging
 from testconfig import config as cfg # just works when nose command it's launched
-from qalabCore.core.loggers.LoggerManager import LoggerManager
-from qalabCore.core.exceptions.CoreException import CoreException
+from qacode.core.loggers.LoggerManager import LoggerManager
+from qacode.core.exceptions.CoreException import CoreException
 
 
 class BotOptions(object):
@@ -45,7 +45,8 @@ class BotOptions(object):
             self.log_option_loaded(self.botProfilePath)
             self.log_option_loaded(self.botDriversPath)
             self.log_option_loaded(self.botLogName)
-            self.log_option_loaded(self.botLogOutputFile)                          
+            self.log_option_loaded(self.botLogOutputFile)
+            # TODO: add missing keys to this object                          
         except Exception as err:
            raise CoreException(err,'Error: at create LoggerManager for Bot')
 
