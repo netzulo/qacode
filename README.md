@@ -1,6 +1,15 @@
-# QAlab Code  [![Build status ](https://travis-ci.org/netzulo/qacode.svg?branch=master)](https://travis-ci.org/netzulo/qacode)
+# QA Code
+
++ Linux Deploy: [![Build status ](https://travis-ci.org/netzulo/qacode.svg?branch=master)](https://travis-ci.org/netzulo/qacode)
++ Windows Deploy: [![Build status](https://ci.appveyor.com/api/projects/status/rykjetai0968blwt?svg=true)](https://ci.appveyor.com/api/projects/status/rykjetai0968blwt?svg=true)
 
 Python library for : **3.6**
+
+## PIP installation ?
+
+```
+pip install qacode
+```
 
 ## Prerequisites ?
 
