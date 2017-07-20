@@ -12,8 +12,8 @@ intall:
   - python setup.py install
 
 before_script:
-  - cd qacode/
-
-script:
   - python tests/unitaries/TestConfig.py
   - python tests/unitaries/TestLoggerManager.py
+
+script:
+  - echo "FINISHED AUTOMATED BUILD"
