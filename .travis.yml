@@ -13,10 +13,10 @@ intall:
   - pip install -r requirements.txt
 
 before_script:
-  - cd scripts/
+  - cd qacode/scripts/
   - bash qacode.sh -h
 
 script:
-  - cd scripts/
+  - cd qacode/scripts/
   - bash qacode.sh test-loggers
   - bash qacode.sh test-configs
