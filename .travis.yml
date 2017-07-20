@@ -12,8 +12,8 @@ intall:
   - python setup.py install
 
 before_script:
-  - python tests/unitaries/TestConfig.py
-  - python tests/unitaries/TestLoggerManager.py
+  - nosetests tests/unitaries/TestConfig.py --tc-file="qacode/configs/settings.example.ini"
+  - nosetests tests/unitaries/TestLoggerManager.py --tc-file="qacode/configs/settings.example.ini"
 
 script:
   - echo "FINISHED AUTOMATED BUILD"
