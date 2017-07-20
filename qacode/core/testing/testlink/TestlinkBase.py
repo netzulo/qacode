@@ -1,5 +1,5 @@
 import os, testlink
-from qalabCore.core.exceptions.CoreException import CoreException     
+from qacode.core.exceptions.CoreException import CoreException
 
 class TestlinkBase(object):
     """
