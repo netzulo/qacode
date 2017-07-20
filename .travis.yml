@@ -1,5 +1,10 @@
 language: python
 python:
+  - "2.7"
+  - "3.2"
+  - "3.3"
+  - "3.4"
+  - "3.5"
   - "3.6"
 before_install:
   - echo "travis before_install"
@@ -8,7 +13,7 @@ intall:
   - pip install -r requirements.txt
 
 before_script:
-  - bash scripts/qalab-core.sh -h
+  - bash scripts/qacode.sh -h
 
 script:
   - cd scripts/
