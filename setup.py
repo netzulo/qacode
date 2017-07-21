@@ -1,7 +1,16 @@
-
 from setuptools import setup
+from os import path
+from os import name
 
-with open('requirements.txt') as f:
+CURR_PATH = path.abspath(path.dirname(__file__))
+FORMAT_PATH = "{}{}{}"
+
+if name == "nt":
+    requirements_path = FORMAT_PATH.format(CURR_PATH,"\\","requirements.txt")
+else:
+    requirements_path = FORMAT_PATH.format(CURR_PATH,"/","requirements.txt")
+
+with open(requirements_path) as f:
     requirements = f.read().splitlines()
 
 setup(name='qacode',
