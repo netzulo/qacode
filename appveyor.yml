@@ -15,10 +15,11 @@ environment:
       DISTUTILS_USE_SDK: "1"
     - PYTHON: "C:\\Python35-x64"
 
-before_install:
-  - "xcopy qacode\\configs\\settings.example.ini qacode\\configs\\settings.ini"
-
 install:
   - "%PYTHON%\\python.exe setup.py install"
+
+before_test:
+  - "xcopy qacode\\configs\\settings.example.ini qacode\\configs\\settings.ini"
+
 test_script:
   - "nosetests tests\\unitaries\\TestConfig.py --tc-file=qacode\\configs\\settings.ini"

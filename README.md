@@ -1,9 +1,13 @@
 # QA Code
 
 + **Linux Deploy**: [![Build status ](https://travis-ci.org/netzulo/qacode.svg?branch=master)](https://travis-ci.org/netzulo/qacode)
-+ **Windows Deploy**: [![Build status](https://ci.appveyor.com/api/projects/status/rykjetai0968blwt?svg=true)](https://ci.appveyor.com/api/projects/status/rykjetai0968blwt?svg=true)
++ **Windows Deploy**: [![Build status](https://ci.appveyor.com/api/projects/status/4a0tc5pis1bykt9x?svg=true)](https://ci.appveyor.com/project/netzulo/qacode)
 
-Python library for : **3.6**
+Python library for :
+
+  +  **3.6**
+  +  ...
+  +  **2.7**
 
 ## PIP installation ?
 
