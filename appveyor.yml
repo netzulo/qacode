@@ -15,7 +15,7 @@ environment:
 branches:
   only:
     - master
-clone_folder: c:\
+clone_folder: c:\qa
 
 before_build:
   - "%PYTHON%\\python.exe -m pip install wheel"
