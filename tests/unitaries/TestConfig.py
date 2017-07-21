@@ -6,7 +6,7 @@ class TestConfig(unittest.TestCase):
     '''
     Comprueba el fichero que se pasa por parametro a Nose, si contiene un JSON con la estructura pedida en los tests
     '''
-    log = loggerManager = LoggerManager(log_path=cfg["BOT"]["log_output_file"],log_level=logging.DEBUG).get_log()
+    log = LoggerManager(log_path=cfg["BOT"]["log_output_file"],log_level=logging.DEBUG).get_log()
     msgs = [
         "Settings file doesn't found, copy from settings.example.ini",
         "Some missing section on settings.ini file",
@@ -41,11 +41,11 @@ class TestConfig(unittest.TestCase):
         self.assertIn(cfg.get("BOT")["browser"],valid_values,self.msgs[3])
 
     def test_004_config_has_key_bot_url_hub(self):
-        self.assertRegex(cfg.get("BOT")["url_hub"],self.regexs[0],
+        self.assertRegexpMatches(cfg.get("BOT")["url_hub"],self.regexs[0],
                          self.msgs[4].format(self.regexs[0]))
 
     def test_005_config_has_key_bot_url_node(self):
-        self.assertRegex(cfg.get("BOT")["url_node"],self.regexs[0],
+        self.assertRegexpMatches(cfg.get("BOT")["url_node"],self.regexs[0],
                          self.msgs[5].format(self.regexs[0]))
 
     def test_006_config_has_key_bot_profile_path(self):
@@ -74,7 +74,7 @@ class TestConfig(unittest.TestCase):
         if exist_length <= 0:
             self.log.warn(self.msgs[10].format(self.regexs[0]))
         else:
-            self.assertRegex(value,self.regexs[0],self.msgs[10])
+            self.assertRegexpMatches(value,self.regexs[0],self.msgs[10])
 
     def test_011_config_has_key_testlink_devkey(self):
         value = cfg.get("TESTLINK")["devkey"]
@@ -83,7 +83,7 @@ class TestConfig(unittest.TestCase):
             self.log.warn(self.msgs[11])
 
     def test_012_config_has_key_test_unitaries_url(self):
-        self.assertRegex(cfg.get("TEST_UNITARIES")["url"],self.regexs[0],self.msgs[12])
+        self.assertRegexpMatches(cfg.get("TEST_UNITARIES")["url"],self.regexs[0],self.msgs[12])
 
 if __name__ == '__main__':
     unittest.main()
