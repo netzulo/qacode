@@ -1,15 +1,24 @@
-version: 1.0.{build}
+environment:
+
+  matrix:
+    - PYTHON: "C:\\Python27"
+    - PYTHON: "C:\\Python33"
+    - PYTHON: "C:\\Python34"
+    - PYTHON: "C:\\Python35"
+    - PYTHON: "C:\\Python27-x64"
+    - PYTHON: "C:\\Python33-x64"
+      DISTUTILS_USE_SDK: "1"
+    - PYTHON: "C:\\Python34-x64"
+      DISTUTILS_USE_SDK: "1"
+    - PYTHON: "C:\\Python35-x64"
+
 branches:
   only:
     - master
-image: Visual Studio 2017
 clone_folder: c:\
-platform: Any CPU
-configuration: Release
+
 before_build:
+  - "%PYTHON%\\python.exe -m pip install wheel"
 
-before_package:
-
-after_build:
-
-build_script:
+install:
+  - "%PYTHON%\\python.exe setup.py"
