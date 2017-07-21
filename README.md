@@ -30,7 +30,7 @@ python setup.py install
 + 2. Configure path for key : **log_output_file**
 
 ```
-# @author: Netzulo
+# author: Netzulo
 [BOT]
 # DRIVERMODE: local , remote
 mode=local
@@ -43,17 +43,18 @@ url_node=http://localhost:11001/wd/hub
 # FIREFOXPROFILE
 profile_path=
 # DRIVERS PATH
-drivers_path=
+drivers_path=drivers
 # FILE NAME FOR LOGGER
-log_name=qalabCore
+log_name=qacode
 # OUTPUT FILE NAME FOR LOGGER
-log_output_file=
+log_output_file=logs
 
 [TESTLINK]
 # Url for testlink API : http://localhost/lib/api/xmlrpc/v1/xmlrpc.php
-url=
+url=http://localhost/lib/api/xmlrpc/v1/xmlrpc.php
 # Devkey provided by testlink: 182c5b87c776ff2956b68e23eae866d9
-devkey= 
+devkey=182c5b87c776ff2956b68e23eae866d9
+
 [TEST_UNITARIES]
 url=http://demoqa.com
 
