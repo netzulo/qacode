@@ -100,3 +100,6 @@ ENV/
 
 # Sonar
 .sonar/
+
+# QACODE ignores
+qacode/configs/settings.ini

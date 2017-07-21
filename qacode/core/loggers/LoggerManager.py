@@ -49,13 +49,9 @@ class LoggerManager(object):
     def create_file_handler(self, log_level, log_formatter, log_file_path):
         """create console handler and set logfile level"""
         # create file handler
-        fileHandler = None
-        try:    
-            fileHandler = logging.FileHandler(log_file_path);
-            fileHandler.setLevel(log_level)
-            fileHandler.setFormatter(log_formatter)
-        except :
-            print("error at load file handler for logger")
+        fileHandler = logging.FileHandler(log_file_path);
+        fileHandler.setLevel(log_level)
+        fileHandler.setFormatter(log_formatter)
         return fileHandler
 
     def get_log(self):
