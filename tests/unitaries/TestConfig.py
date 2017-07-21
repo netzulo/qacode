@@ -25,7 +25,7 @@ class TestConfig(unittest.TestCase):
     regexs = ["http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+"]
 
     def test_000_config_exist(self):
-        exist = os.path.exists("../qacode/configs/settings.example.ini")
+        exist = os.path.exists("qacode/configs/settings.ini")
         self.assertEqual(exist,True,self.msgs[0])
 
     def test_001_config_nose_loaded(self):
