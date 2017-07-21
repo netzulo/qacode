@@ -14,7 +14,5 @@ environment:
       DISTUTILS_USE_SDK: "1"
     - PYTHON: "C:\\Python35-x64"
 
-before_build:
-  - "%PYTHON%\\python.exe -m pip install wheel"
 install:
   - "%PYTHON%\\python.exe setup.py install"
