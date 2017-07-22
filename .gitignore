@@ -103,3 +103,6 @@ ENV/
 
 # QACODE ignores
 qacode/configs/settings.ini
+
+# Visual Studio
+.vs/
