@@ -16,7 +16,8 @@ python:
 - '3.6'
 before_install:
 - pip freeze
-install :
+- openssl aes-256-cbc -K $encrypted_65553d4eaa33_key -iv $encrypted_65553d4eaa33_iv -in deploy-keys.tar.enc -out deploy-keys.tar -d
+install:
 - python setup.py install
 before_script:
 - cp qacode/configs/settings.example.ini qacode/configs/settings.ini
@@ -24,3 +25,6 @@ script:
 - nosetests tests/unitaries/TestConfig.py --tc-file="qacode/configs/settings.ini"
 - nosetests tests/unitaries/TestLoggerManager.py --tc-file="qacode/configs/settings.ini"
 - echo "FINISHED AUTOMATED BUILD"
+env:
+  global:
+    secure: ondIx9iLPeA4EkO6d0bzuBf8/9hCCVIzINd0tptThPSlXQTinLQoyRVGBCHYny5NkXPcidwSocRP0LPDYt4UZdY2/mfsDDO+KQR7BIiImHpVdSH+AOVPPUwMC5z9xn9ibR1rpa3PkMbmtD/EJ4BGqCyTfOSYwvBd+qHL0yzNYzyUW8O93R53l2KFGZx0BowKbITUz4DGG+lQRyrSP8gmq9WjZg1siBToDIE+ivWg5tPoOHmOxw1h71S5UeZIPJYn/nXyDXXWXuluZi9QUiPEAepW1fDb8aGWU3hVwzRNKtMVJ89Ef/VpiukYgPCR7bZxN+G8gc0TLEEEyhJnIz39JeCNE1z0mHyR9v4LJxJYC9wuPFIXvOUUZGRyTbDs1LWejuxURI52GOtL3HcmcpReMMSK0M8M1/YiyydpSvD7C+D0SMSG0CSiOv6iE48gqbpEWhTTLphpEmKIJiZgzS5mrfIJjaWuDbf0pj4ZIt+YqkNmL3Z8Bi4/GTLePw0liyUekWvk59bsNXLKhVzMRrqp9+LVq8gaGDD/a2dsFHE3iAHN2VXXsqLcEn6zSZwkLUAMg6Q4WQJHtouSlnjbapITkiQZIgdoQ10aLE1q89xm7FYIgBv0QwpByG3k9zxFD3OKfjcwbyXdy8e+XlGUKTy1ypGp4Ubrjzk+9ZIAsmYeWXM=
