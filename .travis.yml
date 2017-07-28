@@ -16,6 +16,7 @@ python:
 - '3.6'
 before_install:
 - pip freeze
+install :
 - python setup.py install
 before_script:
 - cp qacode/configs/settings.example.ini qacode/configs/settings.ini
