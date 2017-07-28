@@ -2,22 +2,24 @@ branches:
   only:
   - master
   - devel
+addons:
+  sonarqube:
+    token:
+      secure: JXG66I32t4JafFo1G6KCJdMP9v6+OKkpu22O3+jEqfMmIIUzasDwoKtWnNuJaZCw92mOxfYmjTQ3Z2gnFY/bP//g5aYSwvhl+d15f+Km/2m1Kf3xD4lED44Ygesk9iJlndyQPG433EPSSCE9tvzFgxLsSAyzzz/IjeYm2SsWt/CZp0XYgAyEeGSfpnOLuGc2jsAX+XxcnREncPG19jgYxb+kLafAQ/PJuINVjtBHUONpFWY5XsPQLApinAtzTnM/HXqFhae/zyPbw2GNA9S/OKm7ALeWoaCZzPj8KCVkeoNSA6m0w+0uib3J08RjD2YsLYk/CiyOU6CxVXsq8fQL2lR9mUqqOzjHYzfeN6NbYM0mewOnv8ZgGyeLC78Va7jFQLW8biztEvTuh+sGX2frbZkscpfkUmwomGes8ZwkLdNlEj2trZHDNwSMV/QvSSV0ueAUBf+1oqto89bMsx8rO1QfdAtytqmeL7qIR29OwlRqylrcyMBRCEU2enk7zh0DnshIVvnlug6bGWeIk7F33kD3NU5ufz0REc7IQmHPEhcdLQqJZ3pFsXHbNDwinC1iBmqd0mPYllmrjFWF5eNcLOF5vCnjRk0PwuZoHmYK+KqIeLuktXuhEggBqbVa0yxX4YOtwwXhmoUvSzwucp2g5d8KX4r1awiDaD6c7DnDj1w=
 language: python
 python:
-  - "2.7"
-  - "3.2"
-  - "3.3"
-  - "3.4"
-  - "3.5"
-  - "3.6"
+- '2.7'
+- '3.2'
+- '3.3'
+- '3.4'
+- '3.5'
+- '3.6'
 before_install:
-  - pip freeze
-  - python setup.py install
-
+- pip freeze
+- python setup.py install
 before_script:
-  - cp qacode/configs/settings.example.ini qacode/configs/settings.ini
-
+- cp qacode/configs/settings.example.ini qacode/configs/settings.ini
 script:
-  - nosetests tests/unitaries/TestConfig.py --tc-file="qacode/configs/settings.ini"
-  - nosetests tests/unitaries/TestLoggerManager.py --tc-file="qacode/configs/settings.ini"
-  - echo "FINISHED AUTOMATED BUILD"
+- nosetests tests/unitaries/TestConfig.py --tc-file="qacode/configs/settings.ini"
+- nosetests tests/unitaries/TestLoggerManager.py --tc-file="qacode/configs/settings.ini"
+- echo "FINISHED AUTOMATED BUILD"
