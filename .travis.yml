@@ -31,6 +31,7 @@ before_script:
 script:
 - nosetests tests/unitaries/TestConfig.py --tc-file="qacode/configs/settings.ini"
 - nosetests tests/unitaries/TestLoggerManager.py --tc-file="qacode/configs/settings.ini"
-- sonar-scanner -X -Dsonar.login=fbc432a5f3c8fe2c1f217e6027b73ed58eae8fff sonar-project.properties
 - echo "FINISHED AUTOMATED BUILD"
 
+after_script:
+- sonar-scanner -X -Dsonar.login=fbc432a5f3c8fe2c1f217e6027b73ed58eae8fff
