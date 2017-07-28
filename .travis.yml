@@ -27,6 +27,9 @@ script:
 - echo "FINISHED AUTOMATED BUILD"
 addons:
   sonarqube:
+    branches:
+      - master
+      - devel
     token:
       secure: Prn10ydB2CY7Fu9ywMdK6+Jpf7Q4inp9GjjCKwyDScpJq3nfZKmvMVLdY/ssBcw4qVEh4eTyMgKTnsWtIWYJ4jU4VVYhb/fwW8tAi4No5QXE9wgqVQBSJXmJuOkX74/Alsf/KWCxGBl520JcoMo79DSHr6f6i5q55ICawMLjjOdxWtqm6Jr1Tt/8uoxgfAHi8dw4dHTNGDkV2PWfO3dbmqpW42i9XO5iP+p3LdMhXjze9uDP6NaOqVIzBRswcKgWQgkMfnw4NG0R+I36cZ281ZFNCOJpDKMa8qHHacNiTdbkErdulapH6f5l9fiEI80E053WNzvprBTzF1Lph/E/6xX5Hn1qpNypu0rhhiJdIHmG1P2LYp0qnWS3qBvazptMEqG8bn9RAwQ+I/S6ctdZVf984IhqPN7wgDYIFaunf17PfbRnGhF4FXh7bwq+y6NuigpU+qi42BFwS4naIKokOiR+lWuMLMi1nPKMlrkuPYXdTfxVj+wSigd2A3TwtT2AgT3vtme+HGDRyIkAMT0d4gRC+pOOWfW+2JM+UjVVyLzdInJAeaXivaexJRss+pQIVE9n5zkqisoZtOVZhAvWGJnWECvcNonIEE34zcKKjmMxIclMCm3Lmdi7e/B4qOIs9J1V/RYv29u6iOLNPMiFHAB1wh+7nDj8n1D2pgenhHE=
 
