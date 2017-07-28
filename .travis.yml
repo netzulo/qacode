@@ -34,4 +34,4 @@ script:
 - echo "FINISHED AUTOMATED BUILD"
 
 after_script:
-- sonar-scanner -X -Dsonar.login=${SONAR_GITHUB_TOKEN} -Dsonar.host.url=https://qalab.tk
+- sonar-scanner -X -Dsonar.login=${SONAR_GITHUB_TOKEN} -Dsonar.host.url=http://qalab.tk:82
