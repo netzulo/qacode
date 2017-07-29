@@ -21,7 +21,7 @@
   <ItemGroup>
     <Compile Include="qacode\configs\__init__.py" />
     <Compile Include="qacode\core\bots\BotBase.py" />
-    <Compile Include="qacode\core\bots\BotOptions.py" />
+    <Compile Include="qacode\core\bots\BotConfig.py" />
     <Compile Include="qacode\core\bots\modules\NavBase.py" />
     <Compile Include="qacode\core\bots\modules\__init__.py" />
     <Compile Include="qacode\core\bots\__init__.py" />
@@ -54,7 +54,15 @@
     <Compile Include="tests\__init__.py" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include=".git" />
+    <Content Include=".gitignore" />
+    <Content Include=".travis.yml" />
+    <Content Include="appveyor.yml" />
+    <Content Include="LICENSE" />
     <Content Include="qacode\configs\settings.example.ini" />
+    <Content Include="README.md" />
+    <Content Include="setup.cfg" />
+    <Content Include="sonar-project.properties" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="qacode" />

@@ -75,39 +75,39 @@ class BotBase(object):
                 capabilities=self.curr_caps,
                 executable_path= self.curr_driver_path)
 
-        elif self.options.botBrowser == 'chrome':
+        elif self.bot_config.bot_browser == 'chrome':
             if os.name == 'nt':
                 self.curr_driver_path.format("chromedriver.exe")
             else:
                 self.curr_driver_path.format("chromedriver")
-            self.currCaps = DesiredCapabilities.CHROME.copy()
-            self.currDriver = WebDriver.Chrome(
+            self.curr_caps = DesiredCapabilities.CHROME.copy()
+            self.curr_driver = WebDriver.Chrome(
                 executable_path=self.curr_driver_path,
                 desired_capabilities=self.curr_caps)
 
-        elif self.options.botBrowser == 'iexplorer':
-            self.currCaps = DesiredCapabilities.INTERNETEXPLORER.copy()
-            self.currDriver = WebDriver.Ie(
+        elif self.bot_config.bot_browser == 'iexplorer':
+            self.curr_caps = DesiredCapabilities.INTERNETEXPLORER.copy()
+            self.curr_driver = WebDriver.Ie(
                 executable_path=self.curr_driver_path.format("IEDriverServer_32.exe"),
                 desired_capabilities=self.curr_caps)
 
-        elif self.options.botBrowser == 'edge':
-            self.currCaps = DesiredCapabilities.EDGE.copy()
-            self.currDriver = WebDriver.Edge(
+        elif self.bot_config.bot_browser == 'edge':
+            self.curr_caps = DesiredCapabilities.EDGE.copy()
+            self.curr_driver = WebDriver.Edge(
                 executable_path=self.curr_driver_path.format("EdgeDriver_64.exe"),
                 desired_capabilities=self.curr_caps)
 
-        elif self.options.botBrowser == 'phantomjs':
-             if os.name == 'nt':
+        elif self.bot_config.bot_browser == 'phantomjs':
+            if os.name == 'nt':
                 self.curr_driver_path.format("phantomjs.exe")
             else:
                 self.curr_driver_path.format("phantomjs")
-            self.currCaps = DesiredCapabilities.PHANTOMJS.copy()
+            self.curr_caps = DesiredCapabilities.PHANTOMJS.copy()
             self.curr_driver = WebDriver.PhantomJS(
                 executable_path=self.curr_driver_path,
                 desired_capabilities=self.curr_caps)
         else:
-            raise Exception()
+            raise CoreException()
         self.log.info('Started browser with mode : LOCAL OK')
 
     def mode_remote(self):
@@ -138,6 +138,9 @@ class BotBase(object):
         self.log.info('Started browser with mode : REMOTE OK')
 
     def close(self):
+        """
+        Close curr_driver browser
+        """
         self.log.info('Closing browser')
         self.curr_driver.close()
         self.curr_driver.quit()
