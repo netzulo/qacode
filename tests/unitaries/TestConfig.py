@@ -46,29 +46,23 @@ class TestConfig(unittest.TestCase):
 
     def test_005_config_has_key_bot_url_node(self):
         self.assertRegexpMatches(cfg.get("BOT")["url_node"],self.regexs[0],
-                         self.msgs[5].format(self.regexs[0]))
+                         self.msgs[5].format(self.regexs[0]))    
 
-    def test_006_config_has_key_bot_profile_path(self):
-        value = cfg.get("BOT")["profile_path"]
-        exist = os.path.exists(value)
-        if not exist:
-            self.log.warn(self.msgs[6])
-
-    def test_007_config_has_key_bot_drivers_path(self):
+    def test_006_config_has_key_bot_drivers_path(self):
         value = cfg.get("BOT")["drivers_path"]
         exist = os.path.exists(value)
         if not exist:
             self.log.warn(self.msgs[7])
 
-    def test_008_config_has_key_bot_log_name(self):
+    def test_007_config_has_key_bot_log_name(self):
         value = cfg.get("BOT")["log_name"]
         self.assertNotEqual(value,"",self.msgs[8])
 
-    def test_009_config_has_key_bot_log_output_file(self):
+    def test_008_config_has_key_bot_log_output_file(self):
         value = cfg.get("BOT")["log_output_file"]
         self.assertNotEqual(value,"",self.msgs[9])
 
-    def test_010_config_has_key_testlink_url(self):        
+    def test_009_config_has_key_testlink_url(self):        
         value = cfg.get("TESTLINK")["url"]
         exist_length = len(value)
         if exist_length <= 0:
@@ -76,13 +70,13 @@ class TestConfig(unittest.TestCase):
         else:
             self.assertRegexpMatches(value,self.regexs[0],self.msgs[10])
 
-    def test_011_config_has_key_testlink_devkey(self):
+    def test_010_config_has_key_testlink_devkey(self):
         value = cfg.get("TESTLINK")["devkey"]
         exist_length = len(value)
         if exist_length <= 0:
             self.log.warn(self.msgs[11])
 
-    def test_012_config_has_key_test_unitaries_url(self):
+    def test_011_config_has_key_test_unitaries_url(self):
         self.assertRegexpMatches(cfg.get("TEST_UNITARIES")["url"],self.regexs[0],self.msgs[12])
 
 if __name__ == '__main__':

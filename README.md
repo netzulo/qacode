@@ -42,8 +42,6 @@ browser=chrome
 url_hub=http://localhost:11000/wd/hub
 # NODEWEBDRIVER
 url_node=http://localhost:11001/wd/hub
-# FIREFOXPROFILE
-profile_path=
 # DRIVERS PATH
 drivers_path=drivers
 # FILE NAME FOR LOGGER
@@ -60,4 +58,12 @@ devkey=182c5b87c776ff2956b68e23eae866d9
 [TEST_UNITARIES]
 url=http://demoqa.com
 
+```
+
+
+## Tests
+
+```
+# nosetests tests/unitaries/TestConfig.py --tc-file="qacode/configs/settings.ini"
+# nosetests tests/unitaries/TestLoggerManager.py --tc-file="qacode/configs/settings.ini"
 ```
