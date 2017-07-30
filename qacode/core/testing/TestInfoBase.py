@@ -54,7 +54,7 @@ class TestInfoBase(unittest.TestCase):
         if wait > 0 : 
             time.sleep(wait)
 
-    def assertEqualUrl(self, actual, expected, msg='', wait=0):
+    def assert_equals_url(self, actual, expected, msg='', wait=0):
         """
         Allow to compare 2 urls and check if 1st it's equals to 2nd url
         """
@@ -62,7 +62,7 @@ class TestInfoBase(unittest.TestCase):
         if not actual == expected:
             raise TestAssertionError(actual, expected, 'Wrong URL, not equals: actual='+actual + '| expected='+ expected , msg)        
 
-    def assertNotEqualUrl(self, actual, expected, msg='', wait=0):
+    def assert_not_equals_url(self, actual, expected, msg='', wait=0):
         """
         Allow to compare 2 urls and check if 1st it isn't equals to 2nd url
         """
@@ -70,7 +70,7 @@ class TestInfoBase(unittest.TestCase):
         if actual == expected:
             raise TestAssertionError(actual, expected, 'Wrong URL, is equals: actual='+actual + '| expected='+ expected , msg)
 
-    def assertContainsUrl(self, current, contains, msg='', wait=0):
+    def assert_contains_url(self, current, contains, msg='', wait=0):
         """
         Allow to compare 2 urls and check if 1st contains 2nd url
         """

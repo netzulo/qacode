@@ -26,7 +26,6 @@ class TestInfoBotMultiple(TestInfoBase):
         Close bot by testcase method
         '''
         self.bot.close()
-        pass
 
     def sleep(self, wait=0):
         """        
