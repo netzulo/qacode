@@ -1,18 +1,21 @@
 import time, unittest, logging
 from testconfig import config as cfg # just works when nose command it's launched>
-from qacode.loggers.LoggerManager import LoggerManager
-from qacode.core.bots.BotOptions import BotOptions
+from qacode.core.loggers.LoggerManager import LoggerManager
+from qacode.core.bots.BotConfig import BotConfig 
 from qacode.core.bots.BotBase import BotBase
 from qacode.core.testing.TestInfoBase import TestInfoBase
 from qacode.core.exceptions.TestAssertionError import TestAssertionError
 
 class TestInfoBot(TestInfoBase):
-    '''
+    """
     Create LoggerManager and instance bot
-    '''
+    """
 
-    def __init__(self, methodName="NO_TESTCASE_NAME"):
-        super(TestInfoBot, self).__init__(methodName)
+    def __init__(self, method_name="NO_TESTCASE_NAME"):
+        """
+        Constructor
+        """
+        super(TestInfoBot, self).__init__(method_name)
 
     @classmethod
     def setUpClass(cls):
@@ -23,7 +26,7 @@ class TestInfoBot(TestInfoBase):
         Notes:
           [core] Initialize bot as class property
         """
-        cls.bot = BotBase(BotOptions(iniNoseFile=cfg))
+        cls.bot = BotBase(BotConfig(nose_config=cfg))
         cls.log = cls.bot.log
         
     @classmethod
@@ -34,7 +37,6 @@ class TestInfoBot(TestInfoBase):
           [core] Close bot from class property
         """
         cls.bot.close()
-        pass
 
     def sleep(self, wait=0):
         """        
@@ -46,4 +48,3 @@ class TestInfoBot(TestInfoBase):
 
 if __name__ == '__main__':
     unittest.main()
-    #unittest.main(testRunner=xmlrunner.XMLTestRunner(verbosity=1, failfast=True))

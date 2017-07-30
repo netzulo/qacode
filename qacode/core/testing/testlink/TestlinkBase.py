@@ -90,7 +90,6 @@ class TestlinkBase(object):
             for testplan_id in testplan_ids:
                 builds.append(self.conn.getBuildsForTestPlan(testplan_id))
         return builds
-        pass
 
     def get_tl_milestones(self):
         pass

@@ -1,15 +1,14 @@
 import time, unittest
 from testconfig import config as cfg # just works when nose command it's launched
-# TODO: add loggerManager to this class
-from qacode.core.bots.BotOptions import BotOptions
+from qacode.core.bots.BotConfig import BotConfig
 from qacode.core.bots.BotBase import BotBase
 from qacode.core.testing.TestInfoBase import TestInfoBase
 from qacode.core.exceptions.TestAssertionError import TestAssertionError
 
 class TestInfoBotMultiple(TestInfoBase):
 
-    def __init__(self, methodName="NO_TESTCASE_NAME"):
-        super(TestInfoBotMultiple, self).__init__(methodName)
+    def __init__(self, method_name="NO_TESTCASE_NAME"):
+        super(TestInfoBotMultiple, self).__init__(method_name)
 
     def setUp(self, config=cfg):
         """
@@ -20,7 +19,7 @@ class TestInfoBotMultiple(TestInfoBase):
           Initialize bot by testcase method
           IMPORTANT: inherits must call super(classInheritName, self).setup()
         """        
-        self.bot = BotBase(BotOptions(iniNoseFile=config))
+        self.bot = BotBase(BotConfig(nose_config=config))
 
     def tearDown(self):
         '''

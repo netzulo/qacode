@@ -29,11 +29,11 @@ class NavBase(object):
         """
         self.driver.get(url)
 
-    def get_url(self, url, waitForLoad=0):
+    def get_url(self, url, wait_for_load=0):
         """
         Do get_url including implicit wait for page load
         """
-        self.driver.implicitly_wait(waitForLoad)
+        self.driver.implicitly_wait(wait_for_load)
         self.driver.get(url)
 
     def get_window_handle(self):
@@ -42,11 +42,11 @@ class NavBase(object):
         """
         return self.driver.current_window_handle
 
-    def delete_cookie_by_key(self, keyName):
+    def delete_cookie_by_key(self, key_name):
         '''
         Deletes a single cookie with the given name.
         '''
-        self.driver.delete_cookie(keyName)
+        self.driver.delete_cookie(key_name)
 
     def delete_cookies(self):
         '''
@@ -60,8 +60,8 @@ class NavBase(object):
         """
         return self.driver.desired_capabilities
 
-    def execute_js(self, script, webElements):
-        self.driver.execute_script(script, webElements)
+    def execute_js(self, script, elements):
+        self.driver.execute_script(script, elements)
 
     def find_element(self, selector, by=By.CSS_SELECTOR):
         '''
@@ -132,7 +132,7 @@ class NavBase(object):
         if log_name == 'server':
             self.driver.get_log(log_name)
 
-    def get_screenshot_as_Base64(self):
+    def get_screenshot_as_base64(self):
         '''
         Gets the screenshot of the current window as a base64 encoded string
         which is useful in embedded images in HTML.

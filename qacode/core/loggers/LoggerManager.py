@@ -41,18 +41,17 @@ class LoggerManager(object):
 
     def create_console_handler(self, log_level, log_formatter):
         """create console handler and set logfile level"""
-        consoleHandler = logging.StreamHandler()
-        consoleHandler.setLevel(log_level)
-        consoleHandler.setFormatter(log_formatter)
-        return consoleHandler
+        console_handler = logging.StreamHandler()
+        console_handler.setLevel(log_level)
+        console_handler.setFormatter(log_formatter)
+        return console_handler
 
     def create_file_handler(self, log_level, log_formatter, log_file_path):
         """create console handler and set logfile level"""
-        # create file handler
-        fileHandler = logging.FileHandler(log_file_path);
-        fileHandler.setLevel(log_level)
-        fileHandler.setFormatter(log_formatter)
-        return fileHandler
+        file_handler = logging.FileHandler(log_file_path);
+        file_handler.setLevel(log_level)
+        file_handler.setFormatter(log_formatter)
+        return file_handler
 
     def get_log(self):
         return self.logger

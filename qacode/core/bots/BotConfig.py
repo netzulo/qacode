@@ -4,7 +4,7 @@ from qacode.core.loggers.LoggerManager import LoggerManager
 from qacode.core.exceptions.CoreException import CoreException
 
 
-class BotOptions(object):
+class BotConfig(object):
     '''
     Bot configuration for BotBase or inherit classes
     '''

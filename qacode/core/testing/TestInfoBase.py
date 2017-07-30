@@ -7,8 +7,8 @@ from qacode.core.testing.testlink.TestlinkBase import TestlinkBase
 
 class TestInfoBase(unittest.TestCase):
 
-    def __init__(self, methodName="NO_TESTCASE_NAME"):
-        super(TestInfoBase, self).__init__(methodName)
+    def __init__(self, method_name="NO_TESTCASE_NAME"):
+        super(TestInfoBase, self).__init__(method_name)
 
     @classmethod
     def setUp(cls):
