@@ -2,8 +2,8 @@
 
 | Branch  | Linux Deploy | Windows Deploy |
 | ------------- | ------------- |  ------------- |
-| master  | [![Build Status](https://travis-ci.org/netzulo/qadoc.svg?branch=master)](https://travis-ci.org/netzulo/qacode)  | [![Build status](https://ci.appveyor.com/api/projects/status/4a0tc5pis1bykt9x/branch/master?svg=true)](https://ci.appveyor.com/project/netzulo/qacode/branch/master)  |
-| devel  | [![Build Status](https://travis-ci.org/netzulo/qadmin.svg?branch=devel)](https://travis-ci.org/netzulo/qacode)  | [![Build status](https://ci.appveyor.com/api/projects/status/4a0tc5pis1bykt9x/branch/devel?svg=true)](https://ci.appveyor.com/project/netzulo/qacode/branch/devel)  |
+| master  | [![Build Status](https://travis-ci.org/netzulo/qacode.svg?branch=master)](https://travis-ci.org/netzulo/qacode)  | [![Build status](https://ci.appveyor.com/api/projects/status/4a0tc5pis1bykt9x/branch/master?svg=true)](https://ci.appveyor.com/project/netzulo/qacode/branch/master)  |
+| devel  | [![Build Status](https://travis-ci.org/netzulo/qacode.svg?branch=devel)](https://travis-ci.org/netzulo/qacode)  | [![Build status](https://ci.appveyor.com/api/projects/status/4a0tc5pis1bykt9x/branch/devel?svg=true)](https://ci.appveyor.com/project/netzulo/qacode/branch/devel)  |
 
 Python tested versions :
 
