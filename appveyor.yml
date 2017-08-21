@@ -26,3 +26,4 @@ before_test:
 test_script:
   - "%PYTHON%\\Scripts\\nosetests tests\\unitaries\\TestConfig.py --tc-file=qacode\\configs\\settings.ini"
   - "%PYTHON%\\Scripts\\nosetests tests\\unitaries\\TestLoggerManager.py --tc-file=qacode\\configs\\settings.ini"
+  - "%PYTHON%\\Scripts\\nosetests tests\\unitaries\\TestTestInfoBase.py --tc-file=qacode\\configs\\settings.ini"
