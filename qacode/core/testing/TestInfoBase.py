@@ -1,4 +1,4 @@
-import time, unittest
+import time, unittest, logging
 from testconfig import config as cfg # just works when nose command it's launched>
 from qacode.core.bots.BotBase import BotBase
 from qacode.core.exceptions.TestAssertionError import TestAssertionError
@@ -16,9 +16,9 @@ class TestInfoBase(unittest.TestCase):
         super(TestInfoBase, self).__init__(method_name)
         if logger_manager is None:
             self.logger_managger = LoggerManager(log_path=cfg["BOT"]["log_output_file"],log_level=logging.DEBUG)
-        else
+        else:
             self.logger_manager = logger_manager
-
+        
         self.log = self.logger_manager.get_log()
 
     @classmethod
