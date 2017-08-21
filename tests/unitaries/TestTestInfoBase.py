@@ -7,13 +7,11 @@ class TestTestInfoBase(TestInfoBase):
     def __init__(self, method_name="TestTestInfoBase"):
         super(TestTestInfoBase, self).__init__(method_name, logger_manager=None)
     
-
     def setup(self):
-        super(self).setup()
+        super(TestTestInfoBase, self).setup()
 
     def tearDown(self):
-        super(self).tearDown()
-
+        super(TestTestInfoBase, self).tearDown()
 
     def test_instance(self):
         self.log.info("message enter setup and tearDown from super TestInfoBase Class")

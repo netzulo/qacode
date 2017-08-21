@@ -8,17 +8,15 @@ from qacode.core.loggers.LoggerManager import LoggerManager
 
 class TestInfoBase(unittest.TestCase):
 
-    logger_manager=None 
+    logger_manager = None
     log = None
-
 
     def __init__(self, method_name="NO_TESTCASE_NAME", logger_manager=None):
         super(TestInfoBase, self).__init__(method_name)
         if logger_manager is None:
-            self.logger_managger = LoggerManager(log_path=cfg["BOT"]["log_output_file"],log_level=logging.DEBUG)
+            self.logger_manager = LoggerManager(log_path=cfg["BOT"]["log_output_file"],log_level=logging.DEBUG)
         else:
             self.logger_manager = logger_manager
-        
         self.log = self.logger_manager.get_log()
 
     @classmethod
@@ -26,8 +24,7 @@ class TestInfoBase(unittest.TestCase):
         """
         Just starting testcase instance dependencies
         """
-        self.log.debug("TestInfoBase.setup@classmethod: code mark")
-        pass
+        print("TestInfoBase.setup@classmethod: code mark")
 
     def setUp(self):        
         """
@@ -103,7 +100,7 @@ class TestInfoBase(unittest.TestCase):
         """
         Just stoping testcase class dependencies
         """
-        self.log.debug("TestInfoBase.tearDownClass@classmethod: code mark")
+        print("TestInfoBase.tearDownClass@classmethod: code mark")
         pass
 
 if __name__ == '__main__':
