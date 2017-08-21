@@ -3,18 +3,30 @@ from testconfig import config as cfg # just works when nose command it's launche
 from qacode.core.bots.BotBase import BotBase
 from qacode.core.exceptions.TestAssertionError import TestAssertionError
 from qacode.core.testing.testlink.TestlinkBase import TestlinkBase
+from qacode.core.loggers.LoggerManager import LoggerManager
     
 
 class TestInfoBase(unittest.TestCase):
 
-    def __init__(self, method_name="NO_TESTCASE_NAME"):
+    logger_manager=None 
+    log = None
+
+
+    def __init__(self, method_name="NO_TESTCASE_NAME", logger_manager=None):
         super(TestInfoBase, self).__init__(method_name)
+        if logger_manager is None:
+            self.logger_managger = LoggerManager(log_path=cfg["BOT"]["log_output_file"],log_level=logging.DEBUG)
+        else
+            self.logger_manager = logger_manager
+
+        self.log = self.logger_manager.get_log()
 
     @classmethod
     def setUp(cls):
         """
         Just starting testcase instance dependencies
         """
+        self.log.debug("TestInfoBase.setup@classmethod: code mark")
         pass
 
     def setUp(self):        
@@ -23,6 +35,7 @@ class TestInfoBase(unittest.TestCase):
         Dependencies:
           [core] Instance testlink dependencies
         """
+        self.log.debug("TestInfoBase.setup: code mark")
         # TODO: integrate TestlinkBase class and load testlink data at instance
         #self.testlink = TestlinkBase(url=cfg['TESTLINK']['url'],devkey=cfg['TESTLINK']['devkey'])
         
@@ -82,6 +95,7 @@ class TestInfoBase(unittest.TestCase):
         """
         Just stoping testcase instance dependencies
         """
+        self.log.debug("TestInfoBase.tearDown@classmethod: code mark")
         pass
 
     @classmethod
@@ -89,8 +103,8 @@ class TestInfoBase(unittest.TestCase):
         """
         Just stoping testcase class dependencies
         """
+        self.log.debug("TestInfoBase.tearDownClass@classmethod: code mark")
         pass
 
 if __name__ == '__main__':
     unittest.main()
-    #unittest.main(testRunner=xmlrunner.XMLTestRunner(verbosity=1, failfast=True))
