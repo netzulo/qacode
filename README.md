@@ -68,3 +68,6 @@ url=http://demoqa.com
 # nosetests tests/unitaries/TestLoggerManager.py --tc-file="qacode/configs/settings.ini"
 # nosetests tests/unitaries/TestTestInfoBase.py --tc-file="qacode/configs/settings.example.ini"
 ```
+
+[![asciicast](https://asciinema.org/a/HEk8Dm0zL6eDoyj8MA19wawAx.png)](https://asciinema.org/a/HEk8Dm0zL6eDoyj8MA19wawAx)
+
