@@ -88,7 +88,7 @@ class BotBase(object):
             else:
                 # TODO open linux browsers 64
                 pass
-"""
+        """
         if self.bot_config.bot_browser == 'firefox':
             if os.name == 'nt':
                 self.curr_driver_path.format("geckodriver.exe")
@@ -134,7 +134,7 @@ class BotBase(object):
         else:
             raise CoreException()
         self.log.info('Started browser with mode : LOCAL OK')
-"""
+        """
 
     def mode_remote(self):
         """
