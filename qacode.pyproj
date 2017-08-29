@@ -40,7 +40,6 @@
     <Compile Include="qacode\core\testing\testlink\__init__.py" />
     <Compile Include="qacode\core\testing\__init__.py" />
     <Compile Include="qacode\core\webs\controls\__init__.py" />
-    <Compile Include="qacode\core\webs\models\__init__.py" />
     <Compile Include="qacode\core\webs\pages\__init__.py" />
     <Compile Include="qacode\core\webs\__init__.py" />
     <Compile Include="qacode\core\__init__.py" />
@@ -50,6 +49,7 @@
     <Compile Include="tests\functionals\__init__.py" />
     <Compile Include="tests\unitaries\TestConfig.py" />
     <Compile Include="tests\unitaries\TestLoggerManager.py" />
+    <Compile Include="tests\unitaries\TestTestInfoBase.py" />
     <Compile Include="tests\unitaries\__init__.py" />
     <Compile Include="tests\__init__.py" />
   </ItemGroup>
@@ -60,6 +60,8 @@
     <Content Include="appveyor.yml" />
     <Content Include="LICENSE" />
     <Content Include="qacode\configs\settings.example.ini" />
+    <Content Include="qacode\logs\.gitkeep" />
+    <Content Include="qacode\logs\qacode.log" />
     <Content Include="README.md" />
     <Content Include="setup.cfg" />
     <Content Include="sonar-project.properties" />
@@ -76,8 +78,8 @@
     <Folder Include="qacode\core\testing\testlink" />
     <Folder Include="qacode\core\webs" />
     <Folder Include="qacode\core\webs\controls" />
-    <Folder Include="qacode\core\webs\models" />
     <Folder Include="qacode\core\webs\pages" />
+    <Folder Include="qacode\logs\" />
     <Folder Include="tests" />
     <Folder Include="tests\functionals" />
     <Folder Include="tests\unitaries" />
