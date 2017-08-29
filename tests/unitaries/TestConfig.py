@@ -1,4 +1,4 @@
-import unittest, os, logging
+import unittest, os, logging, ast
 from testconfig import config as cfg # just works when nose command it's launched
 from qacode.core.loggers.LoggerManager import LoggerManager
 
@@ -16,6 +16,7 @@ class TestConfig(unittest.TestCase):
         "BOT url_node just can be match with this regular expression : {}",
         "BOT profile_path, optional key: file not found or not provided",
         "BOT drivers_path: path not found or not provided",
+        "BOT drivers_names: path not found for driver_name={}",
         "BOT log_name can't be empty name",
         "BOT log_output_file can't be empty name",
         "TESTLINK url, optional key, not provided or not matching regular expression: {} ",
@@ -54,30 +55,43 @@ class TestConfig(unittest.TestCase):
         if not exist:
             self.log.warn(self.msgs[7])
 
-    def test_007_config_has_key_bot_log_name(self):
-        value = cfg.get("BOT")["log_name"]
-        self.assertNotEqual(value,"",self.msgs[8])
+    def test_007_config_has_key_bot_drivers_names(self):
+        values = ast.literal_eval(cfg.get("BOT")["drivers_names"])        
+        file_path = "{}{}{}".format(cfg.get("BOT")["drivers_path"],"{}", "{}")
+        if os.name == "nt":
+            file_path = file_path.format("\\","{}")
+        else:
+            file_path = file_path.format("/","{}")        
+        for driver_name in values :
+            file_path = file_path.format(driver_name)
+            exist = os.path.exists(file_path)
+            if not exist:
+                self.log.warn(self.msgs[8].format(driver_name))
 
-    def test_008_config_has_key_bot_log_output_file(self):
-        value = cfg.get("BOT")["log_output_file"]
+    def test_008_config_has_key_bot_log_name(self):
+        value = cfg.get("BOT")["log_name"]
         self.assertNotEqual(value,"",self.msgs[9])
 
-    def test_009_config_has_key_testlink_url(self):        
+    def test_009_config_has_key_bot_log_output_file(self):
+        value = cfg.get("BOT")["log_output_file"]
+        self.assertNotEqual(value,"",self.msgs[10])
+
+    def test_010_config_has_key_testlink_url(self):        
         value = cfg.get("TESTLINK")["url"]
         exist_length = len(value)
         if exist_length <= 0:
-            self.log.warn(self.msgs[10].format(self.regexs[0]))
+            self.log.warn(self.msgs[11].format(self.regexs[0]))
         else:
-            self.assertRegexpMatches(value,self.regexs[0],self.msgs[10])
+            self.assertRegexpMatches(value,self.regexs[0],self.msgs[11])
 
-    def test_010_config_has_key_testlink_devkey(self):
+    def test_011_config_has_key_testlink_devkey(self):
         value = cfg.get("TESTLINK")["devkey"]
         exist_length = len(value)
         if exist_length <= 0:
-            self.log.warn(self.msgs[11])
+            self.log.warn(self.msgs[12])
 
-    def test_011_config_has_key_test_unitaries_url(self):
-        self.assertRegexpMatches(cfg.get("TEST_UNITARIES")["url"],self.regexs[0],self.msgs[12])
+    def test_012_config_has_key_test_unitaries_url(self):        
+        self.assertRegexpMatches(cfg.get("TEST_UNITARIES")["url"],self.regexs[0],self.msgs[13])
 
 if __name__ == '__main__':
     unittest.main()
