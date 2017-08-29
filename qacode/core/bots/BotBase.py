@@ -1,4 +1,4 @@
-import logging, os
+import logging, os, sys
 from selenium import webdriver as WebDriver
 from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
 from selenium.webdriver import DesiredCapabilities
@@ -56,15 +56,39 @@ class BotBase(object):
             elif self.bot_config.bot_mode == 'remote':
                 self.mode_remote()
             else:
-                raise Exception('[FAILED]', 'Unkown word for bot mode config value: {}'.format(self.bot_config.bot_mode))
+                raise CoreException('[FAILED]', 'Unkown word for bot mode config value: {}'.format(self.bot_config.bot_mode))
 
     def mode_local(self):
         """
         Open new brower on local mode
         """
-        self.log.info('Starting browser with mode : LOCAL')
-        self.curr_driver_path = "{}/{}".format(self.bot_config.bot_drivers_path)
+        browser_file = "{}{}"
+        is_64bits = sys.maxsize > 2**32
 
+        self.log.info('Starting browser with mode : LOCAL')
+        if os.name == "nt":
+            self.curr_driver_path = "{}\\{}".format(self.bot_config.bot_drivers_path,"{}")
+        else:
+            self.curr_driver_path = "{}/{}".format(self.bot_config.bot_drivers_path,"{}")        
+
+        if os.name == 'nt':            
+            browser_file = browser_file.format("{}", ".exe")
+            if is_64bits:
+                # TODO open windows browsers 32
+                pass                
+            else:
+                # TODO open windows browsers 64
+                pass
+        else:            
+            # TODO lin 32 or 64
+            browser_file = browser_file.format("{}", ".exe")
+            if is_64bits:
+                # TODO open linux browsers 32
+                pass
+            else:
+                # TODO open linux browsers 64
+                pass
+"""
         if self.bot_config.bot_browser == 'firefox':
             if os.name == 'nt':
                 self.curr_driver_path.format("geckodriver.exe")
@@ -77,7 +101,8 @@ class BotBase(object):
 
         elif self.bot_config.bot_browser == 'chrome':
             if os.name == 'nt':
-                self.curr_driver_path.format("chromedriver.exe")
+                self.log.debug("starting CHROME local")
+                self.curr_driver_path.format("chromedriver.exe")                
             else:
                 self.curr_driver_path.format("chromedriver")
             self.curr_caps = DesiredCapabilities.CHROME.copy()
@@ -109,6 +134,7 @@ class BotBase(object):
         else:
             raise CoreException()
         self.log.info('Started browser with mode : LOCAL OK')
+"""
 
     def mode_remote(self):
         """
