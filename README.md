@@ -11,7 +11,7 @@ Python tested versions :
   +  **3.5**
   +  **3.4**
   +  **3.3**
-  +  **3.2**
+  + ~~**3.2**~~ __(not supported)__
   +  **2.7**
 
 ## PIP installation ?
