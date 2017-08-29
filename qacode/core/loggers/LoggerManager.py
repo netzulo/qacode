@@ -1,6 +1,5 @@
 import logging, os
 
-
 class LoggerManager(object):
     '''
     @use: self.get_log()

@@ -1,6 +1,5 @@
 import time, unittest, logging
 from testconfig import config as cfg # just works when nose command it's launched>
-from qacode.core.bots.BotBase import BotBase
 from qacode.core.exceptions.TestAssertionError import TestAssertionError
 from qacode.core.testing.testlink.TestlinkBase import TestlinkBase
 from qacode.core.loggers.LoggerManager import LoggerManager
@@ -32,11 +31,24 @@ class TestInfoBase(unittest.TestCase):
         Dependencies:
           [core] Instance testlink dependencies
         """
-        self.log.debug("TestInfoBase.setup: code mark")
+        self.log.debug("TestInfoBase.setup: starting testsuite...")
         # TODO: integrate TestlinkBase class and load testlink data at instance
         #self.testlink = TestlinkBase(url=cfg['TESTLINK']['url'],devkey=cfg['TESTLINK']['devkey'])
         
     
+    def tearDown(self):
+        """
+        Just stoping testcase instance dependencies
+        """
+        self.log.debug("TestInfoBase.tearDown: finishing testsuite...")
+
+    @classmethod
+    def tearDownClass(self):
+        """
+        Just stoping testcase class dependencies
+        """
+        print("TestInfoBase.tearDownClass@classmethod: finishing testsuite...")
+
     def timer(self,wait=5, print_each=5, log=None):
         """
         Notes:
@@ -86,22 +98,7 @@ class TestInfoBase(unittest.TestCase):
         """
         self.sleep(wait)
         if current not in contains:
-            raise TestAssertionError(current, contains, "Wrong URL, current doesn't contains expected: current={}, contains={}".format(current, contains), msg)
-
-    def tearDown(self):
-        """
-        Just stoping testcase instance dependencies
-        """
-        self.log.debug("TestInfoBase.tearDown@classmethod: code mark")
-        pass
-
-    @classmethod
-    def tearDownClass(self):
-        """
-        Just stoping testcase class dependencies
-        """
-        print("TestInfoBase.tearDownClass@classmethod: code mark")
-        pass
+            raise TestAssertionError(current, contains, "Wrong URL, current doesn't contains expected: current={}, contains={}".format(current, contains), msg)    
 
 if __name__ == '__main__':
     unittest.main()

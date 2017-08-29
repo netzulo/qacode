@@ -5,25 +5,25 @@ from qacode.core.loggers.LoggerManager import LoggerManager
 
 class TestLoggerManager(unittest.TestCase):
     '''
-    Comprueba que funciona la clase LoggerManager y todos sus metodos
+    Check LoggerManager class and all logger levels
     '''
     loggerManager = LoggerManager(log_path=cfg["BOT"]["log_output_file"],log_level=logging.DEBUG)
     log = loggerManager.get_log()
 
     def test_001_logger_debug(self):        
-        self.log.debug("Prueba unitaria para el logger, mensaje tipo DEBUG")
+        self.log.debug("Unitary test for check messages with level type DEBUG")
 
     def test_002_logger_info(self):     
-        self.log.info("Prueba unitaria para el logger, mensaje tipo INFO")
+        self.log.info("Unitary test for check messages with level type INFO")
 
     def test_003_logger_warn(self):     
-        self.log.warn("Prueba unitaria para el logger, mensaje tipo WARNING")
+        self.log.warn("Unitary test for check messages with level type WARNING")
 
     def test_004_logger_error(self):     
-        self.log.error("Prueba unitaria para el logger, mensaje tipo ERROR")
+        self.log.error("Unitary test for check messages with level type ERROR")
 
     def test_005_logger_critical(self):
-        self.log.critical("Prueba unitaria para el logger, mensaje tipo CRITICAL")    
+        self.log.critical("Unitary test for check messages with level type CRITICAL")    
 
 if __name__ == '__main__':
     unittest.main()
