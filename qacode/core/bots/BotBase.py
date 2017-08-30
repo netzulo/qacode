@@ -173,7 +173,6 @@ class BotBase(object):
         """
         Close curr_driver browser
         """
-        self.log.info('Closing browser')
-        self.curr_driver.close()
+        self.log.info('Closing browser')    
         self.curr_driver.quit()
         self.log.info('Closed browser OK')
