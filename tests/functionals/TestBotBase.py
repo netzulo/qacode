@@ -28,7 +28,7 @@ class TestBotBase(TestInfoBase):
         self.bot.close()
         self.log.debug("TestBotBase: terminated for FIREFOX")
 
-    def test_002_bot_local_iexplorer(self):
+    def test_003_bot_local_iexplorer(self):
         self.log.debug("TestBotBase: started for IEXPLORER")
         bot_config = BotConfig(nose_config=cfg, logger_manager=self.logger_manager)
         bot_config.bot_browser = "iexplorer"
@@ -36,3 +36,12 @@ class TestBotBase(TestInfoBase):
         time.sleep(10)
         self.bot.close()
         self.log.debug("TestBotBase: terminated for IEXPLORER")
+
+    def test_004_bot_local_edge(self):
+        self.log.debug("TestBotBase: started for EDGE")
+        bot_config = BotConfig(nose_config=cfg, logger_manager=self.logger_manager)
+        bot_config.bot_browser = "edge"
+        self.bot = BotBase(bot_config)
+        time.sleep(10)
+        self.bot.close()
+        self.log.debug("TestBotBase: terminated for EDGE")

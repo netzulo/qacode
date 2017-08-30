@@ -103,9 +103,9 @@ class BotBase(object):
             self.curr_driver = WebDriver.Ie(executable_path=self.curr_driver_path,
                                             capabilities=self.curr_caps)
         elif self.bot_config.bot_browser == "edge":
-            raise CoreException(message="not implemented", 
-                                cause="LOCAL browser={} ".format(self.bot_config.bot_browser),
-                                log=self.log)
+            self.curr_caps = DesiredCapabilities.EDGE.copy()
+            self.curr_driver = WebDriver.Edge(executable_path=self.curr_driver_path,
+                                              capabilities=self.curr_caps)
         elif self.bot_config.bot_browser == "phantomjs":
             raise CoreException(message="not implemented", 
                                 cause="LOCAL browser={} ".format(self.bot_config.bot_browser),
@@ -116,12 +116,6 @@ class BotBase(object):
                                 log=self.log)
             
         """
-        elif self.bot_config.bot_browser == 'edge':
-            self.curr_caps = DesiredCapabilities.EDGE.copy()
-            self.curr_driver = WebDriver.Edge(
-                executable_path=self.curr_driver_path.format("EdgeDriver_64.exe"),
-                desired_capabilities=self.curr_caps)
-
         elif self.bot_config.bot_browser == 'phantomjs':
             if os.name == 'nt':
                 self.curr_driver_path.format("phantomjs.exe")
