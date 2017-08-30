@@ -28,14 +28,10 @@ install:
 - python setup.py install
 before_script:
 - cp qacode/configs/settings.example.ini qacode/configs/settings.ini
-- cd ..
-- git clone https://github.com/netzulo/qadrivers
-- cd qacode
 script:
 - nosetests tests/unitaries/TestConfig.py --tc-file="qacode/configs/settings.ini"
 - nosetests tests/unitaries/TestLoggerManager.py --tc-file="qacode/configs/settings.ini"
 - nosetests tests/unitaries/TestTestInfoBase.py --tc-file="qacode/configs/settings.example.ini"
-- nosetests tests/functionals/TestBotBase.py --tc-file="qacode/configs/settings.example.ini"
 - echo "FINISHED AUTOMATED BUILD"
 
 after_script:
