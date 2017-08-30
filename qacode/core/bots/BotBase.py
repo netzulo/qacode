@@ -93,15 +93,15 @@ class BotBase(object):
         if self.bot_config.bot_browser == "chrome":
             self.curr_caps = DesiredCapabilities.CHROME.copy()            
             self.curr_driver = WebDriver.Chrome(executable_path=self.curr_driver_path,
-                desired_capabilities=self.curr_caps)
+                                                desired_capabilities=self.curr_caps)
         elif self.bot_config.bot_browser == "firefox":            
             self.curr_caps = DesiredCapabilities.FIREFOX.copy()
             self.curr_driver = WebDriver.Firefox(executable_path=self.curr_driver_path,
-                capabilities=self.curr_caps)
+                                                 capabilities=self.curr_caps)
         elif self.bot_config.bot_browser == "iexplorer":
-            raise CoreException(message="not implemented", 
-                                cause="LOCAL browser={} ".format(self.bot_config.bot_browser),
-                                log=self.log)
+            self.curr_caps = DesiredCapabilities.INTERNETEXPLORER.copy()
+            self.curr_driver = WebDriver.Ie(executable_path=self.curr_driver_path,
+                                            capabilities=self.curr_caps)
         elif self.bot_config.bot_browser == "edge":
             raise CoreException(message="not implemented", 
                                 cause="LOCAL browser={} ".format(self.bot_config.bot_browser),
@@ -116,12 +116,6 @@ class BotBase(object):
                                 log=self.log)
             
         """
-        elif self.bot_config.bot_browser == 'iexplorer':
-            self.curr_caps = DesiredCapabilities.INTERNETEXPLORER.copy()
-            self.curr_driver = WebDriver.Ie(
-                executable_path=self.curr_driver_path.format("IEDriverServer_32.exe"),
-                desired_capabilities=self.curr_caps)
-
         elif self.bot_config.bot_browser == 'edge':
             self.curr_caps = DesiredCapabilities.EDGE.copy()
             self.curr_driver = WebDriver.Edge(
