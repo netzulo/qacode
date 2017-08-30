@@ -15,6 +15,6 @@ setup(name='qacode',
       keywords = ['testing', 'logging', 'functional','selenium', 'test'],
       install_requires=[
           'appdirs','packaging==16.8','pyparsing',
-          'selenium==3.0.2','six==1.10.0','nose==1.3.7','nose-testconfig==0.10',
+          'selenium==3.5.0', '==1.10.0','nose==1.3.7','nose-testconfig==0.10',
           'TestLink-API-Python-client==0.6.2']
       )
