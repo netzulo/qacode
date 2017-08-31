@@ -107,33 +107,20 @@ class BotBase(object):
             self.curr_driver = WebDriver.Edge(executable_path=self.curr_driver_path,
                                               capabilities=self.curr_caps)
         elif self.bot_config.bot_browser == "phantomjs":
-            raise CoreException(message="not implemented", 
-                                cause="LOCAL browser={} ".format(self.bot_config.bot_browser),
-                                log=self.log)
+            self.curr_caps = DesiredCapabilities.PHANTOMJS.copy()
+            self.curr_driver = WebDriver.PhantomJS(executable_path=self.curr_driver_path,
+                                                   desired_capabilities=self.curr_caps)
         else:
             raise CoreException(message="config file error, SECTION=bot, KEY=browser",
                                 cause="isn't valid value: {}".format(self.bot_config.bot_browser),
-                                log=self.log)
-            
-        """
-        elif self.bot_config.bot_browser == 'phantomjs':
-            if os.name == 'nt':
-                self.curr_driver_path.format("phantomjs.exe")
-            else:
-                self.curr_driver_path.format("phantomjs")
-            self.curr_caps = DesiredCapabilities.PHANTOMJS.copy()
-            self.curr_driver = WebDriver.PhantomJS(
-                executable_path=self.curr_driver_path,
-                desired_capabilities=self.curr_caps)
-        else:
-            raise CoreException()
-        self.log.info('Started browser with mode : LOCAL OK')
-        """
+                                log=self.log)           
 
     def mode_remote(self):
         """
         Open new brower on remote mode
         """
+        # TODO: check this method, do tests, etc...
+
         self.log.info('Starting browser with mode : REMOTE')
         if self.bot_config.bot_browser  == 'firefox':
             self.curr_caps = DesiredCapabilities.FIREFOX.copy()
