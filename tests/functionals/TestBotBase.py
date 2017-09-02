@@ -99,3 +99,13 @@ class TestBotBase(TestInfoBase):
         time.sleep(10)
         self.bot.close()
         self.log.debug("TestBotBase: REMOTE terminated for IEXPLORER")
+
+    def test_010_bot_remote_edge(self):
+        self.log.debug("TestBotBase: REMOTE started for EDGE")
+        bot_config = BotConfig(nose_config=cfg, logger_manager=self.logger_manager)
+        bot_config.bot_browser = "edge"
+        bot_config.bot_mode = "remote"
+        self.bot = BotBase(bot_config)
+        time.sleep(10)
+        self.bot.close()
+        self.log.debug("TestBotBase: REMOTE terminated for EDGE")
