@@ -79,3 +79,23 @@ class TestBotBase(TestInfoBase):
         time.sleep(10)
         self.bot.close()
         self.log.debug("TestBotBase: REMOTE terminated for FIREFOX")
+
+    def test_008_bot_remote_phantomjs(self):
+        self.log.debug("TestBotBase: REMOTE started for PHANTOMJS")
+        bot_config = BotConfig(nose_config=cfg, logger_manager=self.logger_manager)
+        bot_config.bot_browser = "phantomjs"
+        bot_config.bot_mode = "remote"
+        self.bot = BotBase(bot_config)
+        time.sleep(10)
+        self.bot.close()
+        self.log.debug("TestBotBase: REMOTE terminated for PHANTOMJS")
+
+    def test_009_bot_remote_iexplorer(self):
+        self.log.debug("TestBotBase: REMOTE started for IEXPLORER")
+        bot_config = BotConfig(nose_config=cfg, logger_manager=self.logger_manager)
+        bot_config.bot_browser = "iexplorer"
+        bot_config.bot_mode = "remote"
+        self.bot = BotBase(bot_config)
+        time.sleep(10)
+        self.bot.close()
+        self.log.debug("TestBotBase: REMOTE terminated for IEXPLORER")
