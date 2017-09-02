@@ -140,7 +140,7 @@ class BotBase(object):
             raise Exception("Bad browser selected")
 
         self.curr_driver = RemoteWebDriver(
-            command_executor=self.options.bot_url_hub,
+            command_executor=self.bot_config.bot_url_hub,
             desired_capabilities=self.curr_caps)
         self.log.info('Started browser with mode : REMOTE OK')
 

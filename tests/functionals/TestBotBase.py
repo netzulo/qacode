@@ -11,46 +11,61 @@ class TestBotBase(TestInfoBase):
         super(TestBotBase, self).__init__(method_name, logger_manager=None)
    
     def test_001_bot_local_chrome(self):
-        self.log.debug("TestBotBase: started for CHROME")
+        self.log.debug("TestBotBase: LOCAL started for CHROME")
         bot_config = BotConfig(nose_config=cfg, logger_manager=self.logger_manager)
         bot_config.bot_browser = "chrome"
+        bot_config.bot_mode = "local"
         self.bot = BotBase(bot_config)
         time.sleep(10)
         self.bot.close()
-        self.log.debug("TestBotBase: terminated for CHROME")
+        self.log.debug("TestBotBase: LOCAL terminated for CHROME")
     
     def test_002_bot_local_firefox(self):
-        self.log.debug("TestBotBase: started for FIREFOX")
+        self.log.debug("TestBotBase: LOCAL started for FIREFOX")
         bot_config = BotConfig(nose_config=cfg, logger_manager=self.logger_manager)
         bot_config.bot_browser = "firefox"
+        bot_config.bot_mode = "local"
         self.bot = BotBase(bot_config)
         time.sleep(10)
         self.bot.close()
-        self.log.debug("TestBotBase: terminated for FIREFOX")
+        self.log.debug("TestBotBase: LOCAL terminated for FIREFOX")
 
     def test_003_bot_local_phantomjs(self):
-        self.log.debug("TestBotBase: started for PHANTOMJS")
+        self.log.debug("TestBotBase: LOCAL started for PHANTOMJS")
         bot_config = BotConfig(nose_config=cfg, logger_manager=self.logger_manager)
         bot_config.bot_browser = "phantomjs"
+        bot_config.bot_mode = "local"
         self.bot = BotBase(bot_config)
         time.sleep(10)
         self.bot.close()
-        self.log.debug("TestBotBase: terminated for PHANTOMJS")
+        self.log.debug("TestBotBase: LOCAL terminated for PHANTOMJS")
 
     def test_004_bot_local_iexplorer(self):
-        self.log.debug("TestBotBase: started for IEXPLORER")
+        self.log.debug("TestBotBase: LOCAL started for IEXPLORER")
         bot_config = BotConfig(nose_config=cfg, logger_manager=self.logger_manager)
         bot_config.bot_browser = "iexplorer"
+        bot_config.bot_mode = "local"
         self.bot = BotBase(bot_config)
         time.sleep(10)
         self.bot.close()
-        self.log.debug("TestBotBase: terminated for IEXPLORER")
+        self.log.debug("TestBotBase: LOCAL terminated for IEXPLORER")
 
     def test_005_bot_local_edge(self):
-        self.log.debug("TestBotBase: started for EDGE")
+        self.log.debug("TestBotBase: LOCAL started for EDGE")
         bot_config = BotConfig(nose_config=cfg, logger_manager=self.logger_manager)
         bot_config.bot_browser = "edge"
+        bot_config.bot_mode = "local"
         self.bot = BotBase(bot_config)
         time.sleep(10)
         self.bot.close()
-        self.log.debug("TestBotBase: terminated for EDGE")
+        self.log.debug("TestBotBase: LOCAL terminated for EDGE")
+
+    def test_006_bot_remote_chrome(self):
+        self.log.debug("TestBotBase: REMOTE started for CHROME")
+        bot_config = BotConfig(nose_config=cfg, logger_manager=self.logger_manager)
+        bot_config.bot_browser = "chrome"
+        bot_config.bot_mode = "remote"
+        self.bot = BotBase(bot_config)
+        time.sleep(10)
+        self.bot.close()
+        self.log.debug("TestBotBase: REMOTE terminated for CHROME")
