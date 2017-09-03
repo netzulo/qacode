@@ -51,9 +51,9 @@ class BotBase(object):
                 raise CoreException(message="Unkown word for bot mode",
                                    cause="config value: {}".format(self.bot_config.bot_mode))
 
-    def driver_name_filter(self,contains=""):
+    def driver_name_filter(self,endswith=""):
         for driver_name in self.bot_config.bot_drivers_names:
-            if contains in driver_name:
+            if driver_name.endswith(endswith):
                 return driver_name
 
     def mode_local(self):
