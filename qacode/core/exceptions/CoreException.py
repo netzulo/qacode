@@ -4,8 +4,11 @@ from qacode.core.loggers.LoggerManager import LoggerManager
 
 
 class CoreException(Exception):
-    def __init__(self, cause, message, logger_manager=None):
-        if logger_manager is None:
-            self.logger_manager = LoggerManager()
-        self.log = self.logger_manager.get_log()
-        self.log.error("Error core: cause=%s , message=%s", cause, message)
+    log = None
+
+    def __init__(self, cause, message, log=None):
+        if log is None:
+            self.log = LoggerManager().get_log()
+        else:
+            self.log = log
+        self.log.error("Error at core class: cause={} , message={}".format(cause, message))
