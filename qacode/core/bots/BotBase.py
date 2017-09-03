@@ -69,18 +69,18 @@ class BotBase(object):
         if os.name == 'nt':            
             browser_file = browser_file.format("{}", ".exe")
             if is_64bits:                
-                browser_file = self.driver_name_filter(contains="{}driver_64.exe".format(
+                browser_file = self.driver_name_filter("{}driver_64.exe".format(
                     self.bot_config.bot_browser))
             else:
-                browser_file = self.driver_name_filter(contains="{}driver_32.exe".format(
+                browser_file = self.driver_name_filter("{}driver_32.exe".format(
                     self.bot_config.bot_browser))
         else:            
             browser_file = browser_file.format("{}", "")
             if is_64bits:
-                browser_file = self.driver_name_filter(contains="{}driver_64".format(
+                browser_file = self.driver_name_filter("{}driver_64".format(
                     self.bot_config.bot_browser))
             else:
-                browser_file = self.driver_name_filter(contains="{}driver_32".format(
+                browser_file = self.driver_name_filter("{}driver_32".format(
                     self.bot_config.bot_browser))
 
         if browser_file is None:            
