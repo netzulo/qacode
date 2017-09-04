@@ -17,13 +17,18 @@ environment:
     - PYTHON: "C:\\Python35-x64"
 
 install:
-  - "%PYTHON%\\python.exe -m pip install wheel"
-  - "%PYTHON%\\python.exe setup.py install"
+- "%PYTHON%\\python.exe -m pip install wheel"
+- "%PYTHON%\\python.exe setup.py install"
 
 before_test:
-  - "xcopy \"qacode\\configs\\settings.example.ini\" \"qacode\\configs\\settings.ini*\""
+- "xcopy \"qacode\\configs\\settings.example.ini\" \"qacode\\configs\\settings.ini*\""
 
 test_script:
-  - "%PYTHON%\\Scripts\\nosetests tests\\unitaries\\TestConfig.py --tc-file=qacode\\configs\\settings.ini"
-  - "%PYTHON%\\Scripts\\nosetests tests\\unitaries\\TestLoggerManager.py --tc-file=qacode\\configs\\settings.ini"
-  - "%PYTHON%\\Scripts\\nosetests tests\\unitaries\\TestTestInfoBase.py --tc-file=qacode\\configs\\settings.ini"
+- "%PYTHON%\\Scripts\\nosetests tests\\unitaries\\TestConfig.py --tc-file=qacode\\configs\\settings.ini"
+- "%PYTHON%\\Scripts\\nosetests tests\\unitaries\\TestLoggerManager.py --tc-file=qacode\\configs\\settings.ini"
+- "%PYTHON%\\Scripts\\nosetests tests\\unitaries\\TestTestInfoBase.py --tc-file=qacode\\configs\\settings.ini"
+- "echo TESTS UNITARIES SUCCESS"
+- "%PYTHON%\\Scripts\\nosetests tests/functionals/TestBotBase.py:TestBotBase.test_006_bot_remote_chrome --tc-file=qacode/configs/settings.ini"
+- "%PYTHON%\\Scripts\\nosetests tests/functionals/TestBotBase.py:TestBotBase.test_007_bot_remote_firefox --tc-file=qacode/configs/settings.ini"
+- "%PYTHON%\\Scripts\\nosetests tests/functionals/TestBotBase.py:TestBotBase.test_008_bot_remote_phantomjs --tc-file=qacode/configs/settings.ini"
+- echo "TESTS FUNCTIONALS SUCCESS"

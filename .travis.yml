@@ -31,8 +31,12 @@ before_script:
 script:
 - nosetests tests/unitaries/TestConfig.py --tc-file="qacode/configs/settings.ini"
 - nosetests tests/unitaries/TestLoggerManager.py --tc-file="qacode/configs/settings.ini"
-- nosetests tests/unitaries/TestTestInfoBase.py --tc-file="qacode/configs/settings.example.ini"
-- echo "FINISHED AUTOMATED BUILD"
+- nosetests tests/unitaries/TestTestInfoBase.py --tc-file="qacode/configs/settings.ini"
+- echo "TESTS UNITARIES SUCCESS"
+- nosetests tests/functionals/TestBotBase.py:TestBotBase.test_006_bot_remote_chrome --tc-file="qacode/configs/settings.ini"
+- nosetests tests/functionals/TestBotBase.py:TestBotBase.test_007_bot_remote_firefox --tc-file="qacode/configs/settings.ini"
+- nosetests tests/functionals/TestBotBase.py:TestBotBase.test_008_bot_remote_phantomjs --tc-file="qacode/configs/settings.ini"
+- echo "TESTS FUNCTIONALS SUCCESS"
 
 after_script:
 - sonar-scanner -X -Dsonar.login=${SONAR_GITHUB_TOKEN} -Dsonar.host.url=http://qalab.tk:82
