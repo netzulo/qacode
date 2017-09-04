@@ -25,7 +25,8 @@ class BotBase(object):
     navigation = None
     bot_config = None
     logger_manager = None 
-    log = None 
+    log = None
+    IS_64BITS = sys.maxsize > 2**32
 
     def __init__(self, bot_config):
         """
@@ -33,14 +34,14 @@ class BotBase(object):
         (help for each option can be found on settings.example.ini)        
         """
         if bot_config is None:
-            raise CoreException('[FAILED]', 'BotBase configuration can\'t be none: bad bot_config provided')
+            raise CoreException(message='BotBase configuration can\'t be none: bad bot_config provided')
         else:
             try:
                 self.bot_config = bot_config
                 self.logger_manager = bot_config.logger_manager
                 self.log = self.logger_manager.get_log()
             except Exception as err:
-                raise CoreException(message="Error at create LoggerManager for BotBase class", cause=err)
+                raise CoreException(message="Error at create LoggerManager for BotBase class")
             self.navigation = NavBase(self) # TODO: testcases
 
             if self.bot_config.bot_mode == 'local':
@@ -48,8 +49,7 @@ class BotBase(object):
             elif self.bot_config.bot_mode == 'remote':
                 self.mode_remote()
             else:
-                raise CoreException(message="Unkown word for bot mode",
-                                   cause="config value: {}".format(self.bot_config.bot_mode))
+                raise CoreException(message="Unkown word for bot mode config value: {}".format(self.bot_config.bot_mode))
 
     def driver_name_filter(self,endswith=""):
         for driver_name in self.bot_config.bot_drivers_names:
@@ -60,15 +60,14 @@ class BotBase(object):
         """
         Open new brower on local mode
         """               
-        self.curr_driver_path = "{}/{}".format(self.bot_config.bot_drivers_path,"{}")  
-        is_64bits = sys.maxsize > 2**32        
+        self.curr_driver_path = "{}/{}".format(self.bot_config.bot_drivers_path,"{}")
         self.log.info('Starting browser with mode : LOCAL')        
 
         # STEP 1
         browser_file = "{}{}"
         if os.name == 'nt':            
             browser_file = browser_file.format("{}", ".exe")
-            if is_64bits:                
+            if IS_64BITS:
                 browser_file = self.driver_name_filter("{}driver_64.exe".format(
                     self.bot_config.bot_browser))
             else:
@@ -76,7 +75,7 @@ class BotBase(object):
                     self.bot_config.bot_browser))
         else:            
             browser_file = browser_file.format("{}", "")
-            if is_64bits:
+            if IS_64BITS:
                 browser_file = self.driver_name_filter("{}driver_64".format(
                     self.bot_config.bot_browser))
             else:
@@ -84,8 +83,7 @@ class BotBase(object):
                     self.bot_config.bot_browser))
 
         if browser_file is None:            
-            raise CoreException(message="Failed at select driver name",
-                                cause="selected isn't valid : {}".format(browser_file),
+            raise CoreException(message="Failed at select driver name selected isn't valid : {}".format(browser_file),
                                 log=self.log)
         self.curr_driver_path = self.curr_driver_path.format(browser_file)
 
@@ -111,9 +109,7 @@ class BotBase(object):
             self.curr_driver = WebDriver.PhantomJS(executable_path=self.curr_driver_path,
                                                    desired_capabilities=self.curr_caps)
         else:
-            raise CoreException(message="config file error, SECTION=bot, KEY=browser",
-                                cause="isn't valid value: {}".format(self.bot_config.bot_browser),
-                                log=self.log)           
+            raise CoreException(message="config file error, SECTION=bot, KEY=browser isn't valid value: {}".format(self.bot_config.bot_browser), log=self.log)
 
     def mode_remote(self):
         """
