@@ -1,6 +1,6 @@
 import time, unittest, logging
 from testconfig import config as cfg # just works when nose command it's launched>
-from qacode.core.exceptions.TestAssertionError import TestAssertionError
+from qacode.core.exceptions.AssertionError import AssertionError
 from qacode.core.testing.testlink.TestlinkBase import TestlinkBase
 from qacode.core.loggers.LoggerManager import LoggerManager
     
@@ -82,7 +82,7 @@ class TestInfoBase(unittest.TestCase):
         """
         self.sleep(wait)
         if not actual == expected:
-            raise TestAssertionError(actual, expected, 'Wrong URL, not equals: actual='+actual + '| expected='+ expected , msg)        
+            raise AssertionError(actual, expected, 'Wrong URL, not equals: actual='+actual + '| expected='+ expected , msg)        
 
     def assert_not_equals_url(self, actual, expected, msg='', wait=0):
         """
@@ -90,7 +90,7 @@ class TestInfoBase(unittest.TestCase):
         """
         self.sleep(wait)
         if actual == expected:
-            raise TestAssertionError(actual, expected, 'Wrong URL, is equals: actual='+actual + '| expected='+ expected , msg)
+            raise AssertionError(actual, expected, 'Wrong URL, is equals: actual='+actual + '| expected='+ expected , msg)
 
     def assert_contains_url(self, current, contains, msg='', wait=0):
         """
@@ -98,7 +98,7 @@ class TestInfoBase(unittest.TestCase):
         """
         self.sleep(wait)
         if current not in contains:
-            raise TestAssertionError(current, contains, "Wrong URL, current doesn't contains expected: current={}, contains={}".format(current, contains), msg)    
+            raise AssertionError(current, contains, "Wrong URL, current doesn't contains expected: current={}, contains={}".format(current, contains), msg)    
 
 if __name__ == '__main__':
     unittest.main()
