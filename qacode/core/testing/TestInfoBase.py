@@ -1,6 +1,5 @@
 import time, unittest, logging
 from testconfig import config as cfg # just works when nose command it's launched>
-from qacode.core.exceptions.AssertionError import AssertionError
 from qacode.core.testing.testlink.TestlinkBase import TestlinkBase
 from qacode.core.loggers.LoggerManager import LoggerManager
     
