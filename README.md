@@ -15,9 +15,9 @@ Python tested versions :
   +  **2.7**
 
 
-[![Downloads on Github](https://img.shields.io/github/downloads/netzulo/qalab/total.svg)](https://img.shields.io/github/downloads/netzulo/qalab/total.svg)
-[![Downloads on Pypi](https://img.shields.io/pypi/dd/qalaboratory.svg)](https://img.shields.io/pypi/dd/qalaboratory.svg)
-[![GitHub release](https://img.shields.io/github/release/netzulo/qalab.svg)]()
+[![Downloads on Github](https://img.shields.io/github/downloads/netzulo/qacode/total.svg)](https://img.shields.io/github/downloads/netzulo/qacode/total.svg)
+[![Downloads on Pypi](https://img.shields.io/pypi/dd/qacode.svg)](https://img.shields.io/pypi/dd/qacode.svg)
+[![GitHub release](https://img.shields.io/github/release/netzulo/qcode.svg)](https://github.com/netzulo/qacode/releases/latest)
 
 ## Code Metrics
 
