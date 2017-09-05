@@ -14,6 +14,11 @@ Python tested versions :
   + ~~**3.2**~~ __(not supported)__
   +  **2.7**
 
+
+[![Downloads on Github](https://img.shields.io/github/downloads/netzulo/qalab/total.svg)](https://img.shields.io/github/downloads/netzulo/qalab/total.svg)
+[![Downloads on Pypi](https://img.shields.io/pypi/dd/qalaboratory.svg)](https://img.shields.io/pypi/dd/qalaboratory.svg)
+[![GitHub release](https://img.shields.io/github/release/netzulo/qalab.svg)]()
+
 ## Code Metrics
 
 [[(https://qalab.tk/api/badges/gate?key=qacode)](https://qalab.tk/dashboard/index/qacode)
