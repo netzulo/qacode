@@ -14,6 +14,10 @@ Python tested versions :
   + ~~**3.2**~~ __(not supported)__
   +  **2.7**
 
+## Code Metrics
+
+[![Quality Gate](https://qalab.tk/api/badges/gate?key=qacode&metric=lines)](<serverBaseURL>/dashboard/index/qacode)
+
 ## PIP installation ?
 
 ```
