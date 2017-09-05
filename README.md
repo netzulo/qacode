@@ -21,7 +21,7 @@ Python tested versions :
 
 ## Code Metrics
 
-[[(https://qalab.tk/api/badges/gate?key=qacode)](https://qalab.tk/dashboard/index/qacode)
+[![Quality Gate](https://qalab.tk/api/badges/gate?key=qacode)](https://qalab.tk/dashboard/index/qacode)
 
 
 ## PIP installation ?
