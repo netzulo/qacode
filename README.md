@@ -43,13 +43,13 @@ python setup.py install
 # author: Netzulo
 [BOT]
 # DRIVERMODE: local , remote
-mode=local
+mode=remote
 # BROWSER: firefox , chrome , iexplorer, edge, phantomjs
 browser=chrome
 # REMOTEDRIVER
-url_hub=http://localhost:11000/wd/hub
+url_hub=http://146.255.101.51:11000/wd/hub
 # NODEWEBDRIVER
-url_node=http://localhost:11001/wd/hub
+url_node=http://146.255.101.51:11001/wd/hub
 # DRIVERS PATH
 drivers_path=../../modules/qadrivers
 # DRIVERS NAMES
@@ -71,7 +71,8 @@ url=http://localhost/lib/api/xmlrpc/v1/xmlrpc.php
 devkey=182c5b87c776ff2956b68e23eae866d9
 
 [TEST_UNITARIES]
-url=http://demoqa.com
+url=https://www.netzulo.com
+
 
 ```
 

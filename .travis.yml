@@ -35,6 +35,7 @@ script:
 - echo "TESTS UNITARIES SUCCESS"
 - nosetests tests/functionals/TestBotBase.py:TestBotBase.test_006_bot_remote_chrome --tc-file="qacode/configs/settings.ini"
 - nosetests tests/functionals/TestBotBase.py:TestBotBase.test_008_bot_remote_phantomjs --tc-file="qacode/configs/settings.ini"
+- nosetests tests/functionals/TestNavBase.py --tc-file="qacode/configs/settings.ini"
 - echo "TESTS FUNCTIONALS SUCCESS"
 
 after_script:
