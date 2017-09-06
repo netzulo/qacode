@@ -3,8 +3,6 @@ from testconfig import config as cfg # just works when nose command it's launche
 from qacode.core.testing.TestInfoBase import TestInfoBase
 from qacode.core.bots.BotConfig import BotConfig
 from qacode.core.bots.BotBase import BotBase
-from qacode.core.exceptions.PageException import PageException
-from qacode.core.webs.pages.PageBase import PageBase
 
 class TestNavBase(TestInfoBase):
     
