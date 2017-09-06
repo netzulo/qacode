@@ -10,18 +10,15 @@ from qacode.core.exceptions.CoreException import CoreException
 class NavBase(object):
     '''
     Main navigation methods to use on selenium scripts
-    + bot
     + driver
     '''
-    bot = None
     driver = None
 
-    def __init__(self, bot):
+    def __init__(self, driver):
         '''
         Initialize self properties        
         '''
-        self.bot = bot
-        self.driver = self.bot.curr_driver
+        self.driver = driver
 
     def get_url(self, url):
         """
