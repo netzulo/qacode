@@ -1,5 +1,10 @@
 # QA Code
 
+[![Downloads on Github](https://img.shields.io/github/downloads/netzulo/qacode/total.svg)](https://img.shields.io/github/downloads/netzulo/qacode/total.svg)
+[![Downloads on Pypi](https://img.shields.io/pypi/dd/qacode.svg)](https://img.shields.io/pypi/dd/qacode.svg)
+[![GitHub release](https://img.shields.io/github/release/netzulo/qcode.svg)](https://github.com/netzulo/qacode/releases/latest)
+
+
 | Branch  | Linux Deploy | Windows Deploy |
 | ------------- | ------------- |  ------------- |
 | master  | [![Build Status](https://travis-ci.org/netzulo/qacode.svg?branch=master)](https://travis-ci.org/netzulo/qacode)  | [![Build status](https://ci.appveyor.com/api/projects/status/4a0tc5pis1bykt9x/branch/master?svg=true)](https://ci.appveyor.com/project/netzulo/qacode/branch/master)  |
@@ -13,6 +18,12 @@ Python tested versions :
   +  **3.3**
   + ~~**3.2**~~ __(not supported)__
   +  **2.7**
+
+
+## Code Metrics
+
+[![Quality Gate](https://qalab.tk/api/badges/gate?key=qacode)](https://qalab.tk/dashboard/index/qacode)
+
 
 ## PIP installation ?
 
