@@ -30,4 +30,5 @@ test_script:
 - "echo TESTS UNITARIES SUCCESS"
 - "%PYTHON%\\Scripts\\nosetests tests/functionals/TestBotBase.py:TestBotBase.test_006_bot_remote_chrome --tc-file=qacode/configs/settings.ini"
 - "%PYTHON%\\Scripts\\nosetests tests/functionals/TestBotBase.py:TestBotBase.test_008_bot_remote_phantomjs --tc-file=qacode/configs/settings.ini"
+- "%PYTHON%\\Scripts\\nosetests tests/functionals/TestNavBase.py --tc-file=qacode/configs/settings.ini"
 - echo "TESTS FUNCTIONALS SUCCESS"
