@@ -41,8 +41,7 @@ class BotBase(object):
                 self.logger_manager = bot_config.logger_manager
                 self.log = self.logger_manager.get_log()
             except Exception as err:
-                raise CoreException(message="Error at create LoggerManager for BotBase class")
-            self.navigation = NavBase(self) # TODO: testcases
+                raise CoreException(message="Error at create LoggerManager for BotBase class")            
 
             if self.bot_config.bot_mode == 'local':
                 self.mode_local()
@@ -50,6 +49,8 @@ class BotBase(object):
                 self.mode_remote()
             else:
                 raise CoreException(message="Unkown word for bot mode config value: {}".format(self.bot_config.bot_mode))
+
+            self.navigation = NavBase(self.curr_driver) # TODO: testcases
 
     def driver_name_filter(self,endswith=""):
         for driver_name in self.bot_config.bot_drivers_names:
@@ -67,7 +68,7 @@ class BotBase(object):
         browser_file = "{}{}"
         if os.name == 'nt':            
             browser_file = browser_file.format("{}", ".exe")
-            if IS_64BITS:
+            if self.IS_64BITS:
                 browser_file = self.driver_name_filter("{}driver_64.exe".format(
                     self.bot_config.bot_browser))
             else:
@@ -75,7 +76,7 @@ class BotBase(object):
                     self.bot_config.bot_browser))
         else:            
             browser_file = browser_file.format("{}", "")
-            if IS_64BITS:
+            if self.IS_64BITS:
                 browser_file = self.driver_name_filter("{}driver_64".format(
                     self.bot_config.bot_browser))
             else:
