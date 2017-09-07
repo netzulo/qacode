@@ -90,7 +90,10 @@ url=https://www.netzulo.com
 
 ```
 # nosetests tests/functionals/TestBotBase.py --tc-file="qacode/configs/settings.example.ini"
+# nosetests tests/functionals/TestNavBase.py --tc-file="qacode/configs/settings.example.ini"
+# nosetests tests/functionals/TestPageBase.py --tc-file="qacode/configs/settings.example.ini"
 ```
 
 [![asciicast](https://asciinema.org/a/HEk8Dm0zL6eDoyj8MA19wawAx.png)](https://asciinema.org/a/HEk8Dm0zL6eDoyj8MA19wawAx)
 
+_(video it's obsolete...TODO)_
