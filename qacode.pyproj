@@ -25,27 +25,31 @@
     <Compile Include="qacode\core\bots\modules\NavBase.py" />
     <Compile Include="qacode\core\bots\modules\__init__.py" />
     <Compile Include="qacode\core\bots\__init__.py" />
-    <Compile Include="qacode\core\exceptions\ControlException.py" />
     <Compile Include="qacode\core\exceptions\CoreException.py" />
-    <Compile Include="qacode\core\exceptions\ModelException.py" />
     <Compile Include="qacode\core\exceptions\PageException.py" />
-    <Compile Include="qacode\core\exceptions\TestAssertionError.py" />
     <Compile Include="qacode\core\exceptions\__init__.py" />
     <Compile Include="qacode\core\loggers\LoggerManager.py" />
     <Compile Include="qacode\core\loggers\__init__.py" />
     <Compile Include="qacode\core\testing\TestInfoBase.py" />
-    <Compile Include="qacode\core\testing\TestInfoBot.py" />
-    <Compile Include="qacode\core\testing\TestInfoBotMultiple.py" />
     <Compile Include="qacode\core\testing\testlink\TestlinkBase.py" />
     <Compile Include="qacode\core\testing\testlink\__init__.py" />
     <Compile Include="qacode\core\testing\__init__.py" />
     <Compile Include="qacode\core\webs\controls\__init__.py" />
+    <Compile Include="qacode\core\webs\pages\PageBase.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="qacode\core\webs\pages\__init__.py" />
     <Compile Include="qacode\core\webs\__init__.py" />
     <Compile Include="qacode\core\__init__.py" />
     <Compile Include="qacode\__init__.py" />
     <Compile Include="setup.py" />
     <Compile Include="tests\functionals\TestBotBase.py" />
+    <Compile Include="tests\functionals\TestNavBase.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tests\functionals\TestPageBase.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="tests\functionals\__init__.py" />
     <Compile Include="tests\unitaries\TestConfig.py" />
     <Compile Include="tests\unitaries\TestLoggerManager.py" />
