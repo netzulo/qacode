@@ -16,8 +16,7 @@ setup(name='qacode',
       install_requires=[
           'appdirs','packaging==16.8','pyparsing',
           'selenium==3.5.0','six==1.10.0','nose==1.3.7','nose-testconfig==0.10',
-          'TestLink-API-Python-client==0.6.2']
-      ),
+          'TestLink-API-Python-client==0.6.2'],
       classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
@@ -27,5 +26,4 @@ setup(name='qacode',
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
-    ],
+        'Programming Language :: Python :: 3.6'])
