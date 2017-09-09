@@ -12,7 +12,7 @@ QA Code
   :target: https://img.shields.io/github/release/netzulo/qcode.svg
 
 +-----------------------+-------------------------------------------------------------------+------------------------------------------------------------------------------------------------+
-| Branch                | Linux Deploy                                                      |Windows Deploy                                                                                  |
+| Branch                | Linux Deploy                                                      | Windows Deploy                                                                                 |
 +=======================+===================================================================+================================================================================================+
 |  master               | .. image:: https://travis-ci.org/netzulo/qacode.svg?branch=master | .. image:: https://ci.appveyor.com/api/projects/status/4a0tc5pis1bykt9x/branch/master?svg=true |
 +-----------------------+-----------------------+-------------------------------------------+------------------------------------------------------------------------------------------------+
@@ -31,24 +31,23 @@ Python tested versions
 +  **2.7**
 
 
-Code Metrics _(by sonarqube)_
+Code Metrics by sonarqube
 ----------------------------
 
 .. image:: http://qalab.tk:82/api/badges/gate?key=qacode
   :alt: Quality Gate
-.. image: http://qalab.tk:82/api/badges/measure?key=qacode&metric=lines
+.. image:: http://qalab.tk:82/api/badges/measure?key=qacode&metric=lines
   :alt: Lines
-.. image: http://qalab.tk:82/api/badges/measure?key=qacode&metric=bugs
+.. image:: http://qalab.tk:82/api/badges/measure?key=qacode&metric=bugs
   :alt: Bugs
-.. image: http://qalab.tk:82/api/badges/measure?key=qacode&metric=vulnerabilities
+.. image:: http://qalab.tk:82/api/badges/measure?key=qacode&metric=vulnerabilities
   :alt: Vulnerabilities
-.. image: http://qalab.tk:82/api/badges/measure?key=qacode&metric=code_smells
+.. image:: http://qalab.tk:82/api/badges/measure?key=qacode&metric=code_smells
   :alt: Code Smells
-.. image: http://qalab.tk:82/api/badges/measure?key=qacode&metric=sqale_debt_ratio
+.. image:: http://qalab.tk:82/api/badges/measure?key=qacode&metric=sqale_debt_ratio
   :alt: Debt ratio
-.. image: http://qalab.tk:82/api/badges/measure?key=qacode&metric=comment_lines_density
+.. image:: http://qalab.tk:82/api/badges/measure?key=qacode&metric=comment_lines_density
   :alt: Comments
-
 
 
 PIP install
