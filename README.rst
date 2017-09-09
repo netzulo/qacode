@@ -38,7 +38,7 @@ Code Metrics
   :alt: Quality Gate
 
 .. image: http://qalab.tk:82/api/badges/gate?key=qacode&metric=lines
-  :alt: Line of code
+  :alt: Lines
 
 
 PIP install
