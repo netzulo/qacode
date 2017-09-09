@@ -31,14 +31,24 @@ Python tested versions
 +  **2.7**
 
 
-Code Metrics
-------------
+Code Metrics _(by sonarqube)_
+----------------------------
 
 .. image:: http://qalab.tk:82/api/badges/gate?key=qacode
   :alt: Quality Gate
-
-.. image: http://qalab.tk:82/api/badges/gate?key=qacode&metric=lines
+.. image: http://qalab.tk:82/api/badges/measure?key=qacode&metric=lines
   :alt: Lines
+.. image: http://qalab.tk:82/api/badges/measure?key=qacode&metric=bugs
+  :alt: Bugs
+.. image: http://qalab.tk:82/api/badges/measure?key=qacode&metric=vulnerabilities
+  :alt: Vulnerabilities
+.. image: http://qalab.tk:82/api/badges/measure?key=qacode&metric=code_smells
+  :alt: Code Smells
+.. image: http://qalab.tk:82/api/badges/measure?key=qacode&metric=sqale_debt_ratio
+  :alt: Debt ratio
+.. image: http://qalab.tk:82/api/badges/measure?key=qacode&metric=comment_lines_density
+  :alt: Comments
+
 
 
 PIP install
