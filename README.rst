@@ -36,18 +36,25 @@ Code Metrics by sonarqube
 
 .. image:: http://qalab.tk:82/api/badges/gate?key=qacode
   :alt: Quality Gate
+  :target: http://qalab.tk:82/api/badges/gate?key=qacode
 .. image:: http://qalab.tk:82/api/badges/measure?key=qacode&metric=lines
   :alt: Lines
+  :target: http://qalab.tk:82/api/badges/gate?key=qacode
 .. image:: http://qalab.tk:82/api/badges/measure?key=qacode&metric=bugs
   :alt: Bugs
+  :target: http://qalab.tk:82/api/badges/gate?key=qacode
 .. image:: http://qalab.tk:82/api/badges/measure?key=qacode&metric=vulnerabilities
   :alt: Vulnerabilities
+  :target: http://qalab.tk:82/api/badges/gate?key=qacode
 .. image:: http://qalab.tk:82/api/badges/measure?key=qacode&metric=code_smells
   :alt: Code Smells
+  :target: http://qalab.tk:82/api/badges/gate?key=qacode
 .. image:: http://qalab.tk:82/api/badges/measure?key=qacode&metric=sqale_debt_ratio
   :alt: Debt ratio
+  :target: http://qalab.tk:82/api/badges/gate?key=qacode
 .. image:: http://qalab.tk:82/api/badges/measure?key=qacode&metric=comment_lines_density
   :alt: Comments
+  :target: http://qalab.tk:82/api/badges/gate?key=qacode
 
 
 PIP install
