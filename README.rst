@@ -16,12 +16,13 @@ QA Code
 +=======================+===================================================================+================================================================================================+
 |  master               | .. image:: https://travis-ci.org/netzulo/qacode.svg?branch=master | .. image:: https://ci.appveyor.com/api/projects/status/4a0tc5pis1bykt9x/branch/master?svg=true |
 +-----------------------+-----------------------+-------------------------------------------+------------------------------------------------------------------------------------------------+
-|  master               | .. image:: https://travis-ci.org/netzulo/qacode.svg?branch=devel  | .. image:: https://ci.appveyor.com/api/projects/status/4a0tc5pis1bykt9x/branch/devel?svg=true  |
+|  devel                | .. image:: https://travis-ci.org/netzulo/qacode.svg?branch=devel  | .. image:: https://ci.appveyor.com/api/projects/status/4a0tc5pis1bykt9x/branch/devel?svg=true  |
 +-----------------------+-----------------------+-------------------------------------------+------------------------------------------------------------------------------------------------+
 
 
 Python tested versions
 ----------------------
+
 +  **3.6**
 +  **3.5**
 +  **3.4**
@@ -35,6 +36,9 @@ Code Metrics
 
 .. image:: http://qalab.tk:82/api/badges/gate?key=qacode
   :alt: Quality Gate
+
+.. image: http://qalab.tk:82/api/badges/gate?key=qacode&metric=lines
+  :alt: Line of code
 
 
 PIP install
