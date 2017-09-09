@@ -4,14 +4,19 @@ from os import name
 
 CURR_PATH = path.abspath(path.dirname(__file__))
 
+def readme():
+    with open('README.rst') as f:
+        return f.read()
+
 setup(name='qacode',
-      version='0.1.5',
+      version='0.1.6',
       packages=find_packages(exclude=['tests']),
       description = 'Main automation lib',
+      long_description=readme(),
       author = 'Netzulo Open Source',
       author_email = 'netzuleando@gmail.com',
       url = 'https://github.com/netzulo/qacode',
-      download_url = 'https://github.com/netzulo/qacode/tarball/v0.1.5',
+      download_url = 'https://github.com/netzulo/qacode/tarball/v0.1.6',
       keywords = ['testing', 'logging', 'functional','selenium', 'test'],
       install_requires=[
           'appdirs','packaging==16.8','pyparsing',
