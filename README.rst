@@ -106,6 +106,12 @@ Configuration File
     [TEST_UNITARIES]
     url=https://www.netzulo.com
 
+	[TEST_FUNCTIONALS]
+	url_login=http://qalab.tk:82/sessions/new
+	url_logout=http://qalab.tk:82/sessions/logout
+	creed_user=qacode
+	creed_pass=qacode
+
 Tests
 -----
 
@@ -127,6 +133,7 @@ Functionals
     nosetests tests/functionals/TestBotBase.py --tc-file="qacode/configs/settings.example.ini"
     nosetests tests/functionals/TestNavBase.py --tc-file="qacode/configs/settings.example.ini"
     nosetests tests/functionals/TestPageBase.py --tc-file="qacode/configs/settings.example.ini"
+    nosetests tests/functionals/TestPageLogin.py --tc-file="qacode/configs/settings.example.ini"
 
 
 Live example
