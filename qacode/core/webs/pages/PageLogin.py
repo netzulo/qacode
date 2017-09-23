@@ -19,10 +19,16 @@ class PageLogin(PageBase):
 
     def login(self,username,password,is_login_now=True):
         message_error = "Can't '{}' '{}' on field '{}' for class PageLogin"
-        try: self.txt_username.send_keys(username)
-        except Exception as err: raise PageException(message_error.format("send_keys", username, "txt_username"))
-        try: self.txt_password.send_keys(password)
-        except Exception as err: raise PageException(message_error.format("send_keys", password, "txt_password"))
+        try: 
+            self.txt_username.send_keys(username)
+        except Exception as err: 
+            raise PageException(message_error.format("send_keys", username, "txt_username"))
+        try:
+           self.txt_password.send_keys(password)
+        except Exception as err: 
+            raise PageException(message_error.format("send_keys", password, "txt_password"))
         if is_login_now:
-            try: self.txt_password.send_keys(password)
-            except Exception as err: raise PageException(message_error.format("click", password, "btn_login"))
+            try:
+               self.txt_password.send_keys(password)
+            except Exception as err:
+               raise PageException(message_error.format("click", password, "btn_login"))
