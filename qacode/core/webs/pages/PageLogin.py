@@ -1,6 +1,6 @@
 from qacode.core.webs.pages.PageBase import PageBase
 from qacode.core.exceptions.PageException import PageException
-
+from selenium.webdriver.common.by import By
 
 class PageLogin(PageBase):
     """Inherit PageBase class with login and valitation methods"""
@@ -9,10 +9,10 @@ class PageLogin(PageBase):
     txt_password = None
     btn_login = None
 
-    def __init__(self,bot, url, by=By.CSS_SELECTOR, selectors=[], go_url=True):
+    def __init__(self,bot, url, by=By.CSS_SELECTOR, selectors=[], go_url=True):        
         super().__init__(bot, url, by ,selectors, go_url)
-        if selectors is None or len(selectors) != 3:
-            raise PageException("Can't generate PageLogin elements if not have 3 selectors")
+        if len(selectors) != 3:
+            raise PageException("Can't instance PageLogin elements if not have 3 selectors")
         self.txt_username = self.elements[0]
         self.txt_password = self.elements[1]
         self.btn_login = self.elements[2]    
