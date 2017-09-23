@@ -30,36 +30,44 @@ class TestConfig(unittest.TestCase):
     regexs = ["http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+"]
 
     def test_000_config_exist(self):
+        """Test : test_000_config_exist"""
         exist = os.path.exists("qacode/configs/settings.ini")
         self.assertEqual(exist,True,self.msgs[0])
 
     def test_001_config_nose_loaded(self):
+        """Test : test_001_config_nose_loaded"""
         sections = [cfg["BOT"],cfg["TESTLINK"],cfg["TEST_UNITARIES"]]
         self.assertNotIn(None,sections,self.msgs[1])
 
     def test_002_config_has_key_bot_mode(self):
+        """Test : test_002_config_has_key_bot_mode"""
         valid_values = ["local", "remote"]
         self.assertIn(cfg.get("BOT")["mode"],valid_values,self.msgs[2])
 
     def test_003_config_has_key_bot_browser(self):
+        """Test : test_003_config_has_key_bot_browser"""
         valid_values = ["firefox" , "chrome" , "iexplorer", "phantomjs"]
         self.assertIn(cfg.get("BOT")["browser"],valid_values,self.msgs[3])
 
     def test_004_config_has_key_bot_url_hub(self):
+        """Test : test_004_config_has_key_bot_url_hub"""
         self.assertRegexpMatches(cfg.get("BOT")["url_hub"],self.regexs[0],
                          self.msgs[4].format(self.regexs[0]))
 
     def test_005_config_has_key_bot_url_node(self):
+        """Test : test_005_config_has_key_bot_url_node"""
         self.assertRegexpMatches(cfg.get("BOT")["url_node"],self.regexs[0],
                          self.msgs[5].format(self.regexs[0]))    
 
     def test_006_config_has_key_bot_drivers_path(self):
+        """Test : test_006_config_has_key_bot_drivers_path"""
         value = cfg.get("BOT")["drivers_path"]
         exist = os.path.exists(value)
         if not exist:
             self.log.warn(self.msgs[7])
 
     def test_007_config_has_key_bot_drivers_names(self):
+        """Test : test_007_config_has_key_bot_drivers_names"""
         values = ast.literal_eval(cfg.get("BOT")["drivers_names"])        
         file_path = "{}{}{}".format(cfg.get("BOT")["drivers_path"],"{}", "{}")
         if os.name == "nt":
@@ -73,14 +81,17 @@ class TestConfig(unittest.TestCase):
                 self.log.warn(self.msgs[8].format(driver_name))
 
     def test_008_config_has_key_bot_log_name(self):
+        """Test : test_008_config_has_key_bot_log_name"""
         value = cfg.get("BOT")["log_name"]
         self.assertNotEqual(value,"",self.msgs[9])
 
     def test_009_config_has_key_bot_log_output_file(self):
+        """Test : test_009_config_has_key_bot_log_output_file"""
         value = cfg.get("BOT")["log_output_file"]
         self.assertNotEqual(value,"",self.msgs[10])
 
-    def test_010_config_has_key_testlink_url(self):        
+    def test_010_config_has_key_testlink_url(self):
+        """Test : test_010_config_has_key_testlink_url"""
         value = cfg.get("TESTLINK")["url"]
         exist_length = len(value)
         if exist_length <= 0:
@@ -89,25 +100,31 @@ class TestConfig(unittest.TestCase):
             self.assertRegexpMatches(value,self.regexs[0],self.msgs[11])
 
     def test_011_config_has_key_testlink_devkey(self):
+        """Test : test_011_config_has_key_testlink_devkey"""
         value = cfg.get("TESTLINK")["devkey"]
         exist_length = len(value)
         if exist_length <= 0:
             self.log.warn(self.msgs[12])
 
-    def test_012_config_has_key_test_unitaries_url(self):        
+    def test_012_config_has_key_test_unitaries_url(self):
+        """Test : test_012_config_has_key_test_unitaries_url"""
         self.assertRegexpMatches(cfg.get("TEST_UNITARIES")["url"],self.regexs[0],self.msgs[13])
 
     def test_013_config_has_key_test_functionals_url_login(self):
+        """Test : test_013_config_has_key_test_functionals_url_login"""
         self.assertRegexpMatches(cfg.get("TEST_FUNCTIONALS")["url_login"],self.regexs[0],self.msgs[14])
 
     def test_014_config_has_key_test_functionals_url_login(self):
+        """Test : test_014_config_has_key_test_functionals_url_login"""
         self.assertRegexpMatches(cfg.get("TEST_FUNCTIONALS")["url_logout"],self.regexs[0],self.msgs[15])
 
     def test_015_config_has_key_test_functionals_creed_user(self):
+        """Test : test_015_config_has_key_test_functionals_creed_user"""
         value = cfg.get("TEST_FUNCTIONALS")["creed_user"]
         self.assertNotEqual(value,"",self.msgs[16])
 
     def test_016_config_has_key_test_functionals_creed_pass(self):
+        """Test : test_016_config_has_key_test_functionals_creed_pass"""
         value = cfg.get("TEST_FUNCTIONALS")["creed_pass"]
         self.assertNotEqual(value,"",self.msgs[17])
 
