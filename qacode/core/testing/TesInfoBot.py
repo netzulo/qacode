@@ -18,10 +18,10 @@ class TestInfoBot(TestInfoBase):
         self.is_multiple_bot = is_multiple_bot
 
     def setUp(self):   
-        super().setUp()
+        super(TestInfoBot,self).setUp()
         self.bot_config = BotConfig(nose_config=cfg, logger_manager=self.logger_manager)
         self.bot = BotBase(self.bot_config)
 
     def tearDown(self):
-        super().tearDown()
+        super(TestInfoBot,self).tearDown()
         self.bot.close()
