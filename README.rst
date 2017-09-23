@@ -129,8 +129,9 @@ Functionals
 ***********
 
 ::
-
+    
     nosetests tests/functionals/TestBotBase.py --tc-file="qacode/configs/settings.example.ini"
+	nosetests tests/functionals/TestTestInfoBot.py --tc-file="qacode/configs/settings.ini"
     nosetests tests/functionals/TestNavBase.py --tc-file="qacode/configs/settings.example.ini"
     nosetests tests/functionals/TestPageBase.py --tc-file="qacode/configs/settings.example.ini"
     nosetests tests/functionals/TestPageLogin.py --tc-file="qacode/configs/settings.example.ini"
