@@ -40,6 +40,8 @@ class PageBase(object):
         #more logic
         if go_url:
             self.go_page_url()
+        if len(selectors) > 0:
+            self.get_elements()
 
     def get_elements(self, selectors=[]):
         searchs = None
@@ -48,9 +50,14 @@ class PageBase(object):
         else:
             searchs = selectors        
         for selector in searchs:
-            self.elements.append(
-                self.bot.navigation.find_element(selector,self.by))
-
+            message_template = "Searching element: by={} with selector={}"
+            self.bot.log.debug(message_template.format(self.by,selector))
+            element = self.bot.navigation.find_element(selector,self.by)
+            if element is None:
+                self.bot.log.error(message_template.format(self.by,selector))
+            else:
+                self.bot.log.debug("Element Found, adding to PageClass")
+                self.elements.append(element)
 
     def go_page_url(self, url=None, wait_for_load=0):
         # TODO: create test
