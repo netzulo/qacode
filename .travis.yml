@@ -34,6 +34,7 @@ script:
   --tc-file="qacode/configs/settings.ini"
 - nosetests tests/functionals/TestNavBase.py --tc-file="qacode/configs/settings.ini"
 - nosetests tests/functionals/TestPageBase.py --tc-file="qacode/configs/settings.ini"
+- nosetests tests/functionals/TestPageLogin.py --tc-file="qacode/configs/settings.ini"
 - echo "TESTS FUNCTIONALS SUCCESS"
 after_script:
 - if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then 
