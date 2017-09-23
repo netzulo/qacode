@@ -10,7 +10,7 @@ class PageLogin(PageBase):
     btn_login = None
 
     def __init__(self,bot, url, by=By.CSS_SELECTOR, selectors=[], go_url=True):
-        super().__init__(bot, url, by ,selectors, go_url)
+        super(PageLogin,self).__init__(bot, url, by ,selectors, go_url)
         if len(selectors) != 3:
             raise PageException("Can't instance PageLogin elements if not have 3 selectors")
         self.txt_username = self.elements[0]
