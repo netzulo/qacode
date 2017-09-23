@@ -17,7 +17,7 @@ class TestPageBase(TestInfoBase):
             self.bot = BotBase(BotConfig(nose_config=cfg))
             page = PageBase(self.bot,cfg['TEST_UNITARIES']['url'])
             assert cfg['TEST_UNITARIES']['url'] in self.bot.curr_driver.current_url
-        except Exception as err:
+        except PageException as err:
             raise Exception(err)
         finally:
             self.bot.close()
@@ -27,7 +27,7 @@ class TestPageBase(TestInfoBase):
             self.bot = BotBase(BotConfig(nose_config=cfg))
             page = PageBase(self.bot,cfg['TEST_UNITARIES']['url'], go_url=False)
             assert cfg['TEST_UNITARIES']['url'] not in self.bot.curr_driver.current_url
-        except Exception as err:
+        except PageException as err:
             raise Exception(err)
         finally:
             self.bot.close()
@@ -40,7 +40,7 @@ class TestPageBase(TestInfoBase):
             assert cfg['TEST_UNITARIES']['url'] in self.bot.curr_driver.current_url
             page.go_page_url(url_second_page )
             assert url_second_page in self.bot.curr_driver.current_url
-        except Exception as err:
+        except PageException as err:
             raise Exception(err)
         finally:
             self.bot.close()
@@ -51,7 +51,7 @@ class TestPageBase(TestInfoBase):
             self.bot = BotBase(BotConfig(nose_config=cfg))
             page = PageBase(self.bot,cfg['TEST_UNITARIES']['url'],selectors=selectors)
             assert isinstance(page.elements[0], WebElement)
-        except Exception as err:
+        except PageException as err:
             raise Exception(err)
         finally:
             self.bot.close()
@@ -62,7 +62,7 @@ class TestPageBase(TestInfoBase):
             self.bot = BotBase(BotConfig(nose_config=cfg))
             page = PageBase(self.bot,cfg['TEST_UNITARIES']['url'],selectors=selectors)
             assert isinstance(page.elements[0], WebElement)
-        except Exception as err:
+        except PageException as err:
             raise Exception(err)
         finally:
             self.bot.close()
