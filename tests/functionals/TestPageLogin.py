@@ -9,8 +9,8 @@ from qacode.core.webs.pages.PageLogin import PageLogin
 
 class TestPageLogin(TestInfoBase):
 
-    def __init__(self, method_name="TestPageBase"):
-        super(TestPageLogin,self).__init__(method_name, logger_manager=None)
+    def __init__(self, method_name="TestPageLogin"):
+        super(TestPageLogin, self).__init__(method_name, logger_manager=None)
 
     def test_001_page_login_instance(self):
         selectors = ["#login", "#password", "[name='commit']"]
