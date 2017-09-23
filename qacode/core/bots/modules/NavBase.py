@@ -224,3 +224,10 @@ class NavBase(object):
         Return current url from opened bot
         '''
         return self.driver.current_url
+
+    def ele_text(self, element):
+        '''
+        Return element content text
+        '''
+        return element.text
+        
