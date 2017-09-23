@@ -10,14 +10,14 @@ from qacode.core.webs.pages.PageLogin import PageLogin
 class TestPageLogin(TestInfoBase):
 
     def __init__(self, method_name="TestPageBase"):
-        super(TestPageLogin, self).__init__(method_name, logger_manager=None)
+        super(TestPageLogin,self).__init__(method_name, logger_manager=None)
 
     def test_001_page_login_instance(self):
+        selectors = ["#login", "#password", "[name='commit']"]
+        url_login = cfg['TEST_FUNCTIONALS']['url_login']
+        self.bot = BotBase(BotConfig(nose_config=cfg))
         try:
-            selectors = ["#login", "#password", "[name='commit']"]
-            url_login = self.bot,cfg['TEST_FUNCTIONALS']['url_login']
-            self.bot = BotBase(BotConfig(nose_config=cfg))
-            page = PageLogin(url_login , selectors=selectors)
+            page = PageLogin(self.bot,url_login, selectors=selectors)
             assert url_login in self.bot.curr_driver.current_url
         except PageException as err:
             self.bot.log.error(err.args)
@@ -26,10 +26,10 @@ class TestPageLogin(TestInfoBase):
             self.bot.close()
 
     def test_002_page_login_instance_without_selectors(self):
+        message_error = "PageLogin must fail at instance without selectors"
+        url_login = cfg['TEST_FUNCTIONALS']['url_login']
+        self.bot = BotBase(BotConfig(nose_config=cfg))
         try:
-            message_error = "PageLogin must fail at instance without selectors"
-            url_login = self.bot,cfg['TEST_FUNCTIONALS']['url_login']
-            self.bot = BotBase(BotConfig(nose_config=cfg))
             page = PageLogin(self.bot,url_login)
             self.fail(message_error)
         except PageException as err:
