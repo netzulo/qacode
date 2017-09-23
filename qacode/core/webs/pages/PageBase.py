@@ -2,12 +2,12 @@ from qacode.core.exceptions.PageException import PageException
 from selenium.webdriver.common.by import By
 
 class PageBase(object):
+    """Base class for all Inehrit Page classes wich need selenium functionality througth qacode bot"""
     
     bot = None
     url = None
     selectors = None
     go_url = None
-
     elements = []
 
     def __init__(self,bot, url, by=By.CSS_SELECTOR, selectors=[], go_url=True):
@@ -41,10 +41,11 @@ class PageBase(object):
         if go_url:
             self.go_page_url()
         if len(selectors) > 0:
-            self.get_elements()
+            self.elements = self.get_elements()
 
     def get_elements(self, selectors=[]):
         searchs = None
+        elements = []
         if len(selectors) <= 0:            
             searchs = self.selectors
         else:
@@ -56,11 +57,11 @@ class PageBase(object):
             if element is None:
                 self.bot.log.error(message_template.format(self.by,selector))
             else:
-                self.bot.log.debug("Element Found, adding to PageClass")
-                self.elements.append(element)
+                self.bot.log.debug("Element Found, adding to return method")
+                elements.append(element)
+        return elements
 
     def go_page_url(self, url=None, wait_for_load=0):
-        # TODO: create test
         if url is None:
             self.bot.navigation.get_url(self.url, wait_for_load=wait_for_load)
         else:            
