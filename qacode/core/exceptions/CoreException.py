@@ -6,7 +6,7 @@ class CoreException(Exception):
 
     def __init__(self, message, log=None):
         if log is None:
-            self.log = LoggerManager().get_log()
+            self.log = LoggerManager(log_path="logs").get_log()
         else:
             self.log = log
-        self.log.error("FAILED qacode.core: message={}".format(cause, message))
+        self.log.error("FAILED qacode.core: message={}".format(message))
