@@ -21,7 +21,11 @@ class TestConfig(unittest.TestCase):
         "BOT log_output_file can't be empty name",
         "TESTLINK url, optional key, not provided or not matching regular expression: {} ",
         "TESTLINK devkey, optional key: file not found",
-        "TEST_UNITARIES url just can be  match with this regular expression : {}"
+        "TEST_UNITARIES url just can be match with this regular expression : {}",
+        "TEST_FUNCTIONALS url_login just can be match with this regular expression : {}",
+        "TEST_FUNCTIONALS url_logout just can be match with this regular expression : {}",
+        "TEST_FUNCTIONALS creed_user, can't be empty string",
+        "TEST_FUNCTIONALS creed_pass, can't be empty string",
         ]
     regexs = ["http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+"]
 
@@ -92,6 +96,21 @@ class TestConfig(unittest.TestCase):
 
     def test_012_config_has_key_test_unitaries_url(self):        
         self.assertRegexpMatches(cfg.get("TEST_UNITARIES")["url"],self.regexs[0],self.msgs[13])
+
+    def test_013_config_has_key_test_functionals_url_login(self):
+        self.assertRegexpMatches(cfg.get("TEST_FUNCTIONALS")["url_login"],self.regexs[0],self.msgs[14])
+
+    def test_014_config_has_key_test_functionals_url_login(self):
+        self.assertRegexpMatches(cfg.get("TEST_FUNCTIONALS")["url_logout"],self.regexs[0],self.msgs[15])
+
+    def test_015_config_has_key_test_functionals_creed_user(self):
+        value = cfg.get("TEST_FUNCTIONALS")["creed_user"]
+        self.assertNotEqual(value,"",self.msgs[16])
+
+    def test_016_config_has_key_test_functionals_creed_pass(self):
+        value = cfg.get("TEST_FUNCTIONALS")["creed_pass"]
+        self.assertNotEqual(value,"",self.msgs[17])
+
 
 if __name__ == '__main__':
     unittest.main()
