@@ -9,7 +9,7 @@ class TestInfoBase(unittest.TestCase):
     logger_manager = None
     log = None
 
-    def __init__(self, method_name="NO_TESTCASE_NAME", logger_manager=None):
+    def __init__(self, method_name="TESTSUITE_NAME", logger_manager=None):
         super(TestInfoBase, self).__init__(method_name)
         if logger_manager is None:
             self.logger_manager = LoggerManager(log_path=cfg["BOT"]["log_output_file"],log_level=logging.DEBUG)
