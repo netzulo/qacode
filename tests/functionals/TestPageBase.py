@@ -5,6 +5,7 @@ from qacode.core.bots.BotConfig import BotConfig
 from qacode.core.bots.BotBase import BotBase
 from qacode.core.exceptions.PageException import PageException
 from qacode.core.webs.pages.PageBase import PageBase
+from selenium.webdriver.remote.webelement import WebElement
 
 class TestPageBase(TestInfoBase):
     
@@ -39,6 +40,28 @@ class TestPageBase(TestInfoBase):
             assert cfg['TEST_UNITARIES']['url'] in self.bot.curr_driver.current_url
             page.go_page_url(url_second_page )
             assert url_second_page in self.bot.curr_driver.current_url
+        except Exception as err:
+            raise Exception(err)
+        finally:
+            self.bot.close()
+
+    def test_004_page_base_method_get_elements_one_element(self):
+        try:
+            selectors = [".logo-dark[alt='Netzulo Testing Lab']"]
+            self.bot = BotBase(BotConfig(nose_config=cfg))
+            page = PageBase(self.bot,cfg['TEST_UNITARIES']['url'],selectors=selectors)
+            assert isinstance(page.elements[0], WebElement)
+        except Exception as err:
+            raise Exception(err)
+        finally:
+            self.bot.close()
+
+    def test_005_page_base_method_get_elements_multiple_elements(self):
+        try:
+            selectors = [".logo-dark[alt='Netzulo Testing Lab']", ".ti-menu"]
+            self.bot = BotBase(BotConfig(nose_config=cfg))
+            page = PageBase(self.bot,cfg['TEST_UNITARIES']['url'],selectors=selectors)
+            assert isinstance(page.elements[0], WebElement)
         except Exception as err:
             raise Exception(err)
         finally:
