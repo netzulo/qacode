@@ -52,13 +52,18 @@ class ControlBase(object):
 
     def attrs(self, attr_names=[]):
         """Find a list of attributes on WebElement with this name"""
-        #TODO:
-        pass
+        attrs = []
+        for attr_name in attr_names:
+            attrs.append(self.attr(attr_name))        
+        return attrs
 
     def attr(self, attr_name, attr_value=None):
         """
         attr_name : find an attribute on WebElement with this name
         attr_value: if value it's not None, then validate value
         """
-        #TODO:
-        pass
+        validated = False
+        name, value =  self.bot.navigation.ele_attribute(self.element,attr_name)
+        if attr_value is not None:
+            validated = str(attr_value).endswith(value)
+        return (name, value, validated)
