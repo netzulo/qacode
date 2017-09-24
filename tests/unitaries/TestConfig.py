@@ -8,7 +8,7 @@ class TestConfig(unittest.TestCase):
     '''
     log = LoggerManager(log_path=cfg["BOT"]["log_output_file"],log_level=logging.DEBUG).get_log()
     msgs = [
-        "Settings file doesn't found, copy from settings.example.ini",
+        "Settings file doesn't found, copy from settings.example.ini",#0
         "Some missing section on settings.ini file",
         "BOT mode just can be : local,remote",
         "BOT browser just can be : firefox , chrome , iexplorer, phantomjs",
@@ -18,14 +18,17 @@ class TestConfig(unittest.TestCase):
         "BOT drivers_path: path not found or not provided",
         "BOT drivers_names: path not found for driver_name={}",
         "BOT log_name can't be empty name",
-        "BOT log_output_file can't be empty name",
+        "BOT log_output_file can't be empty name",#10
         "TESTLINK url, optional key, not provided or not matching regular expression: {} ",
         "TESTLINK devkey, optional key: file not found",
         "TEST_UNITARIES url just can be match with this regular expression : {}",
         "TEST_FUNCTIONALS url_login just can be match with this regular expression : {}",
         "TEST_FUNCTIONALS url_logout just can be match with this regular expression : {}",
+        "TEST_FUNCTIONALS url_logged_ok just can be match with this regular expression : {}",
+        "TEST_FUNCTIONALS url_logged_ko just can be match with this regular expression : {}",
+        "TEST_FUNCTIONALS selectors can't be empty array and can't contain empty selectors",
         "TEST_FUNCTIONALS creed_user, can't be empty string",
-        "TEST_FUNCTIONALS creed_pass, can't be empty string",
+        "TEST_FUNCTIONALS creed_pass, can't be empty string" #20
         ]
     regexs = ["http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+"]
 
@@ -114,19 +117,34 @@ class TestConfig(unittest.TestCase):
         """Test : test_013_config_has_key_test_functionals_url_login"""
         self.assertRegexpMatches(cfg.get("TEST_FUNCTIONALS")["url_login"],self.regexs[0],self.msgs[14])
 
-    def test_014_config_has_key_test_functionals_url_login(self):
-        """Test : test_014_config_has_key_test_functionals_url_login"""
+    def test_014_config_has_key_test_functionals_url_logout(self):
+        """Test : test_014_config_has_key_test_functionals_url_logout"""
         self.assertRegexpMatches(cfg.get("TEST_FUNCTIONALS")["url_logout"],self.regexs[0],self.msgs[15])
 
-    def test_015_config_has_key_test_functionals_creed_user(self):
-        """Test : test_015_config_has_key_test_functionals_creed_user"""
-        value = cfg.get("TEST_FUNCTIONALS")["creed_user"]
-        self.assertNotEqual(value,"",self.msgs[16])
+    def test_015_config_has_key_test_functionals_url_logged_ok(self):
+        """Test : test_015_config_has_key_test_functionals_url_logged_ok"""
+        self.assertRegexpMatches(cfg.get("TEST_FUNCTIONALS")["url_logged_ok"],self.regexs[0],self.msgs[16])
 
-    def test_016_config_has_key_test_functionals_creed_pass(self):
-        """Test : test_016_config_has_key_test_functionals_creed_pass"""
+    def test_016_config_has_key_test_functionals_url_logged_ko(self):
+        """Test : test_016_config_has_key_test_functionals_url_logged_ko"""
+        self.assertRegexpMatches(cfg.get("TEST_FUNCTIONALS")["url_logged_ko"],self.regexs[0],self.msgs[17])
+
+    def test_017_config_has_key_test_functionals_selectors_login(self):
+        """Test : test_017_config_has_key_test_functionals_selectors_login"""
+        values = ast.literal_eval(cfg.get("TEST_FUNCTIONALS")["selectors_login"])
+        self.assertEqual(len(values),3,self.msgs[18])
+        for value in values:
+            self.assertNotEqual(value,"",self.msgs[18])
+
+    def test_018_config_has_key_test_functionals_creed_user(self):
+        """Test : test_018_config_has_key_test_functionals_creed_user"""
+        value = cfg.get("TEST_FUNCTIONALS")["creed_user"]
+        self.assertNotEqual(value,"",self.msgs[19])
+
+    def test_019_config_has_key_test_functionals_creed_pass(self):
+        """Test : test_019_config_has_key_test_functionals_creed_pass"""
         value = cfg.get("TEST_FUNCTIONALS")["creed_pass"]
-        self.assertNotEqual(value,"",self.msgs[17])
+        self.assertNotEqual(value,"",self.msgs[20])
 
 
 if __name__ == '__main__':
