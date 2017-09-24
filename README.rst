@@ -109,8 +109,11 @@ Configuration File
 	[TEST_FUNCTIONALS]
 	url_login=http://qalab.tk:82/sessions/new
 	url_logout=http://qalab.tk:82/sessions/logout
-	creed_user=qacode
-	creed_pass=qacode
+    url_logged_ok=http://qalab.tk:82/
+    url_logged_ko=http://qalab.tk:82/sessions/
+    selectors_login=["#login", "#password", "[name='commit']"]
+    creed_user=qacode
+    creed_pass=qacode
 
 Tests
 -----
