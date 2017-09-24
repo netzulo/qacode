@@ -9,14 +9,14 @@ def readme():
         return f.read()
 
 setup(name='qacode',
-      version='0.1.6',
+      version='0.1.7',
       packages=find_packages(exclude=['tests']),
       description = 'Main automation lib',
       long_description=readme(),
       author = 'Netzulo Open Source',
       author_email = 'netzuleando@gmail.com',
       url = 'https://github.com/netzulo/qacode',
-      download_url = 'https://github.com/netzulo/qacode/tarball/v0.1.6',
+      download_url = 'https://github.com/netzulo/qacode/tarball/v0.1.7',
       keywords = ['testing', 'logging', 'functional','selenium', 'test'],
       install_requires=[
           'appdirs','packaging==16.8','pyparsing',
