@@ -135,6 +135,7 @@ Functionals
     nosetests tests/functionals/TestNavBase.py --tc-file="qacode/configs/settings.example.ini"
     nosetests tests/functionals/TestPageBase.py --tc-file="qacode/configs/settings.example.ini"
     nosetests tests/functionals/TestPageLogin.py --tc-file="qacode/configs/settings.example.ini"
+    nosetests tests/functionals/TestControlBase.py --tc-file="qacode/configs/settings.ini"
 
 
 Live example
