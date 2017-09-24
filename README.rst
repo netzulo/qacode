@@ -96,7 +96,6 @@ Configuration File
     log_name=qacode
     # OUTPUT FILE NAME FOR LOGGER
     log_output_file=logs
-
     [TESTLINK]
     # Url for testlink API : http://localhost/lib/api/xmlrpc/v1/xmlrpc.php
     url=http://localhost/lib/api/xmlrpc/v1/xmlrpc.php
