@@ -25,17 +25,29 @@
     <Compile Include="qacode\core\bots\modules\NavBase.py" />
     <Compile Include="qacode\core\bots\modules\__init__.py" />
     <Compile Include="qacode\core\bots\__init__.py" />
+    <Compile Include="qacode\core\exceptions\ControlException.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="qacode\core\exceptions\CoreException.py" />
     <Compile Include="qacode\core\exceptions\PageException.py" />
     <Compile Include="qacode\core\exceptions\__init__.py" />
     <Compile Include="qacode\core\loggers\LoggerManager.py" />
     <Compile Include="qacode\core\loggers\__init__.py" />
+    <Compile Include="qacode\core\testing\TesInfoBot.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="qacode\core\testing\TestInfoBase.py" />
     <Compile Include="qacode\core\testing\testlink\TestlinkBase.py" />
     <Compile Include="qacode\core\testing\testlink\__init__.py" />
     <Compile Include="qacode\core\testing\__init__.py" />
+    <Compile Include="qacode\core\webs\controls\ControlBase.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="qacode\core\webs\controls\__init__.py" />
     <Compile Include="qacode\core\webs\pages\PageBase.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="qacode\core\webs\pages\PageLogin.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="qacode\core\webs\pages\__init__.py" />
@@ -44,13 +56,25 @@
     <Compile Include="qacode\__init__.py" />
     <Compile Include="setup.py" />
     <Compile Include="tests\functionals\TestBotBase.py" />
+    <Compile Include="tests\functionals\TestControlBase.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="tests\functionals\TestNavBase.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tests\functionals\TestPageBase.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="tests\functionals\TestPageLogin.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tests\functionals\TestTestInfoBot.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="tests\functionals\__init__.py" />
+    <Compile Include="tests\reports\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="tests\unitaries\TestConfig.py" />
     <Compile Include="tests\unitaries\TestLoggerManager.py" />
     <Compile Include="tests\unitaries\TestTestInfoBase.py" />
@@ -86,6 +110,7 @@
     <Folder Include="qacode\logs\" />
     <Folder Include="tests" />
     <Folder Include="tests\functionals" />
+    <Folder Include="tests\reports\" />
     <Folder Include="tests\unitaries" />
   </ItemGroup>
   <ItemGroup>
