@@ -96,27 +96,26 @@ Configuration File
     log_name=qacode
     # OUTPUT FILE NAME FOR LOGGER
     log_output_file=logs
-  
+
     [TESTLINK]
     # Url for testlink API : http://localhost/lib/api/xmlrpc/v1/xmlrpc.php
     url=http://localhost/lib/api/xmlrpc/v1/xmlrpc.php
     # Devkey provided by testlink: 182c5b87c776ff2956b68e23eae866d9
     devkey=182c5b87c776ff2956b68e23eae866d9
-
     [TEST_UNITARIES]
     url=https://www.netzulo.com
-
-	[TEST_FUNCTIONALS]
-	url_login=http://qalab.tk:82/sessions/new
-	url_logout=http://qalab.tk:82/sessions/logout
+    [TEST_FUNCTIONALS]
+    url_login=http://qalab.tk:82/sessions/new
+    url_logout=http://qalab.tk:82/sessions/logout
     url_logged_ok=http://qalab.tk:82/
     url_logged_ko=http://qalab.tk:82/sessions/
     selectors_login=["#login", "#password", "[name='commit']"]
     creed_user=qacode
     creed_pass=qacode
-	[BUILD]
+    [BUILD]
     # Skip driver are not support on public selenium server http://qalab.tk:11000
     skip_travis_tests=True
+
 
 Tests
 -----
@@ -137,7 +136,7 @@ Functionals
 ::
     
     nosetests tests/functionals/TestBotBase.py --tc-file="qacode/configs/settings.example.ini"
-	nosetests tests/functionals/TestTestInfoBot.py --tc-file="qacode/configs/settings.ini"
+    nosetests tests/functionals/TestTestInfoBot.py --tc-file="qacode/configs/settings.ini"
     nosetests tests/functionals/TestNavBase.py --tc-file="qacode/configs/settings.example.ini"
     nosetests tests/functionals/TestPageBase.py --tc-file="qacode/configs/settings.example.ini"
     nosetests tests/functionals/TestPageLogin.py --tc-file="qacode/configs/settings.example.ini"
