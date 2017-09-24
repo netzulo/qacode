@@ -39,7 +39,7 @@ class BotBase(object):
             try:
                 self.bot_config = bot_config
                 self.logger_manager = bot_config.logger_manager
-                self.log = self.logger_manager.get_log()
+                self.log = self.bot_config.log
             except Exception as err:
                 raise CoreException(message="Error at create LoggerManager for BotBase class")            
 
