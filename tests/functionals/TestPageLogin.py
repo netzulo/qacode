@@ -2,14 +2,16 @@ import unittest, logging, time, ast
 from testconfig import config as cfg # just works when nose command it's launched
 from qacode.core.exceptions.PageException import PageException
 from qacode.core.webs.pages.PageLogin import PageLogin
-
 from qacode.core.testing. TesInfoBot import TestInfoBot
+from qacode.core.loggers.LoggerManager import LoggerManager
+
+logger_manager = LoggerManager(log_path=cfg["BOT"]["log_output_file"],log_level=logging.DEBUG)
 
 class TestPageLogin(TestInfoBot):
     """Test Suite for class PageLogin"""
 
     def __init__(self, method_name="TestPageLogin"):
-        super(TestPageLogin, self).__init__(method_name, logger_manager=None)
+        super(TestPageLogin, self).__init__(method_name, logger_manager=logger_manager)
         self.url_login = cfg['TEST_FUNCTIONALS']['url_login']
         self.url_logout = cfg['TEST_FUNCTIONALS']['url_logout']
         self.url_logged_ok = cfg['TEST_FUNCTIONALS']['url_logged_ok']

@@ -4,12 +4,15 @@ from qacode.core.testing. TesInfoBot import TestInfoBot
 from qacode.core.exceptions.PageException import PageException
 from qacode.core.webs.pages.PageBase import PageBase
 from selenium.webdriver.remote.webelement import WebElement
+from qacode.core.loggers.LoggerManager import LoggerManager
+
+logger_manager = LoggerManager(log_path=cfg["BOT"]["log_output_file"],log_level=logging.DEBUG)
 
 class TestPageBase(TestInfoBot):
     """Test Suite for PageBase class"""
     
     def __init__(self, method_name="TestPageBase"):
-        super(TestPageBase, self).__init__(method_name, logger_manager=None)
+        super(TestPageBase, self).__init__(method_name, logger_manager=logger_manager)
 
     def test_001_page_base_instance(self):
         try:

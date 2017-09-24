@@ -3,12 +3,14 @@ from testconfig import config as cfg # just works when nose command it's launche
 from qacode.core.testing.TestInfoBase import TestInfoBase
 from qacode.core.bots.BotConfig import BotConfig
 from qacode.core.bots.BotBase import BotBase
+from qacode.core.loggers.LoggerManager import LoggerManager
 
+logger_manager = LoggerManager(log_path=cfg["BOT"]["log_output_file"],log_level=logging.DEBUG)
 
 class TestBotBase(TestInfoBase):     
 
     def __init__(self, method_name="TestBotBase"):
-        super(TestBotBase, self).__init__(method_name, logger_manager=None)
+        super(TestBotBase, self).__init__(method_name, logger_manager=logger_manager)
    
     @unittest.skipIf(cfg["BUILD"]["skip_travis_tests"],"TRAVIS build not support local drivers")
     def test_001_bot_local_chrome(self):
