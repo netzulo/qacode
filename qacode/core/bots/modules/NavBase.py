@@ -230,4 +230,10 @@ class NavBase(object):
         Return element content text
         '''
         return element.text
+
+    def ele_attribute(self, element, attr_name):
+        '''
+        Returns tuple with (attr, value) if founds
+        '''
+        return (attr_name, element.get_attribute(attr_name))
         
