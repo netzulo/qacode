@@ -28,7 +28,8 @@ class TestConfig(unittest.TestCase):
         "TEST_FUNCTIONALS url_logged_ko just can be match with this regular expression : {}",
         "TEST_FUNCTIONALS selectors can't be empty array and can't contain empty selectors",
         "TEST_FUNCTIONALS creed_user, can't be empty string",
-        "TEST_FUNCTIONALS creed_pass, can't be empty string" #20
+        "TEST_FUNCTIONALS creed_pass, can't be empty string", #20
+        "BUILD skip_travis_tests, can't be None, just bool values"
         ]
     regexs = ["http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+"]
 
@@ -146,6 +147,11 @@ class TestConfig(unittest.TestCase):
         value = cfg.get("TEST_FUNCTIONALS")["creed_pass"]
         self.assertNotEqual(value,"",self.msgs[20])
 
+    def test_020_config_has_key_build_skip_travis_tests(self):
+        """Test : test_020_config_has_key_build_skip_travis_tests"""
+        value = cfg.get("BUILD")["skip_travis_tests"]
+        self.assertNotEqual(value,None,self.msgs[21])
+        self.assertNotEqual(value,"",self.msgs[21])
 
 if __name__ == '__main__':
     unittest.main()
