@@ -1,12 +1,14 @@
 import unittest, os, logging, ast
 from testconfig import config as cfg # just works when nose command it's launched
+from qacode.core.testing.TestInfoBase import TestInfoBase
 from qacode.core.loggers.LoggerManager import LoggerManager
 
-class TestConfig(unittest.TestCase):
+logger_manager = LoggerManager(log_path=cfg["BOT"]["log_output_file"],log_level=logging.DEBUG)
+
+class TestConfig(TestInfoBase):
     '''
     Comprueba el fichero que se pasa por parametro a Nose, si contiene un JSON con la estructura pedida en los tests
     '''
-    log = LoggerManager(log_path=cfg["BOT"]["log_output_file"],log_level=logging.DEBUG).get_log()
     msgs = [
         "Settings file doesn't found, copy from settings.example.ini",#0
         "Some missing section on settings.ini file",
@@ -32,6 +34,9 @@ class TestConfig(unittest.TestCase):
         "BUILD skip_travis_tests, can't be None, just bool values"
         ]
     regexs = ["http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+"]
+
+    def __init__(self, method_name="TestConfig"):
+        super(TestConfig, self).__init__(method_name, logger_manager=logger_manager)
 
     def test_000_config_exist(self):
         """Test : test_000_config_exist"""
