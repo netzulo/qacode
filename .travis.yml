@@ -24,7 +24,7 @@ install:
 before_script:
 - cp qacode/configs/settings.example.ini qacode/configs/settings.ini
 script:
-- nosetests --with-xunit --xunit-file=tests/reports/tests_unitaries.xml tests/functionals/ --tc-file="qacode/configs/settings.ini"
+- nosetests --with-xunit --xunit-file=tests/reports/tests_unitaries.xml tests/unitaries/ --tc-file="qacode/configs/settings.ini"
 - echo "TESTS UNITARIES SUCCESS"
 - nosetests --with-xunit --xunit-file=tests/reports/tests_functionals.xml tests/functionals/ --tc-file="qacode/configs/settings.ini"
 - echo "TESTS FUNCTIONALS SUCCESS"
