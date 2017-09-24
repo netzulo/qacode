@@ -29,6 +29,6 @@ class PageLogin(PageBase):
             raise PageException(message_error.format("send_keys", password, "txt_password"))
         if is_login_now:
             try:
-               self.txt_password.send_keys(password)
+               self.btn_login.click()
             except Exception as err:
                raise PageException(message_error.format("click", password, "btn_login"))
