@@ -24,16 +24,16 @@ install:
 before_script:
 - cp qacode/configs/settings.example.ini qacode/configs/settings.ini
 script:
-- nosetests tests/unitaries/TestConfig.py --tc-file="qacode/configs/settings.ini"
-- nosetests tests/unitaries/TestLoggerManager.py --tc-file="qacode/configs/settings.ini"
-- nosetests tests/unitaries/TestTestInfoBase.py --tc-file="qacode/configs/settings.ini"
+- nosetests --with-xunit --xunit-file=tests/reports/TestConfig.xml tests/unitaries/TestConfig.py --tc-file="qacode/configs/settings.ini"
+- nosetests --with-xunit --xunit-file=tests/reports/TestLoggerManager.xml tests/unitaries/TestLoggerManager.py --tc-file="qacode/configs/settings.ini"
+- nosetests --with-xunit --xunit-file=tests/reports/TestTestInfoBase.xml tests/unitaries/TestTestInfoBase.py --tc-file="qacode/configs/settings.ini"
 - echo "TESTS UNITARIES SUCCESS"
-- nosetests tests/functionals/TestBotBase.py:TestBotBase.test_008_bot_remote_phantomjs --tc-file="qacode/configs/settings.ini"
-- nosetests tests/functionals/TestTestInfoBot.py --tc-file="qacode/configs/settings.ini"
-- nosetests tests/functionals/TestNavBase.py --tc-file="qacode/configs/settings.ini"
-- nosetests tests/functionals/TestPageBase.py --tc-file="qacode/configs/settings.ini"
-- nosetests tests/functionals/TestPageLogin.py --tc-file="qacode/configs/settings.ini"
-- nosetests tests/functionals/TestControlBase.py --tc-file="qacode/configs/settings.ini"
+- nosetests --with-xunit --xunit-file=tests/reports/TestBotBase.xml tests/functionals/TestBotBase.py:TestBotBase.test_008_bot_remote_phantomjs --tc-file="qacode/configs/settings.ini"
+- nosetests --with-xunit --xunit-file=tests/reports/TestTestInfoBot.xml tests/functionals/TestTestInfoBot.py --tc-file="qacode/configs/settings.ini"
+- nosetests --with-xunit --xunit-file=tests/reports/TestNavBase.xml tests/functionals/TestNavBase.py --tc-file="qacode/configs/settings.ini"
+- nosetests --with-xunit --xunit-file=tests/reports/TestPageBase.xml tests/functionals/TestPageBase.py --tc-file="qacode/configs/settings.ini"
+- nosetests --with-xunit --xunit-file=tests/reports/TestPageLogin.xml tests/functionals/TestPageLogin.py --tc-file="qacode/configs/settings.ini"
+- nosetests --with-xunit --xunit-file=tests/reports/TestControlBase.xml tests/functionals/TestControlBase.py --tc-file="qacode/configs/settings.ini"
 - echo "TESTS FUNCTIONALS SUCCESS"
 after_script:
 - if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then 
