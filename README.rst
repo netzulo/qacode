@@ -114,6 +114,9 @@ Configuration File
     selectors_login=["#login", "#password", "[name='commit']"]
     creed_user=qacode
     creed_pass=qacode
+	[BUILD]
+    # Skip driver are not support on public selenium server http://qalab.tk:11000
+    skip_travis_tests=True
 
 Tests
 -----
