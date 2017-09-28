@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+
+
 from qacode.core.loggers.LoggerManager import LoggerManager
 
 
