@@ -6,18 +6,21 @@ from os import path
 CURR_PATH = path.abspath(path.dirname(__file__))
 
 
-def readme():
-    if version_info.major == 3:
-        with open(path.join(CURR_PATH, 'README.rst'), encoding='utf-8') as f:
+def get_file(version_py=version_info.major, file_name=None):
+    if file_name is None:
+        raise Exception('File name couldn\'t be None')
+    if version_py == 3:
+        with open(path.join(CURR_PATH, file_name), encoding='utf-8') as f:
             return f.read()
-    if version_info.major == 2:
-        with open(path.join(CURR_PATH, 'README.rst')) as f:
+    if version_py== 2:
+        with open(path.join(CURR_PATH,file_name)) as f:
             return f.read().decode("UTF-8")
+
 
 setup(
     name='qacode',
     version='0.1.9',
-    license='UNLICENSED',  # TODO: Choose a good license
+    license=get_file(file_name='LICENSE'),
     packages=find_packages(
         exclude=['tests'],
         # TODO: Remove include after testing it works without it (it should)
@@ -36,7 +39,7 @@ setup(
         ]
     ),
     description='Main automation lib',
-    long_description=readme(),
+    long_description=get_file(file_name='README.rst'),
     author='Netzulo Open Source',
     author_email='netzuleando@gmail.com',
     url='https://github.com/netzulo/qacode',
@@ -61,6 +64,7 @@ setup(
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
     ],
     extras_require={
         'test': 'nose',
