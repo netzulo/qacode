@@ -1,3 +1,4 @@
+from sys import version_info
 from setuptools import setup, find_packages
 from os import path
 
@@ -6,12 +7,13 @@ CURR_PATH = path.abspath(path.dirname(__file__))
 
 
 def readme():
-    # TODO: just tested on windows, check this on linux to get real solution
-    with open(path.join(CURR_PATH, 'README.rst')) as f:
+    if version_info.major == 3:
+        with open(path.join(CURR_PATH, 'README.rst'), encoding='utf-8') as f:
+            return f.read()
+    if version_info.major == 2:
+        with open(path.join(CURR_PATH, 'README.rst')) as f:
             return f.read().decode("UTF-8")
 
-# TODO: Add how to add extra requires and automatic `nose` execution with the
-# command `python setup.py test`
 setup(
     name='qacode',
     version='0.1.9',
@@ -59,5 +61,8 @@ setup(
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
-    ]
+    ],
+    extras_require={
+        'test': 'nose',
+    },
 )
