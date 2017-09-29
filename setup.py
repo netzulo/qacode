@@ -6,9 +6,9 @@ CURR_PATH = path.abspath(path.dirname(__file__))
 
 
 def readme():
-    with open(path.join(CURR_PATH, 'README.rst'), encoding='utf-8') as f:
-        return f.read()
-
+    # TODO: just tested on windows, check this on linux to get real solution
+    with open(path.join(CURR_PATH, 'README.rst')) as f:
+            return f.read().decode("UTF-8")
 
 # TODO: Add how to add extra requires and automatic `nose` execution with the
 # command `python setup.py test`
