@@ -6,15 +6,18 @@ from os import path
 CURR_PATH = path.abspath(path.dirname(__file__))
 
 
-def get_file(version_py=version_info.major, file_name=None):
+def get_file(version_py=version_info.major, file_name=None, encoding=None):
     if file_name is None:
         raise Exception('File name couldn\'t be None')
+    if encoding is None:
+        with open(path.join(CURR_PATH, file_name)) as f:
+            return f.read()
     if version_py == 3:
-        with open(path.join(CURR_PATH, file_name), encoding='utf-8') as f:
+        with open(path.join(CURR_PATH, file_name), encoding=encoding) as f:
             return f.read()
     if version_py== 2:
         with open(path.join(CURR_PATH,file_name)) as f:
-            return f.read().decode("UTF-8")
+            return f.read().decode(encoding)
 
 
 setup(
@@ -39,7 +42,7 @@ setup(
         ]
     ),
     description='Main automation lib',
-    long_description=get_file(file_name='README.rst'),
+    long_description=get_file(file_name='README.rst', encoding='utf-8'),
     author='Netzulo Open Source',
     author_email='netzuleando@gmail.com',
     url='https://github.com/netzulo/qacode',
