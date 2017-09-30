@@ -1,32 +1,16 @@
-from sys import version_info
 from setuptools import setup, find_packages
-from os import path
-
-
-CURR_PATH = path.abspath(path.dirname(__file__))
-
-
-def get_file(version_py=version_info.major, file_name=None, encoding=None):
-    if not path.exists(file_name):
-        raise IOError("File '{0!s}' doesn't exists")
-    if encoding is None:
-        with open(path.join(CURR_PATH, file_name)) as f:
-            return f.read()
-    if version_py == 3:
-        with open(path.join(CURR_PATH, file_name), encoding=encoding) as f:
-            return f.read()
-    if version_py == 2:
-        with open(path.join(CURR_PATH, file_name)) as f:
-            return f.read().decode(encoding)
+from qacode.core.utils.Utils import Utils
 
 
 setup(
     name='qacode',
     version='0.1.9',
-    license=get_file(file_name='LICENSE'),
+    license=Utils.get_file(file_path=__file__, file_name='LICENSE'),
     packages=find_packages(exclude=['tests']),
     description='Main automation lib',
-    long_description=get_file(file_name='README.rst', encoding='utf-8'),
+    long_description=Utils.get_file(file_path=__file__,
+                                    file_name='README.rst',
+                                    encoding='utf-8'),
     author='Netzulo Open Source',
     author_email='netzuleando@gmail.com',
     url='https://github.com/netzulo/qacode',
