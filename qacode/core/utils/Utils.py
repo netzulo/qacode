@@ -8,6 +8,7 @@ from json import *
 class Utils(object):
     """All methods what i don't know where to include"""
 
+    @staticmethod
     def get_file(version_py=version_info.major,file_path=None, file_name=None, encoding=None, json=False):
         """Returns file, py version and enconding parametrization"""        
         if not path.exists(file_path):
@@ -27,13 +28,14 @@ class Utils(object):
         if version_py == 2:
             with open(file_path_join) as f:
                 return f.read().decode(encoding)
-
+    @staticmethod
     def get_file_abspath(file=None):
         """Return absolute path for __file__ instance"""
         if file is None:
             raise IOError("File '{0!s}' doesn't exists")
         return path.abspath(path.dirname(file))
-
+    
+    @staticmethod
     def get_config():
         return Utils.get_file(json=True,
                               file_path='qacode/configs',
