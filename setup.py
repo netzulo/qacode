@@ -7,16 +7,16 @@ CURR_PATH = path.abspath(path.dirname(__file__))
 
 
 def get_file(version_py=version_info.major, file_name=None, encoding=None):
-    if file_name is None:
-        raise Exception('File name couldn\'t be None')
+    if not path.exists(file_name):
+        raise IOError("File '{0!s}' doesn't exists")
     if encoding is None:
         with open(path.join(CURR_PATH, file_name)) as f:
             return f.read()
     if version_py == 3:
         with open(path.join(CURR_PATH, file_name), encoding=encoding) as f:
             return f.read()
-    if version_py== 2:
-        with open(path.join(CURR_PATH,file_name)) as f:
+    if version_py == 2:
+        with open(path.join(CURR_PATH, file_name)) as f:
             return f.read().decode(encoding)
 
 
@@ -24,9 +24,7 @@ setup(
     name='qacode',
     version='0.1.9',
     license=get_file(file_name='LICENSE'),
-    packages=find_packages(
-        exclude=['tests'],
-    ),
+    packages=find_packages(exclude=['tests']),
     description='Main automation lib',
     long_description=get_file(file_name='README.rst', encoding='utf-8'),
     author='Netzulo Open Source',
@@ -55,7 +53,7 @@ setup(
         'Programming Language :: Python :: 3.6',
         'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
     ],
-    extras_require={
-        'test': 'nose',
-    },
+    tests_require=[
+        'nose',
+    ],
 )
