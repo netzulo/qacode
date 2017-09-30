@@ -14,7 +14,7 @@ class LoggerManager(object):
     '''
 
     def __init__(self,
-                 log_path="",
+                 log_path="logs",
                  log_name="qacode", log_level=logging.DEBUG,
                  is_output_console=True, is_output_file=True):
         if len(log_path) <= 0:
