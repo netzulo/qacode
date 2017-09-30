@@ -93,6 +93,8 @@
     <Content Include="README.rst" />
     <Content Include="setup.cfg" />
     <Content Include="sonar-project.properties" />
+    <Content Include="tests\reports\tests_functionals.xml" />
+    <Content Include="tests\reports\tests_unitaries.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="qacode" />

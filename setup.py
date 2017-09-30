@@ -26,20 +26,6 @@ setup(
     license=get_file(file_name='LICENSE'),
     packages=find_packages(
         exclude=['tests'],
-        # TODO: Remove include after testing it works without it (it should)
-        include=[
-            'qacode',
-            'qacode.configs',
-            'qacode.core.bots',
-            'qacode.core.bots.modules',
-            'qacode.core',
-            'qacode.core.exceptions',
-            'qacode.core.loggers',
-            'qacode.core.testing',
-            'qacode.core.testing.testlink',
-            'qacode.core.webs.pages',
-            'qacode.core.webs.controls',
-        ]
     ),
     description='Main automation lib',
     long_description=get_file(file_name='README.rst', encoding='utf-8'),
