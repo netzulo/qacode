@@ -40,6 +40,8 @@
     <Compile Include="qacode\core\testing\testlink\TestlinkBase.py" />
     <Compile Include="qacode\core\testing\testlink\__init__.py" />
     <Compile Include="qacode\core\testing\__init__.py" />
+    <Compile Include="qacode\core\utils\Utils.py" />
+    <Compile Include="qacode\core\utils\__init__.py" />
     <Compile Include="qacode\core\webs\controls\ControlBase.py">
       <SubType>Code</SubType>
     </Compile>
@@ -88,6 +90,9 @@
     <Content Include="appveyor.yml" />
     <Content Include="LICENSE" />
     <Content Include="qacode\configs\settings.example.ini" />
+    <Content Include="qacode\configs\settings.json" />
+    <Content Include="qacode\core\utils\__pycache__\Utils.cpython-36.pyc" />
+    <Content Include="qacode\core\utils\__pycache__\__init__.cpython-36.pyc" />
     <Content Include="qacode\logs\.gitkeep" />
     <Content Include="qacode\logs\qacode.log" />
     <Content Include="README.rst" />
@@ -106,6 +111,8 @@
     <Folder Include="qacode\core\loggers" />
     <Folder Include="qacode\core\testing" />
     <Folder Include="qacode\core\testing\testlink" />
+    <Folder Include="qacode\core\utils\" />
+    <Folder Include="qacode\core\utils\__pycache__\" />
     <Folder Include="qacode\core\webs" />
     <Folder Include="qacode\core\webs\controls" />
     <Folder Include="qacode\core\webs\pages" />

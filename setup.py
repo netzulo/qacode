@@ -1,16 +1,26 @@
+# -*- coding: utf-8 -*-
+
+
 from setuptools import setup, find_packages
-from qacode.core.utils.Utils import Utils
+from qacode.core.utils.Utils import read_file
+from qacode.core.utils.Utils import get_path_join
+
+
+def read(file_name=None):
+    if file_name is None:
+        raise Exception("File name not provided")
+    return read_file(file_path=get_path_join(
+        file_path='./', file_name=file_name)
+    )
 
 
 setup(
     name='qacode',
     version='0.1.9',
-    license=Utils.get_file(file_path=__file__, file_name='LICENSE'),
+    license=read("LICENSE"),
     packages=find_packages(exclude=['tests']),
     description='Main automation lib',
-    long_description=Utils.get_file(file_path=__file__,
-                                    file_name='README.rst',
-                                    encoding='utf-8'),
+    long_description=read("README.rst"),
     author='Netzulo Open Source',
     author_email='netzuleando@gmail.com',
     url='https://github.com/netzulo/qacode',
