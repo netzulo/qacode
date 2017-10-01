@@ -1,11 +1,17 @@
+# -*- coding: utf-8 -*-
+
+
 '''
 Created on 04 march 2017
 
 @author: ntz
 '''
+
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from qacode.core.exceptions.CoreException import CoreException
+
 
 class NavBase(object):
     '''
@@ -16,21 +22,16 @@ class NavBase(object):
 
     def __init__(self, driver):
         '''
-        Initialize self properties        
+        Initialize self properties
         '''
         self.driver = driver
-
-    def get_url(self, url):
-        """
-        Obtains url passed by param using selenium driver from bot class
-        """
-        self.driver.get(url)
 
     def get_url(self, url, wait_for_load=0):
         """
         Do get_url including implicit wait for page load
         """
-        self.driver.implicitly_wait(wait_for_load)
+        if wait_for_load > 0:
+            self.driver.implicitly_wait(wait_for_load)
         self.driver.get(url)
 
     def get_window_handle(self):
@@ -118,7 +119,7 @@ class NavBase(object):
         '''
         Get selenium log by name, valid values are
         + default value : browser
-        + [browser,driver,client, server]        
+        + [browser, driver, client, server]
         '''
         if log_name == 'browser':
             self.driver.get_log(log_name)
@@ -186,37 +187,45 @@ class NavBase(object):
 
     def ele_click(self, element=None, selector=None, by=By.CSS_SELECTOR):
         '''
-        Perform click over webelement passed by param or search it by default CSS_SELECTOR value
-        if element it's none but selector it's not default value
+        Perform click over webelement passed by param or search it by default
+        CSS_SELECTOR value if element it's none but selector it's not default
+        value
         '''
         curr_ele = element
         curr_selector = selector
         can_click = False
 
-        if curr_ele is None and curr_selector is None :            
-            raise CoreException("Can\'t click over None element and None selector arguments: curr_ele={}, curr_selector={}".format(curr_ele,curr_selector))
-        elif curr_ele is None :
-            curr_ele = self.find_element(curr_selector, by=by)                
+        if curr_ele is None and curr_selector is None:
+            raise CoreException(
+                "Can't click over None element and None selector arguments: "
+                "curr_ele={}, curr_selector={}"
+                .format(curr_ele, curr_selector)
+            )
+        elif curr_ele is None:
+            curr_ele = self.find_element(curr_selector, by=by)
             can_click = True
-        elif curr_ele is not None and isinstance(curr_ele, WebElement):            
+        elif curr_ele is not None and isinstance(curr_ele, WebElement):
             can_click = True
         if can_click:
             curr_ele.click()
         return curr_ele
 
-
     def ele_write(self, element, text=None):
         '''
-        Over element perform send_keys , if not sended text, then will write empty over element
+        Over element perform send_keys , if not sended text, then will write
+        empty over element
         :param element: WebElement
         :return: None
         '''
         if not isinstance(element, WebElement):
-            raise CoreException("Element passed by param it's not instance of WebElement class")
+            raise CoreException(
+                "Element passed by param it's not instance of WebElement class"
+            )
         if text is not None:
-            element.send_keys(text)            
+            element.send_keys(text)
         else:
-            # it's neccessary because some fields shows validation message and color after try to send empty message
+            # it's neccessary because some fields shows validation message and
+            # color after try to send empty message
             element.send_keys()
 
     def get_curr_url(self):
@@ -236,4 +245,3 @@ class NavBase(object):
         Returns tuple with (attr, value) if founds
         '''
         return (attr_name, element.get_attribute(attr_name))
-        
