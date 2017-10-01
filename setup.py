@@ -9,8 +9,10 @@ from qacode.core.utils.Utils import get_path_join
 def read(file_name=None, is_encoding=True):
     if file_name is None:
         raise Exception("File name not provided")
-    return read_file(file_path=get_path_join(
-        file_path='./', file_name=file_name, is_encoding=is_encoding)
+    return read_file(is_encoding=is_encoding,
+                     file_path=get_path_join(
+                        file_path='./',
+                        file_name=file_name)
     )
 
 
