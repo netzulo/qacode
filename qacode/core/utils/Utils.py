@@ -14,7 +14,7 @@ def get_path_join(file_path=None, file_name=None):
             raise IOError("File '{0!s}' doesn't exists")
         return path.join(file_path, file_name)
 
-def read_file(is_json=False, file_path=None, encoding='utf-8'):
+def read_file(is_json=False, file_path=None, encoding='utf-8', is_encoding=True):
     """Returns file object from file_path,
        compatible with all py versiones
     optionals:
@@ -26,11 +26,16 @@ def read_file(is_json=False, file_path=None, encoding='utf-8'):
     if file_path is None:
         raise Exception("File path received it's None")
     if version_info.major >= 3:
+        if not is_encoding:
+            encoding = None
         with open(file_path, encoding=encoding) as f:
-                return f.read()
+            return f.read()
     if version_info.major <= 2:
         with open(file_path) as f:
+            if is_encoding:
                 return f.read().decode(encoding)
+            else:
+                return f.read()
 
 def settings():
     """Returns file settings as a dict to be use on qacode lib"""
