@@ -21,9 +21,9 @@ install:
 - "%PYTHON%\\python.exe setup.py install"
 
 before_test:
-- "%PYTHON%\\Scripts\\nosetests tests\\unitaries\\
+- "%PYTHON%\\Scripts\\nosetests tests\\unitaries\\"
 - "echo TESTS UNITARIES SUCCESS"
 
 test_script:
-- "%PYTHON%\\Scripts\\nosetests tests\\functionals\\
+- "%PYTHON%\\Scripts\\nosetests tests\\functionals\\"
 - echo "TESTS FUNCTIONALS SUCCESS"
