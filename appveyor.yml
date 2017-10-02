@@ -21,10 +21,9 @@ install:
 - "%PYTHON%\\python.exe setup.py install"
 
 before_test:
-- "xcopy \"qacode\\configs\\settings.example.ini\" \"qacode\\configs\\settings.ini*\""
+- "%PYTHON%\\Scripts\\nosetests tests\\unitaries\\
+- "echo TESTS UNITARIES SUCCESS"
 
 test_script:
-- "%PYTHON%\\Scripts\\nosetests tests\\unitaries\\ --tc-file=qacode\\configs\\settings.ini"
-- "echo TESTS UNITARIES SUCCESS"
-- "%PYTHON%\\Scripts\\nosetests tests\\functionals\\ --tc-file=qacode\\configs\\settings.ini"
+- "%PYTHON%\\Scripts\\nosetests tests\\functionals\\
 - echo "TESTS FUNCTIONALS SUCCESS"

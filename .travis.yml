@@ -22,11 +22,10 @@ before_install:
 install:
 - python setup.py install
 before_script:
-- cp qacode/configs/settings.example.ini qacode/configs/settings.ini
-script:
-- nosetests --with-xunit --xunit-file=tests/reports/tests_unitaries.xml tests/unitaries/ --tc-file="qacode/configs/settings.ini"
+- nosetests --with-xunit --xunit-file=tests/reports/tests_unitaries.xml tests/unitaries/
 - echo "TESTS UNITARIES SUCCESS"
-- nosetests --with-xunit --xunit-file=tests/reports/tests_functionals.xml tests/functionals/ --tc-file="qacode/configs/settings.ini"
+script:
+- nosetests --with-xunit --xunit-file=tests/reports/tests_functionals.xml tests/functionals/
 - echo "TESTS FUNCTIONALS SUCCESS"
 after_script:
 - if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then 
