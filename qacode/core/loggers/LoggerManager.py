@@ -19,9 +19,16 @@ class LoggerManager(object):
 
 
     def __init__(self,
-                 log_path="logs",
-                 log_name="qacode", log_level=logging.DEBUG,
+                 log_path="logs/",
+                 log_name="qacode.log", log_level=None,
                  is_output_console=True, is_output_file=True):
+        """
+        Create new logger_manager instance with default
+         path 'logs/qacode.log'
+         log_level DEBUG
+         console_handler enable
+         file_handler enable
+        """
         if len(log_path) <= 0:
             raise Exception("bad format at logger log_path={}"
                             .format(log_path))
@@ -46,12 +53,12 @@ class LoggerManager(object):
         self.is_output_file = is_output_file
         self.log_path_join = get_path_join(
             file_path=self.log_path,
-            file_name=self.log_name)
+            file_name=self.log_name,
+            ignore_raises=True)
         self.create_logger()
 
     def create_logger(self):
-        """TODO"""
-
+        """Generates handlers from logging package"""
         self.logger = logging.getLogger(self.log_name)
         self.logger.setLevel(self.log_level)
         self.log_formatter = logging.Formatter(

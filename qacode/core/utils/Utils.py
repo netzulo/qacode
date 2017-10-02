@@ -11,19 +11,20 @@ from os import path
 import json
 
 
-def get_path_join(file_path=None, file_name=None, is_abspath=False):
+def get_path_join(file_path=None, file_name=None, is_abspath=False, ignore_raises=False):
     """
     Get path joined checking before if path and filepath exist,
      if not, raise an Exception
     """
-    if file_path is None or not path.exists(file_path):
-        raise IOError("Path '{}' doesn't exists".format(file_path))
-    if file_name is None or not path.exists("{}{}".format(file_path, file_name)):
-        raise IOError("File '{}{}' doesn't exists".format(file_path, file_name))
-    if is_abspath:
-        return path.abspath(path.join(file_path, file_name))
-    else:
-        return path.join(file_path, file_name)
+    if not ignore_raises:
+        if file_path is None or not path.exists(file_path):
+            raise IOError("Path '{}' doesn't exists".format(file_path))
+        if file_name is None or not path.exists("{}{}".format(file_path, file_name)):
+            raise IOError("File '{}{}' doesn't exists".format(file_path, file_name))
+        if is_abspath:
+            return path.abspath(path.join(file_path, file_name))
+
+    return path.join(file_path, file_name)
 
 def read_file(is_json=False, file_path=None, encoding='utf-8', is_encoding=True):
     """Returns file object from file_path,
