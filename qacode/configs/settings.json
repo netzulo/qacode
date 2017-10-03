@@ -44,6 +44,6 @@
     }
   },
   "build": {
-    "skip_travis_tests": true
+    "travis":{ "skip_tests": true }
   }
 }
