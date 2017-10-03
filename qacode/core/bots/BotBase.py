@@ -52,10 +52,11 @@ class BotBase(object):
                     err,
                     message="Error at create LoggerManager for BotBase class"
                 )
-            self.curr_driver_path = self.driver_name_filter()
-            if self.bot_config.bot_mode == 'local':
+            if self.bot_config.config['mode'] == 'local':
+                self.curr_driver_path = self.driver_name_filter(
+                    driver_name=self.bot_config.config['browser'])
                 self.mode_local()
-            elif self.bot_config.bot_mode == 'remote':
+            elif self.bot_config.config['mode'] == 'remote':
                 self.mode_remote()
             else:
                 raise CoreException(
