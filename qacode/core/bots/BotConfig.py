@@ -23,7 +23,7 @@ class BotConfig(object):
         """
         if config is None:
             raise CoreException("Bot config provived it's None")
-        self.config = config
+        self.config = config['bot']
         props = [
             'mode',
             'browser',
@@ -36,7 +36,7 @@ class BotConfig(object):
         ]
         self.init_logger_manager(logger_manager)
         for prop in props:
-            self.log_option_loaded(self.config['bot'][prop])
+            self.log_option_loaded(self.config[prop])
 
     def init_logger_manager(self, logger_manager=None):
         """
