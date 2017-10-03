@@ -3,7 +3,7 @@
 
 
 import logging
-from qacode.core.utils.Utils import get_path_join
+from qacode.core.utils.Utils import path_format
 
 
 class LoggerManager(object):
@@ -51,7 +51,7 @@ class LoggerManager(object):
             )
         self.is_output_console = is_output_console
         self.is_output_file = is_output_file
-        self.log_path_join = get_path_join(
+        self.log_path_join = path_format(
             file_path=self.log_path,
             file_name=self.log_name,
             ignore_raises=True)
