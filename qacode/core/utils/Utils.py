@@ -11,7 +11,7 @@ from os import path
 import json
 
 
-def get_path_join(file_path=None, file_name=None, is_abspath=False, ignore_raises=False):
+def path_format(file_path=None, file_name=None, is_abspath=False, ignore_raises=False):
     """
     Get path joined checking before if path and filepath exist,
      if not, raise an Exception
@@ -49,12 +49,11 @@ def read_file(is_json=False, file_path=None, encoding='utf-8', is_encoding=True)
                 text = buff.read()
     if is_json:
         return json.loads(text)
-    else:
-        return text
+    return text
 
 def settings():
     """Returns file settings as a dict to be use on qacode lib"""
     return read_file(is_json=True,
-                     file_path=get_path_join(file_path='qacode/configs/',
-                                             file_name='settings.json',
-                                             is_abspath=True))
+                     file_path=path_format(file_path='qacode/configs/',
+                                           file_name='settings.json',
+                                           is_abspath=True))
