@@ -4,7 +4,7 @@
 
 from setuptools import setup, find_packages
 from qacode.core.utils.Utils import read_file
-from qacode.core.utils.Utils import get_path_join
+from qacode.core.utils.Utils import path_format
 
 
 def read(file_name=None, is_encoding=True):
@@ -12,7 +12,7 @@ def read(file_name=None, is_encoding=True):
     if file_name is None:
         raise Exception("File name not provided")
     return read_file(is_encoding=is_encoding,
-                     file_path=get_path_join(
+                     file_path=path_format(
                          file_path='./',
                          file_name=file_name))
 
