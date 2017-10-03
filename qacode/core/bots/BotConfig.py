@@ -34,9 +34,9 @@ class BotConfig(object):
             'log_name',
             'log_output_file',
         ]
+        self.init_logger_manager(logger_manager)
         for prop in props:
             self.log_option_loaded(self.config['bot'][prop])
-        self.init_logger_manager(logger_manager)
 
     def init_logger_manager(self, logger_manager=None):
         """
