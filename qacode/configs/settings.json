@@ -36,8 +36,8 @@
     "functionals": {
       "url_login": "http://qalab.tk:82/sessions/new",
       "url_logout": "http://qalab.tk:82/sessions/logout",
-      "url_logged_ok": "http://qalab.tk:82/",
-      "url_logged_ko": "http://qalab.tk:82/sessions/login",
+      "url_logged": "http://qalab.tk:82/",
+      "url_404": "http://qalab.tk:82/sessions/login",
       "selectors_login": [ "#login", "#password", "[name='commit']" ],
       "creed_user": "qacode",
       "creed_pass": "qacode"
