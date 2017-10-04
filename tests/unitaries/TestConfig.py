@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""TODO"""
+"""Test Suite module for configs"""
 
 
 import os
@@ -10,10 +10,7 @@ from qacode.core.utils.Utils import path_format
 
 LOGGER_MANAGER = LoggerManager()
 class TestConfig(TestInfoBase):
-    '''
-    TestSuite for settings keys and values
-    '''
-
+    """TestSuite for settings keys and values"""
     # Error Messages
     ERR_KEY_NOT_FOUND = "Required key '{}', can't be None"
     ERR_KEY_INVALID_VALUE = "Required key '{}', just can be in '{}'"
