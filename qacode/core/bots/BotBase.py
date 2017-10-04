@@ -35,7 +35,7 @@ class BotBase(object):
     def __init__(self, bot_config):
         """
         Create new Bot browser based on options object what can be:
-        (help for each option can be found on settings.example.ini)
+        (help for each option can be found on settings.json)
         """
         if bot_config is None:
             raise CoreException(
@@ -129,8 +129,7 @@ class BotBase(object):
         else:
             raise CoreException(
                 message=("config file error, SECTION=bot, KEY=browser isn't "
-                         "valid value: {}"
-                         .format(self.bot_config.config['browser'])),
+                         "valid value: {}".format(browser_name)),
                 log=self.log
             )
 
@@ -138,26 +137,28 @@ class BotBase(object):
         """
         Open new brower on remote mode
         """
+        browser_name = self.bot_config.config['browser']
+        url_hub = self.bot_config.config['url_hub']
         self.log.info('Starting browser with mode : REMOTE')
-        if self.bot_config.config['browser'] == 'firefox':
+        if browser_name == 'firefox':
             self.curr_caps = DesiredCapabilities.FIREFOX.copy()
 
-        elif self.bot_config.config['browser'] == 'chrome':
+        elif browser_name == 'chrome':
             self.curr_caps = DesiredCapabilities.CHROME.copy()
 
-        elif self.bot_config.config['browser'] == 'iexplorer':
+        elif browser_name == 'iexplorer':
             self.curr_caps = DesiredCapabilities.INTERNETEXPLORER.copy()
 
-        elif self.bot_config.config['browser'] == 'phantomjs':
+        elif browser_name == 'phantomjs':
             self.curr_caps = DesiredCapabilities.PHANTOMJS.copy()
 
-        elif self.bot_config.config['browser'] == 'edge':
+        elif browser_name == 'edge':
             self.curr_caps = DesiredCapabilities.EDGE.copy()
         else:
-            raise Exception("Bad browser selected")
+            raise CoreException(message='Bad browser selected')
 
         self.curr_driver = RemoteWebDriver(
-            command_executor=self.bot_config.bot_url_hub,
+            command_executor=url_hub,
             desired_capabilities=self.curr_caps)
         self.log.info('Started browser with mode : REMOTE OK')
 

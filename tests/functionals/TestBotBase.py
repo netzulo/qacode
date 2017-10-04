@@ -22,13 +22,13 @@ class TestBotBase(TestInfoBase):
     """Tests for class BotBase"""
 
     def __init__(self, method_name='TestBotBase'):
-        """TODO"""
+        """Just call to parent constructor class, see TestInfoBase"""
         super(TestBotBase, self).__init__(
             method_name, logger_manager=LOGGER_MANAGER
         )
 
     def setUp(self):
-        """TODO"""
+        """Testcases setup"""
         self.bot_config = BotConfig(config=self.test_config,
                                     logger_manager=self.logger_manager)
 
