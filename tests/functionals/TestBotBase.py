@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""TODO"""
+"""Testsuite for package bots"""
 
 
 import unittest
@@ -19,7 +19,7 @@ SKIP = CONFIG['build']['travis']['skip_tests']
 WAIT_TO_CLOSE = int(5)
 
 class TestBotBase(TestInfoBase):
-    """Tests for class BotBase"""
+    """Testcases for class BotBase"""
 
     def __init__(self, method_name='TestBotBase'):
         """Just call to parent constructor class, see TestInfoBase"""
