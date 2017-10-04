@@ -57,4 +57,4 @@ class BotConfig(object):
         if option is None:
             self.log.warning(str(msg.format(option, 'Loaded failed')))
         else:
-            self.log.info(str(msg.format(option, 'Loaded success')))
+            self.log.debug(str(msg.format(option, 'Loaded success')))
