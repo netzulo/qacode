@@ -10,7 +10,7 @@ from qacode.core.utils.Utils import path_format
 
 LOGGER_MANAGER = LoggerManager()
 class TestConfig(TestInfoBase):
-    """TestSuite for settings keys and values"""
+    """Testcases for class TestInfoBase"""
     # Error Messages
     ERR_KEY_NOT_FOUND = "Required key '{}', can't be None"
     ERR_KEY_INVALID_VALUE = "Required key '{}', just can be in '{}'"

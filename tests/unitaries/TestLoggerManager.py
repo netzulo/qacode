@@ -10,9 +10,7 @@ LOGGER_MANAGER = LoggerManager()
 
 
 class TestLoggerManager(TestInfoBase):
-    '''
-    Check LoggerManager class and all logger levels
-    '''
+    """Testcases for class LoggerManager"""
 
     def __init__(self, method_name="TestLoggerManager"):
         super(TestLoggerManager, self).__init__(

@@ -12,7 +12,7 @@ LOGGER_MANAGER = LoggerManager()
 
 
 class TestTestInfoBase(TestInfoBase):
-    """Test Suite for TestInfoBase class"""
+    """Testcases for class TestInfoBase"""
 
     def __init__(self, method_name="TestTestInfoBase"):
         super(TestTestInfoBase, self).__init__(
