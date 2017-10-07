@@ -9,6 +9,8 @@ from qacode.core.loggers.LoggerManager import LoggerManager
 from qacode.core.utils.Utils import path_format
 
 LOGGER_MANAGER = LoggerManager()
+
+
 class TestConfig(TestInfoBase):
     """Testcases for class TestInfoBase"""
     # Error Messages
@@ -69,14 +71,18 @@ class TestConfig(TestInfoBase):
     def test_006_bot_drivers_names(self):
         """Test : test_007_config_has_key_bot_drivers_names"""
         values = self.test_config['bot']["drivers_names"]
+        drivers_path = '../qadrivers/'
+        path_not_found = self.ERR_KEY_PATH_NOT_FOUND.format(
+            'bot.drivers_path', drivers_path)
         for driver_name in values:
-            file_path = path_format(
-                self.test_config['bot']["drivers_path"],
-                driver_name)
-            msg = self.ERR_KEY_PATH_NOT_FOUND.format('bot.drivers_names', file_path)
-
-            if not os.path.exists(file_path):
-                self.log.warning(msg)
+            file_not_found = self.ERR_KEY_PATH_NOT_FOUND.format(
+                'bot.drivers_path[driver_name]', driver_name)
+            if not os.path.exists(drivers_path):
+                self.log.warning(path_not_found)
+            else:
+                file_path = path_format(drivers_path, driver_name)
+                if not os.path.exists(file_path):
+                    self.log.warning(file_not_found)
 
     def test_007_bot_log_name(self):
         """Test : test_008_config_has_key_bot_log_name"""
@@ -132,20 +138,20 @@ class TestConfig(TestInfoBase):
             self.ERR_KEY_REGEX.format('tests.functionals.url_logout', self.REGEX_URL)
         )
 
-    def test_014_key_url_logged_ok(self):
-        """Test : test_015_config_has_key_test_functionals_url_logged_ok"""
+    def test_014_key_url_logged(self):
+        """Test : test_015_config_has_key_test_functionals_url_logged"""
         self.assertRegex(
-            self.test_config['tests']['functionals']['url_logged_ok'],
+            self.test_config['tests']['functionals']['url_logged'],
             self.REGEX_URL,
-            self.ERR_KEY_REGEX.format('tests.functionals.url_logged_ok', self.REGEX_URL)
+            self.ERR_KEY_REGEX.format('tests.functionals.url_logged', self.REGEX_URL)
         )
 
-    def test_015_key_url_logged_ko(self):
-        """Test : test_016_config_has_key_test_functionals_url_logged_ko"""
+    def test_015_key_url_404(self):
+        """Test : test_016_config_has_key_test_functionals_url_404"""
         self.assertRegex(
-            self.test_config['tests']['functionals']['url_logged_ko'],
+            self.test_config['tests']['functionals']['url_404'],
             self.REGEX_URL,
-            self.ERR_KEY_REGEX.format('tests.functionals.url_logged_ko', self.REGEX_URL)
+            self.ERR_KEY_REGEX.format('tests.functionals.url_404', self.REGEX_URL)
         )
 
     def test_016_key_selectors_login(self):

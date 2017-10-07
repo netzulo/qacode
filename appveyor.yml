@@ -25,5 +25,5 @@ before_test:
 - "echo TESTS UNITARIES SUCCESS"
 
 test_script:
-- "%PYTHON%\\Scripts\\nosetests tests\\functionals\\"
+- "%PYTHON%\\python.exe setup.py test"
 - echo "TESTS FUNCTIONALS SUCCESS"
