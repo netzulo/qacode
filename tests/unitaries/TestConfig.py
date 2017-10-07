@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# pylint: disable=deprecated-method
 """Test Suite module for configs"""
 
 
@@ -49,14 +50,14 @@ class TestConfig(TestInfoBase):
 
     def test_003_bot_url_hub(self):
         """Test : Has key bot.url_hub and match regex"""
-        self.assertRegex(
+        self.assertRegexpMatches(
             self.test_config['bot']["url_hub"], self.REGEX_URL,
             self.ERR_KEY_REGEX.format('bot.url_hub', self.REGEX_URL)
         )
 
     def test_004_bot_url_node(self):
         """Test : test_005_config_has_key_bot_url_node"""
-        self.assertRegex(
+        self.assertRegexpMatches(
             self.test_config['bot']["url_node"], self.REGEX_URL,
             self.ERR_KEY_REGEX.format('bot.url_node', self.REGEX_URL)
         )
@@ -103,7 +104,7 @@ class TestConfig(TestInfoBase):
         if len(value) <= 0:
             self.log.warning(msg)
         else: # optional key
-            self.assertRegex(value, self.REGEX_URL, msg)
+            self.assertRegexpMatches(value, self.REGEX_URL, msg)
 
     def test_010_testlink_devkey(self):
         """Test : test_011_config_has_key_testlink_devkey"""
@@ -116,7 +117,7 @@ class TestConfig(TestInfoBase):
 
     def test_011_key_url(self):
         """Test : test_012_config_has_key_test_unitaries_url"""
-        self.assertRegex(
+        self.assertRegexpMatches(
             self.test_config['tests']['unitaries']['url'],
             self.REGEX_URL,
             self.ERR_KEY_REGEX.format('tests.unitaries.url', self.REGEX_URL)
@@ -124,7 +125,7 @@ class TestConfig(TestInfoBase):
 
     def test_012_key_url_login(self):
         """Test : test_013_config_has_key_test_functionals_url_login"""
-        self.assertRegex(
+        self.assertRegexpMatches(
             self.test_config['tests']['functionals']['url_login'],
             self.REGEX_URL,
             self.ERR_KEY_REGEX.format('tests.functionals.url_login', self.REGEX_URL)
@@ -132,7 +133,7 @@ class TestConfig(TestInfoBase):
 
     def test_013_key_url_logout(self):
         """Test : test_014_config_has_key_test_functionals_url_logout"""
-        self.assertRegex(
+        self.assertRegexpMatches(
             self.test_config['tests']['functionals']['url_logout'],
             self.REGEX_URL,
             self.ERR_KEY_REGEX.format('tests.functionals.url_logout', self.REGEX_URL)
@@ -140,7 +141,7 @@ class TestConfig(TestInfoBase):
 
     def test_014_key_url_logged(self):
         """Test : test_015_config_has_key_test_functionals_url_logged"""
-        self.assertRegex(
+        self.assertRegexpMatches(
             self.test_config['tests']['functionals']['url_logged'],
             self.REGEX_URL,
             self.ERR_KEY_REGEX.format('tests.functionals.url_logged', self.REGEX_URL)
@@ -148,7 +149,7 @@ class TestConfig(TestInfoBase):
 
     def test_015_key_url_404(self):
         """Test : test_016_config_has_key_test_functionals_url_404"""
-        self.assertRegex(
+        self.assertRegexpMatches(
             self.test_config['tests']['functionals']['url_404'],
             self.REGEX_URL,
             self.ERR_KEY_REGEX.format('tests.functionals.url_404', self.REGEX_URL)
