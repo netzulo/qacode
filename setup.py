@@ -39,6 +39,7 @@ setup(
         'nose-testconfig==0.10',
         'TestLink-API-Python-client==0.6.2',
     ],
+    setup_cfg='setup.cfg',
     setup_requires=['pytest-runner'],
     tests_require=[
         'nose',
