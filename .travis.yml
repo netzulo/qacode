@@ -20,12 +20,8 @@ before_install:
 - pip freeze
 install:
 - python setup.py install
-before_script:
-- nosetests --with-xunit --xunit-file=tests/reports/tests_unitaries.xml tests/unitaries/
-- echo "TESTS UNITARIES SUCCESS"
 script:
-- nosetests --with-xunit --xunit-file=tests/reports/tests_functionals.xml tests/functionals/
-- echo "TESTS FUNCTIONALS SUCCESS"
+- python setup.py test
 after_script:
 - if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then 
       sonar-scanner -X -Dsonar.login=${SONAR_GITHUB_TOKEN} -Dsonar.host.url=http://qalab.tk:82 ;
