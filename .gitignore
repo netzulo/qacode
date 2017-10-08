@@ -102,7 +102,7 @@ ENV/
 .sonar/
 
 # QACODE ignores
-qacode/configs/settings.ini
-
+qacode/configs/settings.json
+tests/reports/report_xunit.xml
 # Visual Studio
 .vs/
