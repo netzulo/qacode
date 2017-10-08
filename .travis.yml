@@ -24,9 +24,9 @@ install:
 - python setup.py install
 script:
 - if [ $(python setup.py test) = 5 ]; then
-      echo "0 TESTS COLLECTED"
+      echo "0 TESTS COLLECTED" ;
   else
-      echo "TESTS EXECUTED"
+      echo "TESTS EXECUTED" ;
   fi
 after_script:
 - if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then 
