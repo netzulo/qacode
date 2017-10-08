@@ -1,46 +1,38 @@
 # -*- coding: utf-8 -*-
+"""Test Suite module for loggers"""
 
 
-import logging
-from testconfig import config as cfg
 from qacode.core.testing.TestInfoBase import TestInfoBase
 from qacode.core.loggers.LoggerManager import LoggerManager
 
 
-logger_manager = LoggerManager(
-    log_path=cfg["BOT"]["log_output_file"],
-    log_level=logging.DEBUG
-)
+LOGGER_MANAGER = LoggerManager()
 
 
 class TestLoggerManager(TestInfoBase):
-    '''
-    Check LoggerManager class and all logger levels
-    '''
+    """Testcases for class LoggerManager"""
 
     def __init__(self, method_name="TestLoggerManager"):
         super(TestLoggerManager, self).__init__(
-            method_name, logger_manager=logger_manager
+            method_name, logger_manager=LOGGER_MANAGER
         )
 
     def test_001_logger_debug(self):
         """Test: test_001_logger_debug"""
-        self.log.debug("Unitary test for check messages with level type DEBUG")
+        self.log.debug("Unitary test, checking level type DEBUG")
 
     def test_002_logger_info(self):
         """Test: test_002_logger_info"""
-        self.log.info("Unitary test for check messages with level type INFO")
+        self.log.info("Unitary test, checking level type INFO")
 
     def test_003_logger_warn(self):
         """Test: test_003_logger_warn"""
-        self.log.warn("Unitary test for check messages with level type "
-                      "WARNING")
+        self.log.warning("Unitary test, checking level type WARNING")
 
     def test_004_logger_error(self):
         """Test: test_004_logger_error"""
-        self.log.error("Unitary test for check messages with level type ERROR")
+        self.log.error("Unitary test, checking level type ERROR")
 
     def test_005_logger_critical(self):
         """Test: test_005_logger_critical"""
-        self.log.critical("Unitary test for check messages with level type "
-                          "CRITICAL")
+        self.log.critical("Unitary test, checking level type CRITICAL")

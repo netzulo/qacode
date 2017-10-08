@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""TODO"""
 
 
 import os
@@ -6,17 +7,16 @@ import testlink
 from qacode.core.exceptions.CoreException import CoreException
 
 
-class TestlinkBase(object):
+class TlBase(object):
     """
     Testlink API manager
-
-    example:
-    $ export TESTLINK_API_PYTHON_SERVER_URL=http://10.0.32.66/lib/api/xmlrpc/v1/xmlrpc.php \n  # noqa
-    $ export TESTLINK_API_PYTHON_DEVKEY=014d1ab7cf6232863fd831d87c2879d1 \n
-    $ python
-    >>> import testlink
-    >>> tl = testlink.TestLinkHelper().connect(testlink.TestlinkAPIClient) \n
-    >>> tc = api.getTestCase(None, testcaseexternalid='prefix-1')
+    usage:
+      $ export TESTLINK_API_PYTHON_SERVER_URL=http://localhost/lib/api/xmlrpc/v1/xmlrpc.php \n
+      $ export TESTLINK_API_PYTHON_DEVKEY=014d1ab7cf6232863fd831d87c2879d1 \n
+      $ python
+      >>> import testlink
+      >>> tl = testlink.TestLinkHelper().connect(testlink.TestlinkAPIClient) \n
+      >>> tc = api.getTestCase(None, testcaseexternalid='prefix-1')
     """
 
     conn = None  # Testlink connection
@@ -41,7 +41,8 @@ class TestlinkBase(object):
                 self.devkey = devkey
                 self.conn = self.connect(self.url, self.devkey)
         except (CoreException, Exception) as err:
-                raise Exception("FAILED at instance testlink object")
+            raise CoreException(err=err,
+                                message='FAILED at instance testlink object')
 
     def connect(self, url, devkey):
         """
@@ -68,6 +69,7 @@ class TestlinkBase(object):
         self.builds = self.get_tl_builds(testplan_ids=[])
 
     def get_tl_proyects(self):
+        """TODO"""
         proyects = self.conn.getProjects()
         return proyects
 
@@ -100,10 +102,16 @@ class TestlinkBase(object):
         return builds
 
     def get_tl_milestones(self):
+        """TODO"""
+        # TODO: not implemented
         pass
 
     def get_tl_testsuites(self):
+        """TODO"""
+        # TODO: not implemented
         pass
 
     def get_tl_testcases(self):
+        """TODO"""
+        # TODO: not implemented
         pass

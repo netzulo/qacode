@@ -1,25 +1,29 @@
 # -*- coding: utf-8 -*-
+"""Base module for inherit new Test Suites"""
 
 
 import time
 import unittest
-import logging
-from testconfig import config as cfg
+
 from qacode.core.loggers.LoggerManager import LoggerManager
+from qacode.core.utils.Utils import settings
 
 
 class TestInfoBase(unittest.TestCase):
+    """Base class for inherit new Test classes"""
 
     logger_manager = None
     log = None
+    test_config = None
 
-    def __init__(self, method_name="TESTSUITE_NAME", logger_manager=None):
+    def __init__(self, method_name="TESTSUITE_NAME", logger_manager=None, test_config=None):
         super(TestInfoBase, self).__init__(method_name)
+        if test_config is None:
+            self.test_config = settings()
+        else:
+            self.test_config = test_config
         if logger_manager is None:
-            self.logger_manager = LoggerManager(
-                log_path=cfg["BOT"]["log_output_file"],
-                log_level=logging.DEBUG
-            )
+            self.logger_manager = LoggerManager()
         else:
             self.logger_manager = logger_manager
         self.log = self.logger_manager.get_log()
@@ -47,7 +51,7 @@ class TestInfoBase(unittest.TestCase):
         self.log.debug("TestInfoBase.tearDown: finishing testsuite...")
 
     @classmethod
-    def tearDownClass(self):
+    def tearDownClass(cls):
         """
         Just stoping testcase class dependencies
         """

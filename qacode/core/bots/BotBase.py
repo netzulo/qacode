@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+"""TODO"""
 
 import os
 import sys
@@ -30,11 +30,12 @@ class BotBase(object):
     logger_manager = None
     log = None
     IS_64BITS = sys.maxsize > 2**32
+    IS_WIN = os.name == 'nt'
 
     def __init__(self, bot_config):
         """
         Create new Bot browser based on options object what can be:
-        (help for each option can be found on settings.example.ini)
+        (help for each option can be found on settings.json)
         """
         if bot_config is None:
             raise CoreException(
@@ -48,12 +49,14 @@ class BotBase(object):
                 self.log = self.bot_config.log
             except Exception as err:
                 raise CoreException(
+                    err,
                     message="Error at create LoggerManager for BotBase class"
                 )
-
-            if self.bot_config.bot_mode == 'local':
+            if self.bot_config.config['mode'] == 'local':
+                self.curr_driver_path = self.driver_name_filter(
+                    driver_name=self.bot_config.config['browser'])
                 self.mode_local()
-            elif self.bot_config.bot_mode == 'remote':
+            elif self.bot_config.config['mode'] == 'remote':
                 self.mode_remote()
             else:
                 raise CoreException(
@@ -61,77 +64,63 @@ class BotBase(object):
                              .format(self.bot_config.bot_mode))
                 )
 
-            self.navigation = NavBase(self.curr_driver)  # TODO: testcases
+            self.navigation = NavBase(self.curr_driver)
 
-    def driver_name_filter(self, endswith=""):
-        for driver_name in self.bot_config.bot_drivers_names:
-            if driver_name.endswith(endswith):
-                return driver_name
+    def driver_name_filter(self, driver_name=None):
+        """
+        driver_name_format = {driver_name}{arch}{os}
+        examples:
+          chromedriver_32.exe
+          firefox_64
+        """
+        driver_name_format = '{}{}{}'
+        if driver_name is None:
+            raise CoreException(message='driver_name received it\'s None')
+        driver_name_format = driver_name_format.format(
+            driver_name, '{}', '{}'
+        )
+        if self.IS_WIN:
+            driver_name_format = driver_name_format.format('{}', '.exe')
+        else:
+            driver_name_format = driver_name_format.format('{}', '')
+        if self.IS_64BITS:
+            driver_name_format = driver_name_format.format('_64')
+        else:
+            driver_name_format = driver_name_format.format('_32')
+
+        for name in self.bot_config.config['drivers_names']:
+            if name.endswith(driver_name_format):
+                return driver_name_format
+        raise CoreException(message='Driver name not found')
 
     def mode_local(self):
-        """
-        Open new brower on local mode
-        """
-        self.curr_driver_path = "{}/{}".format(
-            self.bot_config.bot_drivers_path, "{}"
-        )
-        self.log.info('Starting browser with mode : LOCAL')
-
-        # STEP 1
-        browser_file = "{}{}"
-        if os.name == 'nt':
-            browser_file = browser_file.format("{}", ".exe")
-            if self.IS_64BITS:
-                browser_file = self.driver_name_filter(
-                    "{}driver_64.exe".format(self.bot_config.bot_browser)
-                )
-            else:
-                browser_file = self.driver_name_filter(
-                    "{}driver_32.exe".format(self.bot_config.bot_browser)
-                )
-        else:
-            browser_file = browser_file.format("{}", "")
-            if self.IS_64BITS:
-                browser_file = self.driver_name_filter("{}driver_64".format(
-                    self.bot_config.bot_browser))
-            else:
-                browser_file = self.driver_name_filter("{}driver_32".format(
-                    self.bot_config.bot_browser))
-
-        if browser_file is None:
-            raise CoreException(
-                message=("Failed at select driver name selected isn't valid: "
-                         "{}".format(browser_file)),
-                log=self.log
-            )
-        self.curr_driver_path = self.curr_driver_path.format(browser_file)
-
-        # STEP 2
-        if self.bot_config.bot_browser == "chrome":
+        """Open new brower on local mode"""
+        browser_name = self.bot_config.config['browser']
+        if browser_name == "chrome":
             self.curr_caps = DesiredCapabilities.CHROME.copy()
             self.curr_driver = WebDriver.Chrome(
                 executable_path=self.curr_driver_path,
                 desired_capabilities=self.curr_caps
             )
-        elif self.bot_config.bot_browser == "firefox":
+        elif browser_name == "firefox":
             self.curr_caps = DesiredCapabilities.FIREFOX.copy()
             self.curr_driver = WebDriver.Firefox(
                 executable_path=self.curr_driver_path,
                 capabilities=self.curr_caps
             )
-        elif self.bot_config.bot_browser == "iexplorer":
+        elif browser_name == "iexplorer":
             self.curr_caps = DesiredCapabilities.INTERNETEXPLORER.copy()
             self.curr_driver = WebDriver.Ie(
                 executable_path=self.curr_driver_path,
                 capabilities=self.curr_caps
             )
-        elif self.bot_config.bot_browser == "edge":
+        elif browser_name == "edge":
             self.curr_caps = DesiredCapabilities.EDGE.copy()
             self.curr_driver = WebDriver.Edge(
                 executable_path=self.curr_driver_path,
                 capabilities=self.curr_caps
             )
-        elif self.bot_config.bot_browser == "phantomjs":
+        elif browser_name == "phantomjs":
             self.curr_caps = DesiredCapabilities.PHANTOMJS.copy()
             self.curr_driver = WebDriver.PhantomJS(
                 executable_path=self.curr_driver_path,
@@ -140,8 +129,7 @@ class BotBase(object):
         else:
             raise CoreException(
                 message=("config file error, SECTION=bot, KEY=browser isn't "
-                         "valid value: {}"
-                         .format(self.bot_config.bot_browser)),
+                         "valid value: {}".format(browser_name)),
                 log=self.log
             )
 
@@ -149,28 +137,28 @@ class BotBase(object):
         """
         Open new brower on remote mode
         """
-        # TODO: check this method, do tests, etc...
-
+        browser_name = self.bot_config.config['browser']
+        url_hub = self.bot_config.config['url_hub']
         self.log.info('Starting browser with mode : REMOTE')
-        if self.bot_config.bot_browser == 'firefox':
+        if browser_name == 'firefox':
             self.curr_caps = DesiredCapabilities.FIREFOX.copy()
 
-        elif self.bot_config.bot_browser == 'chrome':
+        elif browser_name == 'chrome':
             self.curr_caps = DesiredCapabilities.CHROME.copy()
 
-        elif self.bot_config.bot_browser == 'iexplorer':
+        elif browser_name == 'iexplorer':
             self.curr_caps = DesiredCapabilities.INTERNETEXPLORER.copy()
 
-        elif self.bot_config.bot_browser == 'phantomjs':
+        elif browser_name == 'phantomjs':
             self.curr_caps = DesiredCapabilities.PHANTOMJS.copy()
 
-        elif self.bot_config.bot_browser == 'edge':
+        elif browser_name == 'edge':
             self.curr_caps = DesiredCapabilities.EDGE.copy()
         else:
-            raise Exception("Bad browser selected")
+            raise CoreException(message='Bad browser selected')
 
         self.curr_driver = RemoteWebDriver(
-            command_executor=self.bot_config.bot_url_hub,
+            command_executor=url_hub,
             desired_capabilities=self.curr_caps)
         self.log.info('Started browser with mode : REMOTE OK')
 

@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
-
+"""Package qacode.core.exceptions"""
 
 from qacode.core.exceptions.CoreException import CoreException
 
 
 class PageException(CoreException):
-    def __init__(
-            self,
-            message="Message Exception not defined for PageException class",
-            log=None
-    ):
-        super(PageException, self).__init__(message, log)
+    """Exception class that can be raise from Page classes"""
+
+    def __init__(self, err=None, message='Raised PageException', log=None):
+        """This exception must be raised from PageBase or inherit classes"""
+        super(PageException, self).__init__(err=err,
+                                            message=message,
+                                            log=log)

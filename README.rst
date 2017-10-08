@@ -67,66 +67,20 @@ SETUP.py install
 
 ``python setup.py install``
 
-
-Configuration File
-------------------
-
-:: 
-
-    # author: Netzulo
-    [BOT]
-    # DRIVERMODE: local , remote
-    mode=remote
-    # BROWSER: firefox , chrome , iexplorer, edge, phantomjs
-    browser=chrome
-    # REMOTEDRIVER
-    url_hub=http://146.255.101.51:11000/wd/hub
-    # NODEWEBDRIVER
-    url_node=http://146.255.101.51:11001/wd/hub
-    # DRIVERS PATH
-    drivers_path=../../modules/qadrivers
-    # DRIVERS NAMES
-    drivers_names= [
-        "chromedriver_32.exe","chromedriver_64.exe","chromedriver_32","chromedriver_64",
-        "firefoxdriver_32.exe", "firefoxdriver_64.exe","firefoxdriver_64.exe","firefoxdriver_32",
-        "phantomjsdriver_32.exe", "phantomjsdriver_64.exe","phantomjsdriver_32","phantomjsdriver_64",
-        "iexplorerdriver_32.exe","iexplorerdriver_64.exe",
-        "edgedriver_32.exe","edgedriver_64.exe"]
-    # FILE NAME FOR LOGGER
-    log_name=qacode
-    # OUTPUT FILE NAME FOR LOGGER
-    log_output_file=logs
-    [TESTLINK]
-    # Url for testlink API : http://localhost/lib/api/xmlrpc/v1/xmlrpc.php
-    url=http://localhost/lib/api/xmlrpc/v1/xmlrpc.php
-    # Devkey provided by testlink: 182c5b87c776ff2956b68e23eae866d9
-    devkey=182c5b87c776ff2956b68e23eae866d9
-    [TEST_UNITARIES]
-    url=https://www.netzulo.com
-    [TEST_FUNCTIONALS]
-    url_login=http://qalab.tk:82/sessions/new
-    url_logout=http://qalab.tk:82/sessions/logout
-    url_logged_ok=http://qalab.tk:82/
-    url_logged_ko=http://qalab.tk:82/sessions/
-    selectors_login=["#login", "#password", "[name='commit']"]
-    creed_user=qacode
-    creed_pass=qacode
-    [BUILD]
-    # Skip driver are not support on public selenium server http://qalab.tk:11000
-    skip_travis_tests=True
-
-
 Tests
 -----
+
+``python setup.py test``
+
 
 Unitaries
 *********
 
 ::
 
-    nosetests tests/unitaries/TestConfig.py --tc-file="qacode/configs/settings.ini"
-    nosetests tests/unitaries/TestLoggerManager.py --tc-file="qacode/configs/settings.ini"
-    nosetests tests/unitaries/TestTestInfoBase.py --tc-file="qacode/configs/settings.example.ini"
+    nosetests tests/unitaries/TestConfig.py
+    nosetests tests/unitaries/TestLoggerManager.py
+    nosetests tests/unitaries/TestTestInfoBase.py
 
 
 Functionals
@@ -134,12 +88,12 @@ Functionals
 
 ::
     
-    nosetests tests/functionals/TestBotBase.py --tc-file="qacode/configs/settings.example.ini"
-    nosetests tests/functionals/TestTestInfoBot.py --tc-file="qacode/configs/settings.ini"
-    nosetests tests/functionals/TestNavBase.py --tc-file="qacode/configs/settings.example.ini"
-    nosetests tests/functionals/TestPageBase.py --tc-file="qacode/configs/settings.example.ini"
-    nosetests tests/functionals/TestPageLogin.py --tc-file="qacode/configs/settings.example.ini"
-    nosetests tests/functionals/TestControlBase.py --tc-file="qacode/configs/settings.ini"
+    nosetests tests/functionals/TestBotBase.py
+    nosetests tests/functionals/TestTestInfoBot.py
+    nosetests tests/functionals/TestNavBase.py
+    nosetests tests/functionals/TestPageBase.py
+    nosetests tests/functionals/TestPageLogin.py
+    nosetests tests/functionals/TestControlBase.py
 
 
 Live example
@@ -150,3 +104,64 @@ Live example
   :alt: asciicast
 
 TODO: generate new ascii video
+
+
+Configuration File
+------------------
+
+.. highlight:: json
+.. code-block:: json
+   :linenos:
+
+::
+
+   {
+    "bot": {
+    "mode": "remote",
+    "browser": "chrome",
+    "url_hub": "http://146.255.101.51:11000/wd/hub",
+    "url_node": "http://146.255.101.51:11001/wd/hub",
+    "drivers_path": "../../modules/qadrivers",
+    "drivers_names": [
+      "chromedriver_32.exe",
+      "chromedriver_64.exe",
+      "chromedriver_32",
+      "chromedriver_64",
+      "firefoxdriver_32.exe",
+      "firefoxdriver_64.exe",
+      "firefoxdriver_64.exe",
+      "firefoxdriver_32",
+      "phantomjsdriver_32.exe",
+      "phantomjsdriver_64.exe",
+      "phantomjsdriver_32",
+      "phantomjsdriver_64",
+      "iexplorerdriver_32.exe",
+      "iexplorerdriver_64.exe",
+      "edgedriver_32.exe",
+      "edgedriver_64.exe"
+    ],
+    "log_output_file": "logs",
+    "log_name": "qacode"
+    },
+    "testlink": {
+      "url_api": "http://localhost/lib/api/xmlrpc/v1/xmlrpc.php",
+      "dev_key": "182c5b87c776ff2956b68e23eae866d9"
+    },
+    "tests": {
+      "unitaries": {
+        "url": "https://www.netzulo.com"
+      },
+      "functionals": {
+        "url_login": "http://qalab.tk:82/sessions/new",
+        "url_logout": "http://qalab.tk:82/sessions/logout",
+        "url_logged": "http://qalab.tk:82/",
+        "url_404": "http://qalab.tk:82/sessions/login",
+        "selectors_login": [ "#login", "#password", "[name='commit']" ],
+        "creed_user": "qacode",
+        "creed_pass": "qacode"
+      }
+    },
+    "build": {
+      "travis":{ "skip_tests": true }
+    }
+  }

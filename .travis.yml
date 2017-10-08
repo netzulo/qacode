@@ -1,3 +1,5 @@
+sudo: required 
+dist: trusty
 env:
   global:
 # SONAR_GITHUB_TOKEN
@@ -12,7 +14,6 @@ addons:
 language: python
 python:
 - '2.7'
-- '3.2'
 - '3.3'
 - '3.4'
 - '3.5'
@@ -21,13 +22,12 @@ before_install:
 - pip freeze
 install:
 - python setup.py install
-before_script:
-- cp qacode/configs/settings.example.ini qacode/configs/settings.ini
 script:
-- nosetests --with-xunit --xunit-file=tests/reports/tests_unitaries.xml tests/unitaries/ --tc-file="qacode/configs/settings.ini"
-- echo "TESTS UNITARIES SUCCESS"
-- nosetests --with-xunit --xunit-file=tests/reports/tests_functionals.xml tests/functionals/ --tc-file="qacode/configs/settings.ini"
-- echo "TESTS FUNCTIONALS SUCCESS"
+- if [ $(python setup.py test) = 5 ]; then
+      echo "0 TESTS COLLECTED" ;
+  else
+      echo "TESTS EXECUTED" ;
+  fi
 after_script:
 - if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then 
       sonar-scanner -X -Dsonar.login=${SONAR_GITHUB_TOKEN} -Dsonar.host.url=http://qalab.tk:82 ;

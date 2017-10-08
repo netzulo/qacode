@@ -1,18 +1,13 @@
 # -*- coding: utf-8 -*-
+"""Testsuite for package qacode.core.webs.controls"""
 
-
-import logging
-from testconfig import config as cfg
 from selenium.webdriver.remote.webelement import WebElement
-from qacode.core.testing.TesInfoBot import TestInfoBot
+from qacode.core.testing.TestInfoBot import TestInfoBot
 from qacode.core.webs.controls.ControlBase import ControlBase
 from qacode.core.loggers.LoggerManager import LoggerManager
 
 
-logger_manager = LoggerManager(
-    log_path=cfg["BOT"]["log_output_file"],
-    log_level=logging.DEBUG
-)
+LOGGER_MANAGER = LoggerManager()
 
 
 class TestControlBase(TestInfoBot):
@@ -20,24 +15,26 @@ class TestControlBase(TestInfoBot):
 
     def __init__(self, method_name="TestControlBase"):
         super(TestControlBase, self).__init__(
-            method_name, logger_manager=logger_manager
+            method_name=method_name,
+            logger_manager=LOGGER_MANAGER
         )
 
-    def test_001_controlbase_instance_selector(self):
-        url = cfg['TEST_UNITARIES']['url']
-        selector = "[href='http://www.netzulo.com/?page_id=116']"
-        self.bot.navigation.get_url(url)
-        assert url in self.bot.curr_driver.current_url
-        control = ControlBase(self.bot, selector=selector)
+    def setUp(self):
+        super(TestControlBase, self).setUp()
+        self.url = self.test_config['tests']['unitaries']['url']
+        self.selector = "[href='http://www.netzulo.com/?page_id=116']"
+        self.bot.navigation.get_url(self.url)
+        assert self.url in self.bot.curr_driver.current_url
+
+    def test_001_control_findselector(self):
+        """Testcase: test_001_control_findselector"""
+        control = ControlBase(self.bot, selector=self.selector)
         self.assertIsInstance(control.element, WebElement)
         self.assertIsInstance(control, ControlBase)
 
-    def test_002_controlbase_instance_element(self):
-        url = cfg['TEST_UNITARIES']['url']
-        selector = "[href='http://www.netzulo.com/?page_id=116']"
-        self.bot.navigation.get_url(url)
-        assert url in self.bot.curr_driver.current_url
-        element = self.bot.navigation.find_element(selector)
+    def test_002_control_instance(self):
+        """Testcase: test_002_control_instance"""
+        element = self.bot.navigation.find_element(self.selector)
         control = ControlBase(self.bot, element=element)
         self.assertIsInstance(control.element, WebElement)
         self.assertIsInstance(control, ControlBase)

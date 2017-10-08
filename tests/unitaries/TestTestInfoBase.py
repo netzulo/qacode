@@ -1,25 +1,22 @@
 # -*- coding: utf-8 -*-
+"""Test Suite module for testing package"""
 
 
 import unittest
-import logging
-from testconfig import config as cfg
+
 from qacode.core.testing.TestInfoBase import TestInfoBase
 from qacode.core.loggers.LoggerManager import LoggerManager
 
 
-logger_manager = LoggerManager(
-    log_path=cfg["BOT"]["log_output_file"],
-    log_level=logging.DEBUG
-)
+LOGGER_MANAGER = LoggerManager()
 
 
 class TestTestInfoBase(TestInfoBase):
-    """Test Suite for TestInfoBase class"""
+    """Testcases for class TestInfoBase"""
 
     def __init__(self, method_name="TestTestInfoBase"):
         super(TestTestInfoBase, self).__init__(
-            method_name, logger_manager=logger_manager
+            method_name, logger_manager=LOGGER_MANAGER
         )
 
     def test_001_inheritance(self):

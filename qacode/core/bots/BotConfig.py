@@ -1,66 +1,49 @@
 # -*- coding: utf-8 -*-
+"""
+All Bot Base functionality for inherit class and expand library
+"""
 
 
-import ast
-from testconfig import config as cfg
 from qacode.core.loggers.LoggerManager import LoggerManager
+from qacode.core.exceptions.CoreException import CoreException
 
 
 class BotConfig(object):
     '''
     Bot configuration for BotBase or inherit classes
     '''
-    bot_mode = None
-    bot_browser = None
-    bot_url_hub = None
-    bot_url_node = None
-    bot_drivers_path = None
-    bot_drivers_names = None
-    bot_log_name = None
-    bot_log_output_file = None
+    config = None
     logger_manager = None
     log = None
 
-    def __init__(self, nose_config=cfg, logger_manager=None):
+    def __init__(self, config=None, logger_manager=None):
         """
         Load all defined options for configure new bots
         (listed on settings.example.ini)
         """
-        self.bot_mode = nose_config['BOT']['mode']
-        self.bot_browser = nose_config['BOT']['browser']
-        self.bot_url_hub = nose_config['BOT']['url_hub']
-        self.bot_url_node = nose_config['BOT']['url_node']
-        self.bot_drivers_path = nose_config['BOT']['drivers_path']
-        self.bot_drivers_names = ast.literal_eval(
-            nose_config['BOT']['drivers_names']
-        )
-        self.bot_log_name = nose_config['BOT']['log_name']
-        self.bot_log_output_file = nose_config['BOT']['log_output_file']
-
-        try:
-            self.init_logger_manager(logger_manager)
-            self.log_option_loaded(self.bot_mode)
-            self.log_option_loaded(self.bot_browser)
-            self.log_option_loaded(self.bot_url_hub)
-            self.log_option_loaded(self.bot_url_node)
-            self.log_option_loaded(self.bot_drivers_path)
-            self.log_option_loaded(self.bot_drivers_names)
-            self.log_option_loaded(self.bot_log_name)
-            self.log_option_loaded(self.bot_log_output_file)
-            self.init_logger_manager(logger_manager)
-        except Exception as err:
-            raise Exception(
-                err, 'Error: at create LoggerManager for  BotConfig class'
-            )
+        if config is None:
+            raise CoreException("Bot config provived it's None")
+        self.config = config['bot']
+        props = [
+            'mode',
+            'browser',
+            'url_hub',
+            'url_node',
+            'drivers_path',
+            'drivers_names',
+            'log_name',
+            'log_output_file',
+        ]
+        self.init_logger_manager(logger_manager)
+        for prop in props:
+            self.log_option_loaded(self.config[prop])
 
     def init_logger_manager(self, logger_manager=None):
         """
         Initialize new logger_manager fot BotConfig object and return it
         """
         if logger_manager is None:
-            self.logger_manager = LoggerManager(
-                log_path=self.bot_log_output_file, log_name=self.bot_log_name
-            )
+            self.logger_manager = LoggerManager()
         else:
             self.logger_manager = logger_manager
         self.log = self.logger_manager.get_log()
@@ -70,7 +53,8 @@ class BotConfig(object):
         """
         Write log message with bot option value or show EMPTY as value on log
         """
+        msg = 'Bot option={} : {}'
         if option is None:
-            self.log.info('UNLOADED Bot option : {}'.format(option))
+            self.log.warning(str(msg.format(option, 'Loaded failed')))
         else:
-            self.log.info('LOADED Bot option : {}'.format(str(option)))
+            self.log.debug(str(msg.format(option, 'Loaded success')))
