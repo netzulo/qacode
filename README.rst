@@ -72,15 +72,14 @@ Tests
 
 ``python setup.py test``
 
-
 Unitaries
 *********
 
 ::
 
-    nosetests tests/unitaries/TestConfig.py
-    nosetests tests/unitaries/TestLoggerManager.py
-    nosetests tests/unitaries/TestTestInfoBase.py
+    pytest tests/unitaries/TestConfig.py
+    pytest tests/unitaries/TestLoggerManager.py
+    pytest tests/unitaries/TestTestInfoBase.py
 
 
 Functionals
@@ -88,19 +87,19 @@ Functionals
 
 ::
     
-    nosetests tests/functionals/TestBotBase.py
-    nosetests tests/functionals/TestTestInfoBot.py
-    nosetests tests/functionals/TestNavBase.py
-    nosetests tests/functionals/TestPageBase.py
-    nosetests tests/functionals/TestPageLogin.py
-    nosetests tests/functionals/TestControlBase.py
+    pytest tests/functionals/TestBotBase.py
+    pytest tests/functionals/TestTestInfoBot.py
+    pytest tests/functionals/TestNavBase.py
+    pytest tests/functionals/TestPageBase.py
+    pytest tests/functionals/TestPageLogin.py
+    pytest tests/functionals/TestControlBase.py
 
 
 Live example
 ************
 
-.. image:: https://asciinema.org/a/HEk8Dm0zL6eDoyj8MA19wawAx.png
-  :target: https://asciinema.org/a/HEk8Dm0zL6eDoyj8MA19wawAx
+.. image:: https://asciinema.org/a/phH5ISjGEfwXZUp648dvMOqox.png
+  :target: https://asciinema.org/a/phH5ISjGEfwXZUp648dvMOqox
   :alt: asciicast
 
 TODO: generate new ascii video
@@ -115,53 +114,53 @@ Configuration File
 
 ::
 
-   {
-    "bot": {
-    "mode": "remote",
-    "browser": "chrome",
-    "url_hub": "http://146.255.101.51:11000/wd/hub",
-    "url_node": "http://146.255.101.51:11001/wd/hub",
-    "drivers_path": "../../modules/qadrivers",
-    "drivers_names": [
-      "chromedriver_32.exe",
-      "chromedriver_64.exe",
-      "chromedriver_32",
-      "chromedriver_64",
-      "firefoxdriver_32.exe",
-      "firefoxdriver_64.exe",
-      "firefoxdriver_64.exe",
-      "firefoxdriver_32",
-      "phantomjsdriver_32.exe",
-      "phantomjsdriver_64.exe",
-      "phantomjsdriver_32",
-      "phantomjsdriver_64",
-      "iexplorerdriver_32.exe",
-      "iexplorerdriver_64.exe",
-      "edgedriver_32.exe",
-      "edgedriver_64.exe"
-    ],
-    "log_output_file": "logs",
-    "log_name": "qacode"
-    },
-    "testlink": {
-      "url_api": "http://localhost/lib/api/xmlrpc/v1/xmlrpc.php",
-      "dev_key": "182c5b87c776ff2956b68e23eae866d9"
-    },
-    "tests": {
-      "unitaries": {
-        "url": "https://www.netzulo.com"
+    {
+      "bot": {
+        "mode": "remote",
+        "browser": "chrome",
+        "url_hub": "http://146.255.101.51:11000/wd/hub",
+        "url_node": "http://146.255.101.51:11001/wd/hub",
+        "drivers_path": "../../modules/qadrivers",
+        "drivers_names": [
+          "chromedriver_32.exe",
+          "chromedriver_64.exe",
+          "chromedriver_32",
+          "chromedriver_64",
+          "firefoxdriver_32.exe",
+          "firefoxdriver_64.exe",
+          "firefoxdriver_64.exe",
+          "firefoxdriver_32",
+          "phantomjsdriver_32.exe",
+          "phantomjsdriver_64.exe",
+          "phantomjsdriver_32",
+          "phantomjsdriver_64",
+          "iexplorerdriver_32.exe",
+          "iexplorerdriver_64.exe",
+          "edgedriver_32.exe",
+          "edgedriver_64.exe"
+        ],
+        "log_output_file": "logs",
+        "log_name": "qacode"
       },
-      "functionals": {
-        "url_login": "http://qalab.tk:82/sessions/new",
-        "url_logout": "http://qalab.tk:82/sessions/logout",
-        "url_logged": "http://qalab.tk:82/",
-        "url_404": "http://qalab.tk:82/sessions/login",
-        "selectors_login": [ "#login", "#password", "[name='commit']" ],
-        "creed_user": "qacode",
-        "creed_pass": "qacode"
+      "testlink": {
+        "url_api": "http://localhost/lib/api/xmlrpc/v1/xmlrpc.php",
+        "dev_key": "182c5b87c776ff2956b68e23eae866d9"
+      },
+      "tests": {
+        "unitaries": {
+          "url": "https://www.netzulo.com"
+        },
+        "functionals": {
+          "url_login": "http://qalab.tk:82/sessions/new",
+          "url_logout": "http://qalab.tk:82/sessions/logout",
+          "url_logged": "http://qalab.tk:82/",
+          "url_404": "http://qalab.tk:82/sessions/login",
+          "selectors_login": [ "#login", "#password", "[name='commit']" ],
+          "creed_user": "qacode",
+          "creed_pass": "qacode"
+        }
+      },
+      "build": {
+        "travis":{ "skip_tests": true }
       }
-    },
-    "build": {
-      "travis":{ "skip_tests": true }
     }
-  }
