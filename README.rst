@@ -95,16 +95,6 @@ Functionals
     pytest tests/functionals/TestControlBase.py
 
 
-Live example
-************
-
-.. image:: https://asciinema.org/a/phH5ISjGEfwXZUp648dvMOqox.png
-  :target: https://asciinema.org/a/phH5ISjGEfwXZUp648dvMOqox
-  :alt: asciicast
-
-TODO: generate new ascii video
-
-
 Configuration File
 ------------------
 
@@ -164,3 +154,13 @@ Configuration File
         "travis":{ "skip_tests": true }
       }
     }
+
+
+Live example
+************
+
+.. image:: https://asciinema.org/a/phH5ISjGEfwXZUp648dvMOqox.png
+  :target: https://asciinema.org/a/phH5ISjGEfwXZUp648dvMOqox
+  :alt: asciicast
+
+

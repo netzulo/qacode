@@ -23,7 +23,8 @@ before_install:
 install:
 - python setup.py install
 script:
-- if [ $(python setup.py test) = 5 ]; then
+- python setup.py test
+- if [ $? = 5 ]; then
       echo "0 TESTS COLLECTED" ;
   else
       echo "TESTS EXECUTED" ;
