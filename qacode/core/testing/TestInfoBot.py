@@ -15,7 +15,7 @@ class TestInfoBot(TestInfoBase):
     bot_config = None
     bot = None
 
-    def __init__(self, method_name="TESTSUITE_NAME", logger_manager=None,
+    def __init__(self, method_name="TestInfoBot", logger_manager=None,
                  is_multiple_bot=True):
         super(TestInfoBot, self).__init__(method_name, logger_manager)
         if is_multiple_bot is None:

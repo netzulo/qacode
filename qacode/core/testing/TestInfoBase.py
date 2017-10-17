@@ -16,7 +16,7 @@ class TestInfoBase(unittest.TestCase):
     log = None
     test_config = None
 
-    def __init__(self, method_name="TESTSUITE_NAME", logger_manager=None, test_config=None):
+    def __init__(self, method_name="TestInfoBase", logger_manager=None, test_config=None):
         super(TestInfoBase, self).__init__(method_name)
         if test_config is None:
             self.test_config = settings()
