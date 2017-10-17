@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 """qacode module can be installed and configured from here"""
 
-
+from os import path
 from setuptools import setup, find_packages
 from qacode.core.utils.Utils import read_file
 from qacode.core.utils.Utils import path_format
+
+
+CURR_PATH = "{}{}".format(path.abspath(path.dirname(__file__)), '/')
 
 
 def read(file_name=None, is_encoding=True):
@@ -13,7 +16,7 @@ def read(file_name=None, is_encoding=True):
         raise Exception("File name not provided")
     return read_file(is_encoding=is_encoding,
                      file_path=path_format(
-                         file_path='./',
+                         file_path=CURR_PATH,
                          file_name=file_name))
 
 
