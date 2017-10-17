@@ -133,7 +133,8 @@ Configuration File
         "log_name": "qacode"
       },
       "testlink": {
-        "url_api": "http://localhost/lib/api/xmlrpc/v1/xmlrpc.php",
+        "enabled": false,
+        "url_api": "http://qalab.tk:86/lib/api/xmlrpc/v1/xmlrpc.php",
         "dev_key": "182c5b87c776ff2956b68e23eae866d9"
       },
       "tests": {
