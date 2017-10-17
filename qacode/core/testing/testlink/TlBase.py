@@ -3,75 +3,80 @@
 
 
 import os
-import testlink
+from Testlink import TestlinkAPIClient
+from Testlink import TestLinkHelper
 from qacode.core.exceptions.CoreException import CoreException
 
 
 class TlBase(object):
-    """
-    Testlink API manager
-    usage:
-      $ export TESTLINK_API_PYTHON_SERVER_URL=http://localhost/lib/api/xmlrpc/v1/xmlrpc.php \n
-      $ export TESTLINK_API_PYTHON_DEVKEY=014d1ab7cf6232863fd831d87c2879d1 \n
-      $ python
-      >>> import testlink
-      >>> tl = testlink.TestLinkHelper().connect(testlink.TestlinkAPIClient) \n
-      >>> tc = api.getTestCase(None, testcaseexternalid='prefix-1')
-    """
+    """Testlink API manager class"""
 
-    conn = None  # Testlink connection
-    proyects = None  # Testlink Proyects list
-    plans = None  # Testlink TestPlans list by proyect id
-    builds = None  # Testlink Builds list by testplan id
+    # Testlink connection
+    conn = None
+    # Testlink Proyects list
+    proyects = None
+    # Testlink TestPlans list by proyect id
+    plans = None
+    # Testlink Builds list by testplan id
+    builds = None
 
-    def __init__(self, url="", devkey=""):
+    def __init__(self, logger_manager=None, url_api=None, dev_key=None):
         """
         Instance testlink api and save as self.conn property
         """
-        try:
-            if ((str(url) == "" or url is None) or
-                    (str(devkey) == "" or devkey is None)):
-                raise CoreException(
-                    "Didn't started testlink connection because bad format "
-                    "params : url={} , devkey={}".format(url, devkey)
-                )
-            else:
-                # connect with success params
-                self.url = url
-                self.devkey = devkey
-                self.conn = self.connect(self.url, self.devkey)
-        except (CoreException, Exception) as err:
-            raise CoreException(err=err,
-                                message='FAILED at instance testlink object')
+        if logger_manager is None:
+            raise CoreException(message='Testlink logger_manager can\'t be None')
+        self.logger_manager = logger_manager
+        if url_api is None:
+            raise CoreException(message='Testlink url_api can\'t be None')
+        self.url_api = url_api
+        if dev_key is None:
+            raise CoreException(message='Testlink dev_key can\'t be None')
+        self.dev_key = dev_key
+        # connect with success params
+        self.conn = self.connect()
 
-    def connect(self, url, devkey):
+    def connect(self, url_api=None, dev_key=None):
         """
         SETs 2 environments vars and connect to Testlink API
 
         + TESTLINK_API_PYTHON_SERVER_URL
         + TESTLINK_API_PYTHON_DEVKEY
-        """
-        os.environ['TESTLINK_API_PYTHON_SERVER_URL'] = url
-        os.environ['TESTLINK_API_PYTHON_DEVKEY'] = devkey
-        conn = testlink.TestLinkHelper().connect(testlink.TestlinkAPIClient)
-        return conn
+        """  
+        selected_url_api = None
+        selected_dev_key = None      
+        if url_api is None or dev_key is None:
+            selected_url_api = self.url_api
+            selected_dev_key = self.dev_key
+        else:
+            selected_url_api = url_api
+            selected_url_api = dev_key
+        os.environ['TESTLINK_API_PYTHON_SERVER_URL'] = selected_url_api
+        os.environ['TESTLINK_API_PYTHON_DEVKEY'] = selected_dev_key
+        msg_err = 'Error at connect testlink, api_url={}, dev_key={}'.format(
+            selected_url_api, selected_dev_key
+        )
+        conn = TestLinkHelper().connect(TestlinkAPIClient)
+        if conn is None:
+            raise CoreException(message=msg_err)
+        else:
+            self.load_all()
 
     def load_all(self):
         """
         Load all TestProyects, TestPlans, Builds, Testsuites y TestCases
         """
-        # TODO: make functional ...
         if self.conn is None:
-            raise CoreException("None property",
-                                "self.conn it's null at TestlinkBase class")
+            raise CoreException(
+                message='Connection can\'t be None at obtain data')
+        # TODO: make functional
         self.proyects = self.get_tl_proyects()
         self.plans = self.get_tl_plans(proyect_ids=[0])
         self.builds = self.get_tl_builds(testplan_ids=[])
 
     def get_tl_proyects(self):
-        """TODO"""
-        proyects = self.conn.getProjects()
-        return proyects
+        """Obtain from testlink connection: Test Proyects"""
+        return self.conn.getProjects()
 
     def get_tl_plans(self, proyect_ids=None):
         """
