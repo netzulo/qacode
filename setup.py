@@ -22,7 +22,7 @@ def read(file_name=None, is_encoding=True):
 
 setup(
     name='qacode',
-    version='0.2.6',
+    version='0.2.7',
     license=read("LICENSE", is_encoding=False),
     packages=find_packages(exclude=['tests']),
     description='Main automation lib',
@@ -30,7 +30,7 @@ setup(
     author='Netzulo Open Source',
     author_email='netzuleando@gmail.com',
     url='https://github.com/netzulo/qacode',
-    download_url='https://github.com/netzulo/qacode/tarball/v0.2.6',
+    download_url='https://github.com/netzulo/qacode/tarball/v0.2.7',
     keywords=['testing', 'logging', 'functional', 'selenium', 'test'],
     install_requires=[
         'appdirs',
