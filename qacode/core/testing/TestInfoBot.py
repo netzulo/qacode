@@ -16,8 +16,11 @@ class TestInfoBot(TestInfoBase):
     bot = None
 
     def __init__(self, method_name="TestInfoBot", logger_manager=None,
+                 test_config=None,
                  is_multiple_bot=True):
-        super(TestInfoBot, self).__init__(method_name, logger_manager)
+        super(TestInfoBot, self).__init__(method_name=method_name,
+                                          logger_manager=logger_manager,
+                                          test_config=test_config)
         if is_multiple_bot is None:
             raise CoreException(
                 message='Param is_multiple_bot (bool) can\'t be None'
