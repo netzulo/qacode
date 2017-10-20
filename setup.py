@@ -10,20 +10,21 @@ from qacode.core.utils.Utils import path_format
 CURR_PATH = "{}{}".format(path.abspath(path.dirname(__file__)), '/')
 
 
-def read(file_name=None, is_encoding=True):
+def read(file_name=None, is_encoding=True, ignore_raises=False):
     """Read file"""
     if file_name is None:
         raise Exception("File name not provided")
     return read_file(is_encoding=is_encoding,
                      file_path=path_format(
                          file_path=CURR_PATH,
-                         file_name=file_name))
+                         file_name=file_name,
+                         ignore_raises=ignore_raises))
 
 
 setup(
     name='qacode',
     version='0.2.7',
-    license=read("LICENSE", is_encoding=False),
+    license=read("LICENSE", is_encoding=False, ignore_raises=True),
     packages=find_packages(exclude=['tests']),
     description='Main automation lib',
     long_description=read("README.rst"),

@@ -11,7 +11,8 @@ from os import path
 import json
 
 
-def path_format(file_path=None, file_name=None, is_abspath=False, ignore_raises=False):
+def path_format(file_path=None, file_name=None, is_abspath=False,
+                ignore_raises=False):
     """
     Get path joined checking before if path and filepath exist,
      if not, raise an Exception
@@ -25,12 +26,12 @@ def path_format(file_path=None, file_name=None, is_abspath=False, ignore_raises=
             raise IOError("File '{}{}' doesn't exists".format(file_path, file_name))
         if is_abspath:
             return path.abspath(path.join(file_path, file_name))
-        else:
-            return path.join(file_path, file_name)
+        return path.join(file_path, file_name)
     else:
         return path_formatted
 
-def read_file(is_json=False, file_path=None, encoding='utf-8', is_encoding=True):
+def read_file(is_json=False, file_path=None, encoding='utf-8',
+              is_encoding=True):
     """Returns file object from file_path,
        compatible with all py versiones
     optionals:
@@ -55,9 +56,10 @@ def read_file(is_json=False, file_path=None, encoding='utf-8', is_encoding=True)
         return json.loads(text)
     return text
 
-def settings():
+def settings(file_path='qacode/configs/', file_name='settings.json',
+             is_abspath=True):
     """Returns file settings as a dict to be use on qacode lib"""
     return read_file(is_json=True,
-                     file_path=path_format(file_path='qacode/configs/',
-                                           file_name='settings.json',
-                                           is_abspath=True))
+                     file_path=path_format(file_path=file_path,
+                                           file_name=file_name,
+                                           is_abspath=is_abspath))
