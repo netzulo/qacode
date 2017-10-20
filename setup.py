@@ -14,16 +14,25 @@ def read(file_name=None, is_encoding=True, ignore_raises=False):
     """Read file"""
     if file_name is None:
         raise Exception("File name not provided")
+    if ignore_raises:
+	try:
+            return read_file(is_encoding=is_encoding,
+                             file_path=path_format(
+                                 file_path=CURR_PATH,
+                                 file_name=file_name,
+                                 ignore_raises=ignore_raises))
+        except (Exception):
+             return 'NOTFOUND'
     return read_file(is_encoding=is_encoding,
-                     file_path=path_format(
-                         file_path=CURR_PATH,
-                         file_name=file_name,
-                         ignore_raises=ignore_raises))
+                      file_path=path_format(
+                          file_path=CURR_PATH,
+                          file_name=file_name,
+                          ignore_raises=ignore_raises))
 
 
 setup(
     name='qacode',
-    version='0.2.8',
+    version='0.2.9',
     license=read("LICENSE", is_encoding=False, ignore_raises=True),
     packages=find_packages(exclude=['tests']),
     description='Main automation lib',
@@ -31,7 +40,7 @@ setup(
     author='Netzulo Open Source',
     author_email='netzuleando@gmail.com',
     url='https://github.com/netzulo/qacode',
-    download_url='https://github.com/netzulo/qacode/tarball/v0.2.8',
+    download_url='https://github.com/netzulo/qacode/tarball/v0.2.9',
     keywords=['testing', 'logging', 'functional', 'selenium', 'test'],
     install_requires=[
         'appdirs',
