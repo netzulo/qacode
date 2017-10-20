@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# pylint: disable=broad-except
 """qacode module can be installed and configured from here"""
 
 from os import path
@@ -15,19 +16,21 @@ def read(file_name=None, is_encoding=True, ignore_raises=False):
     if file_name is None:
         raise Exception("File name not provided")
     if ignore_raises:
-	try:
+        try:
             return read_file(is_encoding=is_encoding,
                              file_path=path_format(
                                  file_path=CURR_PATH,
                                  file_name=file_name,
                                  ignore_raises=ignore_raises))
-        except (Exception):
-             return 'NOTFOUND'
+        except Exception:
+            #TODO: not silence like this,
+            # must be on setup.cfg, README path
+            return 'NOTFOUND'
     return read_file(is_encoding=is_encoding,
-                      file_path=path_format(
-                          file_path=CURR_PATH,
-                          file_name=file_name,
-                          ignore_raises=ignore_raises))
+                     file_path=path_format(
+                         file_path=CURR_PATH,
+                         file_name=file_name,
+                         ignore_raises=ignore_raises))
 
 
 setup(
