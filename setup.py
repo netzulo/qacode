@@ -14,11 +14,20 @@ def read(file_name=None, is_encoding=True, ignore_raises=False):
     """Read file"""
     if file_name is None:
         raise Exception("File name not provided")
+    if ignore_raises:
+	try:
+            return read_file(is_encoding=is_encoding,
+                             file_path=path_format(
+                                 file_path=CURR_PATH,
+                                 file_name=file_name,
+                                 ignore_raises=ignore_raises))
+        except (Exception):
+             return 'NOTFOUND'
     return read_file(is_encoding=is_encoding,
-                     file_path=path_format(
-                         file_path=CURR_PATH,
-                         file_name=file_name,
-                         ignore_raises=ignore_raises))
+                      file_path=path_format(
+                          file_path=CURR_PATH,
+                          file_name=file_name,
+                          ignore_raises=ignore_raises))
 
 
 setup(
