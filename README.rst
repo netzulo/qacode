@@ -4,9 +4,6 @@ QA Code
 .. image:: https://img.shields.io/github/downloads/netzulo/qacode/total.svg
   :alt: Downloads on Github
   :target: https://img.shields.io/github/downloads/netzulo/qacode/total.svg
-.. image:: https://img.shields.io/pypi/dd/qacode.svg
-  :alt: Downloads on Pypi
-  :target: https://img.shields.io/pypi/dd/qacode.svg
 .. image:: https://img.shields.io/github/release/netzulo/qcode.svg
   :alt: GitHub release
   :target: https://img.shields.io/github/release/netzulo/qcode.svg
@@ -17,7 +14,7 @@ QA Code
 |  master               | .. image:: https://travis-ci.org/netzulo/qacode.svg?branch=master | .. image:: https://ci.appveyor.com/api/projects/status/4a0tc5pis1bykt9x/branch/master?svg=true |
 +-----------------------+-----------------------+-------------------------------------------+------------------------------------------------------------------------------------------------+
 |  devel                | .. image:: https://travis-ci.org/netzulo/qacode.svg?branch=devel  | .. image:: https://ci.appveyor.com/api/projects/status/4a0tc5pis1bykt9x/branch/devel?svg=true  |
-+-----------------------+-----------------------+-------------------------------------------+------------------------------------------------------------------------------------------------+
++-----------------------+-------------------------------------------------------------------+------------------------------------------------------------------------------------------------+
 
 
 Python tested versions
@@ -26,8 +23,8 @@ Python tested versions
 +  **3.6**
 +  **3.5**
 +  **3.4**
-+  **3.3**
-+ **3.2** *(not supported)*
++  **3.3** (*not supported*)
++  **3.2** (*not supported*)
 +  **2.7**
 
 
