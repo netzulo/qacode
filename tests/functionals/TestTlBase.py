@@ -13,5 +13,10 @@ class TestTlBase(TestInfoBase):
     def __init__(self, method_name="TestTlBase", logger_manager=None,
                  test_config=None):
         """TODO"""
-        # TODO: make functional tests
         super(TestTlBase, self).__init__(method_name, logger_manager, test_config)
+
+
+
+    def test_000_instance(self):
+        """TODO"""
+        pass

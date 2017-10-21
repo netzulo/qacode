@@ -28,7 +28,13 @@
   "testlink": {
     "enabled": false,
     "url_api": "http://qalab.tk:86/lib/api/xmlrpc/v1/xmlrpc.php",
-    "dev_key": "182c5b87c776ff2956b68e23eae866d9"
+    "dev_key": "ae2f4839476bea169f7461d74b0ed0ac",
+    "data":{
+      "generate": false,
+      "test_proyects":[
+        {"id_prefix":"qacode", "name":"qacode", "desc":"Main QA library"}
+      ]
+    }    
   },
   "tests": {
     "unitaries": {
