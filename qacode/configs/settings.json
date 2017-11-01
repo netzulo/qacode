@@ -3,7 +3,7 @@
     "browser": "chrome",
     "url_hub": "http://146.255.101.51:11000/wd/hub",
     "url_node": "http://146.255.101.51:11001/wd/hub",
-    "drivers_path": "../../modules/qadrivers",
+    "drivers_path": "../qadrivers",
     "drivers_names": [
       "chromedriver_32.exe",
       "chromedriver_64.exe",
@@ -50,11 +50,11 @@
         "#password",
         "[name='commit']"        
       ],
+      "creed_user": "qacode",
+      "creed_pass": "qacode",
       "url_selector_parent": "http://qalab.tk:82/sessions/new",
       "selector_parent": "#login_form",
-      "selector_child": "#login",
-      "creed_user": "qacode",
-      "creed_pass": "qacode"
+      "selector_child": "#login"      
     }
   },
   "build": {

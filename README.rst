@@ -149,9 +149,17 @@ Configuration File
           "url_logout": "http://qalab.tk:82/sessions/logout",
           "url_logged": "http://qalab.tk:82/",
           "url_404": "http://qalab.tk:82/sessions/login",
-          "selectors_login": [ "#login", "#password", "[name='commit']" ],
+          "selectors_login": [
+            "#login",
+            "#password",
+            "[name='commit']"
+          ],
           "creed_user": "qacode",
-          "creed_pass": "qacode"
+          "creed_pass": "qacode",
+          "url_selector_parent": "http://qalab.tk:82/sessions/new",
+          "selector_parent": "#login_form",
+          "selector_child": "#login"
+          }
         }
       },
       "build": {
