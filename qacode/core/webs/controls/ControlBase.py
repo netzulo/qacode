@@ -16,6 +16,9 @@ class ControlBase(object):
     # noqa for this properties, yet
     text = None
     attrs = None
+    is_displayed = None
+    is_enabled = None
+    is_selected = None
 
     def __init__(self, bot, selector='', locator=By.CSS_SELECTOR,
                  element=None, search=True):
@@ -48,7 +51,7 @@ class ControlBase(object):
         if element is not None:
             search = False
         if search:
-            self.element = self.find_element(selector, locator=locator)
+            self.element = self.load_element(selector, locator=locator)
         else:
             self.element = element
         # noqa for this logic, yet
@@ -60,14 +63,27 @@ class ControlBase(object):
             "class" : self.get_attr('class')
         }
         self.text = self.get_text()
+        self.is_displayed = self.bot.navigation.ele_is_displayed(self.element)
+        self.is_enabled = self.bot.navigation.ele_is_enabled(self.element)
+        self.is_selected = self.bot.navigation.ele_is_selected(self.element)
 
-    def find_element(self, selector, locator=By.CSS_SELECTOR):
+    def load_element(self, selector, locator=By.CSS_SELECTOR):
         """
         Find element using bot with default By.CSS_SELECTOR strategy for
         internal element
         """
-        self.bot.log.debug("find_element: selector={}".format(selector))
+        self.bot.log.debug("load_element: selector={}".format(selector))
         return self.bot.navigation.find_element(selector, locator=locator)
+
+    def find_child(self, selector, locator=By.CSS_SELECTOR):
+        """
+        Find child element using bot with default By.CSS_SELECTOR strategy for
+        internal element trought selenium WebElement
+        """
+        self.bot.log.debug("find_child: selector={}".format(selector))
+        return ControlBase(
+            self.bot, element=self.element.find_element(
+                locator, selector))
 
     def type_text(self, text):
         """Type text on input element
@@ -75,15 +91,19 @@ class ControlBase(object):
         Args:
             text: string
         """
+        self.bot.log.debug("type_text: text={}".format(text))
         self.bot.navigation.ele_write(self.element, text)
 
     def click(self):
         """Click on element"""
+        self.bot.log.debug("click: clicking element...")
         self.bot.navigation.ele_click(element=self.element)
 
     def get_text(self):
         """Return element content text"""
-        return self.bot.navigation.ele_text(self.element)
+        text = self.bot.navigation.ele_text(self.element)
+        self.bot.log.debug("get_text: text={}".format(text))
+        return text
 
     def get_attrs(self, attr_names):
         """Find a list of attributes on WebElement with this name"""
@@ -104,6 +124,9 @@ class ControlBase(object):
                              instead of value
         """
         is_valid = False
+        self.bot.log.debug(
+            "get_attr: attr_name={}, attr_value={}".format(
+                attr_name, attr_value))
         name, value = self.bot.navigation.ele_attribute(
             self.element, attr_name)
         if attr_value is not None:

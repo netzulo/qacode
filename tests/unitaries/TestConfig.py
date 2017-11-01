@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=deprecated-method
+# pylint: disable=invalid-method-name
 """Test Suite module for configs"""
 
 
@@ -8,6 +9,7 @@ import os
 from qacode.core.testing.TestInfoBase import TestInfoBase
 from qacode.core.loggers.LoggerManager import LoggerManager
 from qacode.core.utils.Utils import path_format
+
 
 LOGGER_MANAGER = LoggerManager()
 
@@ -176,8 +178,29 @@ class TestConfig(TestInfoBase):
         self.assertNotEqual(value, "", self.ERR_KEY_EMPTY.format(
             'tests.functionals.creed_pass', value))
 
-    def test_019_key_skip_travis_tests(self):
-        """Test : test_020_config_has_key_build_skip_travis_tests"""
+    def test_019_key_url_selector_parent(self):
+        """Test : test_019_key_url_selector_parent"""
+        self.assertRegexpMatches(
+            self.test_config['tests']['functionals']['url_selector_parent'],
+            self.REGEX_URL,
+            self.ERR_KEY_REGEX.format(
+                'tests.functionals.url_selector_parent', self.REGEX_URL)
+        )
+
+    def test_020_key_selector_parent(self):
+        """Test : test_020_key_selector_parent"""
+        value = self.test_config['tests']['functionals']['selector_parent']
+        self.assertNotEqual(value, "", self.ERR_KEY_EMPTY.format(
+            'tests.functionals.selector_parent', value))
+
+    def test_021_key_selector_child(self):
+        """Test : test_021_key_selector_child"""
+        value = self.test_config['tests']['functionals']['selector_child']
+        self.assertNotEqual(value, "", self.ERR_KEY_EMPTY.format(
+            'tests.functionals.selector_child', value))
+
+    def test_022_key_build_skip_travis_tests(self):
+        """Test : test_022_key_build_skip_travis_tests"""
         value = self.test_config['build']['travis']['skip_tests']
         msg = self.ERR_KEY_INVALID_VALUE.format('build.travis.skip_tests', value)
         self.assertIn(value, (True, False), msg)

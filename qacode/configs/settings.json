@@ -48,9 +48,11 @@
       "selectors_login": [ 
         "#login",
         "#password",
-        "[name='commit']",
-        "#login_form"
+        "[name='commit']"        
       ],
+      "url_selector_parent": "http://qalab.tk:82/sessions/new",
+      "selector_parent": "#login_form",
+      "selector_child": "#login",
       "creed_user": "qacode",
       "creed_pass": "qacode"
     }
