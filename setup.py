@@ -59,6 +59,7 @@ setup(
     tests_require=[
         'nose',
         'pytest',
+        'pytest-html'
     ],
     classifiers=[
         'Development Status :: 4 - Beta',

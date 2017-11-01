@@ -53,7 +53,7 @@
       "creed_user": "qacode",
       "creed_pass": "qacode",
       "url_selector_parent": "http://qalab.tk:82/sessions/new",
-      "selector_parent": "#login_form",
+      "selector_parent": "#nonav",
       "selector_child": "#login"      
     }
   },
