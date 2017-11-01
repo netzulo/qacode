@@ -84,14 +84,16 @@ class BotBase(object):
         else:
             driver_name_format = driver_name_format.format('{}', '')
         if self.IS_64BITS:
-            driver_name_format = driver_name_format.format('_64')
+            driver_name_format = driver_name_format.format('driver_64')
         else:
-            driver_name_format = driver_name_format.format('_32')
+            driver_name_format = driver_name_format.format('driver_32')
 
         for name in self.bot_config.config['drivers_names']:
             if name.endswith(driver_name_format):
                 return driver_name_format
-        raise CoreException(message='Driver name not found')
+        raise CoreException(
+            message='Driver name not found {}'.format(
+                driver_name_format))
 
     def mode_local(self):
         """Open new brower on local mode"""

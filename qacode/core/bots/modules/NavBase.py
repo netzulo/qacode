@@ -238,6 +238,18 @@ class NavBase(object):
             # color after try to send empty message
             element.send_keys()
 
+    def ele_is_displayed(self, element):
+        """Whether the element is visible to a user"""
+        return element.is_displayed()
+
+    def ele_is_enabled(self, element):
+        """Returns whether the element is enabled"""
+        return element.is_enabled()
+
+    def ele_is_selected(self, element):
+        """Returns whether the element is selected"""
+        return element.is_selected()
+
     def get_curr_url(self):
         """Return current url from opened bot"""
         return self.driver.current_url
@@ -246,6 +258,14 @@ class NavBase(object):
         """Return element content text"""
         return element.text
 
+    def ele_text_input(self, element):
+        """Return value of value attribute, usefull for inputs"""
+        return element.get_attribute('value')
+
     def ele_attribute(self, element, attr_name):
         """Returns tuple with (attr, value) if founds"""
         return (attr_name, element.get_attribute(attr_name))
+
+    def ele_tag(self, element):
+        """Returns element.tag_name value"""
+        return element.tag_name

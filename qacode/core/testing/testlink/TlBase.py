@@ -83,9 +83,10 @@ class TlBase(object):
         if self.generate:
             # TODO: verify if exist and create if not
             pass
-        else:            
+        else:
             if names is None:
                 test_proyects = self.conn.getProjects()
             for name in names:
-                test_proyects.append(self.conn.)
-
+                # TODO: test_proyects.append(self.conn.)
+                pass
+        return test_proyects
