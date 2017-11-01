@@ -15,9 +15,10 @@ class PageLogin(PageBase):
     txt_password = None
     btn_login = None
 
-    def __init__(self, bot, url, by=By.CSS_SELECTOR, selectors=None,
+    def __init__(self, bot, url, selectors=None, locator=By.CSS_SELECTOR,
                  go_url=True):
-        super(PageLogin, self).__init__(bot, url, by, selectors, go_url)
+        super(PageLogin, self).__init__(bot, url, selectors, locator=locator,
+                                        go_url=go_url)
         if selectors is None:
             raise PageException(message='Param selectors can\'t be None')
         if len(selectors) != 3:
@@ -39,11 +40,11 @@ class PageLogin(PageBase):
         error_btn = error_template.format(
             "click", '', "btn_login")
         try:
-            self.txt_username.send_keys(username)
+            self.txt_username.type_text(username)
         except Exception as err:
             raise PageException(err=err, message=error_username)
         try:
-            self.txt_password.send_keys(password)
+            self.txt_password.type_text(password)
         except Exception as err:
             raise PageException(err=err, message=error_password)
         if is_login_now:
