@@ -258,6 +258,14 @@ class NavBase(object):
         """Return element content text"""
         return element.text
 
+    def ele_text_input(self, element):
+        """Return value of value attribute, usefull for inputs"""
+        return element.get_attribute('value')
+
     def ele_attribute(self, element, attr_name):
         """Returns tuple with (attr, value) if founds"""
         return (attr_name, element.get_attribute(attr_name))
+
+    def ele_tag(self, element):
+        """Returns element.tag_name value"""
+        return element.tag_name
