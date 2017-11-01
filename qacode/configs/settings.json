@@ -45,7 +45,12 @@
       "url_logout": "http://qalab.tk:82/sessions/logout",
       "url_logged": "http://qalab.tk:82/",
       "url_404": "http://qalab.tk:82/sessions/login",
-      "selectors_login": [ "#login", "#password", "[name='commit']" ],
+      "selectors_login": [ 
+        "#login",
+        "#password",
+        "[name='commit']",
+        "#login_form"
+      ],
       "creed_user": "qacode",
       "creed_pass": "qacode"
     }
