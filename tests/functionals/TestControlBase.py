@@ -21,20 +21,27 @@ class TestControlBase(TestInfoBot):
 
     def setUp(self):
         super(TestControlBase, self).setUp()
-        self.url = self.test_config['tests']['unitaries']['url']
-        self.selector = "[href='http://www.netzulo.com/?page_id=116']"
+        self.url = self.test_config['tests']['functionals']['url_login']
+        self.selector = self.test_config.get(
+            'tests')['functionals']['selectors_login'][0]
         self.bot.navigation.get_url(self.url)
-        assert self.url in self.bot.curr_driver.current_url
+        self.assert_equals_url(self.bot.curr_driver.current_url, self.url)
 
-    def test_001_control_findselector(self):
-        """Testcase: test_001_control_findselector"""
+    def test_000_instance_byelement(self):
+        """Testcase: test_000_instance_byelement"""
+        element = self.bot.navigation.find_element(self.selector)
+        control = ControlBase(self.bot, element=element)
+        self.assertIsInstance(control.element, WebElement)
+        self.assertIsInstance(control, ControlBase)
+
+    def test_001_instance_byselector(self):
+        """Testcase: test_001_instance_byselector"""
         control = ControlBase(self.bot, selector=self.selector)
         self.assertIsInstance(control.element, WebElement)
         self.assertIsInstance(control, ControlBase)
 
-    def test_002_control_instance(self):
-        """Testcase: test_002_control_instance"""
-        element = self.bot.navigation.find_element(self.selector)
-        control = ControlBase(self.bot, element=element)
+    def test_002_findselector(self):
+        """Testcase: test_002_findselector"""
+        control = ControlBase(self.bot, selector=self.selector)
         self.assertIsInstance(control.element, WebElement)
         self.assertIsInstance(control, ControlBase)

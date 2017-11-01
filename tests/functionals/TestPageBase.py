@@ -5,6 +5,7 @@
 from selenium.webdriver.remote.webelement import WebElement
 from qacode.core.testing.TestInfoBot import TestInfoBot
 from qacode.core.webs.pages.PageBase import PageBase
+from qacode.core.webs.controls.ControlBase import ControlBase
 from qacode.core.loggers.LoggerManager import LoggerManager
 
 
@@ -20,38 +21,40 @@ class TestPageBase(TestInfoBot):
             method_name, logger_manager=LOGGER_MANAGER
         )
 
-    def test_001_page_base_instance(self):
-        """Testcase: test_001_page_base_instance"""
-        url = self.test_config['tests']['unitaries']['url']
-        PageBase(self.bot, url)
-        assert url in self.bot.curr_driver.current_url
+    def setUp(self):
+        super(TestPageBase, self).setUp()
+        self.url = self.test_config['tests']['functionals']['url_login']
+        self.selectors = self.test_config.get(
+            'tests')['functionals']['selectors_login']
 
-    def test_002_page_gourl(self):
-        """Testcase: test_002_page_gourl"""
-        url = self.test_config['tests']['unitaries']['url']
-        PageBase(self.bot, url, go_url=False)
-        assert url not in self.bot.curr_driver.current_url
+    def test_001_instance_url(self):
+        """Testcase: test_001_instance_url"""
+        page = PageBase(self.bot, self.url)
+        self.assertIsInstance(page, PageBase)
+        self.assert_equals_url(self.bot.curr_driver.current_url, self.url)
 
-    def test_003_method_gopageurl(self):
-        """Testcase: test_003_method_gopageurl"""
-        url = self.test_config['tests']['unitaries']['url']
-        url_second_page = "https://www.netzulo.com"
-        page = PageBase(self.bot, url)
-        assert url in self.bot.curr_driver.current_url
-        page.go_page_url(url_second_page)
-        assert url_second_page in self.bot.curr_driver.current_url
+    def test_002_instance_notgourl(self):
+        """Testcase: test_002_instance_notgourl"""
+        page = PageBase(self.bot, self.url, go_url=False)
+        self.assertIsInstance(page, PageBase)
+        self.assert_not_equals_url(self.bot.curr_driver.current_url, self.url)
 
-    def test_004_method_getelements_one(self):
-        """Testcase: test_004_method_getelements_one"""
-        url = self.test_config['tests']['unitaries']['url']
-        selectors = [".logo-dark[alt='Netzulo Testing Lab']"]
-        page = PageBase(self.bot, url, selectors=selectors)
-        assert isinstance(page.elements[0], WebElement)
+    def test_003_instance_element(self):
+        """Testcase: test_003_instance_element"""
+        page = PageBase(self.bot, self.url, selectors=[self.selectors[0]])
+        self.assertIsInstance(page, PageBase)
+        self.assertIsInstance(page.elements[0], ControlBase)
+        self.assertIsInstance(page.elements[0].element, WebElement)
 
-    def test_005_method_getelements(self):
-        """Testcase: test_005_method_getelements"""
-        url = self.test_config['tests']['unitaries']['url']
-        selectors = [".logo-dark[alt='Netzulo Testing Lab']", ".ti-menu"]
-        page = PageBase(self.bot, url, selectors=selectors)
-        assert isinstance(page.elements[0], WebElement)
-        assert isinstance(page.elements[1], WebElement)
+    def test_004_instance_elements(self):
+        """Testcase: test_004_instance_elements"""
+        page = PageBase(self.bot, self.url, selectors=self.selectors)
+        self.assertIsInstance(page, PageBase)
+        self.assertIsInstance(page.elements[1], ControlBase)
+        self.assertIsInstance(page.elements[1].element, WebElement)
+
+    def test_005_method_gopageurl(self):
+        """Testcase: test_005_method_gopageurl"""
+        page = PageBase(self.bot, '', go_url=False)
+        page.go_page_url(self.url)
+        self.assert_equals_url(self.bot.curr_driver.current_url, self.url)
