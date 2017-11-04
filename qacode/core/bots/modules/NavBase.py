@@ -27,6 +27,7 @@ class NavBase(object):
         '''
         self.driver = driver
 
+
     def get_url(self, url, wait_for_load=0):
         """
         Do get_url including implicit wait for page load
@@ -34,6 +35,12 @@ class NavBase(object):
         if wait_for_load > 0:
             self.driver.implicitly_wait(wait_for_load)
         self.driver.get(url)
+
+    def get_window_maximize(self):
+        """
+        Maximize browser window
+        """
+        self.driver.window_maximize()
 
     def get_window_handle(self):
         """
