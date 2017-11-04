@@ -97,7 +97,6 @@ class TestBotBase(TestInfoBase):
         bot.close()
         self.log.debug("TestBotBase: REMOTE terminated for CHROME")
 
-    @unittest.skipIf(SKIP, 'TRAVIS build not support remote firefox drivers')
     def test_007_bot_remote_firefox(self):
         """Testcase: test_007_bot_remote_firefox"""
         self.log.debug("TestBotBase: REMOTE started for FIREFOX")
@@ -118,7 +117,6 @@ class TestBotBase(TestInfoBase):
         bot.close()
         self.log.debug("TestBotBase: REMOTE terminated for PHANTOMJS")
 
-    @unittest.skipIf(SKIP, 'TRAVIS build not support remote windows drivers')
     def test_009_bot_remote_iexplorer(self):
         """Testcase: test_009_bot_remote_iexplorer"""
         self.log.debug("TestBotBase: REMOTE started for IEXPLORER")
