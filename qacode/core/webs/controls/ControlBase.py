@@ -91,15 +91,23 @@ class ControlBase(object):
         self.bot.log.debug("get_tag: tag={}".format(tag_name))
         return tag_name
 
-    def type_text(self, text):
+    def type_text(self, text, clear=False):
         """
         Type text on input element
         Args:
             text: string
         """
         self.bot.log.debug("type_text: text={}".format(text))
+        if clear:
+            self.clear()
         self.bot.navigation.ele_write(self.element, text)
         self.text = text
+
+    def clear(self):
+        """
+        Clear input element text value
+        """
+        self.bot.navigation.ele_clear(self.element)
 
     def click(self):
         """Click on element"""
@@ -110,7 +118,7 @@ class ControlBase(object):
         """Return element content text"""
         text = self.bot.navigation.ele_text(self.element)
         self.bot.log.debug("get_text: text={}".format(text))
-        return text    
+        return text
 
     def get_attrs(self, attr_names):
         """

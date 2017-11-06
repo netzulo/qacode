@@ -276,3 +276,7 @@ class NavBase(object):
     def ele_tag(self, element):
         """Returns element.tag_name value"""
         return element.tag_name
+
+    def ele_clear(self, element):
+        """Clear element text"""
+        return element.clear()

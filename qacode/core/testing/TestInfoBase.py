@@ -16,7 +16,8 @@ class TestInfoBase(unittest.TestCase):
     log = None
     test_config = None
 
-    def __init__(self, method_name="TestInfoBase", logger_manager=None, test_config=None):
+    def __init__(self, method_name="TestInfoBase", logger_manager=None,
+                 test_config=None):
         super(TestInfoBase, self).__init__(method_name)
         if test_config is None:
             self.test_config = settings()
@@ -126,3 +127,24 @@ class TestInfoBase(unittest.TestCase):
                  "contains={}".format(current, contains)),
                 msg
             )
+
+    def assert_is_instance(self, obj, cls, msg=''):
+        """
+        Allow to encapsulate method
+            assertIsInstance(obj, cls, msg='')
+        """
+        self.assertIsInstance(obj, cls, msg=msg)
+
+    def assert_raises(self, expected_exception, *args, **kwargs):
+        """
+        Allow to encapsulate method
+            assertRaises(expected_exception, args, kwargs)
+        """
+        self.assertRaises(expected_exception, args, kwargs)
+
+    def assert_greater(self, int_a, int_b, msg=''):
+        """
+        Allow to encapsulate method
+            assertGreater(a, b, msg=msg)
+        """
+        self.assertGreater(int_a, int_b, msg=msg)
