@@ -40,7 +40,7 @@ class NavBase(object):
         """
         Maximize browser window
         """
-        self.driver.window_maximize()
+        self.driver.maximize_window()
 
     def get_window_handle(self):
         """
