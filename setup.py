@@ -53,7 +53,6 @@ setup(
         'six==1.10.0',
         'nose==1.3.7',
         'nose-testconfig==0.10',
-        'TestLink-API-Python-client==0.6.2',
     ],
     setup_requires=['pytest-runner'],
     tests_require=[
