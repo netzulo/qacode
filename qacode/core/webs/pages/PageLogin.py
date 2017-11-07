@@ -3,9 +3,9 @@
 """Package qacode.core.webs.pages"""
 
 
+from selenium.webdriver.common.by import By
 from qacode.core.webs.pages.PageBase import PageBase
 from qacode.core.exceptions.PageException import PageException
-from selenium.webdriver.common.by import By
 
 
 class PageLogin(PageBase):
@@ -16,9 +16,10 @@ class PageLogin(PageBase):
     btn_login = None
 
     def __init__(self, bot, url, selectors=None, locator=By.CSS_SELECTOR,
-                 go_url=True):
-        super(PageLogin, self).__init__(bot, url, selectors, locator=locator,
-                                        go_url=go_url)
+                 go_url=True, maximize=True):
+        super(PageLogin, self).__init__(
+            bot, url, selectors, locator=locator,
+            go_url=go_url, maximize=maximize)
         if selectors is None:
             raise PageException(message='Param selectors can\'t be None')
         if len(selectors) != 3:
