@@ -47,7 +47,7 @@ class PageBase(object):
         self.go_url = go_url
         if self.go_url:
             self.go_page_url()
-        self.bot.navigation.get_window_maximize()
+        self.bot.navigation.get_maximize_window()
         if self.selectors is not None:
             self.elements = self.get_elements(as_controls=True)
 

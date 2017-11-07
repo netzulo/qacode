@@ -36,7 +36,7 @@ class NavBase(object):
             self.driver.implicitly_wait(wait_for_load)
         self.driver.get(url)
 
-    def get_window_maximize(self):
+    def get_maximize_window(self):
         """
         Maximize browser window
         """

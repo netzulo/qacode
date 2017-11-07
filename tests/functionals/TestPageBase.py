@@ -18,8 +18,8 @@ class TestPageBase(TestInfoBot):
     def __init__(self, method_name="TestPageBase"):
         """Just call to parent constructor class, see TestInfoBot"""
         super(TestPageBase, self).__init__(
-            method_name, logger_manager=LOGGER_MANAGER
-        )
+            method_name,
+            logger_manager=LOGGER_MANAGER)
 
     def setUp(self):
         super(TestPageBase, self).setUp()
