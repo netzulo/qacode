@@ -53,11 +53,10 @@ setup(
         'six==1.10.0',
         'nose==1.3.7',
         'nose-testconfig==0.10',
+        'pytest',
     ],
     setup_requires=['pytest-runner'],
     tests_require=[
-        'nose',
-        'pytest',
         'pytest-html',
         'pytest-dependency',
     ],
