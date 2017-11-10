@@ -36,7 +36,10 @@ class BotConfig(object):
         ]
         self.init_logger_manager(logger_manager)
         for prop in props:
-            self.log_option_loaded(self.config[prop])
+            if self.config['mode'] == 'remote' and prop == 'drivers_names':
+                self.log_option_loaded('drivers_names, not showing remote node drivers path')
+            else:
+                self.log_option_loaded(self.config[prop])
 
     def init_logger_manager(self, logger_manager=None):
         """

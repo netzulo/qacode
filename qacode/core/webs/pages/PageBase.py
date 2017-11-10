@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """TODO"""
 
+
 from selenium.webdriver.common.by import By
 from qacode.core.exceptions.PageException import PageException
 from qacode.core.webs.controls.ControlBase import ControlBase
@@ -20,7 +21,7 @@ class PageBase(object):
     locator = None
 
     def __init__(self, bot, url, selectors=None, locator=By.CSS_SELECTOR,
-                 go_url=True, maximize=True):
+                 go_url=True, maximize=False):
         """
         required:
           bot: BotBase or inherit class instance

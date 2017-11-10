@@ -16,7 +16,7 @@ class PageLogin(PageBase):
     btn_login = None
 
     def __init__(self, bot, url, selectors=None, locator=By.CSS_SELECTOR,
-                 go_url=True, maximize=True):
+                 go_url=True, maximize=False):
         super(PageLogin, self).__init__(
             bot, url, selectors, locator=locator,
             go_url=go_url, maximize=maximize)
