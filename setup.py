@@ -59,6 +59,7 @@ setup(
     tests_require=[
         'pytest-html',
         'pytest-dependency',
+        'pytest-cov',
     ],
     classifiers=[
         'Development Status :: 4 - Beta',
