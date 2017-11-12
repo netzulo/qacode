@@ -5,6 +5,7 @@ import os
 import sys
 from selenium import webdriver as WebDriver
 from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
+from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver import DesiredCapabilities
 from qacode.core.bots.modules.NavBase import NavBase
 from qacode.core.exceptions.CoreException import CoreException
@@ -65,6 +66,7 @@ class BotBase(object):
                 )
 
             self.navigation = NavBase(self.curr_driver)
+            self.curr_driver_wait = WebDriverWait(self.curr_driver, 10)
 
     def driver_name_filter(self, driver_name=None):
         """

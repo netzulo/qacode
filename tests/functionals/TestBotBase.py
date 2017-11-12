@@ -24,13 +24,15 @@ class TestBotBase(TestInfoBase):
     def __init__(self, method_name='TestBotBase'):
         """Just call to parent constructor class, see TestInfoBase"""
         super(TestBotBase, self).__init__(
-            method_name, logger_manager=LOGGER_MANAGER
-        )
+            method_name,
+            logger_manager=LOGGER_MANAGER,
+            test_config=CONFIG)
 
     def setUp(self):
         """Testcases setup"""
-        self.bot_config = BotConfig(config=self.test_config,
-                                    logger_manager=self.logger_manager)
+        self.bot_config = BotConfig(
+            config=self.test_config,
+            logger_manager=self.logger_manager)
 
     @unittest.skipIf(SKIP, 'TRAVIS build not support local drivers')
     def test_001_bot_local_chrome(self):
@@ -129,7 +131,7 @@ class TestBotBase(TestInfoBase):
 
     @unittest.skipIf(SKIP, 'TRAVIS build not support remote windows drivers')
     def test_010_bot_remote_edge(self):
-        """Testcase: test_0WAIT_TO_CLOSE_bot_remote_edge"""
+        """Testcase: test_010_bot_remote_edge"""
         self.log.debug("TestBotBase: REMOTE started for EDGE")
         self.bot_config.config['browser'] = 'edge'
         self.bot_config.config['mode'] = 'remote'

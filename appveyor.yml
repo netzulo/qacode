@@ -17,4 +17,5 @@ install:
 - "%PYTHON%\\python.exe setup.py install"
 
 test_script:
+- "%PYTHON%\\python.exe setup.py develop"
 - "%PYTHON%\\python.exe setup.py test"

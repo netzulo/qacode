@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """TODO"""
 
+
 from selenium.webdriver.common.by import By
 from qacode.core.exceptions.PageException import PageException
 from qacode.core.webs.controls.ControlBase import ControlBase
@@ -20,7 +21,7 @@ class PageBase(object):
     locator = None
 
     def __init__(self, bot, url, selectors=None, locator=By.CSS_SELECTOR,
-                 go_url=True):
+                 go_url=True, maximize=False):
         """
         required:
           bot: BotBase or inherit class instance
@@ -44,11 +45,22 @@ class PageBase(object):
         self.locator = locator
         if go_url is None:
             raise PageException(message='Param go_url can\'t be None')
+        if maximize is None:
+            raise PageException(message='Param maximize can\'t be None')
         self.go_url = go_url
-        if self.go_url:
-            self.go_page_url()
+        self.load_page(self.selectors, go_url=self.go_url, maximize=maximize)
 
-        if self.selectors is not None:
+    def load_page(self, selectors, go_url=True, maximize=True):
+        """
+        Loads page elements and maximize browser window
+        """
+        if go_url:
+            self.go_page_url()
+        if maximize:
+            self.bot.log.debug('maximizing page window')
+            self.bot.navigation.get_maximize_window()
+        if selectors is not None:
+            self.bot.log.debug('start to search page elements')
             self.elements = self.get_elements(as_controls=True)
 
     def get_elements(self, selectors=None, as_controls=False):
@@ -79,6 +91,8 @@ class PageBase(object):
     def go_page_url(self, url=None, wait_for_load=0):
         """Go to url, choose url from instance or locator params"""
         if url is None:
+            self.bot.log.debug('go to url={}'.format(self.url))
             self.bot.navigation.get_url(self.url, wait_for_load=wait_for_load)
         else:
+            self.bot.log.debug('go to url={}'.format(url))
             self.bot.navigation.get_url(url, wait_for_load=wait_for_load)

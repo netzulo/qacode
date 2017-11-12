@@ -10,6 +10,7 @@ Created on 04 march 2017
 
 
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.webelement import WebElement
 from qacode.core.exceptions.CoreException import CoreException
 
@@ -21,11 +22,12 @@ class NavBase(object):
     '''
     driver = None
 
-    def __init__(self, driver):
+    def __init__(self, driver, driver_wait=None):
         '''
         Initialize self properties
         '''
         self.driver = driver
+        self.driver_wait = driver_wait
 
 
     def get_url(self, url, wait_for_load=0):
@@ -36,11 +38,11 @@ class NavBase(object):
             self.driver.implicitly_wait(wait_for_load)
         self.driver.get(url)
 
-    def get_window_maximize(self):
+    def get_maximize_window(self):
         """
         Maximize browser window
         """
-        self.driver.window_maximize()
+        self.driver.maximize_window()
 
     def get_window_handle(self):
         """
@@ -78,26 +80,9 @@ class NavBase(object):
         """
         msg = 'Locator not selected at find_element, selector={}'.format(
             selector)
-        element = None
         if locator is None:
             raise CoreException(message=msg)
-        if locator == By.CLASS_NAME:
-            element = self.driver.find_element_by_class_name(selector)
-        elif locator == By.CSS_SELECTOR:
-            element = self.driver.find_element_by_css_selector(selector)
-        elif locator == By.ID:
-            element = self.driver.find_element_by_id(selector)
-        elif locator == By.LINK_TEXT:
-            element = self.driver.find_element_by_link_text(selector)
-        elif locator == By.NAME:
-            element = self.driver.find_element_by_name(selector)
-        elif locator == By.PARTIAL_LINK_TEXT:
-            element = self.driver.find_element_by_partial_link_text(selector)
-        elif locator == By.TAG_NAME:
-            element = self.driver.find_element_by_tag_name(selector)
-        elif locator == By.XPATH:
-            element = self.driver.find_element_by_xpath(selector)
-        return element
+        return self.driver.find_element(locator, selector)
 
     def find_elements(self, selector, locator=By.CSS_SELECTOR):
         """
@@ -105,26 +90,21 @@ class NavBase(object):
         """
         msg = 'Locator not selected at find_element, selector={}'.format(
             selector)
-        element = None
         if locator is None:
             raise CoreException(message=msg)
-        if locator == By.CLASS_NAME:
-            element = self.driver.find_elements_by_class_name(selector)
-        elif locator == By.CSS_SELECTOR:
-            element = self.driver.find_elements_by_css_selector(selector)
-        elif locator == By.ID:
-            element = self.driver.find_elements_by_id(selector)
-        elif locator == By.LINK_TEXT:
-            element = self.driver.find_elements_by_link_text(selector)
-        elif locator == By.NAME:
-            element = self.driver.find_elements_by_name(selector)
-        elif locator == By.PARTIAL_LINK_TEXT:
-            element = self.driver.find_elements_by_partial_link_text(selector)
-        elif locator == By.TAG_NAME:
-            element = self.driver.find_elements_by_tag_name(selector)
-        elif locator == By.XPATH:
-            element = self.driver.find_elements_by_xpath(selector)
-        return element
+        return self.driver.find_elements(locator, selector)
+
+    def find_element_wait(self, selector, locator=By.CSS_SELECTOR, driver_wait=None):
+        """
+        Search element using WebDriverWait class
+         and ElementConditions presence_of_element_located
+        """
+        if driver_wait is None and self.driver_wait is None:
+            raise CoreException(message='Nav instanced without driver_wait')
+        if driver_wait is None:
+            driver_wait = self.driver_wait
+        return driver_wait.until(
+            EC.presence_of_element_located((locator, selector)))
 
     def forward(self):
         """Go forward using browser functionality"""
@@ -276,3 +256,7 @@ class NavBase(object):
     def ele_tag(self, element):
         """Returns element.tag_name value"""
         return element.tag_name
+
+    def ele_clear(self, element):
+        """Clear element text"""
+        return element.clear()
