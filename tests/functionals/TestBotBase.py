@@ -112,8 +112,8 @@ class TestBotBase(TestInfoBase):
     def test_008_bot_remote_phantomjs(self):
         """Testcase: test_008_bot_remote_phantomjs"""
         self.log.debug("TestBotBase: REMOTE started for PHANTOMJS")
-        self.bot_config.bot_browser = "phantomjs"
-        self.bot_config.bot_mode = "remote"
+        self.bot_config.config['browser'] = "phantomjs"
+        self.bot_config.config['mode'] = "remote"
         bot = BotBase(self.bot_config)
         time.sleep(WAIT_TO_CLOSE)
         bot.close()
