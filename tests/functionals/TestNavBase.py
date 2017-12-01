@@ -35,3 +35,13 @@ class TestNavBase(TestInfoBot):
     def test_002_gourl_with_waitsparam(self):
         """Testcase: test_002_gourl_with_waitsparam"""
         self.bot.navigation.get_url(self.url, wait_for_load=0)
+
+    def test_003_getmaximizewindow(self):
+        """Testcase: test_003_getmaximizewindow"""
+        # TODO: failing , need to fix core
+        self.bot.navigation.get_maximize_window()
+
+    def test_004_getcapabilities(self):
+        """Testcase: test_004_getcapabilities"""
+        # TODO: check isinstance chrome capabilities
+        caps = self.bot.navigation.get_capabilities()
