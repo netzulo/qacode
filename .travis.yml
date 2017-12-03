@@ -1,5 +1,3 @@
-sudo: required 
-dist: trusty
 env:
   global:
 # SONAR_GITHUB_TOKEN
