@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""Package for suites and tests related to bots.modules package"""
 
 
 from qacode.core.testing.TestInfoBot import TestInfoBot
@@ -13,6 +14,7 @@ class TestNavBase(TestInfoBot):
     """Test Suite for class NavBase"""
 
     def __init__(self, method_name="TestNavBase"):
+        """Test what probes NavBase class and methods"""
         super(TestNavBase, self).__init__(
             method_name=method_name,
             logger_manager=LOGGER_MANAGER
@@ -38,10 +40,11 @@ class TestNavBase(TestInfoBot):
 
     def test_003_getmaximizewindow(self):
         """Testcase: test_003_getmaximizewindow"""
-        # TODO: failing , need to fix core
         self.bot.navigation.get_maximize_window()
 
     def test_004_getcapabilities(self):
         """Testcase: test_004_getcapabilities"""
-        # TODO: check isinstance chrome capabilities
         caps = self.bot.navigation.get_capabilities()
+        self.assert_is_instance(caps, dict)
+        self.assert_is_instance(caps['chrome'], dict)
+        self.assertEqual(caps['browserName'], 'chrome')
