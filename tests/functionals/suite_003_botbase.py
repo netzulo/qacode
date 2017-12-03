@@ -16,7 +16,7 @@ from qacode.core.utils.Utils import settings
 LOGGER_MANAGER = LoggerManager()
 CONFIG = settings()
 SKIP = CONFIG['build']['travis']['skip_tests']
-WAIT_TO_CLOSE = int(5)
+WAIT_TO_CLOSE = int(3)
 
 class TestBotBase(TestInfoBase):
     """Testcases for class BotBase"""

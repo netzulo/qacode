@@ -135,12 +135,12 @@ class TestInfoBase(unittest.TestCase):
         """
         self.assertIsInstance(obj, cls, msg=msg)
 
-    def assert_raises(self, expected_exception, *args, **kwargs):
+    def assert_raises(self, expected_exception, function_ref, *args, **kwargs):
         """
         Allow to encapsulate method
             assertRaises(expected_exception, args, kwargs)
         """
-        self.assertRaises(expected_exception, args, kwargs)
+        self.assertRaises(expected_exception, function_ref, args, kwargs)
 
     def assert_greater(self, int_a, int_b, msg=''):
         """

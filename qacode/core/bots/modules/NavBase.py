@@ -9,6 +9,7 @@ Created on 04 march 2017
 '''
 
 
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.webelement import WebElement
@@ -80,9 +81,15 @@ class NavBase(object):
         """
         msg = 'Locator not selected at find_element, selector={}'.format(
             selector)
+        msg_err = 'Error at find_element: selector={}'.format(
+            selector)
         if locator is None:
             raise CoreException(message=msg)
-        return self.driver.find_element(locator, selector)
+        try:
+            return self.driver.find_element(locator, selector)
+        except NoSuchElementException:
+            raise CoreException(message=msg_err)
+
 
     def find_elements(self, selector, locator=By.CSS_SELECTOR):
         """

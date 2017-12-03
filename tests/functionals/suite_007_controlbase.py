@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# pylint: disable=invalid-name
 """Testsuite for package qacode.core.webs.controls"""
 
 from selenium.webdriver.remote.webelement import WebElement
@@ -49,7 +50,7 @@ class TestControlBase(TestInfoBot):
         self.assertIsInstance(control.element, WebElement)
         self.assertIsInstance(control, ControlBase)
 
-    def test_002_raises_nosearch(self):
+    def test_002_raises_nosearchselector(self):
         """Testcase: test_002_raises_nosearch"""
         self.assertRaises(
             ControlException, ControlBase, self.bot, self.selector_parent, search=False)
@@ -103,14 +104,14 @@ class TestControlBase(TestInfoBot):
         control = ControlBase(self.bot, selector=self.selector_txt_username)
         self.assertEqual(control.tag, 'input')
 
-    def test_012_method_typetext_withproperty(self):  # TODO : tag tests
+    def test_012_method_typetext_withproperty(self):
         """Testcase: test_012_method_typetext_withproperty"""
         control = ControlBase(
             self.bot, selector=self.selector_txt_username)
         control.type_text('test')
         self.assertEqual(control.text, 'test')
 
-    def test_013_method_typetext_withmethod(self): # TODO : tag tests
+    def test_013_method_typetext_withmethod(self):
         """Testcase: test_013_method_typetext_withmethod"""
         control = ControlBase(
             self.bot, selector=self.selector_txt_username)

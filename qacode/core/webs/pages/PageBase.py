@@ -3,6 +3,7 @@
 
 
 from selenium.webdriver.common.by import By
+from qacode.core.exceptions.CoreException import CoreException
 from qacode.core.exceptions.PageException import PageException
 from qacode.core.webs.controls.ControlBase import ControlBase
 
@@ -25,7 +26,7 @@ class PageBase(object):
         """
         required:
           bot: BotBase or inherit class instance
-          url: page url for class
+          url: page url for class, can be empty string
         optionals:
           locator: strategy used to search all selectors passed,
               default value it's locator.CSS_SELECTOR
@@ -37,55 +38,72 @@ class PageBase(object):
         self.bot = bot
         if url is None:
             raise PageException(
-                message='Param url can\'t be None or empty')
+                message='Param url can\'t be None, just empty string')
         self.url = url
         if locator is None:
             raise PageException(message='Param locator can\'t be None')
-        self.selectors = selectors
         self.locator = locator
         if go_url is None:
             raise PageException(message='Param go_url can\'t be None')
         if maximize is None:
             raise PageException(message='Param maximize can\'t be None')
         self.go_url = go_url
-        self.load_page(self.selectors, go_url=self.go_url, maximize=maximize)
+        self._load_page(selectors, go_url=self.go_url, maximize=maximize)
 
-    def load_page(self, selectors, go_url=True, maximize=True):
+    def _load_page(self, selectors, go_url=True, maximize=True):
         """
         Loads page elements and maximize browser window
         """
+        self.selectors = selectors
         if go_url:
             self.go_page_url()
         if maximize:
             self.bot.log.debug('maximizing page window')
             self.bot.navigation.get_maximize_window()
-        if selectors is not None:
-            self.bot.log.debug('start to search page elements')
-            self.elements = self.get_elements(as_controls=True)
+        if self.selectors is None:
+            self.bot.log.debug(
+                'Not searching elements if it\'s None')
+        else:
+            self.bot.log.debug(
+                'Searching page elements with selectors')
+            self.elements = self.get_elements(
+                self.selectors, as_controls=True)
 
-    def get_elements(self, selectors=None, as_controls=False):
+    def get_elements(self, selectors, as_controls=False):
         """
         Search elements on Bot instance, choose selectors
           from instance or locator param
+        :Args:
+        :optionals:
+            :selectors:
+                if not selectors passed,
+                then use instance property
+            :as_controls:
+                if True, return list
+                of ControlBase elements loaded
+                from selectors
         """
-        selectors_selected = None
+        msg_page_element_notfound='Page element not found: url={}, selector={}'
         elements = []
         if selectors is None:
-            selectors_selected = self.selectors
-        else:
-            selectors_selected = selectors
-        for selector in selectors_selected:
-            message_template = "Searching element: with selector={} locator={}"
-            self.bot.log.debug(message_template.format(selector, self.locator))
+            raise PageException(
+                message='Can\'t use None selectors to get elements')
+        for selector in selectors:
+            self.bot.log.debug(
+                "Searching element: with selector={} locator={}".format(
+                    selector, self.locator))
             if as_controls:
                 element = ControlBase(self.bot, selector, self.locator)
             else:
-                element = self.bot.navigation.find_element(selector, self.locator)
-            if element is None:
-                self.bot.log.error(message_template.format(selector, self.locator))
-            else:
-                self.bot.log.debug("Element Found, adding to return method")
-                elements.append(element)
+                try:
+                    element = self.bot.navigation.find_element(selector, self.locator)
+                except CoreException:
+                    raise PageException(
+                        message=msg_page_element_notfound.format(
+                            self.bot.navigation.get_curr_url(),
+                            selector))
+            self.bot.log.debug("Element Found, adding to return method")
+            elements.append(element)
         return elements
 
     def go_page_url(self, url=None, wait_for_load=0):
