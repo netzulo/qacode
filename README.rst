@@ -13,8 +13,6 @@ QA Code
 +=======================+===================================================================+================================================================================================+
 |  master               | .. image:: https://travis-ci.org/netzulo/qacode.svg?branch=master | .. image:: https://ci.appveyor.com/api/projects/status/4a0tc5pis1bykt9x/branch/master?svg=true |
 +-----------------------+-----------------------+-------------------------------------------+------------------------------------------------------------------------------------------------+
-|  devel                | .. image:: https://travis-ci.org/netzulo/qacode.svg?branch=devel  | .. image:: https://ci.appveyor.com/api/projects/status/4a0tc5pis1bykt9x/branch/devel?svg=true  |
-+-----------------------+-------------------------------------------------------------------+------------------------------------------------------------------------------------------------+
 
 
 Python tested versions
@@ -166,13 +164,3 @@ Configuration File
         "travis":{ "skip_tests": true }
       }
     }
-
-
-Live example
-************
-
-.. image:: https://asciinema.org/a/phH5ISjGEfwXZUp648dvMOqox.png
-  :target: https://asciinema.org/a/phH5ISjGEfwXZUp648dvMOqox
-  :alt: asciicast
-
-
