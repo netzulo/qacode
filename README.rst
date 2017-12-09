@@ -67,28 +67,6 @@ Tests
 
 ``python setup.py test``
 
-Unitaries
-*********
-
-::
-
-    pytest tests/unitaries/TestConfig.py
-    pytest tests/unitaries/TestLoggerManager.py
-    pytest tests/unitaries/TestTestInfoBase.py
-
-
-Functionals
-***********
-
-::
-    
-    pytest tests/functionals/TestBotBase.py
-    pytest tests/functionals/TestTestInfoBot.py
-    pytest tests/functionals/TestNavBase.py
-    pytest tests/functionals/TestPageBase.py
-    pytest tests/functionals/TestPageLogin.py
-    pytest tests/functionals/TestControlBase.py
-
 
 Configuration File
 ------------------
