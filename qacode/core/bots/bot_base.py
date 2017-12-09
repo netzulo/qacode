@@ -7,8 +7,8 @@ from selenium import webdriver as WebDriver
 from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver import DesiredCapabilities
-from qacode.core.bots.modules.NavBase import NavBase
-from qacode.core.exceptions.CoreException import CoreException
+from qacode.core.bots.modules.nav_base import NavBase
+from qacode.core.exceptions.core_exception import CoreException
 
 
 class BotBase(object):

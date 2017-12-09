@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=deprecated-method
-# pylint: disable=invalid-method-name
+# pylint: disable=invalid-name
 """Test Suite module for configs"""
 
 
 import os
 
-from qacode.core.testing.TestInfoBase import TestInfoBase
-from qacode.core.loggers.LoggerManager import LoggerManager
-from qacode.core.utils.Utils import path_format
+from qacode.core.testing.test_info_base import TestInfoBase
+from qacode.core.loggers.logger_manager import LoggerManager
+from qacode.core.utils import path_format
 
 
 LOGGER_MANAGER = LoggerManager()
@@ -199,8 +199,26 @@ class TestConfig(TestInfoBase):
         self.assertNotEqual(value, "", self.ERR_KEY_EMPTY.format(
             'tests.functionals.selector_child', value))
 
-    def test_022_key_build_skip_travis_tests(self):
-        """Test : test_022_key_build_skip_travis_tests"""
-        value = self.test_config['build']['travis']['skip_tests']
-        msg = self.ERR_KEY_INVALID_VALUE.format('build.travis.skip_tests', value)
+    def test_022_key_skip_drivers_local(self):
+        """Test : test_022_key_skip_drivers_local"""
+        value = self.test_config['tests']['skip']['drivers_local']
+        msg = self.ERR_KEY_INVALID_VALUE.format('tests.skip.drivers_local', value)
+        self.assertIn(value, (True, False), msg)
+
+    def test_023_key_skip_drivers_remote(self):
+        """Test : test_023_key_skip_drivers_remote"""
+        value = self.test_config['tests']['skip']['drivers_remote']
+        msg = self.ERR_KEY_INVALID_VALUE.format('tests.skip.drivers_remote', value)
+        self.assertIn(value, (True, False), msg)
+
+    def test_024_key_skip_web_controls(self):
+        """Test : test_024_key_skip_web_controls"""
+        value = self.test_config['tests']['skip']['web_controls']
+        msg = self.ERR_KEY_INVALID_VALUE.format('tests.skip.web_controls', value)
+        self.assertIn(value, (True, False), msg)
+
+    def test_025_key_skip_web_pages(self):
+        """Test : test_025_key_skip_web_pages"""
+        value = self.test_config['tests']['skip']['web_pages']
+        msg = self.ERR_KEY_INVALID_VALUE.format('tests.skip.web_pages', value)
         self.assertIn(value, (True, False), msg)

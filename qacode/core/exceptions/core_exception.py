@@ -2,7 +2,7 @@
 """Main Exceptions for qacode library"""
 
 
-from qacode.core.loggers.LoggerManager import LoggerManager
+from qacode.core.loggers.logger_manager import LoggerManager
 
 
 class CoreException(Exception):

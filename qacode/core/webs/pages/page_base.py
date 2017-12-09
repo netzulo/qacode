@@ -3,9 +3,9 @@
 
 
 from selenium.webdriver.common.by import By
-from qacode.core.exceptions.CoreException import CoreException
-from qacode.core.exceptions.PageException import PageException
-from qacode.core.webs.controls.ControlBase import ControlBase
+from qacode.core.exceptions.core_exception import CoreException
+from qacode.core.exceptions.page_exception import PageException
+from qacode.core.webs.controls.control_base import ControlBase
 
 
 class PageBase(object):

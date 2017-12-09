@@ -13,7 +13,7 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.webelement import WebElement
-from qacode.core.exceptions.CoreException import CoreException
+from qacode.core.exceptions.core_exception import CoreException
 
 
 class NavBase(object):

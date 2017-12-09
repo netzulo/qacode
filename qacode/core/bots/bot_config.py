@@ -4,8 +4,8 @@ All Bot Base functionality for inherit class and expand library
 """
 
 
-from qacode.core.loggers.LoggerManager import LoggerManager
-from qacode.core.exceptions.CoreException import CoreException
+from qacode.core.loggers.logger_manager import LoggerManager
+from qacode.core.exceptions.core_exception import CoreException
 
 
 class BotConfig(object):

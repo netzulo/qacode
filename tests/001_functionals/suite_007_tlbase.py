@@ -2,7 +2,7 @@
 """Package testing.testlink"""
 
 
-from qacode.core.testing.TestInfoBase import TestInfoBase
+from qacode.core.testing.test_info_base import TestInfoBase
 
 
 class TestTlBase(TestInfoBase):
@@ -19,4 +19,5 @@ class TestTlBase(TestInfoBase):
 
     def test_000_instance(self):
         """TODO"""
+        # TODO: need to wait for qatestlink module be completed
         pass
