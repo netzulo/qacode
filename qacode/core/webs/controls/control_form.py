@@ -21,7 +21,7 @@ class ControlForm(ControlBase):
         HtmlTag.TAG_OUTPUT.value,
         HtmlTag.TAG_FORM.value,
         HtmlTag.TAG_LEGEND.value,
-        HtmlTag.TAG_FIELDSET.valueT
+        HtmlTag.TAG_FIELDSET.value
     ]
 
     #TODO: follow instructions on #63
