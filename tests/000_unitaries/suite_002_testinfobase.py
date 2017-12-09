@@ -4,8 +4,8 @@
 
 import unittest
 
-from qacode.core.testing.TestInfoBase import TestInfoBase
-from qacode.core.loggers.LoggerManager import LoggerManager
+from qacode.core.testing.test_info_base import TestInfoBase
+from qacode.core.loggers.logger_manager import LoggerManager
 
 
 LOGGER_MANAGER = LoggerManager()

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Package qacode.core.exceptions"""
 
-from qacode.core.exceptions.CoreException import CoreException
+from qacode.core.exceptions.core_exception import CoreException
 
 
 class PageException(CoreException):

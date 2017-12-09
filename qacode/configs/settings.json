@@ -37,6 +37,12 @@
     }    
   },
   "tests": {
+    "skip":{
+      "drivers_local": true,
+      "drivers_remote": false,
+      "web_controls": false,
+      "web_pages": false
+    },
     "unitaries": {
       "url": "https://www.netzulo.com"
     },
@@ -56,8 +62,5 @@
       "selector_parent": "#nonav",
       "selector_child": "#login"      
     }
-  },
-  "build": {
-    "travis":{ "skip_tests": true }
   }
 }

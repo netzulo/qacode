@@ -5,7 +5,7 @@
 import os
 from testlink.testlinkapi import TestlinkAPIClient
 from testlink.testlinkhelper import TestLinkHelper
-from qacode.core.exceptions.CoreException import CoreException
+from qacode.core.exceptions.core_exception import CoreException
 
 
 class TlBase(object):

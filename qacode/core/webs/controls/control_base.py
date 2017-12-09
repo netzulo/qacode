@@ -4,16 +4,18 @@
 
 
 from selenium.webdriver.common.by import By
-from qacode.core.exceptions.ControlException import ControlException
+from qacode.core.exceptions.control_exception import ControlException
 
 
 class ControlBase(object):
     """Requirements: #35, #70"""
 
+    # Instance properties
     bot = None
     selector = None
     element = None
-    # noqa for this properties, yet
+    # Element properties
+    tag = None
     text = None
     is_displayed = None
     is_enabled = None

@@ -93,9 +93,6 @@ Functionals
 Configuration File
 ------------------
 
-.. highlight:: json
-.. code-block:: json
-   :linenos:
 
 ::
 
@@ -139,6 +136,12 @@ Configuration File
         }
       },
       "tests": {
+        "skip":{
+          "drivers_local": true,
+          "drivers_remote": false,
+          "web_controls": false,
+          "web_pages": false
+        },
         "unitaries": {
           "url": "https://www.netzulo.com"
         },
@@ -159,8 +162,5 @@ Configuration File
           "selector_child": "#login"
           }
         }
-      },
-      "build": {
-        "travis":{ "skip_tests": true }
       }
     }

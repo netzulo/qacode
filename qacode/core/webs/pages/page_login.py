@@ -4,8 +4,8 @@
 
 
 from selenium.webdriver.common.by import By
-from qacode.core.webs.pages.PageBase import PageBase
-from qacode.core.exceptions.PageException import PageException
+from qacode.core.webs.pages.page_base import PageBase
+from qacode.core.exceptions.page_exception import PageException
 
 
 class PageLogin(PageBase):

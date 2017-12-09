@@ -2,10 +2,10 @@
 """Package testing"""
 
 
-from qacode.core.testing.TestInfoBase import TestInfoBase
-from qacode.core.bots.BotConfig import BotConfig
-from qacode.core.bots.BotBase import BotBase
-from qacode.core.exceptions.CoreException import CoreException
+from qacode.core.testing.test_info_base import TestInfoBase
+from qacode.core.bots.bot_config import BotConfig
+from qacode.core.bots.bot_base import BotBase
+from qacode.core.exceptions.core_exception import CoreException
 
 
 class TestInfoBot(TestInfoBase):

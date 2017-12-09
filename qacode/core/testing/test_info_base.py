@@ -5,8 +5,8 @@
 import time
 import unittest
 
-from qacode.core.loggers.LoggerManager import LoggerManager
-from qacode.core.utils.Utils import settings
+from qacode.core.loggers.logger_manager import LoggerManager
+from qacode.core.utils import settings
 
 
 class TestInfoBase(unittest.TestCase):
@@ -58,7 +58,7 @@ class TestInfoBase(unittest.TestCase):
         """
         print("TestInfoBase.tearDownClass@classmethod: finishing testsuite...")
 
-    def timer(self, wait=5, print_each=5, log=None):
+    def timer(self, wait=5, print_each=5):
         """
         Notes:
           logger:
@@ -66,19 +66,16 @@ class TestInfoBase(unittest.TestCase):
           print_each: default value it's 5, must be divisible by 5, negatives
               are accepted
         """
-        if log is None:
-            raise Exception("Can't execute timer without log")
-        if (print_each % 5) != 0:
-            raise Exception(
-                "Can't print timer if print_each is not divisible by 5"
-            )
-
+        msg_err = "Timer can't works if print_each param isn't divisible by 1"
+        msg_each = "Sleeping {} seconds, remaining {} seconds".format(
+            print_each, wait)
+        if (print_each % 1) != 0:
+            raise Exception(msg_err)
         while wait > 0:
-            log("Sleeping {} seconds, remaining {} seconds"
-                .format(print_each, wait))
+            self.log.debug(msg_each)
             self.sleep(print_each)
             wait -= print_each
-        log("Timer terminated...")
+        self.log.info("Test 'timer' terminated...")
 
     def sleep(self, wait=0):
         """
@@ -88,45 +85,38 @@ class TestInfoBase(unittest.TestCase):
         """
         if wait > 0:
             time.sleep(wait)
+        self.log.info("Test 'sleep' terminated...")
 
     def assert_equals_url(self, actual, expected, msg='', wait=0):
         """
         Allow to compare 2 urls and check if 1st it's equals to 2nd url
         """
+        msg_err = 'Wrong URL, not equals: msg={}, actual={}, expected={}'
         self.sleep(wait)
         if not actual == expected:
             raise AssertionError(
-                actual, expected,
-                ('Wrong URL, not equals: actual={}, expected={}'
-                 .format(actual, expected)),
-                msg
-            )
+                actual, expected, msg_err.format(msg, actual, expected))
 
     def assert_not_equals_url(self, actual, expected, msg='', wait=0):
         """
         Allow to compare 2 urls and check if 1st it isn't equals to 2nd url
         """
+        msg_err = 'Wrong URL, is equals: msg={} actual={}, expected={}'
         self.sleep(wait)
         if actual == expected:
             raise AssertionError(
-                actual, expected,
-                ('Wrong URL, is equals: actual={}, expected={}'
-                 .format(actual, expected)),
-                msg
-            )
+                actual, expected, msg_err.format(msg, actual, expected))
 
     def assert_contains_url(self, current, contains, msg='', wait=0):
         """
         Allow to compare 2 urls and check if 1st contains 2nd url
         """
+        msg_err = ("Wrong URL, current doesn't contains"
+                   "expected: msg={}, current={}, contains={}")
         self.sleep(wait)
         if current not in contains:
             raise AssertionError(
-                current, contains,
-                ("Wrong URL, current doesn't contains expected: current={}, "
-                 "contains={}".format(current, contains)),
-                msg
-            )
+                current, contains, msg_err.format(msg, current, contains))
 
     def assert_is_instance(self, obj, cls, msg=''):
         """
@@ -137,8 +127,9 @@ class TestInfoBase(unittest.TestCase):
 
     def assert_raises(self, expected_exception, function_ref, *args, **kwargs):
         """
+        TODO: last time used failed, need to confirm bug
         Allow to encapsulate method
-            assertRaises(expected_exception, args, kwargs)
+            assertRaises(expected_exception, function_ref, args, kwargs)
         """
         self.assertRaises(expected_exception, function_ref, args, kwargs)
 

@@ -119,7 +119,6 @@ class HtmlTag(Enum):
     TAG_DIALOG = 'dialog'
     TAG_SUMMARY = 'summary'
     TAG_DATA = 'data'
-    TAG_HEAD = 'head'
     TAG_META = 'meta'
     TAG_BASE = 'base'
     TAG_BASEFONT = 'basefont'
