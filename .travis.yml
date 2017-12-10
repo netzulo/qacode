@@ -17,11 +17,12 @@ python:
 before_install:
 - pip freeze
 install:
+- pip install tox-travis
 - python setup.py clean
 - python setup.py build
 - python setup.py install
 script:
-- python setup.py test
+- tox
 - if [ $? = 5 ]; then
       echo "0 TESTS COLLECTED" ;
   else
