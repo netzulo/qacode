@@ -5,20 +5,78 @@ branches:
     - devel
 environment:
   matrix:
-    - TOXENV: py27
-    - TOXENV: py33
-    - TOXENV: py34
-    - TOXENV: py35
-    - TOXENV: py36
+    - JOB: "2.7 32-bit"
+      TOXENV: "py27"
+      PYTHON: "C:\\Python27.10"
+      PYTHON_VERSION: "2.7.10"
+      PYTHON_ARCH: "32"
+    - JOB: "2.7 64-bit"
+      TOXENV: "py27"
+      PYTHON: "C:\\Python27.10-x64"
+      PYTHON_VERSION: "2.7.10"
+      PYTHON_ARCH: "64"
+
+    - JOB: "3.3 32-bit"
+      TOXENV: "py33"
+      PYTHON: "C:\\Python33"
+      PYTHON_VERSION: "3.3"
+      PYTHON_ARCH: "32"
+    - JOB: "3.3 64-bit"
+      TOXENV: "py33"
+      PYTHON: "C:\\Python33"
+      PYTHON_VERSION: "3.3"
+      PYTHON_ARCH: "64"
+
+    - JOB: "3.4 32-bit"
+      TOXENV: "py34"
+      PYTHON: "C:\\Python34"
+      PYTHON_VERSION: "3.4"
+      PYTHON_ARCH: "32"
+    - JOB: "3.4 64-bit"
+      TOXENV: "py34"
+      PYTHON: "C:\\Python34-x64"
+      PYTHON_VERSION: "3.4"
+      PYTHON_ARCH: "64"
+
+    - JOB: "3.5 32-bit"
+      TOXENV: "py35"
+      PYTHON: "C:\\Python35"
+      PYTHON_VERSION: "3.5.0"
+      PYTHON_ARCH: "32"
+    - JOB: "3.5 64-bit"
+      TOXENV: "py35"
+      PYTHON: "C:\\Python35-x64"
+      PYTHON_VERSION: "3.5.0"
+      PYTHON_ARCH: "64"
+
+    - JOB: "3.6 32-bit"
+      TOXENV: "py36"
+      PYTHON: "C:\\Python36"
+      PYTHON_VERSION: "3.6.3"
+      PYTHON_ARCH: "32"
+    - JOB: "3.6 64-bit"
+      TOXENV: "py36"
+      PYTHON: "C:\\Python36"
+      PYTHON_VERSION: "3.6.3"
+      PYTHON_ARCH: "64"
 
 install:
-- "python -c \"import os; open('python{0}.{1}.bat'.format(*os.environ['TOXENV'][2:]), 'w').write('@{0}\\\\python \\x25*\\n'.format(os.environ['PYTHON']))\""
-- "%PYTHON% -m pip install wheel"
-- "%PYTHON% -m pip install --pre -U tox"
-- "%PYTHON% setup.py install"
+# Prepend newly installed Python to the PATH of this build (this cannot be
+# done from inside the powershell script as it would require to restart
+# the parent CMD process).
+- "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
+# Check that we have the expected version and architecture for Python
+- "python --version"
+- "python -c \"import struct; print(struct.calcsize('P') * 8)\""
+# Upgrade to the latest version of pip to avoid it displaying warnings
+# about it being out of date.
+- "pip install --disable-pip-version-check --user --upgrade pip"
+- "python -m pip install wheel"
+- "python -m pip install --pre -U tox"
+- "python setup.py install"
 
 test_script:
-- "%PYTHON%\\scripts\\tox"
+- "tox -e %TOXENV%"
 
 artifacts:
 - path: dist\*"
