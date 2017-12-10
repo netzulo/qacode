@@ -3,13 +3,14 @@
 
 
 from unittest import skipIf
-from qacode.core.testing.test_info_bot import TestInfoBot
 from qacode.core.loggers.logger_manager import LoggerManager
+from qacode.core.testing.test_info_bot import TestInfoBot
 from qacode.core.bots.modules.nav_base import NavBase
 from qacode.core.utils import settings
 
-SETTINGS = settings()
+
 LOGGER_MANAGER = LoggerManager()
+SETTINGS = settings()
 SKIP_REMOTES = SETTINGS['tests']['skip']['drivers_remote']
 SKIP_REMOTES_MSG = 'drivers_remote DISABLED by config file'
 
@@ -21,7 +22,8 @@ class TestNavBase(TestInfoBot):
         """Test what probes NavBase class and methods"""
         super(TestNavBase, self).__init__(
             method_name=method_name,
-            logger_manager=LOGGER_MANAGER
+            logger_manager=LOGGER_MANAGER,
+            test_config=SETTINGS
         )
 
     def setUp(self):

@@ -4,36 +4,47 @@
 
 
 from unittest import skipIf
-from qacode.core.exceptions.page_exception import PageException
-from qacode.core.webs.pages.page_login import PageLogin
-from qacode.core.testing.test_info_bot import TestInfoBot
 from qacode.core.loggers.logger_manager import LoggerManager
 from qacode.core.utils import settings
+from qacode.core.testing.test_info_bot import TestInfoBot
+from qacode.core.webs.pages.page_login import PageLogin
+from qacode.core.exceptions.page_exception import PageException
 
 
-CONFIG = settings()
 LOGGER_MANAGER = LoggerManager()
-SKIP_PAGES = CONFIG['tests']['skip']['web_pages']
+SETTINGS = settings()
+SKIP_PAGES = SETTINGS['tests']['skip']['web_pages']
 SKIP_PAGES_MSG = 'web_pages DISABLED by config file'
 
 
 class TestPageLogin(TestInfoBot):
     """Test Suite for class PageLogin"""
 
-    def __init__(self, method_name="TestPageLogin"):
+    def __init__(self, method_name="suite_TestPageLogin"):
         """Just call to parent constructor class, see TestInfoBot"""
         super(TestPageLogin, self).__init__(
-            method_name, logger_manager=LOGGER_MANAGER
+            method_name,
+            logger_manager=LOGGER_MANAGER,
+            test_config=SETTINGS
         )
-        self.url_login = self.test_config['tests']['functionals']['url_login']
-        self.url_logout = self.test_config['tests']['functionals']['url_logout']
-        self.url_logged = self.test_config['tests']['functionals']['url_logged']
-        self.url_404 = self.test_config['tests']['functionals']['url_404']
-        self.selectors = self.test_config['tests']['functionals']['selectors_login']
-        self.creed_user = self.test_config['tests']['functionals']['creed_user']
-        self.creed_pass = self.test_config['tests']['functionals']['creed_pass']
-        self.msg_logged = "Logged success on url={}".format(self.url_logged)
-        self.msg_fail_ok = "Login fail success on url={}".format(self.url_logged)
+        self.url_login = self.test_config.get(
+            'tests')['functionals']['url_login']
+        self.url_logout = self.test_config.get(
+            'tests')['functionals']['url_logout']
+        self.url_logged = self.test_config.get(
+            'tests')['functionals']['url_logged']
+        self.url_404 = self.test_config.get(
+            'tests')['functionals']['url_404']
+        self.selectors = self.test_config.get(
+            'tests')['functionals']['selectors_login']
+        self.creed_user = self.test_config.get(
+            'tests')['functionals']['creed_user']
+        self.creed_pass = self.test_config.get(
+            'tests')['functionals']['creed_pass']
+        self.msg_logged = "Logged success on url={}".format(
+            self.url_logged)
+        self.msg_fail_ok = "Login fail success on url={}".format(
+            self.url_logged)
 
     @skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
     def test_001_page_login_instance(self):

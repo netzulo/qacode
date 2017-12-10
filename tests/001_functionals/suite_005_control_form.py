@@ -5,16 +5,17 @@
 
 from unittest import skipIf
 from selenium.webdriver.remote.webelement import WebElement
+from qacode.core.loggers.logger_manager import LoggerManager
+from qacode.core.utils import settings
 from qacode.core.testing.test_info_bot import TestInfoBot
 from qacode.core.webs.controls.control_form import ControlForm
-from qacode.core.loggers.logger_manager import LoggerManager
 from qacode.core.exceptions.control_exception import ControlException
-from qacode.core.utils import settings
 
 
-CONFIG = settings()
+
 LOGGER_MANAGER = LoggerManager()
-SKIP_CONTROLS = CONFIG['tests']['skip']['web_controls']
+SETTINGS = settings()
+SKIP_CONTROLS = SETTINGS['tests']['skip']['web_controls']
 SKIP_CONTROLS_MSG = 'web_controls DISABLED by config file'
 
 
@@ -25,7 +26,8 @@ class TestControlForm(TestInfoBot):
     def __init__(self, method_name="TestControlForm"):
         super(TestControlForm, self).__init__(
             method_name=method_name,
-            logger_manager=LOGGER_MANAGER
+            logger_manager=LOGGER_MANAGER,
+            test_config=SETTINGS
         )
 
     def setUp(self):
