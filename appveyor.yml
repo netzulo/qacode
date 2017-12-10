@@ -5,17 +5,17 @@ branches:
     - devel
 environment:
   matrix:
-    - PYTHON: "C:\\Python27"
-    - PYTHON: "C:\\Python27-x64"
-    - PYTHON: "C:\\Python34"
-    - PYTHON: "C:\\Python34-x64"
-    - PYTHON: "C:\\Python35"        
-    - PYTHON: "C:\\Python35-x64"
+    - TOXENV: py27
+    - TOXENV: py33
+    - TOXENV: py34
+    - TOXENV: py35
+    - TOXENV: py36
 
 install:
 - "%PYTHON%\\python.exe -m pip install wheel"
 - "%PYTHON%\\python.exe setup.py install"
+- "%PYTHON%\\python.exe -m pip install --pre -U tox"
 
 test_script:
 - "%PYTHON%\\python.exe setup.py develop"
-- "%PYTHON%\\python.exe setup.py test"
+- "%PYTHON%\\scripts\\tox"
