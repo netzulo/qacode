@@ -79,4 +79,4 @@ test_script:
 - "tox -e %TOXENV%"
 
 artifacts:
-- path: dist\*"
+- path: "dist\\*"
