@@ -151,3 +151,13 @@ class MessageType(Enum):
     BEHAVIOUR = 'BEHAVIOUR'
     USABILITY = 'USABILITY'
     SEO = 'SEO'
+
+    @classmethod
+    def get_attr(cls):
+        """return enum values"""
+        return [item.value for item in MessageType]
+
+    @classmethod
+    def has_attr(cls, value):
+        """returns True if enum have value"""
+        return any(value == item.value for item in cls)
