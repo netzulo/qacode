@@ -3,6 +3,7 @@
 """"TODO: doc module"""
 
 
+from enum import Enum
 from selenium.webdriver.common.by import By
 from qacode.core.exceptions.control_exception import ControlException
 from qacode.core.webs.controls.control_base import ControlBase
@@ -88,4 +89,65 @@ class ControlForm(ControlBase):
             True if validation ok or if strict_mode and have warnings
             False if validation have error
         """
-        raise NotImplementedError("Must code more here...")
+        msg_not_found_for = "Element '{}' not found for '{}' attr 'for' value"
+        msg_not_attr = "Element '{}', not attr '{}' detected"
+        msg_not_css = "Element '{}', not css '{}' with value '{}' detected"
+        msg = "**{}** {}: {}"
+        if strict_mode:
+            msg.format('ERROR', '{}', '{}')
+        else:
+            msg.format('WARN', '{}', '{}')
+        # load attrs
+        self.attr_for = self.get_attr_value('for')
+        self.attr_name = self.get_attr_value('name')
+        # load css
+        self.css_cursor = self.get_css_value('cursor') # TODO: will fail
+        # warnings and errors
+        self._log_rule('name', msg.format(
+            MessageType.USABILITY,
+            msg_not_attr.format(self.selector, 'name')))
+
+        is_for_attr = self._log_rule('for', msg.format(
+            MessageType.BEHAVIOUR,
+            msg_not_attr.format(self.selector, 'for')))
+        if is_for_attr:
+            try:
+                selector_id = '#{}'.format(self.attr_for)
+                ControlBase(self.bot, selector=selector_id)
+            except Exception:
+                raise ControlException(
+                    message=msg_not_found_for.format(
+                        selector_id, self.selector))
+        if self.css_cursor is None or self.css_cursor != 'default':
+            self._log_rule('cursor', msg.format(
+                MessageType.USABILITY,
+                msg_not_css.format(self.selector, 'cursor', 'default')))
+
+    def _log_rule(self, attr, msg, strict_mode=False):
+        """
+        Log to logger by strict_mode type
+        :return:
+            returns is_attr variable value
+        """
+        is_attr = False
+        if attr is None or attr == '':
+            if strict_mode:
+                self.bot.log.error(msg)
+            else:
+                self.bot.log.warning(msg)
+        else:
+            self.bot.log.info(
+                "ControlForm, attr found : {}".format(attr))
+            is_attr = True
+        return is_attr
+
+
+class MessageType(Enum):
+    """
+    Just message type enum for warning and errors
+     on control form class
+    """
+
+    BEHAVIOUR = 'BEHAVIOUR'
+    USABILITY = 'USABILITY'
+    SEO = 'SEO'

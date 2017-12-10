@@ -65,7 +65,11 @@ class TestControlBase(TestInfoBot):
     def test_002_raises_nosearchselector(self):
         """Testcase: test_002_raises_nosearch"""
         self.assertRaises(
-            ControlException, ControlBase, self.bot, self.selector_parent, search=False)
+            ControlException,
+            ControlBase,
+            self.bot,
+            self.selector_parent,
+            search=False)
 
     @skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_003_method_findchild(self):

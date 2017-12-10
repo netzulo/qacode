@@ -38,11 +38,33 @@ class TestControlForm(TestInfoBot):
             'tests')['functionals']['selectors_login'][0]
         self.selector_txt_password = self.test_config.get(
             'tests')['functionals']['selectors_login'][1]
+        self.bot.navigation.get_url(self.url)
+        self.assert_equals_url(
+            self.bot.curr_driver.current_url, self.url)
 
     @skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_000_instance_byelement(self):
         """Testcase: test_000_instance_byelement"""
-        element = self.bot.navigation.find_element(self.selector_txt_username)
+        element = self.bot.navigation.find_element(
+            self.selector_txt_username)
         control = ControlForm(self.bot, element=element)
         self.assertIsInstance(control.element, WebElement)
         self.assertIsInstance(control, ControlForm)
+
+    @skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
+    def test_001_instance_byselector(self):
+        """Testcase: test_001_instance_byselector"""
+        control = ControlForm(
+            self.bot, selector=self.selector_txt_username)
+        self.assertIsInstance(control.element, WebElement)
+        self.assertIsInstance(control, ControlForm)
+
+    @skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
+    def test_002_raises_nosearchselector(self):
+        """Testcase: test_002_raises_nosearch"""
+        self.assertRaises(
+            ControlException,
+            ControlForm,
+            self.bot,
+            self.selector_txt_username,
+            search=False)

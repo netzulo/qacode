@@ -25,11 +25,13 @@ class TestInfoBotUnique(TestInfoBot):
     @classmethod
     def setUpClass(cls):
         global BOT
-        BOT = TestInfoBot.bot_open(SETTINGS, LOGGER_MANAGER)
+        if not SKIP_REMOTES:
+            BOT = TestInfoBot.bot_open(SETTINGS, LOGGER_MANAGER)
     @classmethod
     def tearDownClass(cls):
         global BOT
-        TestInfoBot.bot_close(BOT)
+        if not SKIP_REMOTES:
+            TestInfoBot.bot_close(BOT)
 
     def __init__(self, method_name="TestTestInfoBotUnique"):
         super(TestInfoBotUnique, self).__init__(
