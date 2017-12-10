@@ -55,7 +55,10 @@ setup(
         'nose-testconfig==0.10',
         'pytest',
     ],
-    setup_requires=['pytest-runner'],
+    setup_requires=[
+        'pytest-runner',
+        'tox'
+    ],
     tests_require=[
         'pytest-html',
         'pytest-dependency',
