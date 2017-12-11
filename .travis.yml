@@ -9,17 +9,31 @@ addons:
     branches:
     - master
 language: python
-python:
-- '2.7'
-- '3.4'
-- '3.5'
-- '3.6'
+matrix:
+  include:
+    - os: linux
+      sudo;: required
+      python: 2.7
+      env: TOXENV=py27
+    - os: linux
+      sudo;: required
+      python: 3.4
+      env: TOXENV=py34
+    - os: linux
+      sudo;: required
+      python: 3.5
+      env: TOXENV=py35
+    - os: linux
+      sudo;: required
+      python: 3.6
+      env: TOXENV=py36
+
 before_install:
 - pip freeze
 install:
-- pip install tox-travis
+- pip install tox
 script:
-- tox
+- tox -e "{$TOXENV}"
 after_script:
 - if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then 
       sonar-scanner -X -Dsonar.login=${SONAR_GITHUB_TOKEN} -Dsonar.host.url=http://qalab.tk:82 ;
