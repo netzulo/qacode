@@ -8,6 +8,7 @@ from qacode.core.utils import read_file
 from qacode.core.utils import path_format
 
 
+VERSION = "0.3.8"
 CURR_PATH = "{}{}".format(path.abspath(path.dirname(__file__)), '/')
 
 
@@ -35,7 +36,7 @@ def read(file_name=None, is_encoding=True, ignore_raises=False):
 
 setup(
     name='qacode',
-    version='0.3.7',
+    version=VERSION,
     license=read("LICENSE", is_encoding=False, ignore_raises=True),
     packages=find_packages(exclude=['tests']),
     description='Main automation lib',
@@ -43,7 +44,8 @@ setup(
     author='Netzulo Open Source',
     author_email='netzuleando@gmail.com',
     url='https://github.com/netzulo/qacode',
-    download_url='https://github.com/netzulo/qacode/tarball/v0.3.7',
+    download_url='https://github.com/netzulo/qacode/tarball/v{}'.format(
+        VERSION),
     keywords=['testing', 'logging', 'functional', 'selenium', 'test'],
     install_requires=[
         'appdirs',
