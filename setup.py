@@ -51,14 +51,14 @@ setup(
         'pyparsing',
         'six==1.10.0',
         'selenium==3.5.0',
-        'enum34;python_version < "3.4"',
+        'enum34',
         'nose==1.3.7',
         'nose-testconfig==0.10',
         'pytest',
     ],
     setup_requires=[
         'pytest-runner',
-        'tox'
+        'tox',
     ],
     tests_require=[
         'pytest-html',
