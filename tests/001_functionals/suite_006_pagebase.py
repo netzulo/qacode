@@ -5,17 +5,17 @@
 
 from unittest import skipIf
 from selenium.webdriver.remote.webelement import WebElement
+from qacode.core.loggers.logger_manager import LoggerManager
+from qacode.core.utils import settings
 from qacode.core.testing.test_info_bot import TestInfoBot
 from qacode.core.webs.pages.page_base import PageBase
-from qacode.core.webs.controls.control_base import ControlBase
-from qacode.core.loggers.logger_manager import LoggerManager
 from qacode.core.exceptions.page_exception import PageException
-from qacode.core.utils import settings
+from qacode.core.webs.controls.control_base import ControlBase
 
 
-CONFIG = settings()
 LOGGER_MANAGER = LoggerManager()
-SKIP_PAGES = CONFIG['tests']['skip']['web_pages']
+SETTINGS = settings()
+SKIP_PAGES = SETTINGS['tests']['skip']['web_pages']
 SKIP_PAGES_MSG = 'web_pages DISABLED by config file'
 
 
@@ -26,7 +26,9 @@ class TestPageBase(TestInfoBot):
         """Just call to parent constructor class, see TestInfoBot"""
         super(TestPageBase, self).__init__(
             method_name,
-            logger_manager=LOGGER_MANAGER)
+            logger_manager=LOGGER_MANAGER,
+            test_config=SETTINGS
+        )
 
     def setUp(self):
         super(TestPageBase, self).setUp()

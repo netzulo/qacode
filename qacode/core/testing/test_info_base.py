@@ -9,6 +9,8 @@ from qacode.core.loggers.logger_manager import LoggerManager
 from qacode.core.utils import settings
 
 
+LOGGER_MANAGER = None
+
 class TestInfoBase(unittest.TestCase):
     """Base class for inherit new Test classes"""
 
@@ -24,16 +26,18 @@ class TestInfoBase(unittest.TestCase):
         else:
             self.test_config = test_config
         if logger_manager is None:
-            self.logger_manager = LoggerManager()
+            self.logger_manager = LOGGER_MANAGER
         else:
             self.logger_manager = logger_manager
-        self.log = self.logger_manager.get_log()
+        self.log = self.logger_manager.logger
 
     @classmethod
     def setUpClass(cls):
         """
         Just starting testcase instance dependencies
         """
+        global LOGGER_MANAGER
+        LOGGER_MANAGER = LoggerManager()
         print("TestInfoBase.setup@classmethod: code mark")
 
     def setUp(self):

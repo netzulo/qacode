@@ -16,11 +16,12 @@ class LoggerManager(object):
     log_name = None
     log_path_join = None
     log_level = None
+    logger = None
 
 
     def __init__(self,
                  log_path="logs/",
-                 log_name="qacode.log", log_level=None,
+                 log_name="qacode", log_level=None,
                  is_output_console=True, is_output_file=True):
         """
         Create new logger_manager instance with default
@@ -53,25 +54,28 @@ class LoggerManager(object):
         self.is_output_file = is_output_file
         self.log_path_join = path_format(
             file_path=self.log_path,
-            file_name=self.log_name,
+            file_name="{}.log".format(self.log_name),
             ignore_raises=True)
-        self.create_logger()
+        self.logger = self.create_logger()
 
     def create_logger(self):
         """Generates handlers from logging package"""
-        self.logger = logging.getLogger(self.log_name)
-        self.logger.setLevel(self.log_level)
+        logger = logging.getLogger(self.log_name)
+        logger.setLevel(self.log_level)
         self.log_formatter = logging.Formatter(
             '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
         )
+        for old_handler in logger.handlers:
+            logger.removeHandler(old_handler)
         if self.is_output_console:
-            self.logger.addHandler(self.create_console_handler(
+            logger.addHandler(self.create_console_handler(
                 self.log_level, self.log_formatter
             ))
         if self.is_output_file:
-            self.logger.addHandler(self.create_file_handler(
+            logger.addHandler(self.create_file_handler(
                 self.log_level, self.log_formatter, self.log_path_join
             ))
+        return logger
 
 
     def create_console_handler(self, log_level, log_formatter):
@@ -87,7 +91,3 @@ class LoggerManager(object):
         file_handler.setLevel(log_level)
         file_handler.setFormatter(log_formatter)
         return file_handler
-
-    def get_log(self):
-        """Returns property self.logger"""
-        return self.logger

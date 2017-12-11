@@ -17,16 +17,9 @@ python:
 before_install:
 - pip freeze
 install:
-- python setup.py clean
-- python setup.py build
-- python setup.py install
+- pip install tox-travis
 script:
-- python setup.py test
-- if [ $? = 5 ]; then
-      echo "0 TESTS COLLECTED" ;
-  else
-      echo "TESTS EXECUTED" ;
-  fi
+- tox
 after_script:
 - if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then 
       sonar-scanner -X -Dsonar.login=${SONAR_GITHUB_TOKEN} -Dsonar.host.url=http://qalab.tk:82 ;

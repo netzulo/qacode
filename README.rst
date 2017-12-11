@@ -1,12 +1,21 @@
 QA Code
 =======
 
-.. image:: https://img.shields.io/github/downloads/netzulo/qacode/total.svg
-  :alt: Downloads on Github
-  :target: https://img.shields.io/github/downloads/netzulo/qacode/total.svg
-.. image:: https://img.shields.io/github/release/netzulo/qcode.svg
-  :alt: GitHub release
-  :target: https://img.shields.io/github/release/netzulo/qcode.svg
+.. image:: https://img.shields.io/github/issues/netzulo/qacode.svg
+  :alt: Issues on Github
+  :target: https://github.com/netzulo/qacode/issues
+
+.. image:: https://img.shields.io/github/issues-pr/netzulo/qacode.svg
+  :alt: Pull Request opened on Github
+  :target: https://github.com/netzulo/qacode/issues
+
+.. image:: https://img.shields.io/github/release/netzulo/qacode.svg
+  :alt: Release version on Github
+  :target: https://github.com/netzulo/qacode/releases/latest
+
+.. image:: https://img.shields.io/github/release-date/netzulo/qacode.svg
+  :alt: Release date on Github
+  :target: https://github.com/netzulo/qacode/releases/latest
 
 +-----------------------+-------------------------------------------------------------------+------------------------------------------------------------------------------------------------+
 | Branch                | Linux Deploy                                                      | Windows Deploy                                                                                 |

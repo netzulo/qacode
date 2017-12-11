@@ -14,7 +14,7 @@ class CoreException(Exception):
         super(CoreException, self).__init__(err, message)
         msg = "FAILED qacode.core: message={}"
         if log is None:
-            self.log = LoggerManager().get_log()
+            self.log = LoggerManager().logger
         else:
             self.log = log
         self.log.error(str(msg.format(message)))

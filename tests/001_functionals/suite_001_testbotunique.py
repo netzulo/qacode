@@ -4,10 +4,12 @@
 
 from unittest import skipIf
 from unittest import TestCase
-from qacode.core.bots.bot_base import BotBase
 from qacode.core.loggers.logger_manager import LoggerManager
-from qacode.core.testing.test_info_bot import TestInfoBot
 from qacode.core.utils import settings
+from qacode.core.testing.test_info_bot import TestInfoBot
+from qacode.core.bots.bot_base import BotBase
+
+
 
 
 LOGGER_MANAGER = LoggerManager()
@@ -23,15 +25,18 @@ class TestInfoBotUnique(TestInfoBot):
     @classmethod
     def setUpClass(cls):
         global BOT
-        BOT = TestInfoBot.bot_open(SETTINGS, LOGGER_MANAGER)
+        if not SKIP_REMOTES:
+            BOT = TestInfoBot.bot_open(SETTINGS, LOGGER_MANAGER)
     @classmethod
     def tearDownClass(cls):
         global BOT
-        TestInfoBot.bot_close(BOT)
+        if not SKIP_REMOTES:
+            TestInfoBot.bot_close(BOT)
 
     def __init__(self, method_name="TestTestInfoBotUnique"):
         super(TestInfoBotUnique, self).__init__(
-            method_name, bot=BOT)
+            method_name, bot=BOT,
+        )
 
     @skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
     def test_001_inheritance(self):

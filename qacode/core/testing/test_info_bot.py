@@ -18,6 +18,13 @@ class TestInfoBot(TestInfoBase):
     def __init__(self, method_name="TestInfoBot", logger_manager=None,
                  test_config=None,
                  bot=None):
+        """
+        Allows to execute tests what open and close
+         BotBase on each test method
+        :args:
+            bot: if contain instance of BotBase, then load bot
+             config and logger_manager for self as properties
+        """
         super(TestInfoBot, self).__init__(method_name=method_name,
                                           logger_manager=logger_manager,
                                           test_config=test_config)
