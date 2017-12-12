@@ -156,3 +156,18 @@ class TestBotBase(TestInfoBase):
         self.assertEqual(bot.curr_caps['browserName'], 'MicrosoftEdge')
         bot.close()
         self.log.debug("TestBotBase: REMOTE terminated for EDGE")
+
+    @skipIf(True, 'Issue opened on official opera chromium github')
+    def test_011_bot_remote_opera(self):
+        """Testcase: test_011_bot_remote_opera
+        
+        ISSUE OPENED : https://github.com/operasoftware/operachromiumdriver/issues/9
+        """
+        self.log.debug("TestBotBase: REMOTE started for OPERA")
+        self.bot_config.config['browser'] = 'opera'
+        self.bot_config.config['mode'] = 'remote'
+        bot = BotBase(self.bot_config)
+        self.timer(wait=WAIT_TO_CLOSE)
+        self.assertEqual(bot.curr_caps['browserName'], 'opera')
+        bot.close()
+        self.log.debug("TestBotBase: REMOTE terminated for OPERA")

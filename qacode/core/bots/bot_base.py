@@ -130,6 +130,12 @@ class BotBase(object):
                 executable_path=self.curr_driver_path,
                 desired_capabilities=self.curr_caps
             )
+        elif browser_name == "opera":
+            self.curr_caps = DesiredCapabilities.OPERA.copy()
+            self.curr_driver = WebDriver.Opera(
+                executable_path=self.curr_driver_path,
+                desired_capabilities=self.curr_caps
+            )
         else:
             raise CoreException(
                 message=("config file error, SECTION=bot, KEY=browser isn't "
@@ -158,6 +164,9 @@ class BotBase(object):
 
         elif browser_name == 'edge':
             self.curr_caps = DesiredCapabilities.EDGE.copy()
+
+        elif browser_name == 'opera':
+            self.curr_caps = DesiredCapabilities.OPERA.copy()
         else:
             raise CoreException(message='Bad browser selected')
 
