@@ -97,9 +97,25 @@ class TestBotBase(TestInfoBase):
         bot.close()
         self.log.debug("TestBotBase: LOCAL terminated for EDGE")
 
+    @skipIf(True, 'Issue opened on official opera chromium github')
+    def test_006_bot_local_opera(self):
+        """Testcase: test_006_bot_local_opera
+        
+        ISSUE OPENED : https://github.com/operasoftware/operachromiumdriver/issues/9
+        """
+        self.log.debug("TestBotBase: REMOTE started for OPERA")
+        self.bot_config.config['browser'] = 'opera'
+        self.bot_config.config['mode'] = 'local'
+        bot = BotBase(self.bot_config)
+        self.timer(wait=WAIT_TO_CLOSE)
+        self.assertEqual(bot.curr_caps['browserName'], 'opera')
+        bot.close()
+        self.log.debug("TestBotBase: REMOTE terminated for OPERA")
+
+
     @skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
-    def test_006_bot_remote_chrome(self):
-        """Testcase: test_006_bot_remote_chrome"""
+    def test_007_bot_remote_chrome(self):
+        """Testcase: test_007_bot_remote_chrome"""
         self.log.debug("TestBotBase: REMOTE started for CHROME")
         self.bot_config.config['browser'] = 'chrome'
         self.bot_config.config['mode'] = 'remote'
@@ -110,8 +126,8 @@ class TestBotBase(TestInfoBase):
         self.log.debug("TestBotBase: REMOTE terminated for CHROME")
 
     @skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
-    def test_007_bot_remote_firefox(self):
-        """Testcase: test_007_bot_remote_firefox"""
+    def test_008_bot_remote_firefox(self):
+        """Testcase: test_008_bot_remote_firefox"""
         self.log.debug("TestBotBase: REMOTE started for FIREFOX")
         self.bot_config.config['browser'] = 'firefox'
         self.bot_config.config['mode'] = 'remote'
@@ -122,8 +138,8 @@ class TestBotBase(TestInfoBase):
         self.log.debug("TestBotBase: REMOTE terminated for FIREFOX")
 
     @skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
-    def test_008_bot_remote_phantomjs(self):
-        """Testcase: test_008_bot_remote_phantomjs"""
+    def test_009_bot_remote_phantomjs(self):
+        """Testcase: test_009_bot_remote_phantomjs"""
         self.log.debug("TestBotBase: REMOTE started for PHANTOMJS")
         self.bot_config.config['browser'] = "phantomjs"
         self.bot_config.config['mode'] = "remote"
@@ -134,8 +150,8 @@ class TestBotBase(TestInfoBase):
         self.log.debug("TestBotBase: REMOTE terminated for PHANTOMJS")
 
     @skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
-    def test_009_bot_remote_iexplorer(self):
-        """Testcase: test_009_bot_remote_iexplorer"""
+    def test_010_bot_remote_iexplorer(self):
+        """Testcase: test_010_bot_remote_iexplorer"""
         self.log.debug("TestBotBase: REMOTE started for IEXPLORER")
         self.bot_config.config['browser'] = 'iexplorer'
         self.bot_config.config['mode'] = 'remote'
@@ -146,8 +162,8 @@ class TestBotBase(TestInfoBase):
         self.log.debug("TestBotBase: REMOTE terminated for IEXPLORER")
 
     @skipIf(True, 'Still not public node with edge support')
-    def test_010_bot_remote_edge(self):
-        """Testcase: test_010_bot_remote_edge"""
+    def test_011_bot_remote_edge(self):
+        """Testcase: test_011_bot_remote_edge"""
         self.log.debug("TestBotBase: REMOTE started for EDGE")
         self.bot_config.config['browser'] = 'edge'
         self.bot_config.config['mode'] = 'remote'
@@ -158,8 +174,8 @@ class TestBotBase(TestInfoBase):
         self.log.debug("TestBotBase: REMOTE terminated for EDGE")
 
     @skipIf(True, 'Issue opened on official opera chromium github')
-    def test_011_bot_remote_opera(self):
-        """Testcase: test_011_bot_remote_opera
+    def test_012_bot_remote_opera(self):
+        """Testcase: test_012_bot_remote_opera
         
         ISSUE OPENED : https://github.com/operasoftware/operachromiumdriver/issues/9
         """
