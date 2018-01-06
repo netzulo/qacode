@@ -6,6 +6,7 @@
 
 import os
 
+from unittest import skipIf
 from qacode.core.testing.test_info_base import TestInfoBase
 from qacode.core.loggers.logger_manager import LoggerManager
 from qacode.core.utils import path_format
@@ -57,6 +58,10 @@ class TestConfig(TestInfoBase):
             self.ERR_KEY_REGEX.format('bot.url_hub', self.REGEX_URL)
         )
 
+    @skipIf(
+        True,
+        """Test obsolete, maybe will use again
+        this config key to manage server and nodes connected""")
     def test_004_bot_url_node(self):
         """Test : test_005_config_has_key_bot_url_node"""
         self.assertRegexpMatches(

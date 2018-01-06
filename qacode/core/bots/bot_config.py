@@ -26,7 +26,6 @@ class BotConfig(object):
                     "mode": "remote",
                     "browser": "chrome",
                     "url_hub": "http://146.255.101.51:11000/wd/hub",
-                    "url_node": "http://146.255.101.51:11001/wd/hub",
                     "drivers_path": "../qadrivers",
                     "drivers_names": [
                         "chromedriver_32.exe",
@@ -61,7 +60,6 @@ class BotConfig(object):
             'mode',
             'browser',
             'url_hub',
-            'url_node',
             'drivers_path',
             'drivers_names',
             'log_name',
