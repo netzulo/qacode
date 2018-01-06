@@ -5,17 +5,17 @@
 
 from unittest import skipIf
 from selenium.webdriver.remote.webelement import WebElement
-from qacode.core.loggers.logger_manager import LoggerManager
 from qacode.core.utils import settings
+from qacode.core.loggers.logger_manager import LoggerManager
 from qacode.core.testing.test_info_bot import TestInfoBot
 from qacode.core.webs.controls.control_base import ControlBase
 from qacode.core.exceptions.control_exception import ControlException
 
 
-LOGGER_MANAGER = LoggerManager()
 SETTINGS = settings()
 SKIP_CONTROLS = SETTINGS['tests']['skip']['web_controls']
 SKIP_CONTROLS_MSG = 'web_controls DISABLED by config file'
+LOGGER_MANAGER = LoggerManager(log_level=SETTINGS['bot']['log_level'])
 
 
 class TestControlBase(TestInfoBot):

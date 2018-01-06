@@ -26,7 +26,8 @@
       "operadriver_64"
     ],
     "log_output_file": "logs",
-    "log_name": "qacode"
+    "log_name": "qacode",
+    "log_level": "DEBUG"
   },
   "testlink": {
     "enabled": false,

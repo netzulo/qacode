@@ -2,13 +2,13 @@
 """Package testing.testlink"""
 
 
-from qacode.core.loggers.logger_manager import LoggerManager
 from qacode.core.utils import settings
+from qacode.core.loggers.logger_manager import LoggerManager
 from qacode.core.testing.test_info_base import TestInfoBase
 
 
-LOGGER_MANAGER = LoggerManager()
 SETTINGS = settings()
+LOGGER_MANAGER = LoggerManager(log_level=SETTINGS['bot']['log_level'])
 
 
 class TestTlBase(TestInfoBase):

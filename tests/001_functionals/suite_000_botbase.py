@@ -3,20 +3,20 @@
 
 
 from unittest import skipIf
-from qacode.core.loggers.logger_manager import LoggerManager
 from qacode.core.utils import settings
+from qacode.core.loggers.logger_manager import LoggerManager
 from qacode.core.testing.test_info_base import TestInfoBase
 from qacode.core.bots.bot_config import BotConfig
 from qacode.core.bots.bot_base import BotBase
 
 
-LOGGER_MANAGER = LoggerManager()
 SETTINGS = settings()
 SKIP_LOCALS = SETTINGS['tests']['skip']['drivers_local']
 SKIP_LOCALS_MSG = 'drivers_local DISABLED by config file'
 SKIP_REMOTES = SETTINGS['tests']['skip']['drivers_remote']
 SKIP_REMOTES_MSG = 'drivers_remote DISABLED by config file'
 WAIT_TO_CLOSE = int(3) # TODO: must be setteable from config JSON
+LOGGER_MANAGER = LoggerManager(log_level=SETTINGS['bot']['log_level'])
 
 
 class TestBotBase(TestInfoBase):

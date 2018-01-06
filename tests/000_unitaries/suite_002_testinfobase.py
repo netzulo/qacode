@@ -4,11 +4,13 @@
 
 import unittest
 
-from qacode.core.testing.test_info_base import TestInfoBase
+from qacode.core.utils import settings
 from qacode.core.loggers.logger_manager import LoggerManager
+from qacode.core.testing.test_info_base import TestInfoBase
 
 
-LOGGER_MANAGER = LoggerManager()
+SETTINGS = settings()
+LOGGER_MANAGER = LoggerManager(log_level=SETTINGS['bot']['log_level'])
 
 
 class TestTestInfoBase(TestInfoBase):
