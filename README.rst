@@ -89,6 +89,8 @@ TOX environments
 +---------------------+--------------------------------+
 | flake8              | Exec linter in qalab/ tests/   |
 +---------------------+--------------------------------+
+| coverage            | Generate XML and HTML reports  |
++---------------------+--------------------------------+
 
 
 Configuration File
