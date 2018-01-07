@@ -4,17 +4,18 @@
 
 
 from unittest import skipIf
-from qacode.core.loggers.logger_manager import LoggerManager
 from qacode.core.utils import settings
+from qacode.core.loggers.logger_manager import LoggerManager
 from qacode.core.testing.test_info_bot import TestInfoBot
 from qacode.core.webs.pages.page_login import PageLogin
 from qacode.core.exceptions.page_exception import PageException
 
 
-LOGGER_MANAGER = LoggerManager()
 SETTINGS = settings()
 SKIP_PAGES = SETTINGS['tests']['skip']['web_pages']
 SKIP_PAGES_MSG = 'web_pages DISABLED by config file'
+LOGGER_MANAGER = LoggerManager(log_level=SETTINGS['bot']['log_level'])
+
 
 
 class TestPageLogin(TestInfoBot):

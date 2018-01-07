@@ -64,6 +64,7 @@ class BotConfig(object):
             'drivers_names',
             'log_name',
             'log_output_file',
+            'log_level'
         ]
         self._load_logger_manager(logger_manager)
         for prop in props:
