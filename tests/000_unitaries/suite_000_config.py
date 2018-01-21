@@ -22,10 +22,10 @@ class TestConfig(TestInfoBase):
     ERR_KEY_INVALID_VALUE = "Required key '{}', just can be in '{}'"
     ERR_KEY_PATH_NOT_FOUND = "Required key '{}', not found for path '{}'"
     ERR_KEY_EMPTY = "Required key '{}', can't be empty, value='{}'"
-    ERR_KEY_REGEX = "Optional key '{}', not provided or not matching regex: {} "
+    ERR_KEY_REGEX = "Optional key '{}', not provided or not matching regex: {} "  # noqa: E501
     # Test constants
     PATH_SETTINGS = "qacode/configs/settings.json"
-    REGEX_URL = r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
+    REGEX_URL = r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'  # noqa: E501
 
     def __init__(self, method_name="TestConfig"):
         super(TestConfig, self).__init__(
@@ -35,14 +35,16 @@ class TestConfig(TestInfoBase):
     def test_000_config_exist(self):
         """Test : test_000_config_exist"""
         self.assertEqual(True, os.path.exists(self.PATH_SETTINGS),
-                         self.ERR_KEY_PATH_NOT_FOUND.format("Log file", self.PATH_SETTINGS))
+                         self.ERR_KEY_PATH_NOT_FOUND.format(
+                             "Log file", self.PATH_SETTINGS))
 
     def test_001_bot_mode(self):
         """Test : Has key bot.mode with valid value"""
         value = self.test_config['bot']['mode']
         valid_values = ["local", "remote"]
         self.assertIn(value, valid_values,
-                      self.ERR_KEY_INVALID_VALUE.format('bot.mode', value))
+                      self.ERR_KEY_INVALID_VALUE.format(
+                          'bot.mode', value))
 
     def test_002_bot_browser(self):
         """Test : Has key bot.browser with valid value"""
@@ -105,21 +107,29 @@ class TestConfig(TestInfoBase):
             'bot.log_output_file', value))
 
     def test_009_testlink_url_api(self):
-        """Test : test_010_config_has_key_testlink_url"""
+        """
+        Test : test_010_config_has_key_testlink_url
+
+        Just an optional key configuration
+        """
         value = self.test_config['testlink']["url_api"]
         msg = self.ERR_KEY_REGEX.format('testlink.url_api', self.REGEX_URL)
         if len(value) <= 0:
             self.log.warning(msg)
-        else: # optional key
+        else:
             self.assertRegexpMatches(value, self.REGEX_URL, msg)
 
     def test_010_testlink_devkey(self):
-        """Test : test_011_config_has_key_testlink_devkey"""
+        """
+        Test : test_011_config_has_key_testlink_devkey
+
+        Just an optional key configuration
+        """
         value = self.test_config['testlink']["dev_key"]
         msg = self.ERR_KEY_EMPTY.format('testlink.testlink', value)
         if len(value) <= 0:
             self.log.warning(msg)
-        else: # optional key
+        else:
             self.assertNotEqual(value, "", msg)
 
     def test_011_key_url(self):
@@ -135,7 +145,8 @@ class TestConfig(TestInfoBase):
         self.assertRegexpMatches(
             self.test_config['tests']['functionals']['url_login'],
             self.REGEX_URL,
-            self.ERR_KEY_REGEX.format('tests.functionals.url_login', self.REGEX_URL)
+            self.ERR_KEY_REGEX.format(
+                'tests.functionals.url_login', self.REGEX_URL)
         )
 
     def test_013_key_url_logout(self):
@@ -143,7 +154,8 @@ class TestConfig(TestInfoBase):
         self.assertRegexpMatches(
             self.test_config['tests']['functionals']['url_logout'],
             self.REGEX_URL,
-            self.ERR_KEY_REGEX.format('tests.functionals.url_logout', self.REGEX_URL)
+            self.ERR_KEY_REGEX.format(
+                'tests.functionals.url_logout', self.REGEX_URL)
         )
 
     def test_014_key_url_logged(self):
@@ -151,7 +163,8 @@ class TestConfig(TestInfoBase):
         self.assertRegexpMatches(
             self.test_config['tests']['functionals']['url_logged'],
             self.REGEX_URL,
-            self.ERR_KEY_REGEX.format('tests.functionals.url_logged', self.REGEX_URL)
+            self.ERR_KEY_REGEX.format(
+                'tests.functionals.url_logged', self.REGEX_URL)
         )
 
     def test_015_key_url_404(self):
@@ -159,7 +172,8 @@ class TestConfig(TestInfoBase):
         self.assertRegexpMatches(
             self.test_config['tests']['functionals']['url_404'],
             self.REGEX_URL,
-            self.ERR_KEY_REGEX.format('tests.functionals.url_404', self.REGEX_URL)
+            self.ERR_KEY_REGEX.format(
+                'tests.functionals.url_404', self.REGEX_URL)
         )
 
     def test_016_key_selectors_login(self):
@@ -207,23 +221,27 @@ class TestConfig(TestInfoBase):
     def test_022_key_skip_drivers_local(self):
         """Test : test_022_key_skip_drivers_local"""
         value = self.test_config['tests']['skip']['drivers_local']
-        msg = self.ERR_KEY_INVALID_VALUE.format('tests.skip.drivers_local', value)
+        msg = self.ERR_KEY_INVALID_VALUE.format(
+            'tests.skip.drivers_local', value)
         self.assertIn(value, (True, False), msg)
 
     def test_023_key_skip_drivers_remote(self):
         """Test : test_023_key_skip_drivers_remote"""
         value = self.test_config['tests']['skip']['drivers_remote']
-        msg = self.ERR_KEY_INVALID_VALUE.format('tests.skip.drivers_remote', value)
+        msg = self.ERR_KEY_INVALID_VALUE.format(
+            'tests.skip.drivers_remote', value)
         self.assertIn(value, (True, False), msg)
 
     def test_024_key_skip_web_controls(self):
         """Test : test_024_key_skip_web_controls"""
         value = self.test_config['tests']['skip']['web_controls']
-        msg = self.ERR_KEY_INVALID_VALUE.format('tests.skip.web_controls', value)
+        msg = self.ERR_KEY_INVALID_VALUE.format(
+            'tests.skip.web_controls', value)
         self.assertIn(value, (True, False), msg)
 
     def test_025_key_skip_web_pages(self):
         """Test : test_025_key_skip_web_pages"""
         value = self.test_config['tests']['skip']['web_pages']
-        msg = self.ERR_KEY_INVALID_VALUE.format('tests.skip.web_pages', value)
+        msg = self.ERR_KEY_INVALID_VALUE.format(
+            'tests.skip.web_pages', value)
         self.assertIn(value, (True, False), msg)

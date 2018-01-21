@@ -17,12 +17,11 @@ SKIP_PAGES_MSG = 'web_pages DISABLED by config file'
 LOGGER_MANAGER = LoggerManager(log_level=SETTINGS['bot']['log_level'])
 
 
-
 class TestPageLogin(TestInfoBot):
     """Test Suite for class PageLogin"""
 
     def __init__(self, method_name="suite_TestPageLogin"):
-        """Just call to parent constructor class, see TestInfoBot"""
+        """Just call to parent constructor class, see TestInfoBot."""
         super(TestPageLogin, self).__init__(
             method_name,
             logger_manager=LOGGER_MANAGER,

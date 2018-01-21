@@ -5,7 +5,6 @@
 from qacode.core.testing.test_info_base import TestInfoBase
 from qacode.core.bots.bot_config import BotConfig
 from qacode.core.bots.bot_base import BotBase
-from qacode.core.exceptions.core_exception import CoreException
 
 
 class TestInfoBot(TestInfoBase):
@@ -34,7 +33,6 @@ class TestInfoBot(TestInfoBase):
             self.test_config = bot.bot_config
             self.logger_manager = bot.logger_manager
 
-
     def setUp(self):
         """Each testcase instance BotBase class"""
         super(TestInfoBot, self).setUp()
@@ -60,4 +58,3 @@ class TestInfoBot(TestInfoBase):
             config=test_config,
             logger_manager=logger_manager)
         return BotBase(bot_config)
-         

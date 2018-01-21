@@ -30,7 +30,6 @@ class NavBase(object):
         self.driver = driver
         self.driver_wait = driver_wait
 
-
     def get_url(self, url, wait_for_load=0):
         """
         Do get_url including implicit wait for page load
@@ -90,7 +89,6 @@ class NavBase(object):
         except NoSuchElementException:
             raise CoreException(message=msg_err)
 
-
     def find_elements(self, selector, locator=By.CSS_SELECTOR):
         """
         Just divided execution ways for search web elements throught selenium
@@ -101,7 +99,9 @@ class NavBase(object):
             raise CoreException(message=msg)
         return self.driver.find_elements(locator, selector)
 
-    def find_element_wait(self, selector, locator=By.CSS_SELECTOR, driver_wait=None):
+    def find_element_wait(self, selector,
+                          locator=By.CSS_SELECTOR,
+                          driver_wait=None):
         """
         Search element using WebDriverWait class
          and ElementConditions presence_of_element_located
@@ -223,8 +223,7 @@ class NavBase(object):
         """
         if not isinstance(element, WebElement):
             raise CoreException(
-                "Element passed locator param it's not instance of WebElement class"
-            )
+                "Param 'locator' it's not instance of WebElement class")
         if text is not None:
             element.send_keys(text)
         else:

@@ -26,12 +26,12 @@ class ControlBase(object):
     def __init__(self, bot, selector='', locator=By.CSS_SELECTOR,
                  element=None, search=True):
         """
-        Args:
+        :Args:
             selector: can be empty string to use element insteadof
                       of params to load WebElement
             locator: selenium search strategy
             element: instanced WebElement class
-        Usage:
+        :Usage:
             ControlBase(bot, selector, locator) :TODO
             ControlBase(bot, element) :TODO
             ControlBase(bot, element, search=True) :TODO, must raise CoreEx
@@ -90,7 +90,7 @@ class ControlBase(object):
     def get_tag(self):
         """Returns tag_name from Webelement"""
         tag_name = self.bot.navigation.ele_tag(self.element)
-        self.bot.log.debug("get_tag: tag={}".format(tag_name))
+        self.bot.log.debug("get_tag : tag={}".format(tag_name))
         return tag_name
 
     def type_text(self, text, clear=False):
@@ -99,7 +99,7 @@ class ControlBase(object):
         Args:
             text: string
         """
-        self.bot.log.debug("type_text: text={}".format(text))
+        self.bot.log.debug("type_text : text={}".format(text))
         if clear:
             self.clear()
         self.bot.navigation.ele_write(self.element, text)
@@ -113,13 +113,13 @@ class ControlBase(object):
 
     def click(self):
         """Click on element"""
-        self.bot.log.debug("click: clicking element...")
+        self.bot.log.debug("click : clicking element...")
         self.bot.navigation.ele_click(element=self.element)
 
     def get_text(self):
         """Return element content text"""
         text = self.bot.navigation.ele_text(self.element)
-        self.bot.log.debug("get_text: text={}".format(text))
+        self.bot.log.debug("get_text : text={}".format(text))
         return text
 
     def get_attrs(self, attr_names):
@@ -130,8 +130,8 @@ class ControlBase(object):
         attrs = list()
         for attr_name in attr_names:
             attrs.append({
-                "name" : self.get_attr_name(attr_name),
-                "value" : self.get_attr_value(attr_name)
+                "name": self.get_attr_name(attr_name),
+                "value": self.get_attr_value(attr_name)
             })
         return attrs
 
@@ -145,7 +145,7 @@ class ControlBase(object):
         name, value = self.bot.navigation.ele_attribute(
             self.element, attr_name)
         self.bot.log.debug(
-            "get_attr: attr_name={}, name={}, value={}".format(
+            "get_attr : attr_name={}, name={}, value={}".format(
                 attr_name, name, value))
         return name
 
@@ -161,6 +161,6 @@ class ControlBase(object):
         name, value = self.bot.navigation.ele_attribute(
             self.element, attr_name)
         self.bot.log.debug(
-            "get_attr: attr_name={}, name={}, value={}".format(
+            "get_attr : attr_name={}, name={}, value={}".format(
                 attr_name, name, value))
         return value

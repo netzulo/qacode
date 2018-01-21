@@ -21,7 +21,6 @@ LOGGER_MANAGER = LoggerManager(log_level=SETTINGS['bot']['log_level'])
 class TestControlBase(TestInfoBot):
     """Test Suite for ControlBase class"""
 
-
     def __init__(self, method_name="TestControlBase"):
         super(TestControlBase, self).__init__(
             method_name=method_name,
@@ -75,7 +74,8 @@ class TestControlBase(TestInfoBot):
     def test_003_method_findchild(self):
         """Testcase: test_003_method_findchild"""
         control = ControlBase(self.bot, selector=self.selector_parent)
-        self.assertIsInstance(control.find_child(self.selector_child), ControlBase)
+        self.assertIsInstance(
+            control.find_child(self.selector_child), ControlBase)
 
     @skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_004_property_gettext(self):

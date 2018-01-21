@@ -24,11 +24,13 @@ def path_format(file_path=None, file_name=None, is_abspath=False,
     if file_path is None or not path.exists(file_path):
         raise IOError("Path '{}' doesn't exists".format(file_path))
     if file_name is None or not path.exists(path_formatted):
-        raise IOError("File '{}{}' doesn't exists".format(file_path, file_name))
+        raise IOError(
+            "File '{}{}' doesn't exists".format(file_path, file_name))
     if is_abspath:
         return path.abspath(path.join(file_path, file_name))
     else:
         return path.join(file_path, file_name)
+
 
 def read_file(is_json=False, file_path=None, encoding='utf-8',
               is_encoding=True):
@@ -55,6 +57,7 @@ def read_file(is_json=False, file_path=None, encoding='utf-8',
     if is_json:
         return json.loads(text)
     return text
+
 
 def settings(file_path='qacode/configs/', file_name='settings.json',
              is_abspath=True):

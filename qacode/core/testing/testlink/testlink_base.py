@@ -20,10 +20,16 @@ class TlBase(object):
     # Testlink Builds list by testplan id
     builds = None
 
-    def __init__(self, logger_manager=None, url_api=None, dev_key=None, data=None, generate=False):
+    def __init__(self,
+                 logger_manager=None,
+                 url_api=None,
+                 dev_key=None,
+                 data=None,
+                 generate=False):
         """Instance testlink api and save as self.conn property"""
         if logger_manager is None:
-            raise CoreException(message='Testlink logger_manager can\'t be None')
+            raise CoreException(
+                message='Testlink logger_manager can\'t be None')
         self.logger_manager = logger_manager
         if url_api is None:
             raise CoreException(message='Testlink url_api can\'t be None')
