@@ -4,6 +4,7 @@
 
 
 from selenium.webdriver.common.by import By
+from qacode.core.exceptions.core_exception import CoreException
 from qacode.core.exceptions.control_exception import ControlException
 
 
@@ -75,7 +76,13 @@ class ControlBase(object):
         internal element
         """
         self.bot.log.debug("load_element: selector={}".format(selector))
-        return self.bot.navigation.find_element(selector, locator=locator)
+        try:
+            return self.bot.navigation.find_element(
+                selector, locator=locator)
+        except CoreException as err:
+            raise ControlException(
+                err, message='Element not found at load control_base')
+
 
     def find_child(self, selector, locator=By.CSS_SELECTOR):
         """

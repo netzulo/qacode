@@ -2,6 +2,7 @@
 """Main Exceptions for qacode library"""
 
 
+from selenium.common.exceptions import NoSuchElementException
 from qacode.core.loggers.logger_manager import LoggerManager
 
 
@@ -15,9 +16,13 @@ class CoreException(Exception):
                  log=None):
         """Raise an exception from any part of qacode package"""
         super(CoreException, self).__init__(err, message)
-        msg = "FAILED qacode.core: message={}"
+        msg = "FAILED {}: message={}".format(
+            type(self),
+            message)
         if log is None:
             self.log = LoggerManager().logger
         else:
             self.log = log
-        self.log.error(str(msg.format(message)))
+        if err is not None and isinstance(err, NoSuchElementException):
+            self.log.warning(err.args)
+        self.log.error(msg)

@@ -86,8 +86,8 @@ class NavBase(object):
             raise CoreException(message=msg)
         try:
             return self.driver.find_element(locator, selector)
-        except NoSuchElementException:
-            raise CoreException(message=msg_err)
+        except NoSuchElementException as err:
+            raise CoreException(err, message=msg_err)
 
     def find_elements(self, selector, locator=By.CSS_SELECTOR):
         """
@@ -95,9 +95,14 @@ class NavBase(object):
         """
         msg = 'Locator not selected at find_element, selector={}'.format(
             selector)
+        msg_err = 'Error at find_elements: selector={}'.format(
+            selector)
         if locator is None:
             raise CoreException(message=msg)
-        return self.driver.find_elements(locator, selector)
+        try:
+            return self.driver.find_elements(locator, selector)
+        except NoSuchElementException as err:
+            raise CoreException(err, message=msg_err)
 
     def find_element_wait(self, selector,
                           locator=By.CSS_SELECTOR,
