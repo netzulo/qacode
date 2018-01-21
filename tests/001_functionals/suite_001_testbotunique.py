@@ -10,8 +10,6 @@ from qacode.core.testing.test_info_bot import TestInfoBot
 from qacode.core.bots.bot_base import BotBase
 
 
-
-
 SETTINGS = settings()
 SKIP_REMOTES = SETTINGS['tests']['skip']['drivers_remote']
 SKIP_REMOTES_MSG = 'drivers_remote DISABLED by config file'
@@ -27,6 +25,7 @@ class TestInfoBotUnique(TestInfoBot):
         global BOT
         if not SKIP_REMOTES:
             BOT = TestInfoBot.bot_open(SETTINGS, LOGGER_MANAGER)
+
     @classmethod
     def tearDownClass(cls):
         global BOT
@@ -41,15 +40,17 @@ class TestInfoBotUnique(TestInfoBot):
     @skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
     def test_001_inheritance(self):
         """Testcase: test_001_inheritance"""
-        self.log.info("assertIsInstance : TestCase class inheritance "
-                      "it's working")
+        self.log.info(
+            "assertIsInstance : TestCase class inheritance "
+            "it's working")
         self.assertIsInstance(self, TestCase)
 
     @skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
     def test_002_instance(self):
         """Testcase: test_002_instance"""
-        self.log.info("assertIsInstance : TestInfoBase class inheritance it's "
-                      "working")
+        self.log.info(
+            "assertIsInstance : TestInfoBase class inheritance it's "
+            "working")
         self.assertIsInstance(self, TestInfoBot)
 
     @skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)

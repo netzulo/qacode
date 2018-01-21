@@ -25,7 +25,7 @@ class ControlForm(ControlBase):
         HtmlTag.TAG_FIELDSET.value
     ]
 
-    #TODO: follow instructions on #63
+    # TODO: follow instructions on #63
     def __init__(self, bot, selector='', locator=By.CSS_SELECTOR,
                  element=None, search=True, strict_mode=False):
         """
@@ -75,7 +75,6 @@ class ControlForm(ControlBase):
             # TODO: self._tag_button(strict_mode=strict_mode)
             pass
 
-
     def _tag_label(self, strict_mode=False):
         """
         Initialize ControlForm with tag <label>
@@ -101,7 +100,8 @@ class ControlForm(ControlBase):
         self.attr_for = self.get_attr_value('for')
         self.attr_name = self.get_attr_value('name')
         # load css
-        self.css_cursor = self.get_css_value('cursor') # TODO: will fail
+        # TODO: will fail, NotImplemented
+        self.css_cursor = self.get_css_value('cursor')
         # warnings and errors
         self._log_rule('name', msg.format(
             MessageType.USABILITY,

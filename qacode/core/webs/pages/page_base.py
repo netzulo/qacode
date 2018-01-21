@@ -24,14 +24,16 @@ class PageBase(object):
     def __init__(self, bot, url, selectors=None, locator=By.CSS_SELECTOR,
                  go_url=True, maximize=False):
         """
-        required:
+        :Args:
+         required:
           bot: BotBase or inherit class instance
           url: page url for class, can be empty string
-        optionals:
+         optionals:
           locator: strategy used to search all selectors passed,
               default value it's locator.CSS_SELECTOR
           selectors: list of CSS_SELECTOR strings to search elements
-          go_url: go to url at instance page class locator default, can be disable
+          go_url: allow to disable go to url at instance page
+            class locator default
         """
         if bot is None:
             raise PageException(message="param bot is None")
@@ -83,7 +85,8 @@ class PageBase(object):
                 of ControlBase elements loaded
                 from selectors
         """
-        msg_page_element_notfound='Page element not found: url={}, selector={}'
+        msg_page_element_notfound = "Page element not found: "
+        "url={}, selector={}"
         elements = []
         if selectors is None:
             raise PageException(
@@ -96,7 +99,8 @@ class PageBase(object):
                 element = ControlBase(self.bot, selector, self.locator)
             else:
                 try:
-                    element = self.bot.navigation.find_element(selector, self.locator)
+                    element = self.bot.navigation.find_element(
+                        selector, self.locator)
                 except CoreException:
                     raise PageException(
                         message=msg_page_element_notfound.format(

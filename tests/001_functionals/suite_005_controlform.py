@@ -12,7 +12,6 @@ from qacode.core.webs.controls.control_form import ControlForm
 from qacode.core.exceptions.control_exception import ControlException
 
 
-
 SETTINGS = settings()
 SKIP_CONTROLS = SETTINGS['tests']['skip']['web_controls']
 SKIP_CONTROLS_MSG = 'web_controls DISABLED by config file'
@@ -21,7 +20,6 @@ LOGGER_MANAGER = LoggerManager(log_level=SETTINGS['bot']['log_level'])
 
 class TestControlForm(TestInfoBot):
     """Test Suite for ControlBase class"""
-
 
     def __init__(self, method_name="TestControlForm"):
         super(TestControlForm, self).__init__(

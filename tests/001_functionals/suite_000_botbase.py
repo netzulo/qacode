@@ -15,13 +15,13 @@ SKIP_LOCALS = SETTINGS['tests']['skip']['drivers_local']
 SKIP_LOCALS_MSG = 'drivers_local DISABLED by config file'
 SKIP_REMOTES = SETTINGS['tests']['skip']['drivers_remote']
 SKIP_REMOTES_MSG = 'drivers_remote DISABLED by config file'
-WAIT_TO_CLOSE = int(3) # TODO: must be setteable from config JSON
+# TODO: must be setteable from config JSON
+WAIT_TO_CLOSE = int(3)
 LOGGER_MANAGER = LoggerManager(log_level=SETTINGS['bot']['log_level'])
 
 
 class TestBotBase(TestInfoBase):
     """Testcases for class BotBase"""
-
 
     def __init__(self, method_name='TestBotBase'):
         """Just call to parent constructor class, see TestInfoBase"""
@@ -100,8 +100,9 @@ class TestBotBase(TestInfoBase):
     @skipIf(True, 'Issue opened on official opera chromium github')
     def test_006_bot_local_opera(self):
         """Testcase: test_006_bot_local_opera
-        
-        ISSUE OPENED : https://github.com/operasoftware/operachromiumdriver/issues/9
+
+        ISSUE OPENED :
+         https://github.com/operasoftware/operachromiumdriver/issues/9
         """
         self.log.debug("TestBotBase: REMOTE started for OPERA")
         self.bot_config.config['browser'] = 'opera'
@@ -111,7 +112,6 @@ class TestBotBase(TestInfoBase):
         self.assertEqual(bot.curr_caps['browserName'], 'opera')
         bot.close()
         self.log.debug("TestBotBase: REMOTE terminated for OPERA")
-
 
     @skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
     def test_007_bot_remote_chrome(self):
@@ -176,8 +176,9 @@ class TestBotBase(TestInfoBase):
     @skipIf(True, 'Issue opened on official opera chromium github')
     def test_012_bot_remote_opera(self):
         """Testcase: test_012_bot_remote_opera
-        
-        ISSUE OPENED : https://github.com/operasoftware/operachromiumdriver/issues/9
+
+        ISSUE OPENED :
+         https://github.com/operasoftware/operachromiumdriver/issues/9
         """
         self.log.debug("TestBotBase: REMOTE started for OPERA")
         self.bot_config.config['browser'] = 'opera'

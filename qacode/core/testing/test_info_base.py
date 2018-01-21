@@ -11,6 +11,7 @@ from qacode.core.utils import settings
 
 LOGGER_MANAGER = None
 
+
 class TestInfoBase(unittest.TestCase):
     """Base class for inherit new Test classes"""
 

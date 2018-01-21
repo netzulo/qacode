@@ -8,7 +8,6 @@ from qacode.core.exceptions.core_exception import CoreException
 class BotConfig(object):
     """Bot configuration for BotBase or inherit classes"""
 
-
     logger_manager = None
 
     config = None
@@ -79,7 +78,8 @@ class BotConfig(object):
         Initialize new logger_manager fot BotConfig object and return it
         """
         if logger_manager is None:
-            raise CoreException("Can't start bot config without logger_manager")
+            raise CoreException(
+                "Can't start bot config without logger_manager")
         self.logger_manager = logger_manager
         self.log = self.logger_manager.logger
 

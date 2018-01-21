@@ -11,7 +11,7 @@ class HtmlAttr(Enum):
     ID = 'id'
     CLASS = 'class'
     NAME = 'name'
-    FOR = 'for' 
+    FOR = 'for'
 
     @classmethod
     def get_attr(cls):

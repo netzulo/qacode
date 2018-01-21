@@ -41,6 +41,7 @@ class TestLoggerManager(TestInfoBase):
 
     def test_006_logger_loglevelbyconfig(self):
         """Test: test_005_logger_critical"""
-        self.logger_mamager_test = LoggerManager(log_level=SETTINGS['bot']['log_level'])
+        self.logger_mamager_test = LoggerManager(
+            log_level=SETTINGS['bot']['log_level'])
         self.log = self.logger_mamager_test.logger
         self.log.warning("Unitary test, checking level type by JSON key")

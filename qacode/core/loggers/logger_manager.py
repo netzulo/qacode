@@ -18,11 +18,12 @@ class LoggerManager(object):
     log_level = None
     logger = None
 
-
     def __init__(self,
                  log_path="logs/",
-                 log_name="qacode", log_level=None,
-                 is_output_console=True, is_output_file=True):
+                 log_name="qacode",
+                 log_level=None,
+                 is_output_console=True,
+                 is_output_file=True):
         """
         Create new logger_manager instance with default
          path 'logs/qacode.log'
@@ -76,7 +77,6 @@ class LoggerManager(object):
                 self.log_level, self.log_formatter, self.log_path_join
             ))
         return logger
-
 
     def create_console_handler(self, log_level, log_formatter):
         """create console handler and set logfile level"""

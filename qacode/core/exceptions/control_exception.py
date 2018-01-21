@@ -14,4 +14,5 @@ class ControlException(CoreException):
             message="Message Exception not defined for ControlException class",
             log=None
     ):
-        super(ControlException, self).__init__(err=err, message=message, log=log)
+        super(ControlException, self).__init__(
+            err=err, message=message, log=log)
