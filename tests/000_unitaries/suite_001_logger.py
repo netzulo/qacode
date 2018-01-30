@@ -40,8 +40,30 @@ class TestLoggerManager(TestInfoBase):
         self.log.critical("Unitary test, checking level type CRITICAL")
 
     def test_006_logger_loglevelbyconfig(self):
-        """Test: test_005_logger_critical"""
-        self.logger_mamager_test = LoggerManager(
+        """Test: test_006_logger_loglevelbyconfig"""
+        self.logger_manager_test = LoggerManager(
             log_level=SETTINGS['bot']['log_level'])
-        self.log = self.logger_mamager_test.logger
+        self.log = self.logger_manager_test.logger
         self.log.warning("Unitary test, checking level type by JSON key")
+
+    def test_007_raises_nonelogpath(self):
+        """Test: test_007_raises_nonelogpath"""
+        self.assertRaises(
+            Exception,
+            LoggerManager,
+            log_path=None)
+
+    def test_008_raises_nonelogname(self):
+        """Test: test_008_raises_nonelogname"""
+        self.assertRaises(
+            Exception,
+            LoggerManager,
+            log_name=None)
+
+    def test_009_raises_noneoutputs(self):
+        """Test: test_008_raises_nonelogname"""
+        self.assertRaises(
+            Exception,
+            LoggerManager,
+            is_output_console=None,
+            is_output_file=None)

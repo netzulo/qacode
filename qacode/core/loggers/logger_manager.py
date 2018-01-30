@@ -31,7 +31,7 @@ class LoggerManager(object):
          console_handler enable
          file_handler enable
         """
-        if len(log_path) <= 0:
+        if log_path is None or len(log_path) <= 0:
             raise Exception("bad format at logger log_path={}"
                             .format(log_path))
         self.log_path = log_path
