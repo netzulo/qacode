@@ -36,6 +36,8 @@ class TestPageBase(TestInfoBot):
             'tests')['functionals']['url_login']
         self.selectors = self.test_config.get(
             'tests')['functionals']['selectors_login']
+        self.url_logged = self.test_config.get(
+            'tests')['functionals']['url_logged']
 
     @skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
     def test_001_instance_url(self):
@@ -155,3 +157,45 @@ class TestPageBase(TestInfoBot):
             PageException,
             page.get_elements,
             [''])
+
+    @skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
+    def test_016_method_isurl_default(self):
+        """Testcase: test_016_method_isurl_default"""
+        page = PageBase(self.bot, self.url)
+        self.assertTrue(page.is_url())
+
+    @skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
+    def test_017_method_isurl_true(self):
+        """Testcase: test_017_method_isurl_true"""
+        page = PageBase(self.bot, self.url)
+        self.assertTrue(page.is_url(self.url))
+
+    @skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
+    def test_018_method_isurl_false(self):
+        """Testcase: test_018_method_isurl_false"""
+        page = PageBase(self.bot, self.url)
+        self.assertFalse(page.is_url(self.url_logged))
+
+    @skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
+    def test_017_method_isurl_notignoreraises(self):
+        """Testcase: test_016_method_isurl_notignoreraises"""
+        page = PageBase(self.bot, self.url)
+        self.assertTrue(page.is_url(ignore_raises=False))
+
+    @skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
+    def test_017_method_isurl_true_notignoreraises(self):
+        """Testcase: test_016_method_isurl_notignoreraises"""
+        page = PageBase(self.bot, self.url)
+        self.assertTrue(page.is_url(
+            url=self.url,
+            ignore_raises=False))
+
+    @skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
+    def test_017_method_isurl_raises_false_notignoreraises(self):
+        """Testcase: test_017_method_isurl_notignoreraises"""
+        page = PageBase(self.bot, self.url)
+        self.assertRaises(
+            PageException,
+            page.is_url,
+            url=self.url_logged,
+            ignore_raises=False)
