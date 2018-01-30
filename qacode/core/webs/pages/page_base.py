@@ -136,4 +136,3 @@ class PageBase(object):
             return self.bot.navigation.is_url(url, ignore_raises=ignore_raises)
         except CoreException as err:
             raise PageException(err, "'Current url' is not 'page url'")
-        return False
