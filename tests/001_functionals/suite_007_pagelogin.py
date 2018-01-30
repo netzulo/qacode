@@ -50,7 +50,11 @@ class TestPageLogin(TestInfoBot):
     def test_001_page_login_instance(self):
         """Testcase: test_001_page_login_instance"""
         try:
-            PageLogin(self.bot, self.url_login, selectors=self.selectors)
+            PageLogin(
+                self.bot,
+                self.url_login,
+                self.url_logged,
+                selectors=self.selectors)
             assert self.url_login in self.bot.curr_driver.current_url
         except PageException as err:
             self.bot.log.error(err.args)
@@ -61,7 +65,7 @@ class TestPageLogin(TestInfoBot):
         """Testcase: test_002_login_no_selectors"""
         message_error = "PageLogin must fail at instance without selectors"
         try:
-            PageLogin(self.bot, self.url_login)
+            PageLogin(self.bot, self.url_login, self.url_logged)
             self.fail(message_error)
         except PageException as err:
             if not isinstance(err, PageException):
@@ -72,7 +76,11 @@ class TestPageLogin(TestInfoBot):
     @skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
     def test_003_login_ok(self):
         """Testcase: test_003_login_ok"""
-        page = PageLogin(self.bot, self.url_login, selectors=self.selectors)
+        page = PageLogin(
+            self.bot,
+            self.url_login,
+            self.url_logged,
+            selectors=self.selectors)
         assert self.url_login in self.bot.curr_driver.current_url
         page.login(self.creed_user, self.creed_pass)
         assert self.url_logged in self.bot.curr_driver.current_url
@@ -81,7 +89,11 @@ class TestPageLogin(TestInfoBot):
     @skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
     def test_004_login_baduser(self):
         """Testcase: test_004_login_baduser"""
-        page = PageLogin(self.bot, self.url_login, selectors=self.selectors)
+        page = PageLogin(
+            self.bot,
+            self.url_login,
+            self.url_logged,
+            selectors=self.selectors)
         assert self.url_login in self.bot.curr_driver.current_url
         page.login(" ", self.creed_pass)
         assert self.url_404 in self.bot.curr_driver.current_url
@@ -90,7 +102,11 @@ class TestPageLogin(TestInfoBot):
     @skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
     def test_005_login_emptypass(self):
         """Testcase: test_005_login_emptypass"""
-        page = PageLogin(self.bot, self.url_login, selectors=self.selectors)
+        page = PageLogin(
+            self.bot,
+            self.url_login,
+            self.url_logged,
+            selectors=self.selectors)
         assert self.url_login in self.bot.curr_driver.current_url
         page.login(self.creed_user, " ")
         assert self.url_404 in self.bot.curr_driver.current_url
@@ -99,7 +115,11 @@ class TestPageLogin(TestInfoBot):
     @skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
     def test_006_login_creedsempty(self):
         """Testcase: test_006_login_creedsempty"""
-        page = PageLogin(self.bot, self.url_login, selectors=self.selectors)
+        page = PageLogin(
+            self.bot,
+            self.url_login,
+            self.url_logged,
+            selectors=self.selectors)
         assert self.url_login in self.bot.curr_driver.current_url
         page.login(" ", " ")
         assert self.url_logged in self.bot.curr_driver.current_url

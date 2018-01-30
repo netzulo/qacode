@@ -190,6 +190,28 @@ class NavBase(object):
         '''
         return self.driver.title
 
+    def get_current_url(self):
+        """Return current url from opened bot"""
+        err_msg = "Failed at obtain selenium driver property 'current_url'"
+        try:
+            return self.driver.current_url
+        except Exception as err:
+            raise CoreException(err, message=err_msg)
+
+    def is_url(self, url, ignore_raises=True):
+        """
+        Check if url it's the same what selenium current and visible url
+
+        :Attributes:
+            url: string value used to verify url
+            ignore_raises: not raise exceptions if enabled
+        """
+        if self.get_current_url() != url:
+            if not ignore_raises:
+                raise CoreException("'Current url' is not 'param url'")
+            return False
+        return True
+
     def set_web_element(self, new_attr_id):
         """create_web_element"""
         self.driver.create_web_element(new_attr_id)
@@ -247,10 +269,6 @@ class NavBase(object):
     def ele_is_selected(self, element):
         """Returns whether the element is selected"""
         return element.is_selected()
-
-    def get_curr_url(self):
-        """Return current url from opened bot"""
-        return self.driver.current_url
 
     def ele_text(self, element):
         """Return element content text"""
