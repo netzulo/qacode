@@ -55,6 +55,6 @@ class TestInfoBot(TestInfoBase):
     def bot_open(cls, test_config, logger_manager):
         """Open bot and return it"""
         bot_config = BotConfig(
-            config=test_config,
-            logger_manager=logger_manager)
+            test_config,
+            logger_manager)
         return BotBase(bot_config)

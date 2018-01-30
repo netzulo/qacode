@@ -5,6 +5,7 @@
 from unittest import skipIf
 from qacode.core.utils import settings
 from qacode.core.loggers.logger_manager import LoggerManager
+from qacode.core.exceptions.core_exception import CoreException
 from qacode.core.testing.test_info_base import TestInfoBase
 from qacode.core.bots.bot_config import BotConfig
 from qacode.core.bots.bot_base import BotBase
@@ -188,3 +189,29 @@ class TestBotBase(TestInfoBase):
         self.assertEqual(bot.curr_caps['browserName'], 'opera')
         bot.close()
         self.log.debug("TestBotBase: REMOTE terminated for OPERA")
+
+    def test_013_raises_botconfig_noneconfig(self):
+        """Testcase: test_013_raises_botconfig_noneconfig"""
+        self.assertRaises(
+            CoreException,
+            BotConfig,
+            None,
+            self.logger_manager)
+
+    def test_014_raises_botconfig_nonekeybot(self):
+        """Testcase: test_014_raises_botconfig_nonekeybot"""
+        config = self.test_config.copy()
+        config.pop('bot', None)
+        self.assertRaises(
+            CoreException,
+            BotConfig,
+            config,
+            self.logger_manager)
+
+    def test_015_raises_botconfig_nonelogger(self):
+        """Testcase: test_015_raises_botconfig_nonelogger"""
+        self.assertRaises(
+            CoreException,
+            BotConfig,
+            self.test_config,
+            None)
