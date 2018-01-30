@@ -36,8 +36,8 @@ class TestPageBase(TestInfoBot):
             'tests')['functionals']['url_login']
         self.selectors = self.test_config.get(
             'tests')['functionals']['selectors_login']
-        self.url_logged = self.test_config.get(
-            'tests')['functionals']['url_logged']
+        self.url_other = self.test_config.get(
+            'tests')['functionals']['url_logout']
 
     @skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
     def test_001_instance_url(self):
@@ -174,7 +174,7 @@ class TestPageBase(TestInfoBot):
     def test_018_method_isurl_false(self):
         """Testcase: test_018_method_isurl_false"""
         page = PageBase(self.bot, self.url)
-        self.assertFalse(page.is_url(self.url_logged))
+        self.assertFalse(page.is_url(self.url_other))
 
     @skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
     def test_017_method_isurl_notignoreraises(self):
@@ -197,5 +197,5 @@ class TestPageBase(TestInfoBot):
         self.assertRaises(
             PageException,
             page.is_url,
-            url=self.url_logged,
+            url=self.url_other,
             ignore_raises=False)
