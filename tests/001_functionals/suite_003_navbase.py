@@ -58,3 +58,45 @@ class TestNavBase(TestInfoBot):
         self.assert_is_instance(caps, dict)
         self.assert_is_instance(caps['chrome'], dict)
         self.assertEqual(caps['browserName'], 'chrome')
+
+    @skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
+    def test_005_getlog(self):
+        """Testcase: test_005_getlog"""
+        self.bot.navigation.get_url(self.url)
+        log_data = self.bot.navigation.get_log()
+        self.assertIsNotNone(log_data)
+        self.log.debug("selenium logs, browser={}".format(log_data))
+
+    @skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
+    def test_006_getlog_browser(self):
+        """Testcase: test_006_getlog_browser"""
+        self.bot.navigation.get_url(self.url)
+        log_data = self.bot.navigation.get_log(log_name='browser')
+        self.assertIsNotNone(log_data)
+        self.log.debug("selenium logs, browser={}".format(log_data))
+
+    @skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
+    def test_007_getlog_driver(self):
+        """Testcase: test_007_getlog_driver"""
+        self.bot.navigation.get_url(self.url)
+        log_data = self.bot.navigation.get_log(log_name='driver')
+        self.assertIsNotNone(log_data)
+        self.log.debug("selenium logs, driver={}".format(log_data))
+
+    @skipIf(True, 'Issue opened on github selenium, waiting...')
+    def test_008_getlog_client(self):
+        """Testcase: test_008_getlog_client
+        https://github.com/SeleniumHQ/selenium/issues/5410
+        """
+        self.bot.navigation.get_url(self.url)
+        log_data = self.bot.navigation.get_log(log_name='client')
+        self.assertIsNotNone(log_data)
+        self.log.debug("selenium logs, client={}".format(log_data))
+
+    @skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
+    def test_009_getlog_server(self):
+        """Testcase: test_008_getlog_client"""
+        self.bot.navigation.get_url(self.url)
+        log_data = self.bot.navigation.get_log(log_name='server')
+        self.assertIsNotNone(log_data)
+        self.log.debug("selenium logs, server={}".format(log_data))

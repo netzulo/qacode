@@ -133,13 +133,15 @@ class NavBase(object):
           browser, driver, client, server
         """
         if log_name == 'browser':
-            self.driver.get_log(log_name)
+            return self.driver.get_log(log_name)
         if log_name == 'driver':
-            self.driver.get_log(log_name)
+            return self.driver.get_log(log_name)
         if log_name == 'client':
-            self.driver.get_log(log_name)
+            return self.driver.get_log(log_name)
         if log_name == 'server':
-            self.driver.get_log(log_name)
+            return self.driver.get_log(log_name)
+        raise CoreException(
+            'selenium log_name just can be: [browser,driver,client,server]')
 
     def get_screenshot_as_base64(self):
         """

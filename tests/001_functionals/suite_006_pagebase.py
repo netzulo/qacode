@@ -177,22 +177,22 @@ class TestPageBase(TestInfoBot):
         self.assertFalse(page.is_url(self.url_other))
 
     @skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
-    def test_017_method_isurl_notignoreraises(self):
-        """Testcase: test_016_method_isurl_notignoreraises"""
+    def test_019_method_isurl_notignoreraises(self):
+        """Testcase: test_019_method_isurl_notignoreraises"""
         page = PageBase(self.bot, self.url)
         self.assertTrue(page.is_url(ignore_raises=False))
 
     @skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
-    def test_017_method_isurl_true_notignoreraises(self):
-        """Testcase: test_016_method_isurl_notignoreraises"""
+    def test_020_method_isurl_true_notignoreraises(self):
+        """Testcase: test_020_method_isurl_true_notignoreraises"""
         page = PageBase(self.bot, self.url)
         self.assertTrue(page.is_url(
             url=self.url,
             ignore_raises=False))
 
     @skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
-    def test_017_method_isurl_raises_false_notignoreraises(self):
-        """Testcase: test_017_method_isurl_notignoreraises"""
+    def test_021_method_isurl_raises_false_notignoreraises(self):
+        """Testcase: test_021_method_isurl_raises_false_notignoreraises"""
         page = PageBase(self.bot, self.url)
         self.assertRaises(
             PageException,
