@@ -13,23 +13,35 @@ SETTINGS = settings()
 SKIP_REMOTES = SETTINGS['tests']['skip']['drivers_remote']
 SKIP_REMOTES_MSG = 'drivers_remote DISABLED by config file'
 LOGGER_MANAGER = LoggerManager(log_level=SETTINGS['bot']['log_level'])
+BOT = None
 
 
 class TestNavBase(TestInfoBot):
     """Test Suite for class NavBase"""
 
+    @classmethod
+    def setUpClass(cls):
+        global BOT
+        if not SKIP_REMOTES:
+            BOT = TestInfoBot.bot_open(SETTINGS, LOGGER_MANAGER)
+
+    @classmethod
+    def tearDownClass(cls):
+        global BOT
+        if not SKIP_REMOTES:
+            TestInfoBot.bot_close(BOT)
+
     def __init__(self, method_name="TestNavBase"):
         """Test what probes NavBase class and methods"""
         super(TestNavBase, self).__init__(
             method_name=method_name,
-            logger_manager=LOGGER_MANAGER,
-            test_config=SETTINGS
+            bot=BOT
         )
 
     def setUp(self):
         """Test setup"""
         super(TestNavBase, self).setUp()
-        self.url = self.test_config['tests']['unitaries']['url']
+        self.url = SETTINGS['tests']['unitaries']['url']
 
     @skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
     def test_000_navbase_instance(self):
