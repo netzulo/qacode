@@ -16,31 +16,43 @@ SETTINGS = settings()
 SKIP_CONTROLS = SETTINGS['tests']['skip']['web_controls']
 SKIP_CONTROLS_MSG = 'web_controls DISABLED by config file'
 LOGGER_MANAGER = LoggerManager(log_level=SETTINGS['bot']['log_level'])
+BOT = None
 
 
 class TestControlBase(TestInfoBot):
     """Test Suite for ControlBase class"""
 
+    @classmethod
+    def setUpClass(cls):
+        global BOT
+        if not SKIP_CONTROLS:
+            BOT = TestInfoBot.bot_open(SETTINGS, LOGGER_MANAGER)
+
+    @classmethod
+    def tearDownClass(cls):
+        global BOT
+        if not SKIP_CONTROLS:
+            TestInfoBot.bot_close(BOT)
+
     def __init__(self, method_name="TestControlBase"):
         super(TestControlBase, self).__init__(
             method_name=method_name,
-            logger_manager=LOGGER_MANAGER,
-            test_config=SETTINGS
+            bot=BOT
         )
 
     def setUp(self):
         super(TestControlBase, self).setUp()
-        self.url = self.test_config.get(
+        self.url = SETTINGS.get(
             'tests')['functionals']['url_selector_parent']
-        self.selector_parent = self.test_config.get(
+        self.selector_parent = SETTINGS.get(
             'tests')['functionals']['selector_parent']
-        self.selector_child = self.test_config.get(
+        self.selector_child = SETTINGS.get(
             'tests')['functionals']['selector_child']
-        self.url = self.test_config.get(
+        self.url = SETTINGS.get(
             'tests')['functionals']['url_login']
-        self.selector_btn_login = self.test_config.get(
+        self.selector_btn_login = SETTINGS.get(
             'tests')['functionals']['selectors_login'][2]
-        self.selector_txt_username = self.test_config.get(
+        self.selector_txt_username = SETTINGS.get(
             'tests')['functionals']['selectors_login'][0]
         self.bot.navigation.get_url(self.url)
         self.assert_equals_url(self.bot.curr_driver.current_url, self.url)

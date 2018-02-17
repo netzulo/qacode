@@ -104,7 +104,7 @@ class PageBase(object):
                 except CoreException:
                     raise PageException(
                         message=msg_page_element_notfound.format(
-                            self.bot.navigation.get_curr_url(),
+                            self.bot.navigation.get_current_url(),
                             selector))
             self.bot.log.debug("Element Found, adding to return method")
             elements.append(element)
@@ -118,3 +118,21 @@ class PageBase(object):
         else:
             self.bot.log.debug('go to url={}'.format(url))
             self.bot.navigation.get_url(url, wait_for_load=wait_for_load)
+
+
+    def is_url(self, url=None, ignore_raises=True):
+        """
+        Allows to check if current selenium visible url
+         it's the same what self.url value
+
+        :Attributes:
+            url: default page url but can be string
+                 value used to verify url
+            ignore_raises: not raise exceptions if enabled
+        """
+        if url is None:
+            url = self.url
+        try:
+            return self.bot.navigation.is_url(url, ignore_raises=ignore_raises)
+        except CoreException as err:
+            raise PageException(err, "'Current url' is not 'page url'")

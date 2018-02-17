@@ -109,3 +109,5 @@ tests/reports/report_coverage.xml
 tests/reports/report_coverage_html/*
 # Visual Studio
 .vs/
+# Visual code
+.vscode/
