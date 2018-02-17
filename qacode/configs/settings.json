@@ -43,9 +43,9 @@
   "tests": {
     "skip":{
       "drivers_local": true,
-      "drivers_remote": true,
-      "web_controls": true,
-      "web_pages": true
+      "drivers_remote": false,
+      "web_controls": false,
+      "web_pages": false
     },
     "unitaries": {
       "url": "https://www.netzulo.com"
