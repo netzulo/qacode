@@ -43,9 +43,9 @@
   "tests": {
     "skip":{
       "drivers_local": true,
-      "drivers_remote": false,
-      "web_controls": false,
-      "web_pages": false
+      "drivers_remote": true,
+      "web_controls": true,
+      "web_pages": true
     },
     "unitaries": {
       "url": "https://www.netzulo.com"
@@ -64,7 +64,34 @@
       "creed_pass": "qacode",
       "url_selector_parent": "http://qalab.tk:82/sessions/new",
       "selector_parent": "#nonav",
-      "selector_child": "#login"      
+      "selector_child": "#login",
+      "pages": [
+        { 
+          "name": "page_login",
+          "url" : "http://qalab.tk:82/sessions/new",
+          "creeds": {"name": "qacode", "pass": "qacode"},
+          "controls": [
+            { 
+              "name": "txt_username",
+              "selector": "#login"
+            },
+            { 
+              "name": "txt_password",
+              "selector": "#password"
+            },
+            { 
+              "name": "btn_login",
+              "selector": "[name='commit']"
+            }
+          ]
+        },
+        { 
+          "name": "page_logged",
+          "url": "http://qalab.tk:82/",
+          "url_logout": "http://qalab.tk:82/sessions/logout",
+          "controls": []
+        }
+      ]
     }
   }
 }
