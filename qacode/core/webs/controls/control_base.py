@@ -72,8 +72,8 @@ class ControlBase(object):
 
     def load_element(self, selector, locator=By.CSS_SELECTOR):
         """
-        Find element using bot with default By.CSS_SELECTOR strategy for
-        internal element
+        Find element using bot with default By.CSS_SELECTOR
+            strategy for internal element
         """
         self.bot.log.debug("load_element: selector={}".format(selector))
         try:
@@ -85,9 +85,21 @@ class ControlBase(object):
 
 
     def find_child(self, selector, locator=By.CSS_SELECTOR):
-        """
-        Find child element using bot with default By.CSS_SELECTOR strategy for
-        internal element trought selenium WebElement
+        """Find child element using bot with 
+            default By.CSS_SELECTOR strategy for internal
+            element trought selenium WebElement
+        
+        Arguments:
+            selector {str} -- string search for locator type
+        
+        Keyword Arguments:
+            locator {[selenium.webdriver.common.by.By]} --
+                string type to use on this selenium search request
+                (default: {By.CSS_SELECTOR})
+        
+        Returns:
+            ControlBase -- instanced base element
+                using qacode library object
         """
         self.bot.log.debug("find_child: selector={}".format(selector))
         return ControlBase(
@@ -101,10 +113,14 @@ class ControlBase(object):
         return tag_name
 
     def type_text(self, text, clear=False):
-        """
-        Type text on input element
-        Args:
-            text: string
+        """Type text on input element
+        
+        Arguments:
+            text {str} -- string to be typed on web element
+        
+        Keyword Arguments:
+            clear {bool} -- clear text element at enable key 
+                (default: {False})
         """
         self.bot.log.debug("type_text : text={}".format(text))
         if clear:
@@ -113,26 +129,35 @@ class ControlBase(object):
         self.text = text
 
     def clear(self):
-        """
-        Clear input element text value
-        """
+        """Clear input element text value"""
         self.bot.navigation.ele_clear(self.element)
 
     def click(self):
         """Click on element"""
+
         self.bot.log.debug("click : clicking element...")
         self.bot.navigation.ele_click(element=self.element)
 
     def get_text(self):
-        """Return element content text"""
+        """Get element content text
+        
+        Returns:
+            str -- Return element content text (innerText property)
+        """
         text = self.bot.navigation.ele_text(self.element)
         self.bot.log.debug("get_text : text={}".format(text))
         return text
 
     def get_attrs(self, attr_names):
-        """
-        Find a list of attributes on WebElement
+        """Find a list of attributes on WebElement
         and returns a dict list of {name, value}
+        
+        Arguments:
+            attr_names {list of str} -- list of attr_name to search 
+                for each one name and value on self.element
+        
+        Returns:
+            dict -- a dict list of {name, value}
         """
         attrs = list()
         for attr_name in attr_names:
@@ -143,11 +168,19 @@ class ControlBase(object):
         return attrs
 
     def get_attr_name(self, attr_name):
-        """
-        Search and attribute name over self.element and get value,
-        if attr_value is obtained, then compare and raise if not
-        Args:
-            attr_name : find an attribute on WebElement with this name
+        """Search and attribute name over self.element and get value,
+            if attr_value is obtained, then compare and raise if not
+        
+        Arguments:
+            attr_name {str} -- find an attribute
+                on WebElement with this name
+        
+        Raises:
+            if -- attr_name it's None or empty, because doesn't exis
+                at element
+        
+        Returns:
+            str -- key value of attr_name search on html element
         """
         name, value = self.bot.navigation.ele_attribute(
             self.element, attr_name)
@@ -157,13 +190,15 @@ class ControlBase(object):
         return name
 
     def get_attr_value(self, attr_name):
-        """
-        Search and attribute name over self.element and get value,
+        """Search and attribute name over self.element and get value,
         if attr_value is obtained, then compare and raise if not
-        Args:
-            attr_name : find an attribute on WebElement with this name
-            attr_value: if value it's not None, check if
-                        endswith attr_value
+        
+        Arguments:
+            attr_name {str} -- find an attribute on WebElement 
+                with this name
+        
+        Returns:
+            str -- value of html attr_name
         """
         name, value = self.bot.navigation.ele_attribute(
             self.element, attr_name)
