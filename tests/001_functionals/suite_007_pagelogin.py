@@ -28,19 +28,24 @@ class TestPageLogin(TestInfoBot):
             test_config=SETTINGS
         )
         self.url_login = self.test_config.get(
-            'tests')['functionals']['url_login']
+            'tests')['functionals']['pages'][0]['url']
         self.url_logout = self.test_config.get(
-            'tests')['functionals']['url_logout']
+            'tests')['functionals']['pages'][0]['url_logout']
         self.url_logged = self.test_config.get(
-            'tests')['functionals']['url_logged']
+            'tests')['functionals']['pages'][0]['url_logged']
         self.url_404 = self.test_config.get(
-            'tests')['functionals']['url_404']
-        self.selectors = self.test_config.get(
-            'tests')['functionals']['selectors_login']
+            'tests')['functionals']['pages'][0]['url_404']
+        self.p_login_controls = self.test_config.get(
+            'tests')['functionals']['pages'][0]['controls']
+        self.selectors = [
+            self.p_login_controls[0]['selector'],
+            self.p_login_controls[1]['selector'],
+            self.p_login_controls[2]['selector']
+        ]
         self.creed_user = self.test_config.get(
-            'tests')['functionals']['creed_user']
+            'tests')['functionals']['pages'][0]['creeds']['name']
         self.creed_pass = self.test_config.get(
-            'tests')['functionals']['creed_pass']
+            'tests')['functionals']['pages'][0]['creeds']['pass']
         self.msg_logged = "Logged success on url={}".format(
             self.url_logged)
         self.msg_fail_ok = "Login fail success on url={}".format(

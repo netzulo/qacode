@@ -140,6 +140,7 @@ class TestConfig(TestInfoBase):
             self.ERR_KEY_REGEX.format('tests.unitaries.url', self.REGEX_URL)
         )
 
+    @skipIf(True,"Test obsolete, need new tests for key tests.functionals.pages")
     def test_012_key_url_login(self):
         """Test : test_013_config_has_key_test_functionals_url_login"""
         self.assertRegexpMatches(
@@ -149,6 +150,7 @@ class TestConfig(TestInfoBase):
                 'tests.functionals.url_login', self.REGEX_URL)
         )
 
+    @skipIf(True,"Test obsolete, need new tests for key tests.functionals.pages")
     def test_013_key_url_logout(self):
         """Test : test_014_config_has_key_test_functionals_url_logout"""
         self.assertRegexpMatches(
@@ -158,6 +160,7 @@ class TestConfig(TestInfoBase):
                 'tests.functionals.url_logout', self.REGEX_URL)
         )
 
+    @skipIf(True,"Test obsolete, need new tests for key tests.functionals.pages")
     def test_014_key_url_logged(self):
         """Test : test_015_config_has_key_test_functionals_url_logged"""
         self.assertRegexpMatches(
@@ -167,6 +170,7 @@ class TestConfig(TestInfoBase):
                 'tests.functionals.url_logged', self.REGEX_URL)
         )
 
+    @skipIf(True,"Test obsolete, need new tests for key tests.functionals.pages")
     def test_015_key_url_404(self):
         """Test : test_016_config_has_key_test_functionals_url_404"""
         self.assertRegexpMatches(
@@ -176,6 +180,7 @@ class TestConfig(TestInfoBase):
                 'tests.functionals.url_404', self.REGEX_URL)
         )
 
+    @skipIf(True,"Test obsolete, need new tests for key tests.functionals.pages")
     def test_016_key_selectors_login(self):
         """Test : test_017_config_has_key_test_functionals_selectors_login"""
         values = self.test_config['tests']['functionals']['selectors_login']
@@ -185,61 +190,42 @@ class TestConfig(TestInfoBase):
             self.assertNotEqual(value, "", self.ERR_KEY_EMPTY.format(
                 'tests.functionals.selectors_login', value))
 
+    @skipIf(True,"Test obsolete, need new tests for key tests.functionals.pages")
     def test_017_key_creed_user(self):
         """Test : test_018_config_has_key_test_functionals_creed_user"""
         value = self.test_config['tests']['functionals']['creed_user']
         self.assertNotEqual(value, "", self.ERR_KEY_EMPTY.format(
             'tests.functionals.creed_user', value))
 
+    @skipIf(True,"Test obsolete, need new tests for key tests.functionals.pages")
     def test_018_key_creed_pass(self):
         """Test : test_019_config_has_key_test_functionals_creed_pass"""
         value = self.test_config['tests']['functionals']['creed_pass']
         self.assertNotEqual(value, "", self.ERR_KEY_EMPTY.format(
             'tests.functionals.creed_pass', value))
 
-    def test_019_key_url_selector_parent(self):
-        """Test : test_019_key_url_selector_parent"""
-        self.assertRegexpMatches(
-            self.test_config['tests']['functionals']['url_selector_parent'],
-            self.REGEX_URL,
-            self.ERR_KEY_REGEX.format(
-                'tests.functionals.url_selector_parent', self.REGEX_URL)
-        )
-
-    def test_020_key_selector_parent(self):
-        """Test : test_020_key_selector_parent"""
-        value = self.test_config['tests']['functionals']['selector_parent']
-        self.assertNotEqual(value, "", self.ERR_KEY_EMPTY.format(
-            'tests.functionals.selector_parent', value))
-
-    def test_021_key_selector_child(self):
-        """Test : test_021_key_selector_child"""
-        value = self.test_config['tests']['functionals']['selector_child']
-        self.assertNotEqual(value, "", self.ERR_KEY_EMPTY.format(
-            'tests.functionals.selector_child', value))
-
-    def test_022_key_skip_drivers_local(self):
+    def test_019_key_skip_drivers_local(self):
         """Test : test_022_key_skip_drivers_local"""
         value = self.test_config['tests']['skip']['drivers_local']
         msg = self.ERR_KEY_INVALID_VALUE.format(
             'tests.skip.drivers_local', value)
         self.assertIn(value, (True, False), msg)
 
-    def test_023_key_skip_drivers_remote(self):
+    def test_020_key_skip_drivers_remote(self):
         """Test : test_023_key_skip_drivers_remote"""
         value = self.test_config['tests']['skip']['drivers_remote']
         msg = self.ERR_KEY_INVALID_VALUE.format(
             'tests.skip.drivers_remote', value)
         self.assertIn(value, (True, False), msg)
 
-    def test_024_key_skip_web_controls(self):
+    def test_021_key_skip_web_controls(self):
         """Test : test_024_key_skip_web_controls"""
         value = self.test_config['tests']['skip']['web_controls']
         msg = self.ERR_KEY_INVALID_VALUE.format(
             'tests.skip.web_controls', value)
         self.assertIn(value, (True, False), msg)
 
-    def test_025_key_skip_web_pages(self):
+    def test_022_key_skip_web_pages(self):
         """Test : test_025_key_skip_web_pages"""
         value = self.test_config['tests']['skip']['web_pages']
         msg = self.ERR_KEY_INVALID_VALUE.format(

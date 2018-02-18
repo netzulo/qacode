@@ -138,15 +138,28 @@ class ControlBase(object):
         self.bot.log.debug("click : clicking element...")
         self.bot.navigation.ele_click(element=self.element)
 
-    def get_text(self):
-        """Get element content text
+    def get_text(self, on_screen=True):
+        """Get element content text.
+            If the isDisplayed() method can sometimes trip over when
+            the element is not really hidden but outside the viewport
+            get_text() returns an empty string for such an element.
         
+        Keyword Arguments:
+            on_screen {bool} -- allow to obtain text if element
+                it not displayed to this element before
+                read text (default: {True})
+
         Returns:
             str -- Return element content text (innerText property)
         """
-        text = self.bot.navigation.ele_text(self.element)
-        self.bot.log.debug("get_text : text={}".format(text))
-        return text
+        try:
+            return self.bot.navigation.ele_text(
+                self.element, on_screen=on_screen)
+        except CoreException as err:
+            if isinstance(err, CoreException):
+                raise ControlException(err, message=err.message)
+            else:
+                raise Exception(err, message=err.message)
 
     def get_attrs(self, attr_names):
         """Find a list of attributes on WebElement
@@ -170,15 +183,15 @@ class ControlBase(object):
     def get_attr_name(self, attr_name):
         """Search and attribute name over self.element and get value,
             if attr_value is obtained, then compare and raise if not
-        
+
         Arguments:
             attr_name {str} -- find an attribute
                 on WebElement with this name
-        
+
         Raises:
             if -- attr_name it's None or empty, because doesn't exis
                 at element
-        
+
         Returns:
             str -- key value of attr_name search on html element
         """
@@ -192,11 +205,11 @@ class ControlBase(object):
     def get_attr_value(self, attr_name):
         """Search and attribute name over self.element and get value,
         if attr_value is obtained, then compare and raise if not
-        
+
         Arguments:
             attr_name {str} -- find an attribute on WebElement 
                 with this name
-        
+
         Returns:
             str -- value of html attr_name
         """
@@ -206,3 +219,33 @@ class ControlBase(object):
             "get_attr : attr_name={}, name={}, value={}".format(
                 attr_name, name, value))
         return value
+
+    def get_css_value(self, prop_name):
+        """Allows to obtain CSS value based on CSS property name
+
+        Arguments:
+            prop_name {str} -- CSS property name
+
+        Returns:
+            str -- Value of CSS property searched
+        """
+        return self.bot.navigation.ele_css(self.element, prop_name)
+
+    def set_css_value(self, prop_name, prop_value, css_important=True):
+        """Set new value for given CSS property name
+            on ControlBase selector
+
+        Arguments:
+            prop_name {str} -- CSS property name
+            prop_value {str} -- CSS property value
+
+        Keyword Arguments:
+            css_important {bool} -- Allow to include '!important'
+                to rule for overrite others values 
+                applied (default: {True})
+        Returns:
+            [type] -- [description] TODO: fill up section
+        """
+        return self.bot.navigation.set_css_rule(
+            self.selector, prop_name, prop_value,
+            css_important=css_important)

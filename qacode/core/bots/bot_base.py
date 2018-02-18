@@ -65,7 +65,7 @@ class BotBase(object):
                              .format(self.bot_config.bot_mode))
                 )
 
-            self.navigation = NavBase(self.curr_driver)
+            self.navigation = NavBase(self.curr_driver, self.log)
             self.curr_driver_wait = WebDriverWait(self.curr_driver, 10)
 
     def driver_name_filter(self, driver_name=None):

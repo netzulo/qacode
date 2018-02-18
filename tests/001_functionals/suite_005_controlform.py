@@ -43,11 +43,11 @@ class TestControlForm(TestInfoBot):
     def setUp(self):
         super(TestControlForm, self).setUp()
         self.url = SETTINGS.get(
-            'tests')['functionals']['url_login']
-        self.selector_txt_username = SETTINGS.get(
-            'tests')['functionals']['selectors_login'][0]
-        self.selector_txt_password = SETTINGS.get(
-            'tests')['functionals']['selectors_login'][1]
+            'tests')['functionals']['pages'][0]['url']
+        self.p_login_controls = SETTINGS.get(
+            'tests')['functionals']['pages'][0]['controls']
+        self.selector_txt_username = self.p_login_controls[0]['selector']
+        self.selector_txt_password = self.p_login_controls[1]['selector']
         self.bot.navigation.get_url(self.url)
         self.assert_equals_url(
             self.bot.curr_driver.current_url, self.url)

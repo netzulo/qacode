@@ -22,12 +22,14 @@ class NavBase(object):
     + driver
     '''
     driver = None
+    log = None
 
-    def __init__(self, driver, driver_wait=None):
+    def __init__(self, driver, log,driver_wait=None):
         '''
         Initialize self properties
         '''
         self.driver = driver
+        self.log = log
         self.driver_wait = driver_wait
 
     def get_url(self, url, wait_for_load=0):
@@ -68,11 +70,46 @@ class NavBase(object):
         """
         return self.driver.desired_capabilities
 
-    def execute_js(self, script, elements):
+    def execute_js(self, script, *args):
+        """Execute arbitrary Javascript code
+        
+        Arguments:
+            script {str} -- JS code to be executed on WebDriver
+            *args {[type]} -- More arguments ( like element selector )
+
+        Returns:
+            str -- JS script returns
         """
-        Execute arbitrary Javascript code
+        return self.driver.execute_script(script, *args)
+    
+    def set_css_rule(self, css_selector, css_prop, css_value, css_important=False, index=0):
+        """Set new value for given CSS property name
+        
+        Arguments:
+            css_selector {str} -- CSS selector to apply rule
+            css_prop {str} -- CSS property to be applied to rule
+            css_value {str} -- CSS property value to be applied to rule
+        
+        Keyword Arguments:
+            css_important {bool} -- Allow to include '!important'
+                to rule (default: {False})
+            index {int} -- Position to insert new CSS rule
+                on first stylesheet (default: {0})
+        
+        Returns:
+            str -- JS script returns
         """
-        self.driver.execute_script(script, elements)
+        css_important_text = ''
+        if css_important:
+            css_important_text = '!important'
+        css_rule = " {0!s} {{ {1!s} : {2!s} {3!s}; }}".format(
+            css_selector,
+            css_prop,
+            css_value,
+            css_important_text)
+        js_script = "document.styleSheets[0].insertRule(\"{0!s}\", {1:d})".format(
+            css_rule, index)
+        return self.execute_js(js_script)
 
     def find_element(self, selector, locator=By.CSS_SELECTOR):
         """
@@ -261,20 +298,65 @@ class NavBase(object):
             element.send_keys()
 
     def ele_is_displayed(self, element):
-        """Whether the element is visible to a user"""
+        """Whether the element is visible to a user
+
+        Webdriver spec to determine if element it's displayed: 
+            https://w3c.github.io/webdriver/webdriver-spec.html#widl-WebElement-isDisplayed-boolean
+        
+        Arguments:
+            element {WebElement} -- selenium web element
+        
+        Returns:
+            bool -- Value based on selenium SPEC to determine if  an element is enabled
+        """
         return element.is_displayed()
 
     def ele_is_enabled(self, element):
-        """Returns whether the element is enabled"""
+        """Returns whether the element is enabled
+        
+        Arguments:
+            element {WebElement} -- selenium web element
+        
+        Returns:
+            bool -- Value based on selenium SPEC to determine if  an element is enabled
+        """
         return element.is_enabled()
 
     def ele_is_selected(self, element):
-        """Returns whether the element is selected"""
+        """Returns whether the element is selected
+        
+        Arguments:
+            element {WebElement} -- selenium web element
+        
+        Returns:
+            bool -- Value based on selenium SPEC to determine if  an element is enabled
+        """
         return element.is_selected()
 
-    def ele_text(self, element):
-        """Return element content text"""
-        return element.text
+    def ele_text(self, element, on_screen=True):
+        """Get element content text.
+            If the isDisplayed() method can sometimes trip over when
+            the element is not really hidden but outside the viewport
+            get_text() returns an empty string for such an element.
+        
+        Keyword Arguments:
+            on_screen {bool} -- allow to obtain text if element
+                it not displayed to this element before
+                read text (default: {True})
+
+        Returns:
+            str -- Return element content text (innerText property)
+        """
+        if on_screen:
+            text = element.text
+        else:
+            text = self.ele_attribute(element, 'innerText')[1]
+            self.log.warning("text obtained from innerText")
+            if self.ele_is_displayed(element):
+                raise CoreException(
+                    message="on_screen param must be"
+                    "use when element it's not displayed")
+        return text
 
     def ele_text_input(self, element):
         """Return value of value attribute, usefull for inputs"""
@@ -291,3 +373,15 @@ class NavBase(object):
     def ele_clear(self, element):
         """Clear element text"""
         return element.clear()
+
+    def ele_css(self, element, prop_name):
+        """Allows to obtain CSS value based on CSS property name
+
+        Arguments:
+            element {WebElement} -- WebElement to modify CSS property
+            prop_name {str} -- CSS property name
+
+        Returns:
+            str -- Value of CSS property searched
+        """
+        return element.value_of_css_property(prop_name)

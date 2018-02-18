@@ -33,11 +33,16 @@ class TestPageBase(TestInfoBot):
     def setUp(self):
         super(TestPageBase, self).setUp()
         self.url = self.test_config.get(
-            'tests')['functionals']['url_login']
-        self.selectors = self.test_config.get(
-            'tests')['functionals']['selectors_login']
+            'tests')['functionals']['pages'][0]['url']
+        self.p_login_controls = self.test_config.get(
+            'tests')['functionals']['pages'][0]['controls']
+        self.selectors = [
+            self.p_login_controls[0]['selector'],
+            self.p_login_controls[1]['selector'],
+            self.p_login_controls[2]['selector']
+        ]
         self.url_other = self.test_config.get(
-            'tests')['functionals']['url_logout']
+            'tests')['functionals']['pages'][0]['url_logout']
 
     @skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
     def test_001_instance_url(self):
