@@ -138,22 +138,36 @@ class TestPageBase(TestInfoBot):
             self.bot.curr_driver.current_url, self.url)
 
     @skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
-    def test_012_method_getelements_aswebelements(self):
-        """Testcase: test_012_method_getelements_withselectors"""
+    def test_012_method_getelement_aswebelement(self):
+        """Testcase: test_012_method_getelement_aswebelement"""
+        page = PageBase(self.bot, self.url)
+        element = page.get_element(self.selectors[0])
+        self.assertIsInstance(element, WebElement)
+
+    @skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
+    def test_013_method_getelement_ascontrol(self):
+        """Testcase: test_013_method_getelement_ascontrol"""
+        page = PageBase(self.bot, self.url)
+        element = page.get_element(self.selectors[0], as_control=True)
+        self.assertIsInstance(element, ControlBase)
+
+    @skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
+    def test_014_method_getelements_aswebelements(self):
+        """Testcase: test_014_method_getelements_aswebelements"""
         page = PageBase(self.bot, self.url)
         elements = page.get_elements(self.selectors)
         self.assertIsInstance(elements[1], WebElement)
 
     @skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
-    def test_013_method_getelements_ascontrols(self):
-        """Testcase: test_013_method_getelements_paramselectors"""
+    def test_015_method_getelements_ascontrols(self):
+        """Testcase: test_015_method_getelements_ascontrols"""
         page = PageBase(self.bot, self.url)
         elements = page.get_elements(self.selectors, as_controls=True)
         self.assertIsInstance(elements[1], ControlBase)
 
     @skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
-    def test_014_method_getelements_raises_noneselectors(self):
-        """Testcase: test_014_method_getelements_raises_noneselectors"""
+    def test_016_method_getelements_raises_noneselectors(self):
+        """Testcase: test_016_method_getelements_raises_noneselectors"""
         page = PageBase(self.bot, self.url)
         self.assertRaises(
             PageException,
@@ -161,8 +175,8 @@ class TestPageBase(TestInfoBot):
             None, as_controls=True)
 
     @skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
-    def test_015_method_getelements_raises_emptyselector(self):
-        """Testcase: test_015_method_getelements_raises_emptyselector"""
+    def test_017_method_getelements_raises_emptyselector(self):
+        """Testcase: test_017_method_getelements_raises_emptyselector"""
         page = PageBase(self.bot, self.url)
         self.assertRaises(
             PageException,
@@ -170,40 +184,40 @@ class TestPageBase(TestInfoBot):
             [''])
 
     @skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
-    def test_016_method_isurl_default(self):
-        """Testcase: test_016_method_isurl_default"""
+    def test_018_method_isurl_default(self):
+        """Testcase: test_018_method_isurl_default"""
         page = PageBase(self.bot, self.url)
         self.assertTrue(page.is_url())
 
     @skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
-    def test_017_method_isurl_true(self):
-        """Testcase: test_017_method_isurl_true"""
+    def test_019_method_isurl_true(self):
+        """Testcase: test_019_method_isurl_true"""
         page = PageBase(self.bot, self.url)
         self.assertTrue(page.is_url(self.url))
 
     @skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
-    def test_018_method_isurl_false(self):
-        """Testcase: test_018_method_isurl_false"""
+    def test_020_method_isurl_false(self):
+        """Testcase: test_020_method_isurl_false"""
         page = PageBase(self.bot, self.url)
         self.assertFalse(page.is_url(self.url_other))
 
     @skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
-    def test_019_method_isurl_notignoreraises(self):
-        """Testcase: test_019_method_isurl_notignoreraises"""
+    def test_021_method_isurl_notignoreraises(self):
+        """Testcase: test_021_method_isurl_notignoreraises"""
         page = PageBase(self.bot, self.url)
         self.assertTrue(page.is_url(ignore_raises=False))
 
     @skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
-    def test_020_method_isurl_true_notignoreraises(self):
-        """Testcase: test_020_method_isurl_true_notignoreraises"""
+    def test_022_method_isurl_true_notignoreraises(self):
+        """Testcase: test_022_method_isurl_true_notignoreraises"""
         page = PageBase(self.bot, self.url)
         self.assertTrue(page.is_url(
             url=self.url,
             ignore_raises=False))
 
     @skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
-    def test_021_method_isurl_raises_false_notignoreraises(self):
-        """Testcase: test_021_method_isurl_raises_false_notignoreraises"""
+    def test_023_method_isurl_raises_false_notignoreraises(self):
+        """Testcase: test_023_method_isurl_raises_false_notignoreraises"""
         page = PageBase(self.bot, self.url)
         self.assertRaises(
             PageException,

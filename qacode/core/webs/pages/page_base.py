@@ -69,6 +69,43 @@ class PageBase(object):
             self.elements = self.get_elements(
                 self.selectors, as_controls=True)
 
+    def get_element(self, selector, as_control=False):
+        """
+        Search element on Bot instance, choose selector
+          from instance or locator param
+        :Args:
+        :optionals:
+            :selector:
+                if not selector passed,
+                then use instance property
+            :as_control:
+                if True, return
+                ControlBase element loaded
+                from selector
+        """
+        msg_page_element_notfound = "Page element not found: "
+        "url={}, selector={}"
+        element = None
+        if selector is None:
+            raise PageException(
+                message='Can\'t use None selector to get element')
+        self.bot.log.debug(
+            "Searching element: with selector={} locator={}".format(
+                selector, self.locator))
+        if as_control:
+            element = ControlBase(self.bot, selector, self.locator)
+        else:
+            try:
+                element = self.bot.navigation.find_element(
+                    selector, self.locator)
+            except CoreException:
+                raise PageException(
+                    message=msg_page_element_notfound.format(
+                        self.bot.navigation.get_current_url(),
+                        selector))
+            self.bot.log.debug("Element Found, return it one element")
+        return element
+
     def get_elements(self, selectors, as_controls=False):
         """
         Search elements on Bot instance, choose selectors
@@ -89,7 +126,7 @@ class PageBase(object):
         if selectors is None:
             raise PageException(
                 message='Can\'t use None selectors to get elements')
-        for selector in selectors:
+        for selector in list(selectors):
             self.bot.log.debug(
                 "Searching element: with selector={} locator={}".format(
                     selector, self.locator))
