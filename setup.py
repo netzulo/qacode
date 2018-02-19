@@ -8,7 +8,7 @@ from qacode.core.utils import read_file
 from qacode.core.utils import path_format
 
 
-VERSION = "0.3.8"
+VERSION = "0.3.9"
 CURR_PATH = "{}{}".format(path.abspath(path.dirname(__file__)), '/')
 
 
