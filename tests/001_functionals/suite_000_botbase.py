@@ -3,12 +3,12 @@
 
 
 from unittest import skipIf
-from qacode.core.utils import settings
-from qacode.core.loggers.logger_manager import LoggerManager
-from qacode.core.exceptions.core_exception import CoreException
-from qacode.core.testing.test_info_base import TestInfoBase
-from qacode.core.bots.bot_config import BotConfig
 from qacode.core.bots.bot_base import BotBase
+from qacode.core.bots.bot_config import BotConfig
+from qacode.core.exceptions.core_exception import CoreException
+from qacode.core.loggers.logger_manager import LoggerManager
+from qacode.core.testing.test_info_base import TestInfoBase
+from qacode.core.utils import settings
 
 
 SETTINGS = settings()
@@ -24,8 +24,13 @@ LOGGER_MANAGER = LoggerManager(log_level=SETTINGS['bot']['log_level'])
 class TestBotBase(TestInfoBase):
     """Testcases for class BotBase"""
 
-    def __init__(self, method_name='TestBotBase'):
-        """Just call to parent constructor class, see TestInfoBase"""
+    def __init__(self, method_name='suite_TestBotBase'):
+        """Just call to parent constructor class, see TestInfoBase
+
+        Keyword Arguments:
+            method_name {str} -- name for test info base testsuite
+                (default: {"suite_TestBotBase"})
+        """
         super(TestBotBase, self).__init__(
             method_name,
             logger_manager=LOGGER_MANAGER,

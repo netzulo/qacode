@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-"""Package testing"""
+"""Package qacode.core.testing"""
 
 
-from qacode.core.testing.test_info_base import TestInfoBase
-from qacode.core.bots.bot_config import BotConfig
 from qacode.core.bots.bot_base import BotBase
+from qacode.core.bots.bot_config import BotConfig
+from qacode.core.testing.test_info_base import TestInfoBase
 
 
 class TestInfoBot(TestInfoBase):

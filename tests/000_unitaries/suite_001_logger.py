@@ -2,9 +2,9 @@
 """Test Suite module for loggers"""
 
 
-from qacode.core.utils import settings
 from qacode.core.loggers.logger_manager import LoggerManager
 from qacode.core.testing.test_info_base import TestInfoBase
+from qacode.core.utils import settings
 
 
 SETTINGS = settings()
@@ -15,6 +15,12 @@ class TestLoggerManager(TestInfoBase):
     """Testcases for class LoggerManager"""
 
     def __init__(self, method_name="TestLoggerManager"):
+        """Constructor
+
+        Keyword Arguments:
+            method_name {str} -- name for logger testsuite
+                (default: {"TestLoggerManager"})
+        """
         super(TestLoggerManager, self).__init__(
             method_name, logger_manager=LOGGER_MANAGER
         )

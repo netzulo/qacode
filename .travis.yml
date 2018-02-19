@@ -33,7 +33,7 @@ before_install:
 install:
 - pip install tox
 script:
-- tox -e "{$TOXENV}"
+- tox -e "{$TOXENV},flake8,docs"
 after_script:
 - if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then 
       sonar-scanner -X -Dsonar.login=${SONAR_GITHUB_TOKEN} -Dsonar.host.url=http://qalab.tk:82 ;

@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=too-many-arguments
-""""TODO: doc module"""
+"""TODO: doc module"""
 
 
 from enum import Enum
-from selenium.webdriver.common.by import By
 from qacode.core.exceptions.control_exception import ControlException
 from qacode.core.webs.controls.control_base import ControlBase
 from qacode.core.webs.html_tags import HtmlTag
+from selenium.webdriver.common.by import By
 
 
 class ControlForm(ControlBase):
@@ -154,10 +154,10 @@ class MessageType(Enum):
 
     @classmethod
     def get_attr(cls):
-        """return enum values"""
+        """Return enum values"""
         return [item.value for item in MessageType]
 
     @classmethod
     def has_attr(cls, value):
-        """returns True if enum have value"""
+        """Returns True if enum have value"""
         return any(value == item.value for item in cls)

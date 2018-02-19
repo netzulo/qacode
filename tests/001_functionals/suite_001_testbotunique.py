@@ -2,12 +2,12 @@
 """Testsuite for package testing"""
 
 
-from unittest import skipIf
 from unittest import TestCase
-from qacode.core.utils import settings
+from unittest import skipIf
+from qacode.core.bots.bot_base import BotBase
 from qacode.core.loggers.logger_manager import LoggerManager
 from qacode.core.testing.test_info_bot import TestInfoBot
-from qacode.core.bots.bot_base import BotBase
+from qacode.core.utils import settings
 
 
 SETTINGS = settings()
@@ -22,17 +22,25 @@ class TestInfoBotUnique(TestInfoBot):
 
     @classmethod
     def setUpClass(cls):
+        """Set up test suite"""
         global BOT
         if not SKIP_REMOTES:
             BOT = TestInfoBot.bot_open(SETTINGS, LOGGER_MANAGER)
 
     @classmethod
     def tearDownClass(cls):
+        """Tear down test suite"""
         global BOT
         if not SKIP_REMOTES:
             TestInfoBot.bot_close(BOT)
 
-    def __init__(self, method_name="TestTestInfoBotUnique"):
+    def __init__(self, method_name="suite_TestTestInfoBotUnique"):
+        """Just call to parent constructor class, see TestInfoBase
+
+        Keyword Arguments:
+            method_name {str} -- name for test info bot unique testsuite
+                (default: {"suite_TestTestInfoBotUnique"})
+        """
         super(TestInfoBotUnique, self).__init__(
             method_name, bot=BOT,
         )

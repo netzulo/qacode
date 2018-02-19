@@ -2,10 +2,10 @@
 """TODO"""
 
 
-from selenium.webdriver.common.by import By
 from qacode.core.exceptions.core_exception import CoreException
 from qacode.core.exceptions.page_exception import PageException
 from qacode.core.webs.controls.control_base import ControlBase
+from selenium.webdriver.common.by import By
 
 
 class PageBase(object):
@@ -53,9 +53,7 @@ class PageBase(object):
         self._load_page(selectors, go_url=self.go_url, maximize=maximize)
 
     def _load_page(self, selectors, go_url=True, maximize=True):
-        """
-        Loads page elements and maximize browser window
-        """
+        """Loads page elements and maximize browser window"""
         self.selectors = selectors
         if go_url:
             self.go_page_url()
@@ -119,11 +117,9 @@ class PageBase(object):
             self.bot.log.debug('go to url={}'.format(url))
             self.bot.navigation.get_url(url, wait_for_load=wait_for_load)
 
-
     def is_url(self, url=None, ignore_raises=True):
-        """
-        Allows to check if current selenium visible url
-         it's the same what self.url value
+        """Allows to check if current selenium visible url it's the same
+            what self.url value
 
         :Attributes:
             url: default page url but can be string

@@ -4,12 +4,12 @@
 
 
 from unittest import skipIf
-from selenium.webdriver.remote.webelement import WebElement
-from qacode.core.utils import settings
+from qacode.core.exceptions.control_exception import ControlException
 from qacode.core.loggers.logger_manager import LoggerManager
 from qacode.core.testing.test_info_bot import TestInfoBot
+from qacode.core.utils import settings
 from qacode.core.webs.controls.control_form import ControlForm
-from qacode.core.exceptions.control_exception import ControlException
+from selenium.webdriver.remote.webelement import WebElement
 
 
 SETTINGS = settings()
@@ -24,30 +24,39 @@ class TestControlForm(TestInfoBot):
 
     @classmethod
     def setUpClass(cls):
+        """Set up test suite"""
         global BOT
         if not SKIP_CONTROLS:
             BOT = TestInfoBot.bot_open(SETTINGS, LOGGER_MANAGER)
 
     @classmethod
     def tearDownClass(cls):
+        """Tear down test suite"""
         global BOT
         if not SKIP_CONTROLS:
             TestInfoBot.bot_close(BOT)
 
-    def __init__(self, method_name="TestControlForm"):
+    def __init__(self, method_name="suite_TestControlForm"):
+        """Test what probes ControlForm class and methods
+
+        Keyword Arguments:
+            method_name {str} -- name for test control form
+                (default: {"suite_TestControlForm"})
+        """
         super(TestControlForm, self).__init__(
             method_name=method_name,
             bot=BOT
         )
 
     def setUp(self):
+        """Set up test case"""
         super(TestControlForm, self).setUp()
         self.url = SETTINGS.get(
-            'tests')['functionals']['url_login']
-        self.selector_txt_username = SETTINGS.get(
-            'tests')['functionals']['selectors_login'][0]
-        self.selector_txt_password = SETTINGS.get(
-            'tests')['functionals']['selectors_login'][1]
+            'tests')['functionals']['pages'][0]['url']
+        self.p_login_controls = SETTINGS.get(
+            'tests')['functionals']['pages'][0]['controls']
+        self.selector_txt_username = self.p_login_controls[0]['selector']
+        self.selector_txt_password = self.p_login_controls[1]['selector']
         self.bot.navigation.get_url(self.url)
         self.assert_equals_url(
             self.bot.curr_driver.current_url, self.url)

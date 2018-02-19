@@ -51,24 +51,13 @@
       "url": "https://www.netzulo.com"
     },
     "functionals": {
-      "url_login": "http://qalab.tk:82/sessions/new",
-      "url_logout": "http://qalab.tk:82/sessions/logout",
-      "url_logged": "http://qalab.tk:82/",
-      "url_404": "http://qalab.tk:82/sessions/login",
-      "selectors_login": [ 
-        "#login",
-        "#password",
-        "[name='commit']"        
-      ],
-      "creed_user": "qacode",
-      "creed_pass": "qacode",
-      "url_selector_parent": "http://qalab.tk:82/sessions/new",
-      "selector_parent": "#nonav",
-      "selector_child": "#login",
       "pages": [
         { 
           "name": "page_login",
           "url" : "http://qalab.tk:82/sessions/new",
+          "url_logout": "http://qalab.tk:82/sessions/logout",
+          "url_logged": "http://qalab.tk:82/",
+          "url_404": "http://qalab.tk:82/sessions/login",
           "creeds": {"name": "qacode", "pass": "qacode"},
           "controls": [
             { 
@@ -90,6 +79,28 @@
           "url": "http://qalab.tk:82/",
           "url_logout": "http://qalab.tk:82/sessions/logout",
           "controls": []
+        },
+        { 
+          "name": "page_controls_tests",
+          "url": "https://phptravels.com/documentation/",
+          "controls": [
+            {
+              "name": "ele_searcher",
+              "selector": "#docsSearch input[type='text']"
+            },
+            {
+              "name": "ele_menu",
+              "selector": "#docssidebar"
+            },
+            {
+              "name": "ele_menu_installation",
+              "selector": "a[href='//phptravels.com/documentation/installation']"
+            },
+            {
+              "name": "ele_menu_common_errors",
+              "selector": "a[href='//phptravels.com/documentation/common-errors']"
+            }
+          ]
         }
       ]
     }

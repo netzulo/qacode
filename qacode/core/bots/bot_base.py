@@ -1,28 +1,35 @@
 # -*- coding: utf-8 -*-
 """TODO"""
 
+
 import os
 import sys
-from selenium import webdriver as WebDriver
-from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver import DesiredCapabilities
 from qacode.core.bots.modules.nav_base import NavBase
 from qacode.core.exceptions.core_exception import CoreException
+from selenium import webdriver as WebDriver
+from selenium.webdriver import DesiredCapabilities
+from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
+from selenium.webdriver.support.ui import WebDriverWait
 
 
 class BotBase(object):
-    '''
-    Class Base for handle selenium functionality
-    Properties
-      curr_caps : Capabilities class
-      curr_driver : WebDriver class
-      curr_driver_path : WebDriver browser executable path
-      navigation : Bot methods to brigde selenium functions
-      bot_config : Bot configuration object
-      logger_manager : logger manager class loaded from BotConfig object
-      log : log class to write messages
-    '''
+    """Class Base for handle selenium functionality throught this wrapper
+
+        curr_caps -- Capabilities class
+
+        curr_driver -- WebDriver class
+
+        curr_driver_path -- WebDriver browser executable path
+
+        navigation -- Bot methods to brigde selenium functions
+
+        bot_config -- Bot configuration object
+
+        logger_manager -- logger manager class loaded from BotConfig object
+
+        log -- log class to write messages
+    """
+
     curr_caps = None
     curr_driver = None
     curr_driver_path = None
@@ -34,9 +41,17 @@ class BotBase(object):
     IS_WIN = os.name == 'nt'
 
     def __init__(self, bot_config):
-        """
-        Create new Bot browser based on options object what can be:
-        (help for each option can be found on settings.json)
+        """Create new Bot browser based on options object what can be
+            (help for each option can be found on settings.json)
+
+        Arguments:
+            bot_config {BotConfig} -- object containing configuration
+                for new bot instance
+
+        Raises:
+            CoreException -- Fail at instance LoggerManager class
+            CoreException -- bot_config param is None
+            CoreException -- bot_config.mode is not in [local, remote]
         """
         if bot_config is None:
             raise CoreException(
@@ -64,23 +79,29 @@ class BotBase(object):
                     message=("Unkown word for bot mode config value: {}"
                              .format(self.bot_config.bot_mode))
                 )
-
-            self.navigation = NavBase(self.curr_driver)
+            self.navigation = NavBase(self.curr_driver, self.log)
             self.curr_driver_wait = WebDriverWait(self.curr_driver, 10)
 
     def driver_name_filter(self, driver_name=None):
-        """
-        driver_name_format = {driver_name}{arch}{os}
-        examples:
-          chromedriver_32.exe
-          firefox_64
+        """Filter names of driver to search selected on config list
+
+        Keyword Arguments:
+            driver_name {str} -- driver_name_format is
+                {driver_name}{arch}{os} (default: {None})
+
+        Raises:
+            CoreException -- driver_name param is None
+            CoreException -- driver_name not in
+
+        Returns:
+            str -- name of driver
+                (example: chromedriver_32.exe)
         """
         driver_name_format = '{}{}{}'
         if driver_name is None:
             raise CoreException(message='driver_name received it\'s None')
         driver_name_format = driver_name_format.format(
-            driver_name, '{}', '{}'
-        )
+            driver_name, '{}', '{}')
         if self.IS_WIN:
             driver_name_format = driver_name_format.format('{}', '.exe')
         else:
@@ -89,7 +110,6 @@ class BotBase(object):
             driver_name_format = driver_name_format.format('driver_64')
         else:
             driver_name_format = driver_name_format.format('driver_32')
-
         for name in self.bot_config.config['drivers_names']:
             if name.endswith(driver_name_format):
                 return driver_name_format
@@ -98,8 +118,14 @@ class BotBase(object):
                 driver_name_format))
 
     def mode_local(self):
-        """Open new brower on local mode"""
+        """Open new brower on local mode
+
+        Raises:
+            CoreException -- driver_name on config JSON
+                file is not valid value
+        """
         browser_name = self.bot_config.config['browser']
+        self.log.debug('Starting browser with mode : LOCAL ...')
         if browser_name == "chrome":
             self.curr_caps = DesiredCapabilities.CHROME.copy()
             self.curr_driver = WebDriver.Chrome(
@@ -142,14 +168,17 @@ class BotBase(object):
                          "valid value: {}".format(browser_name)),
                 log=self.log
             )
+        self.log.info('Started browser with mode : REMOTE OK')
 
     def mode_remote(self):
-        """
-        Open new brower on remote mode
+        """Open new brower on remote mode
+
+        Raises:
+            CoreException -- browser name is not in valid values list
         """
         browser_name = self.bot_config.config['browser']
         url_hub = self.bot_config.config['url_hub']
-        self.log.info('Starting browser with mode : REMOTE')
+        self.log.debug('Starting browser with mode : REMOTE ...')
         if browser_name == 'firefox':
             self.curr_caps = DesiredCapabilities.FIREFOX.copy()
 
@@ -176,9 +205,7 @@ class BotBase(object):
         self.log.info('Started browser with mode : REMOTE OK')
 
     def close(self):
-        """
-        Close curr_driver browser
-        """
-        self.log.info('Closing browser')
+        """Close curr_driver browser"""
+        self.log.debug('Closing browser...')
         self.curr_driver.quit()
-        self.log.info('Closed browser OK')
+        self.log.info('Closed browser')

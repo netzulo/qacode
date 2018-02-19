@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-""""TODO: doc module"""
+"""TODO: doc module"""
 
 
 from enum import Enum
@@ -131,10 +131,10 @@ class HtmlTag(Enum):
 
     @classmethod
     def get_tags(cls):
-        """return enum values"""
+        """Return enum values"""
         return [item.value for item in HtmlTag]
 
     @classmethod
     def has_tag(cls, value):
-        """returns True if enum have value"""
+        """Returns True if enum have value"""
         return any(value == item.value for item in cls)

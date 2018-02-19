@@ -2,9 +2,10 @@
 """Package testing.testlink"""
 
 
-from qacode.core.utils import settings
+from unittest import skipIf
 from qacode.core.loggers.logger_manager import LoggerManager
 from qacode.core.testing.test_info_base import TestInfoBase
+from qacode.core.utils import settings
 
 
 SETTINGS = settings()
@@ -12,19 +13,22 @@ LOGGER_MANAGER = LoggerManager(log_level=SETTINGS['bot']['log_level'])
 
 
 class TestTlBase(TestInfoBase):
-    """TODO"""
+    """Test Suite for class TlBase"""
 
-    # properties
+    def __init__(self, method_name="suite_TestTlBase"):
+        """Test what probes TlBase class and methods
 
-    def __init__(self, method_name="TestTlBase"):
-        """TODO"""
+        Keyword Arguments:
+            method_name {str} -- name for test testlink base
+                (default: {"suite_TestTlBase"})
+        """
         super(TestTlBase, self).__init__(
             method_name,
             logger_manager=LOGGER_MANAGER,
             test_config=SETTINGS
         )
 
+    @skipIf(True, "Functionality it's not working yet")
     def test_000_instance(self):
-        """TODO"""
-        # TODO: need to wait for qatestlink module be completed
-        pass
+        """Test: test_000_instance"""
+        raise NotImplementedError("Functionality it's not working yet")

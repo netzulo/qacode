@@ -5,32 +5,38 @@
 
 
 import os
-
 from unittest import skipIf
-from qacode.core.testing.test_info_base import TestInfoBase
 from qacode.core.loggers.logger_manager import LoggerManager
+from qacode.core.testing.test_info_base import TestInfoBase
 from qacode.core.utils import path_format
 
 
 LOGGER_MANAGER = LoggerManager()
+MSG_OBSOLETE = "Test obsolete, need new tests for key tests.functionals.pages"
 
 
 class TestConfig(TestInfoBase):
     """Testcases for class TestInfoBase"""
+
     # Error Messages
     ERR_KEY_NOT_FOUND = "Required key '{}', can't be None"
     ERR_KEY_INVALID_VALUE = "Required key '{}', just can be in '{}'"
     ERR_KEY_PATH_NOT_FOUND = "Required key '{}', not found for path '{}'"
     ERR_KEY_EMPTY = "Required key '{}', can't be empty, value='{}'"
-    ERR_KEY_REGEX = "Optional key '{}', not provided or not matching regex: {} "  # noqa: E501
+    ERR_KEY_REGEX = "Optional key '{}', not provided or not matching regex: {}"
     # Test constants
     PATH_SETTINGS = "qacode/configs/settings.json"
-    REGEX_URL = r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'  # noqa: E501
+    REGEX_URL = r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+"  # noqa: E501
 
     def __init__(self, method_name="TestConfig"):
+        """Constructor
+
+        Keyword Arguments:
+            method_name {str} -- name for config testsuite
+                (default: {"TestConfig"})
+        """
         super(TestConfig, self).__init__(
-            method_name, logger_manager=LOGGER_MANAGER
-        )
+            method_name, logger_manager=LOGGER_MANAGER)
 
     def test_000_config_exist(self):
         """Test : test_000_config_exist"""
@@ -140,6 +146,7 @@ class TestConfig(TestInfoBase):
             self.ERR_KEY_REGEX.format('tests.unitaries.url', self.REGEX_URL)
         )
 
+    @skipIf(True, MSG_OBSOLETE)
     def test_012_key_url_login(self):
         """Test : test_013_config_has_key_test_functionals_url_login"""
         self.assertRegexpMatches(
@@ -149,6 +156,7 @@ class TestConfig(TestInfoBase):
                 'tests.functionals.url_login', self.REGEX_URL)
         )
 
+    @skipIf(True, MSG_OBSOLETE)
     def test_013_key_url_logout(self):
         """Test : test_014_config_has_key_test_functionals_url_logout"""
         self.assertRegexpMatches(
@@ -158,6 +166,7 @@ class TestConfig(TestInfoBase):
                 'tests.functionals.url_logout', self.REGEX_URL)
         )
 
+    @skipIf(True, MSG_OBSOLETE)
     def test_014_key_url_logged(self):
         """Test : test_015_config_has_key_test_functionals_url_logged"""
         self.assertRegexpMatches(
@@ -167,6 +176,7 @@ class TestConfig(TestInfoBase):
                 'tests.functionals.url_logged', self.REGEX_URL)
         )
 
+    @skipIf(True, MSG_OBSOLETE)
     def test_015_key_url_404(self):
         """Test : test_016_config_has_key_test_functionals_url_404"""
         self.assertRegexpMatches(
@@ -176,6 +186,7 @@ class TestConfig(TestInfoBase):
                 'tests.functionals.url_404', self.REGEX_URL)
         )
 
+    @skipIf(True, MSG_OBSOLETE)
     def test_016_key_selectors_login(self):
         """Test : test_017_config_has_key_test_functionals_selectors_login"""
         values = self.test_config['tests']['functionals']['selectors_login']
@@ -185,61 +196,42 @@ class TestConfig(TestInfoBase):
             self.assertNotEqual(value, "", self.ERR_KEY_EMPTY.format(
                 'tests.functionals.selectors_login', value))
 
+    @skipIf(True, MSG_OBSOLETE)
     def test_017_key_creed_user(self):
         """Test : test_018_config_has_key_test_functionals_creed_user"""
         value = self.test_config['tests']['functionals']['creed_user']
         self.assertNotEqual(value, "", self.ERR_KEY_EMPTY.format(
             'tests.functionals.creed_user', value))
 
+    @skipIf(True, MSG_OBSOLETE)
     def test_018_key_creed_pass(self):
         """Test : test_019_config_has_key_test_functionals_creed_pass"""
         value = self.test_config['tests']['functionals']['creed_pass']
         self.assertNotEqual(value, "", self.ERR_KEY_EMPTY.format(
             'tests.functionals.creed_pass', value))
 
-    def test_019_key_url_selector_parent(self):
-        """Test : test_019_key_url_selector_parent"""
-        self.assertRegexpMatches(
-            self.test_config['tests']['functionals']['url_selector_parent'],
-            self.REGEX_URL,
-            self.ERR_KEY_REGEX.format(
-                'tests.functionals.url_selector_parent', self.REGEX_URL)
-        )
-
-    def test_020_key_selector_parent(self):
-        """Test : test_020_key_selector_parent"""
-        value = self.test_config['tests']['functionals']['selector_parent']
-        self.assertNotEqual(value, "", self.ERR_KEY_EMPTY.format(
-            'tests.functionals.selector_parent', value))
-
-    def test_021_key_selector_child(self):
-        """Test : test_021_key_selector_child"""
-        value = self.test_config['tests']['functionals']['selector_child']
-        self.assertNotEqual(value, "", self.ERR_KEY_EMPTY.format(
-            'tests.functionals.selector_child', value))
-
-    def test_022_key_skip_drivers_local(self):
+    def test_019_key_skip_drivers_local(self):
         """Test : test_022_key_skip_drivers_local"""
         value = self.test_config['tests']['skip']['drivers_local']
         msg = self.ERR_KEY_INVALID_VALUE.format(
             'tests.skip.drivers_local', value)
         self.assertIn(value, (True, False), msg)
 
-    def test_023_key_skip_drivers_remote(self):
+    def test_020_key_skip_drivers_remote(self):
         """Test : test_023_key_skip_drivers_remote"""
         value = self.test_config['tests']['skip']['drivers_remote']
         msg = self.ERR_KEY_INVALID_VALUE.format(
             'tests.skip.drivers_remote', value)
         self.assertIn(value, (True, False), msg)
 
-    def test_024_key_skip_web_controls(self):
+    def test_021_key_skip_web_controls(self):
         """Test : test_024_key_skip_web_controls"""
         value = self.test_config['tests']['skip']['web_controls']
         msg = self.ERR_KEY_INVALID_VALUE.format(
             'tests.skip.web_controls', value)
         self.assertIn(value, (True, False), msg)
 
-    def test_025_key_skip_web_pages(self):
+    def test_022_key_skip_web_pages(self):
         """Test : test_025_key_skip_web_pages"""
         value = self.test_config['tests']['skip']['web_pages']
         msg = self.ERR_KEY_INVALID_VALUE.format(

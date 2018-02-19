@@ -65,7 +65,7 @@ install:
 - "python setup.py install"
 
 test_script:
-- "tox -e %TOXENV%"
+- "tox -e %TOXENV%,flake8,docs"
 
 artifacts:
 - path: "dist\\*"

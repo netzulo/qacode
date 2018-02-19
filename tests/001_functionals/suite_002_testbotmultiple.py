@@ -2,12 +2,12 @@
 """Testsuite for package testing"""
 
 
-from unittest import skipIf
 from unittest import TestCase
-from qacode.core.utils import settings
-from qacode.core.loggers.logger_manager import LoggerManager
+from unittest import skipIf
 from qacode.core.bots.bot_base import BotBase
+from qacode.core.loggers.logger_manager import LoggerManager
 from qacode.core.testing.test_info_bot import TestInfoBot
+from qacode.core.utils import settings
 
 
 SETTINGS = settings()
@@ -19,7 +19,13 @@ LOGGER_MANAGER = LoggerManager(log_level=SETTINGS['bot']['log_level'])
 class TestInfoBotMultiple(TestInfoBot):
     """Tests for class TestInfoBot"""
 
-    def __init__(self, method_name="TestTestInfoBot"):
+    def __init__(self, method_name="suite_TestTestInfoBot"):
+        """Just call to parent constructor class, see TestTestInfoBot
+
+        Keyword Arguments:
+            method_name {str} -- name for test info bot testsuite
+                (default: {"suite_TestTestInfoBot"})
+        """
         super(TestInfoBotMultiple, self).__init__(
             method_name,
             logger_manager=LOGGER_MANAGER,

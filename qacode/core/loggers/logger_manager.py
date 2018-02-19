@@ -7,10 +7,10 @@ from qacode.core.utils import path_format
 
 
 class LoggerManager(object):
-    '''
-    Manager to instance configurated logger
+    """Manager to instance configurated logger
+
     @usage: instance.get_log()
-    '''
+    """
 
     log_path = None
     log_name = None
@@ -18,18 +18,10 @@ class LoggerManager(object):
     log_level = None
     logger = None
 
-    def __init__(self,
-                 log_path="logs/",
-                 log_name="qacode",
-                 log_level=None,
-                 is_output_console=True,
-                 is_output_file=True):
-        """
-        Create new logger_manager instance with default
-         path 'logs/qacode.log'
-         log_level DEBUG
-         console_handler enable
-         file_handler enable
+    def __init__(self, log_path="logs/", log_name="qacode", log_level=None,
+                 is_output_console=True, is_output_file=True):
+        """Create new logger_manager instance with default 'logs/qacode.log'
+            path, log_level DEBUG console_handler enable file_handler enable
         """
         if log_path is None or len(log_path) <= 0:
             raise Exception("bad format at logger log_path={}"
@@ -79,14 +71,14 @@ class LoggerManager(object):
         return logger
 
     def create_console_handler(self, log_level, log_formatter):
-        """create console handler and set logfile level"""
+        """Create console handler and set logfile level"""
         console_handler = logging.StreamHandler()
         console_handler.setLevel(log_level)
         console_handler.setFormatter(log_formatter)
         return console_handler
 
     def create_file_handler(self, log_level, log_formatter, log_path_join):
-        """create console handler and set logfile level"""
+        """Create console handler and set logfile level"""
         file_handler = logging.FileHandler(log_path_join)
         file_handler.setLevel(log_level)
         file_handler.setFormatter(log_formatter)

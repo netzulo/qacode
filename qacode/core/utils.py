@@ -1,14 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Utils tasks
-- files operations
-- settings operations
-"""
+"""Utils tasks for files operations and settings operations"""
 
 
-from sys import version_info
-from os import path
 import json
+from os import path
+from sys import version_info
 
 
 def path_format(file_path=None, file_name=None, is_abspath=False,
