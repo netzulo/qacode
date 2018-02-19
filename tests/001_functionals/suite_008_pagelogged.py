@@ -4,12 +4,12 @@
 
 
 from unittest import skipIf
-from qacode.core.utils import settings
+from qacode.core.exceptions.page_exception import PageException
 from qacode.core.loggers.logger_manager import LoggerManager
 from qacode.core.testing.test_info_bot import TestInfoBot
-from qacode.core.webs.pages.page_login import PageLogin
-from qacode.core.exceptions.page_exception import PageException
+from qacode.core.utils import settings
 from qacode.core.webs.pages.page_logged import PageLogged
+from qacode.core.webs.pages.page_login import PageLogin
 
 
 SETTINGS = settings()
@@ -93,7 +93,7 @@ class TestPageLogged(TestInfoBot):
         """Testcase: test_002_page_logged_method_islogged_true"""
         self.assertRaises(
             PageException,
-            PageLogged, 
+            PageLogged,
             self.bot,
             None,
             self.url_logout)
@@ -103,7 +103,7 @@ class TestPageLogged(TestInfoBot):
         """Testcase: test_002_page_logged_method_islogged_true"""
         self.assertRaises(
             PageException,
-            PageLogged, 
+            PageLogged,
             self.bot,
             self.url_logged,
             None)

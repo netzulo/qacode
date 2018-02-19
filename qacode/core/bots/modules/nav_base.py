@@ -1,78 +1,69 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=no-self-use
 # pylint: disable=too-many-public-methods
-
-'''
-Created on 04 march 2017
+"""Created on 04 march 2017
 
 @author: ntz
-'''
+"""
 
 
+from qacode.core.exceptions.core_exception import CoreException
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.webelement import WebElement
-from qacode.core.exceptions.core_exception import CoreException
+from selenium.webdriver.support import expected_conditions as EC
 
 
 class NavBase(object):
-    '''
-    Main navigation methods to use on selenium scripts
-    + driver
-    '''
+    """Main navigation methods to use on selenium scripts"""
+
     driver = None
     log = None
 
-    def __init__(self, driver, log,driver_wait=None):
-        '''
-        Initialize self properties
-        '''
+    def __init__(self, driver, log, driver_wait=None):
+        """Initialize self properties
+
+        Arguments:
+            driver {WebDriver} -- instance of any browser type/mode
+            log {logging.logger} -- Logger for methods usage
+
+        Keyword Arguments:
+            driver_wait {selenium.webdriver.support.ui.WebDriverWait}
+                -- web driver wait for conditions (default: {None})
+        """
         self.driver = driver
         self.log = log
         self.driver_wait = driver_wait
 
     def get_url(self, url, wait_for_load=0):
-        """
-        Do get_url including implicit wait for page load
-        """
+        """Do get_url including implicit wait for page load"""
         if wait_for_load > 0:
             self.driver.implicitly_wait(wait_for_load)
         self.driver.get(url)
 
     def get_maximize_window(self):
-        """
-        Maximize browser window
-        """
+        """Maximize browser window"""
         self.driver.maximize_window()
 
     def get_window_handle(self):
-        """
-        Get window object to handle with selenium on scripts
-        """
+        """Get window object to handle with selenium on scripts"""
         return self.driver.current_window_handle
 
     def delete_cookie_by_key(self, key_name):
-        '''
-        Deletes a single cookie with the given name.
-        '''
+        """Deletes a single cookie with the given name"""
         self.driver.delete_cookie(key_name)
 
     def delete_cookies(self):
-        '''
-        Delete all cookies in the scope of the session.
-        '''
+        """Delete all cookies in the scope of the session"""
         self.driver.delete_all_cookies()
 
     def get_capabilities(self):
-        """
-        Retrieve current capabilities applied to selenium driver
-        """
+        """Retrieve current capabilities applied to selenium driver"""
         return self.driver.desired_capabilities
 
     def execute_js(self, script, *args):
         """Execute arbitrary Javascript code
-        
+
         Arguments:
             script {str} -- JS code to be executed on WebDriver
             *args {[type]} -- More arguments ( like element selector )
@@ -81,21 +72,22 @@ class NavBase(object):
             str -- JS script returns
         """
         return self.driver.execute_script(script, *args)
-    
-    def set_css_rule(self, css_selector, css_prop, css_value, css_important=False, index=0):
+
+    def set_css_rule(self, css_selector, css_prop, css_value,
+                     css_important=False, index=0):
         """Set new value for given CSS property name
-        
+
         Arguments:
             css_selector {str} -- CSS selector to apply rule
             css_prop {str} -- CSS property to be applied to rule
             css_value {str} -- CSS property value to be applied to rule
-        
+
         Keyword Arguments:
             css_important {bool} -- Allow to include '!important'
                 to rule (default: {False})
             index {int} -- Position to insert new CSS rule
                 on first stylesheet (default: {0})
-        
+
         Returns:
             str -- JS script returns
         """
@@ -107,17 +99,33 @@ class NavBase(object):
             css_prop,
             css_value,
             css_important_text)
-        js_script = "document.styleSheets[0].insertRule(\"{0!s}\", {1:d})".format(
+        js_script = "document.styleSheets[0].insertRule(\"{0!s}\", {1:d});".format(  # noqa: E501
             css_rule, index)
         return self.execute_js(js_script)
 
     def find_element(self, selector, locator=By.CSS_SELECTOR):
+        """Just divided execution ways for search web element
+            throught selenium
+
+        Arguments:
+            selector {str} -- string selector used to locate one
+                element or first obtained
+
+        Keyword Arguments:
+            locator {By} -- locator strategy used to find
+                WebElement selector (default: {By.CSS_SELECTOR})
+
+        Raises:
+            CoreException -- If locator is None
+            CoreException -- Element selector+locator strategy raises
+                selenium NoSuchElementException
+
+        Returns:
+            WebElement -- selenium representation for a web element
         """
-        Just divided execution ways for search web element throught selenium
-        """
-        msg = 'Locator not selected at find_element, selector={}'.format(
+        msg = "Locator not selected at find_element, selector={}".format(
             selector)
-        msg_err = 'Error at find_element: selector={}'.format(
+        msg_err = "Error at find_element: selector={}".format(
             selector)
         if locator is None:
             raise CoreException(message=msg)
@@ -127,12 +135,29 @@ class NavBase(object):
             raise CoreException(err, message=msg_err)
 
     def find_elements(self, selector, locator=By.CSS_SELECTOR):
+        """Just divided execution ways for search web elements
+            throught selenium
+
+        Arguments:
+            selector {str} -- string selector used to locate
+                one or more elements
+
+        Keyword Arguments:
+            locator {By} -- locator strategy used to find
+                WebElement selector (default: {By.CSS_SELECTOR})
+
+        Raises:
+            CoreException -- If locator is None
+            CoreException -- Element selector+locator strategy raises
+                selenium NoSuchElementException
+
+        Returns:
+            list(WebElement) -- selenium representation for a
+                list of web elements
         """
-        Just divided execution ways for search web elements throught selenium
-        """
-        msg = 'Locator not selected at find_element, selector={}'.format(
+        msg = "Locator not selected at find_element, selector={}".format(
             selector)
-        msg_err = 'Error at find_elements: selector={}'.format(
+        msg_err = "Error at find_elements: selector={}".format(
             selector)
         if locator is None:
             raise CoreException(message=msg)
@@ -142,11 +167,27 @@ class NavBase(object):
             raise CoreException(err, message=msg_err)
 
     def find_element_wait(self, selector,
-                          locator=By.CSS_SELECTOR,
-                          driver_wait=None):
-        """
-        Search element using WebDriverWait class
-         and ElementConditions presence_of_element_located
+                          locator=By.CSS_SELECTOR, driver_wait=None):
+        """Search element using WebDriverWait class
+            and ElementConditions presence_of_element_located
+
+        Arguments:
+            selector {str} -- string selector used to locate one
+                element or first obtained
+
+        Keyword Arguments:
+            locator {By} -- locator strategy used to find
+                WebElement selector (default: {By.CSS_SELECTOR})
+            driver_wait {WebDriverWait} -- driver that supports
+                ExpectedConditions methods (default: {None})
+
+        Raises:
+            CoreException -- if NavBase instanced
+                without driver_wait
+
+        Returns:
+            WebElement -- element through selenium
+                WebDriverWait class
         """
         if driver_wait is None and self.driver_wait is None:
             raise CoreException(message='Nav instanced without driver_wait')
@@ -164,10 +205,18 @@ class NavBase(object):
         self.driver.refresh()
 
     def get_log(self, log_name='browser'):
-        """
-        Get selenium log by name, valid values are
-        default value : browser
-          browser, driver, client, server
+        """Get selenium log by name, this depends of
+            driver mode and browser what it's using each time
+
+        Keyword Arguments:
+            log_name {str} -- get log type lanes (default: {'browser'})
+
+        Raises:
+            CoreException -- if log_name value not in list
+                of valid values : browser, driver, client, server
+
+        Returns:
+            list() -- list of messages typed on a log_name
         """
         if log_name == 'browser':
             return self.driver.get_log(log_name)
@@ -181,56 +230,86 @@ class NavBase(object):
             'selenium log_name just can be: [browser,driver,client,server]')
 
     def get_screenshot_as_base64(self):
-        """
-        Gets the screenshot of the current window as a base64 encoded string
-        which is useful in embedded images in HTML.
+        """Gets the screenshot of the current window as a base64 encoded string
+        which is useful in embedded images in HTML
         """
         return self.driver.get_screenshot_as_base64()
 
     def get_screenshot_as_file(self, file_name):
+        """Gets the screenshot of the current window. Returns False
+            if there is any IOError, else returns True. Use full paths
+            in your filename.
+
+        Arguments:
+            file_name {str} -- name of file path where
+                want to save screenshot
+
+        Returns:
+            list(byte) -- file binary object of screenshot bytes
         """
-        Gets the screenshot of the current window. Returns False if there is
-        any IOError, else returns True. Use full paths in your filename.
-        TODO: support default name
-        """
-        self.driver.get_screenshot_as_file(file_name)
+        return self.driver.get_screenshot_as_file(file_name)
 
     def get_screenshot_as_png(self):
-        """
-        Gets the screenshot of the current window as a binary data.
-        TODO: support default name
+        """Gets the screenshot of the current window as a
+            binary data.
+
+        Returns:
+            File -- file binary object of screenshot with PNG format
         """
         return self.driver.get_screenshot_as_png()
 
     def get_screenshot_save(self, file_name):
-        """
-        Gets the screenshot of the current window. Returns False if there is
-        any IOError, else returns True. Use full paths in your filename.
-        TODO: support default name
+        """Gets the screenshot of the current window. Returns False
+            if there is any IOError, else returns True.
+            Use full paths in your filename.
+
+        Arguments:
+            file_name {str} -- name of file path where
+                want to save screenshot
+
+        Returns:
+            list(byte) -- file binary object of screenshot bytes
         """
         return self.driver.save_screenshot(file_name)
 
     def js_set_timeout(self, timeout=60):
-        """
-        Set the amount of time that the script should wait during an
-        execute_async_script call before throwing an error.
+        """Set the amount of time that the script should wait during an
+            execute_async_script call before throwing an error.
+
+        Keyword Arguments:
+            timeout {int} -- seconds to raise script
+                wait (default: {60})
         """
         self.driver.set_script_timeout(timeout)
 
     def set_window_size(self, pos_x=800, pos_y=600):
-        """
-        Sets the width and height of the current window. (window.resizeTo)
+        """Sets the width and height of the current
+            window. (window.resizeTo)
+
+        Keyword Arguments:
+            pos_x {int} -- width of new window size (default: {800})
+            pos_y {int} -- height of new window size (default: {600})
         """
         self.driver.set_window_size(pos_x, pos_y)
 
     def get_title(self):
-        '''
-        Returns the title of the current page.
-        '''
+        """Obtains the title of the current page and return it
+
+        Returns:
+            str -- title of current page opened
+        """
         return self.driver.title
 
     def get_current_url(self):
-        """Return current url from opened bot"""
+        """Return current url from opened bot
+
+        Raises:
+            CoreException -- if can't obtains url with this
+                selenium driver
+
+        Returns:
+            str -- string representation of current driver url
+        """
         err_msg = "Failed at obtain selenium driver property 'current_url'"
         try:
             return self.driver.current_url
@@ -238,12 +317,22 @@ class NavBase(object):
             raise CoreException(err, message=err_msg)
 
     def is_url(self, url, ignore_raises=True):
-        """
-        Check if url it's the same what selenium current and visible url
+        """Check if url it's the same what selenium current and visible url
 
-        :Attributes:
-            url: string value used to verify url
-            ignore_raises: not raise exceptions if enabled
+        Arguments:
+            url {str} -- string value used to verify url
+
+        Keyword Arguments:
+            ignore_raises {bool} -- allows to ignore errors
+                when executes if raises errors (default: {True})
+
+        Raises:
+            exceptions -- [description]
+            CoreException -- [description]
+
+        Returns:
+            bool -- if current driver url match with param url,
+                then returns True, False if not
         """
         if self.get_current_url() != url:
             if not ignore_raises:
@@ -252,14 +341,33 @@ class NavBase(object):
         return True
 
     def set_web_element(self, new_attr_id):
-        """create_web_element"""
+        """Create web element using selenium adding to DOM
+
+        Arguments:
+            new_attr_id {str} -- html attribute ID for
+                new web element
+        """
         self.driver.create_web_element(new_attr_id)
 
     def ele_click(self, element=None, selector=None, locator=By.CSS_SELECTOR):
-        """
-        Perform click webelement with locator param or search it by default
-        CSS_SELECTOR value if element it's none but selector it's not default
-        value
+        """Perform click webelement with locator param or search it by default
+            CSS_SELECTOR value if element it's none but selector
+            it's not default value
+
+        Keyword Arguments:
+            element {WebElement} -- selenium object, instance of WebElement
+                (default: {None})
+            selector {str} -- selector to search and element to click
+                (default: {None})
+            locator {By} -- locator selenium strategy
+                (default: {By.CSS_SELECTOR})
+
+        Raises:
+            CoreException -- Bad params combination, need element
+                or selector to search element
+
+        Returns:
+            WebElement -- returns element clicked (to allow chaining)
         """
         curr_ele = element
         curr_selector = selector
@@ -300,36 +408,39 @@ class NavBase(object):
     def ele_is_displayed(self, element):
         """Whether the element is visible to a user
 
-        Webdriver spec to determine if element it's displayed: 
+        Webdriver spec to determine if element it's displayed:
             https://w3c.github.io/webdriver/webdriver-spec.html#widl-WebElement-isDisplayed-boolean
-        
+
         Arguments:
             element {WebElement} -- selenium web element
-        
+
         Returns:
-            bool -- Value based on selenium SPEC to determine if  an element is enabled
+            bool -- Value based on selenium SPEC to determine if an element
+                is enabled
         """
         return element.is_displayed()
 
     def ele_is_enabled(self, element):
         """Returns whether the element is enabled
-        
+
         Arguments:
             element {WebElement} -- selenium web element
-        
+
         Returns:
-            bool -- Value based on selenium SPEC to determine if  an element is enabled
+            bool -- Value based on selenium SPEC to determine if an element
+                is enabled
         """
         return element.is_enabled()
 
     def ele_is_selected(self, element):
         """Returns whether the element is selected
-        
+
         Arguments:
             element {WebElement} -- selenium web element
-        
+
         Returns:
-            bool -- Value based on selenium SPEC to determine if  an element is enabled
+            bool -- Value based on selenium SPEC to determine if an element
+                is enabled
         """
         return element.is_selected()
 
@@ -338,7 +449,7 @@ class NavBase(object):
             If the isDisplayed() method can sometimes trip over when
             the element is not really hidden but outside the viewport
             get_text() returns an empty string for such an element.
-        
+
         Keyword Arguments:
             on_screen {bool} -- allow to obtain text if element
                 it not displayed to this element before

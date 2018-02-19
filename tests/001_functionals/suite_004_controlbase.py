@@ -4,12 +4,12 @@
 
 
 from unittest import skipIf
-from selenium.webdriver.remote.webelement import WebElement
-from qacode.core.utils import settings
+from qacode.core.exceptions.control_exception import ControlException
 from qacode.core.loggers.logger_manager import LoggerManager
 from qacode.core.testing.test_info_bot import TestInfoBot
+from qacode.core.utils import settings
 from qacode.core.webs.controls.control_base import ControlBase
-from qacode.core.exceptions.control_exception import ControlException
+from selenium.webdriver.remote.webelement import WebElement
 
 
 SETTINGS = settings()
@@ -24,23 +24,32 @@ class TestControlBase(TestInfoBot):
 
     @classmethod
     def setUpClass(cls):
+        """Set up test suite"""
         global BOT
         if not SKIP_CONTROLS:
             BOT = TestInfoBot.bot_open(SETTINGS, LOGGER_MANAGER)
 
     @classmethod
     def tearDownClass(cls):
+        """Tear down test suite"""
         global BOT
         if not SKIP_CONTROLS:
             TestInfoBot.bot_close(BOT)
 
-    def __init__(self, method_name="TestControlBase"):
+    def __init__(self, method_name="suite_TestControlBase"):
+        """Test what probes ControlBase class and methods
+
+        Keyword Arguments:
+            method_name {str} -- name for test control base
+                (default: {"suite_TestControlBase"})
+        """
         super(TestControlBase, self).__init__(
             method_name=method_name,
             bot=BOT
         )
 
     def setUp(self):
+        """Set up test case"""
         super(TestControlBase, self).setUp()
         self.url = SETTINGS.get(
             'tests')['functionals']['pages'][2]['url']
@@ -52,7 +61,7 @@ class TestControlBase(TestInfoBot):
             'tests')['functionals']['pages'][2]['controls'][2]['selector']
         self.ele_menu_common_errors = SETTINGS.get(
             'tests')['functionals']['pages'][2]['controls'][3]['selector']
-        
+
         self.bot.navigation.get_url(self.url)
         self.assert_equals_url(self.bot.curr_driver.current_url, self.url)
 
@@ -184,6 +193,8 @@ class TestControlBase(TestInfoBot):
 
     @skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_017_method_gettext_raises_onscreenfalse_whenisdisplayed(self):
-        """Testcase: test_017_method_gettext_raises_onscreenfalse_whenisdisplayed"""
+        """Testcase: test_017_method_gettext_raises_onscreenfalse
+            whenisdisplayed
+        """
         control = ControlBase(self.bot, selector=self.ele_menu_common_errors)
         self.assertRaises(ControlException, control.get_text, on_screen=False)

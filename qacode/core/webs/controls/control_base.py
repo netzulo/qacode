@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=too-many-arguments
-""""TODO: doc module"""
+"""TODO: doc module"""
 
 
-from selenium.webdriver.common.by import By
-from qacode.core.exceptions.core_exception import CoreException
 from qacode.core.exceptions.control_exception import ControlException
+from qacode.core.exceptions.core_exception import CoreException
+from selenium.webdriver.common.by import By
 
 
 class ControlBase(object):
@@ -83,23 +83,20 @@ class ControlBase(object):
             raise ControlException(
                 err, message='Element not found at load control_base')
 
-
     def find_child(self, selector, locator=By.CSS_SELECTOR):
-        """Find child element using bot with 
-            default By.CSS_SELECTOR strategy for internal
-            element trought selenium WebElement
-        
+        """Find child element using bot with default By.CSS_SELECTOR strategy
+            for internal element trought selenium WebElement
+
         Arguments:
             selector {str} -- string search for locator type
-        
+
         Keyword Arguments:
-            locator {[selenium.webdriver.common.by.By]} --
-                string type to use on this selenium search request
+            locator {[selenium.webdriver.common.by.By]} -- string type to
+                use on this selenium search request
                 (default: {By.CSS_SELECTOR})
-        
+
         Returns:
-            ControlBase -- instanced base element
-                using qacode library object
+            ControlBase -- instanced base element using qacode library object
         """
         self.bot.log.debug("find_child: selector={}".format(selector))
         return ControlBase(
@@ -114,13 +111,12 @@ class ControlBase(object):
 
     def type_text(self, text, clear=False):
         """Type text on input element
-        
+
         Arguments:
             text {str} -- string to be typed on web element
-        
+
         Keyword Arguments:
-            clear {bool} -- clear text element at enable key 
-                (default: {False})
+            clear {bool} -- clear text element at enable key (default: {False})
         """
         self.bot.log.debug("type_text : text={}".format(text))
         if clear:
@@ -134,7 +130,6 @@ class ControlBase(object):
 
     def click(self):
         """Click on element"""
-
         self.bot.log.debug("click : clicking element...")
         self.bot.navigation.ele_click(element=self.element)
 
@@ -143,7 +138,7 @@ class ControlBase(object):
             If the isDisplayed() method can sometimes trip over when
             the element is not really hidden but outside the viewport
             get_text() returns an empty string for such an element.
-        
+
         Keyword Arguments:
             on_screen {bool} -- allow to obtain text if element
                 it not displayed to this element before
@@ -164,11 +159,11 @@ class ControlBase(object):
     def get_attrs(self, attr_names):
         """Find a list of attributes on WebElement
         and returns a dict list of {name, value}
-        
+
         Arguments:
-            attr_names {list of str} -- list of attr_name to search 
+            attr_names {list of str} -- list of attr_name to search
                 for each one name and value on self.element
-        
+
         Returns:
             dict -- a dict list of {name, value}
         """
@@ -207,7 +202,7 @@ class ControlBase(object):
         if attr_value is obtained, then compare and raise if not
 
         Arguments:
-            attr_name {str} -- find an attribute on WebElement 
+            attr_name {str} -- find an attribute on WebElement
                 with this name
 
         Returns:
@@ -240,12 +235,13 @@ class ControlBase(object):
             prop_value {str} -- CSS property value
 
         Keyword Arguments:
-            css_important {bool} -- Allow to include '!important'
-                to rule for overrite others values 
-                applied (default: {True})
-        Returns:
-            [type] -- [description] TODO: fill up section
+            css_important {bool} -- Allow to include '!important' to rule for
+                overrite others values applied (default: {True})
         """
-        return self.bot.navigation.set_css_rule(
+        self.bot.navigation.set_css_rule(
             self.selector, prop_name, prop_value,
             css_important=css_important)
+        if self.selector is None:
+            raise ControlException(message="Couldn't reload element")
+        # reload WebElement
+        self.element = self.load_element(self.selector)

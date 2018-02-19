@@ -103,9 +103,8 @@ Configuration File
       "bot": {
         "mode": "remote",
         "browser": "chrome",
-        "url_hub": "http://146.255.101.51:11000/wd/hub",
-        "url_node": "http://146.255.101.51:11001/wd/hub",
-        "drivers_path": "../../modules/qadrivers",
+        "url_hub": "http://localhost:11000/wd/hub",
+        "drivers_path": "../qadrivers",
         "drivers_names": [
           "chromedriver_32.exe",
           "chromedriver_64.exe",
@@ -122,48 +121,14 @@ Configuration File
           "iexplorerdriver_32.exe",
           "iexplorerdriver_64.exe",
           "edgedriver_32.exe",
-          "edgedriver_64.exe"
+          "edgedriver_64.exe",
+          "operadriver_32.exe",
+          "operadriver_64.exe",
+          "operadriver_32",
+          "operadriver_64"
         ],
         "log_output_file": "logs",
-        "log_name": "qacode"
-      },
-      "testlink": {
-        "enabled": false,
-        "url_api": "http://qalab.tk:86/lib/api/xmlrpc/v1/xmlrpc.php",
-        "dev_key": "ae2f4839476bea169f7461d74b0ed0ac",
-        "data":{
-          "generate": false,
-          "test_proyects":[
-            {"id_prefix":"qacode", "name":"qacode", "desc":"Main QA library"}
-          ]
-        }
-      },
-      "tests": {
-        "skip":{
-          "drivers_local": true,
-          "drivers_remote": false,
-          "web_controls": false,
-          "web_pages": false
-        },
-        "unitaries": {
-          "url": "https://www.netzulo.com"
-        },
-        "functionals": {
-          "url_login": "http://qalab.tk:82/sessions/new",
-          "url_logout": "http://qalab.tk:82/sessions/logout",
-          "url_logged": "http://qalab.tk:82/",
-          "url_404": "http://qalab.tk:82/sessions/login",
-          "selectors_login": [
-            "#login",
-            "#password",
-            "[name='commit']"
-          ],
-          "creed_user": "qacode",
-          "creed_pass": "qacode",
-          "url_selector_parent": "http://qalab.tk:82/sessions/new",
-          "selector_parent": "#login_form",
-          "selector_child": "#login"
-          }
-        }
+        "log_name": "qacode",
+        "log_level": "DEBUG"
       }
     }

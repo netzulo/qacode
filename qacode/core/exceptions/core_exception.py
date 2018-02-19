@@ -2,12 +2,13 @@
 """Main Exceptions for qacode library"""
 
 
-from selenium.common.exceptions import NoSuchElementException
 from qacode.core.loggers.logger_manager import LoggerManager
+from selenium.common.exceptions import NoSuchElementException
 
 
 class CoreException(Exception):
     """Base Exception class for inherit new exceptions on library"""
+
     log = None
     message = None
 

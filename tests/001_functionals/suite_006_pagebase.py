@@ -4,13 +4,13 @@
 
 
 from unittest import skipIf
-from selenium.webdriver.remote.webelement import WebElement
-from qacode.core.utils import settings
+from qacode.core.exceptions.page_exception import PageException
 from qacode.core.loggers.logger_manager import LoggerManager
 from qacode.core.testing.test_info_bot import TestInfoBot
-from qacode.core.webs.pages.page_base import PageBase
-from qacode.core.exceptions.page_exception import PageException
+from qacode.core.utils import settings
 from qacode.core.webs.controls.control_base import ControlBase
+from qacode.core.webs.pages.page_base import PageBase
+from selenium.webdriver.remote.webelement import WebElement
 
 
 SETTINGS = settings()
@@ -22,8 +22,13 @@ LOGGER_MANAGER = LoggerManager(log_level=SETTINGS['bot']['log_level'])
 class TestPageBase(TestInfoBot):
     """Test Suite for PageBase class"""
 
-    def __init__(self, method_name="TestPageBase"):
-        """Just call to parent constructor class, see TestInfoBot"""
+    def __init__(self, method_name="suite_TestPageBase"):
+        """Test what probes PageBase class and methods
+
+        Keyword Arguments:
+            method_name {str} -- name for test page base
+                (default: {"suite_TestPageBase"})
+        """
         super(TestPageBase, self).__init__(
             method_name,
             logger_manager=LOGGER_MANAGER,
@@ -31,6 +36,7 @@ class TestPageBase(TestInfoBot):
         )
 
     def setUp(self):
+        """Set up test case"""
         super(TestPageBase, self).setUp()
         self.url = self.test_config.get(
             'tests')['functionals']['pages'][0]['url']

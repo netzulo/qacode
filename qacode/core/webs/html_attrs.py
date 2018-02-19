@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-""""TODO: doc module"""
+"""TODO: doc module"""
 
 
 from enum import Enum
@@ -15,10 +15,10 @@ class HtmlAttr(Enum):
 
     @classmethod
     def get_attr(cls):
-        """return enum values"""
+        """Return enum values"""
         return [item.value for item in HtmlAttr]
 
     @classmethod
     def has_attr(cls, value):
-        """returns True if enum have value"""
+        """Returns True if enum have value"""
         return any(value == item.value for item in cls)

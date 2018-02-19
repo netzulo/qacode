@@ -3,21 +3,22 @@
 """Package qacode.core.webs.pages"""
 
 
-from selenium.webdriver.common.by import By
-from qacode.core.webs.pages.page_base import PageBase
 from qacode.core.exceptions.page_exception import PageException
+from qacode.core.webs.pages.page_base import PageBase
+from selenium.webdriver.common.by import By
 
 
 class PageLogin(PageBase):
-    """
-    Inherit PageBase class with login and valitation methods
-    Attributes:
-        txt_username: web element used as 'user name' input
-        txt_password: web element used as 'user password' input
-        btn_login: web element used as 'confirm login form' button
-        is_logged: will be true after success call to method 'login'
-    """
+    """Inherit PageBase class with login and valitation methods
 
+        txt_username {WebElement} -- web element used as 'user name' input
+
+        txt_password {WebElement} -- web element used as 'user password' input
+
+        btn_login {WebElement} -- web element used as 'confirm login' button
+
+        is_logged {bool} -- will be true after success call to method 'login'
+    """
 
     url_logged = None
     txt_username = None
@@ -26,8 +27,8 @@ class PageLogin(PageBase):
 
     is_logged = False
 
-    def __init__(self, bot, url, url_logged, selectors=None, locator=By.CSS_SELECTOR,
-                 go_url=True, maximize=False):
+    def __init__(self, bot, url, url_logged, selectors=None,
+                 locator=By.CSS_SELECTOR, go_url=True, maximize=False):
         """
         :Attributes:
             bot: BotBase or inherit classes instance
@@ -36,7 +37,7 @@ class PageLogin(PageBase):
         Optionals:
             selectors: a list of selectors ready to search elements
             locator: change default locator selector 'CSS_SELECTOR'
-            go_url_maximize: change default page load, 
+            go_url_maximize: change default page load,
              open browser maximized
         """
         super(PageLogin, self).__init__(

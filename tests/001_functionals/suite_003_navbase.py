@@ -3,10 +3,10 @@
 
 
 from unittest import skipIf
-from qacode.core.utils import settings
+from qacode.core.bots.modules.nav_base import NavBase
 from qacode.core.loggers.logger_manager import LoggerManager
 from qacode.core.testing.test_info_bot import TestInfoBot
-from qacode.core.bots.modules.nav_base import NavBase
+from qacode.core.utils import settings
 
 
 SETTINGS = settings()
@@ -21,18 +21,25 @@ class TestNavBase(TestInfoBot):
 
     @classmethod
     def setUpClass(cls):
+        """Set up test suite"""
         global BOT
         if not SKIP_REMOTES:
             BOT = TestInfoBot.bot_open(SETTINGS, LOGGER_MANAGER)
 
     @classmethod
     def tearDownClass(cls):
+        """Tear down test suite"""
         global BOT
         if not SKIP_REMOTES:
             TestInfoBot.bot_close(BOT)
 
-    def __init__(self, method_name="TestNavBase"):
-        """Test what probes NavBase class and methods"""
+    def __init__(self, method_name="suite_TestNavBase"):
+        """Test what probes NavBase class and methods
+
+        Keyword Arguments:
+            method_name {str} -- name for test nav base
+                (default: {"suite_TestNavBase"})
+        """
         super(TestNavBase, self).__init__(
             method_name=method_name,
             bot=BOT

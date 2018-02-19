@@ -4,11 +4,11 @@
 
 
 from unittest import skipIf
-from qacode.core.utils import settings
+from qacode.core.exceptions.page_exception import PageException
 from qacode.core.loggers.logger_manager import LoggerManager
 from qacode.core.testing.test_info_bot import TestInfoBot
+from qacode.core.utils import settings
 from qacode.core.webs.pages.page_login import PageLogin
-from qacode.core.exceptions.page_exception import PageException
 
 
 SETTINGS = settings()
@@ -21,7 +21,12 @@ class TestPageLogin(TestInfoBot):
     """Test Suite for class PageLogin"""
 
     def __init__(self, method_name="suite_TestPageLogin"):
-        """Just call to parent constructor class, see TestInfoBot."""
+        """Test what probes PageLogin class and methods
+
+        Keyword Arguments:
+            method_name {str} -- name for test page login
+                (default: {"suite_TestPageLogin"})
+        """
         super(TestPageLogin, self).__init__(
             method_name,
             logger_manager=LOGGER_MANAGER,

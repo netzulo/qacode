@@ -5,32 +5,38 @@
 
 
 import os
-
 from unittest import skipIf
-from qacode.core.testing.test_info_base import TestInfoBase
 from qacode.core.loggers.logger_manager import LoggerManager
+from qacode.core.testing.test_info_base import TestInfoBase
 from qacode.core.utils import path_format
 
 
 LOGGER_MANAGER = LoggerManager()
+MSG_OBSOLETE = "Test obsolete, need new tests for key tests.functionals.pages"
 
 
 class TestConfig(TestInfoBase):
     """Testcases for class TestInfoBase"""
+
     # Error Messages
     ERR_KEY_NOT_FOUND = "Required key '{}', can't be None"
     ERR_KEY_INVALID_VALUE = "Required key '{}', just can be in '{}'"
     ERR_KEY_PATH_NOT_FOUND = "Required key '{}', not found for path '{}'"
     ERR_KEY_EMPTY = "Required key '{}', can't be empty, value='{}'"
-    ERR_KEY_REGEX = "Optional key '{}', not provided or not matching regex: {} "  # noqa: E501
+    ERR_KEY_REGEX = "Optional key '{}', not provided or not matching regex: {}"
     # Test constants
     PATH_SETTINGS = "qacode/configs/settings.json"
-    REGEX_URL = r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'  # noqa: E501
+    REGEX_URL = r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+"  # noqa: E501
 
     def __init__(self, method_name="TestConfig"):
+        """Constructor
+
+        Keyword Arguments:
+            method_name {str} -- name for config testsuite
+                (default: {"TestConfig"})
+        """
         super(TestConfig, self).__init__(
-            method_name, logger_manager=LOGGER_MANAGER
-        )
+            method_name, logger_manager=LOGGER_MANAGER)
 
     def test_000_config_exist(self):
         """Test : test_000_config_exist"""
@@ -140,7 +146,7 @@ class TestConfig(TestInfoBase):
             self.ERR_KEY_REGEX.format('tests.unitaries.url', self.REGEX_URL)
         )
 
-    @skipIf(True,"Test obsolete, need new tests for key tests.functionals.pages")
+    @skipIf(True, MSG_OBSOLETE)
     def test_012_key_url_login(self):
         """Test : test_013_config_has_key_test_functionals_url_login"""
         self.assertRegexpMatches(
@@ -150,7 +156,7 @@ class TestConfig(TestInfoBase):
                 'tests.functionals.url_login', self.REGEX_URL)
         )
 
-    @skipIf(True,"Test obsolete, need new tests for key tests.functionals.pages")
+    @skipIf(True, MSG_OBSOLETE)
     def test_013_key_url_logout(self):
         """Test : test_014_config_has_key_test_functionals_url_logout"""
         self.assertRegexpMatches(
@@ -160,7 +166,7 @@ class TestConfig(TestInfoBase):
                 'tests.functionals.url_logout', self.REGEX_URL)
         )
 
-    @skipIf(True,"Test obsolete, need new tests for key tests.functionals.pages")
+    @skipIf(True, MSG_OBSOLETE)
     def test_014_key_url_logged(self):
         """Test : test_015_config_has_key_test_functionals_url_logged"""
         self.assertRegexpMatches(
@@ -170,7 +176,7 @@ class TestConfig(TestInfoBase):
                 'tests.functionals.url_logged', self.REGEX_URL)
         )
 
-    @skipIf(True,"Test obsolete, need new tests for key tests.functionals.pages")
+    @skipIf(True, MSG_OBSOLETE)
     def test_015_key_url_404(self):
         """Test : test_016_config_has_key_test_functionals_url_404"""
         self.assertRegexpMatches(
@@ -180,7 +186,7 @@ class TestConfig(TestInfoBase):
                 'tests.functionals.url_404', self.REGEX_URL)
         )
 
-    @skipIf(True,"Test obsolete, need new tests for key tests.functionals.pages")
+    @skipIf(True, MSG_OBSOLETE)
     def test_016_key_selectors_login(self):
         """Test : test_017_config_has_key_test_functionals_selectors_login"""
         values = self.test_config['tests']['functionals']['selectors_login']
@@ -190,14 +196,14 @@ class TestConfig(TestInfoBase):
             self.assertNotEqual(value, "", self.ERR_KEY_EMPTY.format(
                 'tests.functionals.selectors_login', value))
 
-    @skipIf(True,"Test obsolete, need new tests for key tests.functionals.pages")
+    @skipIf(True, MSG_OBSOLETE)
     def test_017_key_creed_user(self):
         """Test : test_018_config_has_key_test_functionals_creed_user"""
         value = self.test_config['tests']['functionals']['creed_user']
         self.assertNotEqual(value, "", self.ERR_KEY_EMPTY.format(
             'tests.functionals.creed_user', value))
 
-    @skipIf(True,"Test obsolete, need new tests for key tests.functionals.pages")
+    @skipIf(True, MSG_OBSOLETE)
     def test_018_key_creed_pass(self):
         """Test : test_019_config_has_key_test_functionals_creed_pass"""
         value = self.test_config['tests']['functionals']['creed_pass']

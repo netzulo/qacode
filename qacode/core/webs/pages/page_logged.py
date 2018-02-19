@@ -3,10 +3,10 @@
 """Package qacode.core.webs.pages"""
 
 
-from selenium.webdriver.common.by import By
+from qacode.core.exceptions.page_exception import PageException
 from qacode.core.webs.pages.page_base import PageBase
 from qacode.core.webs.pages.page_login import PageLogin
-from qacode.core.exceptions.page_exception import PageException
+from selenium.webdriver.common.by import By
 
 
 class PageLogged(PageBase):
@@ -17,18 +17,25 @@ class PageLogged(PageBase):
 
     url_logout = None
 
-    def __init__(self, bot, url, url_logout, selectors=None, locator=By.CSS_SELECTOR,
-                 go_url=True, maximize=False):
-        """
-        :Attributes:
-            bot: BotBase or inherit classes instance
-            url: page url value
-            url_logout: page logout url value for logout checks
-        Optionals:
-            selectors: a list of selectors ready to search elements
-            locator: change default locator selector 'CSS_SELECTOR'
-            go_url: change default page load
-            maximize: open browser maximized
+    def __init__(self, bot, url, url_logout, selectors=None,
+                 locator=By.CSS_SELECTOR, go_url=True, maximize=False):
+        """Allows to handle PageLogged pages
+
+        Arguments:
+            bot {BotBase} -- BotBase or inherit classes instance
+            url {str} -- Page url value
+            url_logout {str} -- Page logout url value for logout checks
+
+        Keyword Arguments:
+            selectors {list(str)} -- list of selectors ready to search elements
+                (default: {None})
+            locator {By} -- selenium locator strategy
+                (default: {By.CSS_SELECTOR})
+            go_url {str} -- default url to load (default: {True})
+            maximize {bool} -- open browser maximized (default: {False})
+
+        Raises:
+            PageException -- if param url_logout is None
         """
         super(PageLogged, self).__init__(
             bot, url, selectors, locator=locator,
