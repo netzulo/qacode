@@ -83,28 +83,7 @@ class PageBase(object):
                 ControlBase element loaded
                 from selector
         """
-        msg_page_element_notfound = "Page element not found: "
-        "url={}, selector={}"
-        element = None
-        if selector is None:
-            raise PageException(
-                message='Can\'t use None selector to get element')
-        self.bot.log.debug(
-            "Searching element: with selector={} locator={}".format(
-                selector, self.locator))
-        if as_control:
-            element = ControlBase(self.bot, selector, self.locator)
-        else:
-            try:
-                element = self.bot.navigation.find_element(
-                    selector, self.locator)
-            except CoreException:
-                raise PageException(
-                    message=msg_page_element_notfound.format(
-                        self.bot.navigation.get_current_url(),
-                        selector))
-            self.bot.log.debug("Element Found, return it one element")
-        return element
+        return self.get_elements([selector], as_controls=as_control)
 
     def get_elements(self, selectors, as_controls=False):
         """
