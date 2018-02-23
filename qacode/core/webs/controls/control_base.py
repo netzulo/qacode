@@ -42,7 +42,8 @@ class ControlBase(object):
                 params to load WebElement
             locator {By} -- selenium search strategy
                 (default: {By.CSS_SELECTOR})
-            element {WebElement} -- instanced WebElement class (default: {None})
+            element {WebElement} -- instanced WebElement class
+                (default: {None})
             search {bool} -- [description] (default: {True})
             wait_for_load {bool} -- wait for expected condition from selenium
                 before to load element (default: {False})
@@ -91,7 +92,8 @@ class ControlBase(object):
         self.attr_id = self.get_attr_value('id')
         self.attr_class = self.get_attr_value('class')
 
-    def load_element(self, selector, locator=By.CSS_SELECTOR, wait_for_load=False):
+    def load_element(self, selector, locator=By.CSS_SELECTOR,
+                     wait_for_load=False):
         """
         Find element using bot with default By.CSS_SELECTOR
             strategy for internal element
