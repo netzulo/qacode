@@ -25,17 +25,36 @@ class ControlBase(object):
     attr_class = None
 
     def __init__(self, bot, selector='', locator=By.CSS_SELECTOR,
-                 element=None, search=True):
-        """
-        :Args:
-            selector: can be empty string to use element insteadof
-                      of params to load WebElement
-            locator: selenium search strategy
-            element: instanced WebElement class
-        :Usage:
+                 element=None, search=True, wait_for_load=False):
+        """Base class to manage web element through page system of qacode
+            library
+
+        Usage:
             ControlBase(bot, selector, locator) :TODO
             ControlBase(bot, element) :TODO
             ControlBase(bot, element, search=True) :TODO, must raise CoreEx
+
+        Arguments:
+            bot {BotBase} -- qacode bot Class to manage control validations
+
+        Keyword Arguments:
+            selector {str} -- can be empty string to use element insteadof of
+                params to load WebElement
+            locator {By} -- selenium search strategy
+                (default: {By.CSS_SELECTOR})
+            element {WebElement} -- instanced WebElement class (default: {None})
+            search {bool} -- [description] (default: {True})
+            wait_for_load {bool} -- wait for expected condition from selenium
+                before to load element (default: {False})
+
+        Raises:
+            CoreEx -- param 'bot' can't be None
+            ControlException -- param 'selector' can't be None, don't use if
+                want to instance with 'element'
+            ControlException -- param 'element' can't be None, don't use if
+                want to instance with 'selector'
+            ControlException -- 'element' found isn't valid to use, check
+                selector and element
         """
         message_errors = [
             "param 'bot' can't be None",
@@ -55,13 +74,15 @@ class ControlBase(object):
         if element is not None:
             search = False
         if search:
-            self.element = self.load_element(selector, locator=locator)
+            self.element = self.load_element(
+                selector, locator=locator, wait_for_load=wait_for_load)
         else:
             self.element = element
         # noqa for this logic, yet
         if self.element is None:
-            raise ControlException(message_errors[2].format(self.selector,
-                                                            self.element))
+            raise ControlException(
+                message_errors[2].format(
+                    self.selector, self.element))
         self.tag = self.get_tag()
         self.text = self.get_text()
         self.is_displayed = self.bot.navigation.ele_is_displayed(self.element)
@@ -70,13 +91,16 @@ class ControlBase(object):
         self.attr_id = self.get_attr_value('id')
         self.attr_class = self.get_attr_value('class')
 
-    def load_element(self, selector, locator=By.CSS_SELECTOR):
+    def load_element(self, selector, locator=By.CSS_SELECTOR, wait_for_load=False):
         """
         Find element using bot with default By.CSS_SELECTOR
             strategy for internal element
         """
         self.bot.log.debug("load_element: selector={}".format(selector))
         try:
+            if wait_for_load:
+                return self.bot.navigation.find_element_wait(
+                    selector, locator=locator)
             return self.bot.navigation.find_element(
                 selector, locator=locator)
         except CoreException as err:
