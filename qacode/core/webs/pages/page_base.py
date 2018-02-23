@@ -83,7 +83,7 @@ class PageBase(object):
                 ControlBase element loaded
                 from selector
         """
-        return self.get_elements([selector], as_controls=as_control)
+        return self.get_elements([selector], as_controls=as_control)[0]
 
     def get_elements(self, selectors, as_controls=False):
         """
