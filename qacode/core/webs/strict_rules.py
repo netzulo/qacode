@@ -12,6 +12,7 @@ class StrictRule(object):
     """Strict Rule for an element"""
 
     name = None
+    enum_type = None
     strict_type = None
     severity = None
     strict_log = None

@@ -73,17 +73,12 @@ class ControlForm(ControlBase):
             element=element,
             search=search,
             wait_for_load=wait_for_load)
-        if not search:
-            raise NotImplementedError("Open an issue on github if raise here")
         if strict_mode is None:
             raise ControlException(
                 message="bad param 'strict_mode' is None")
         self.strict_mode = strict_mode
-        if not strict_rules:
+        if not strict_rules or not isinstance(strict_rules, (list, tuple)):
             strict_rules = []
-        if not isinstance(strict_rules, (list, tuple)):
-            raise ControlException(
-                message="bad param 'strict_rules' not tuple or list")
         self.strict_tags = []
         self.strict_attrs = []
         self._add_rules(strict_rules, strict_mode)
@@ -107,9 +102,9 @@ class ControlForm(ControlBase):
         # validate rules and add object to respective lists
         for strict_rule in strict_rules:
             if strict_rule.strict_type == StrictType.TAG:
-                self.strict_tags.append(strict_rule.value)
+                self.strict_tags.append(strict_rule.enum_type)
             elif strict_rule.strict_type == StrictType.HTML_ATTR:
-                self.strict_attrs.append(strict_rule.value)
+                self.strict_attrs.append(strict_rule.enum_type)
             elif strict_rule.strict_type == StrictType.CSS_PROP:
                 raise NotImplementedError(
                     "Open an issue on github if raise here")
