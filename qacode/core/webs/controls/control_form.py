@@ -5,9 +5,6 @@
 
 from qacode.core.exceptions.control_exception import ControlException
 from qacode.core.webs.controls.control_base import ControlBase
-from qacode.core.webs.html_tags import HtmlTag
-from qacode.core.webs.html_attrs import HtmlAttr
-from qacode.core.webs.strict_rules import StrictRule
 from qacode.core.webs.strict_rules import StrictType
 from selenium.webdriver.common.by import By
 
@@ -82,6 +79,8 @@ class ControlForm(ControlBase):
             raise ControlException(
                 message="bad param 'strict_mode' is None")
         self.strict_mode = strict_mode
+        if not strict_rules:
+            strict_rules = []
         if not isinstance(strict_rules, (list, tuple)):
             raise ControlException(
                 message="bad param 'strict_rules' not tuple or list")
@@ -90,12 +89,13 @@ class ControlForm(ControlBase):
         self._add_rules(strict_rules, strict_mode)
         if not self.is_strict_tags() and self.strict_mode:
             raise ControlException(
-                message=("Tag obtained for this element html tag not "
-                "in strict_tags list"))
+                message=("Tag obtained for this element html tag not in "
+                         "strict_tags list"))
         if not self.is_strict_attrs() and self.strict_mode:
             raise ControlException(
-                message=("Tag obtained for this element html attr"
-                " not in strict_attrs list"))
+                message=("Tag obtained for this element html attr not in "
+                         "strict_attrs list"))
+
     def _add_rules(self, strict_rules, strict_mode):
         """Validate strict rules for each type
 
@@ -128,13 +128,13 @@ class ControlForm(ControlBase):
             else:
                 raise ControlException(
                     message="bad param 'strict_type', invalid value")
-    
+
     def is_strict_tags(self, strict_tags=None):
         """Validate if element.tag is in list of strict_tags
-        
+
         Keyword Arguments:
             strict_tags {[type]} -- [description] (default: {None})
-        
+
         Returns:
             [type] -- [description]
         """
@@ -147,10 +147,10 @@ class ControlForm(ControlBase):
 
     def is_strict_attrs(self, strict_attrs=None):
         """Validate if element.attrs is in list of strict_attrs
-        
+
         Keyword Arguments:
             strict_attrs {[type]} -- [description] (default: {None})
-        
+
         Returns:
             [type] -- [description]
         """

@@ -4,11 +4,12 @@
 
 from enum import Enum
 from qacode.core.exceptions.core_exception import CoreException
-from qacode.core.webs.html_tags import HtmlTag
 from qacode.core.webs.html_attrs import HtmlAttr
+from qacode.core.webs.html_tags import HtmlTag
 
 
 class StrictRule(object):
+    """Strict Rule for an element"""
 
     name = None
     strict_type = None
@@ -54,7 +55,9 @@ class StrictRule(object):
         elif strict_type == StrictType.SEO:
             raise NotImplementedError("Open an issue on github if raise here")
         else:
-            raise CoreException(message="bad param 'strict_type', invalid value")
+            raise CoreException(
+                message="bad param 'strict_type', invalid value")
+
 
 class StrictType(Enum):
     """Just message type enum for warning and errors on control form class
