@@ -30,9 +30,9 @@ class ControlBase(object):
             library
 
         Usage:
-            ControlBase(bot, selector, locator) :TODO
-            ControlBase(bot, element) :TODO
-            ControlBase(bot, element, search=True) :TODO, must raise CoreEx
+            ControlBase(bot, selector, locator)
+            ControlBase(bot, element)
+            ControlBase(bot, element, search=True)
 
         Arguments:
             bot {BotBase} -- qacode bot Class to manage control validations

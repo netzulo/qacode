@@ -3,161 +3,167 @@
 """TODO: doc module"""
 
 
-from enum import Enum
 from qacode.core.exceptions.control_exception import ControlException
 from qacode.core.webs.controls.control_base import ControlBase
 from qacode.core.webs.html_tags import HtmlTag
+from qacode.core.webs.html_attrs import HtmlAttr
+from qacode.core.webs.strict_rules import StrictRule
+from qacode.core.webs.strict_rules import StrictType
 from selenium.webdriver.common.by import By
 
 
 class ControlForm(ControlBase):
     """Requirements: #63"""
 
-    VALID_TAGS = [
-        HtmlTag.TAG_LABEL.value,
-        HtmlTag.TAG_INPUT.value,
-        HtmlTag.TAG_SELECT.value,
-        HtmlTag.TAG_TEXTAREA.value,
-        HtmlTag.TAG_DATALIST.value,
-        HtmlTag.TAG_OUTPUT.value,
-        HtmlTag.TAG_FORM.value,
-        HtmlTag.TAG_LEGEND.value,
-        HtmlTag.TAG_FIELDSET.value
-    ]
+    strict_tags = None
+    strict_attrs = None
+    strict_mode = None
 
     # TODO: follow instructions on #63
-    def __init__(self, bot, selector='', locator=By.CSS_SELECTOR,
-                 element=None, search=True, strict_mode=False):
-        """
-        Apply for elements tagged with
-         <label> : must validate attrs= id, class, for
-         <input> : must validate attrs= id, class
-         <select> + <option> : must validate attrs= id, class
-         <textarea> : must validate attrs= id, class
-         <datalist> + <option> : must validate attrs= id, class
-         <output> : must validate attrs= id, class
-        Apply also on parent elements
-         <form> : must validate attrs= id, class
-         <legend> : must validate attrs= id, class
-         <fieldset> : must validate attrs= id, class
+    def __init__(self, bot, selector='', locator=By.CSS_SELECTOR, element=None,
+                 search=True, wait_for_load=False,
+                 strict_rules=None,
+                 strict_mode=False):
+        """Base class to manage form web element through page system of qacode
+            library. Apply for elements tagged with
+                <label> : must validate attrs= id, class, for
+                <input> : must validate attrs= id, class
+                <select> + <option> : must validate attrs= id, class
+                <textarea> : must validate attrs= id, class
+                <datalist> + <option> : must validate attrs= id, class
+                <output> : must validate attrs= id, class
+            Apply also on parent elements
+                <form> : must validate attrs= id, class
+                <legend> : must validate attrs= id, class
+                <fieldset> : must validate attrs= id, class
 
-        :args:
-            strict_mode: allows to raise validation when
-             warning it's received
+        Usage:
+            ControlBase(bot, selector, locator)
+            ControlBase(bot, element)
+            ControlBase(bot, element, search=True)
+
+        Arguments:
+            bot {BotBase} -- qacode bot Class to manage control validations
+
+        Keyword Arguments:
+            selector {str} -- can be empty string to use element insteadof of
+                params to load WebElement
+            locator {By} -- selenium search strategy
+                (default: {By.CSS_SELECTOR})
+            element {WebElement} -- instanced WebElement class
+                (default: {None})
+            search {bool} -- [description] (default: {True})
+            wait_for_load {bool} -- wait for expected condition from selenium
+                before to load element (default: {False})
+            strict_rules {list(StrictRule)} -- a list of strict rules to be
+                applied to a element
+            strict_mode {bool} -- allows to raise validation when warning
+                it's received
+
+        Raises:
+            CoreEx -- param 'bot' can't be None
+            ControlException -- param 'selector' can't be None, don't use if
+                want to instance with 'element'
+            ControlException -- param 'element' can't be None, don't use if
+                want to instance with 'selector'
+            ControlException -- 'element' found isn't valid to use, check
+                selector and element
         """
         super(ControlForm, self).__init__(
             bot,
             selector=selector,
             locator=locator,
             element=element,
-            search=search)
-        if search:
-            self._validate_tag(strict_mode=strict_mode)
-
-    def _validate_tag(self, strict_mode=False):
-        """
-        Validate self.tag property is in valid_tags array
-         and load by tag each validation
-        :args:
-            strict_mode: allows to raise validation when
-             warning it's received
-        """
-        msg_err_tag = "Tag invalid for ControlForm class: tag={}"
-        if self.tag not in self.VALID_TAGS:
+            search=search,
+            wait_for_load=wait_for_load)
+        if not search:
+            raise NotImplementedError("Open an issue on github if raise here")
+        if strict_mode is None:
             raise ControlException(
-                message=msg_err_tag.format(self.tag))
-        if self.tag == HtmlTag.TAG_LABEL.value:
-            self._tag_label(strict_mode=strict_mode)
-        if self.tag == HtmlTag.TAG_INPUT.value:
-            # TODO: self._tag_input(strict_mode=strict_mode)
-            pass
-        if self.tag == HtmlTag.TAG_BUTTON.value:
-            # TODO: self._tag_button(strict_mode=strict_mode)
-            pass
+                message="bad param 'strict_mode' is None")
+        self.strict_mode = strict_mode
+        if not isinstance(strict_rules, (list, tuple)):
+            raise ControlException(
+                message="bad param 'strict_rules' not tuple or list")
+        self.strict_tags = []
+        self.strict_attrs = []
+        self._add_rules(strict_rules, strict_mode)
+        if not self.is_strict_tags() and self.strict_mode:
+            raise ControlException(
+                message=("Tag obtained for this element html tag not "
+                "in strict_tags list"))
+        if not self.is_strict_attrs() and self.strict_mode:
+            raise ControlException(
+                message=("Tag obtained for this element html attr"
+                " not in strict_attrs list"))
+    def _add_rules(self, strict_rules, strict_mode):
+        """Validate strict rules for each type
 
-    def _tag_label(self, strict_mode=False):
+        Arguments:
+            strict_rules {StrictRule} -- strict_rule
+            strict_mode {bool} -- if enabled, load values for
+                future checks
         """
-        Initialize ControlForm with tag <label>
-         must validate attrs= id, class, for
-         error: if not exist element with id for for attr value HTML warn
-         warn: if not have css property cursor:default usability warn
-        :args:
-            strict_mode: allows to raise validation when
-             warning it's received
-        :return:
-            True if validation ok or if strict_mode and have warnings
-            False if validation have error
-        """
-        msg_not_found_for = "Element '{}' not found for '{}' attr 'for' value"
-        msg_not_attr = "Element '{}', not attr '{}' detected"
-        msg_not_css = "Element '{}', not css '{}' with value '{}' detected"
-        msg = "**{}** {}: {}"
-        if strict_mode:
-            msg.format('ERROR', '{}', '{}')
-        else:
-            msg.format('WARN', '{}', '{}')
-        # load attrs
-        self.attr_for = self.get_attr_value('for')
-        self.attr_name = self.get_attr_value('name')
-        # load css
-        # TODO: will fail, NotImplemented
-        self.css_cursor = self.get_css_value('cursor')
-        # warnings and errors
-        self._log_rule('name', msg.format(
-            MessageType.USABILITY,
-            msg_not_attr.format(self.selector, 'name')))
-
-        is_for_attr = self._log_rule('for', msg.format(
-            MessageType.BEHAVIOUR,
-            msg_not_attr.format(self.selector, 'for')))
-        if is_for_attr:
-            try:
-                selector_id = '#{}'.format(self.attr_for)
-                ControlBase(self.bot, selector=selector_id)
-            except Exception:
-                raise ControlException(
-                    message=msg_not_found_for.format(
-                        selector_id, self.selector))
-        if self.css_cursor is None or self.css_cursor != 'default':
-            self._log_rule('cursor', msg.format(
-                MessageType.USABILITY,
-                msg_not_css.format(self.selector, 'cursor', 'default')))
-
-    def _log_rule(self, attr, msg, strict_mode=False):
-        """
-        Log to logger by strict_mode type
-        :return:
-            returns is_attr variable value
-        """
-        is_attr = False
-        if attr is None or attr == '':
-            if strict_mode:
-                self.bot.log.error(msg)
+        # validate rules and add object to respective lists
+        for strict_rule in strict_rules:
+            if strict_rule.strict_type == StrictType.TAG:
+                self.strict_tags.append(strict_rule.value)
+            elif strict_rule.strict_type == StrictType.HTML_ATTR:
+                self.strict_attrs.append(strict_rule.value)
+            elif strict_rule.strict_type == StrictType.CSS_PROP:
+                raise NotImplementedError(
+                    "Open an issue on github if raise here")
+            elif strict_rule.strict_type == StrictType.JS_EVENT:
+                raise NotImplementedError(
+                    "Open an issue on github if raise here")
+            elif strict_rule.strict_type == StrictType.BEHAVIOUR:
+                raise NotImplementedError(
+                    "Open an issue on github if raise here")
+            elif strict_rule.strict_type == StrictType.USABILITY:
+                raise NotImplementedError(
+                    "Open an issue on github if raise here")
+            elif strict_rule.strict_type == StrictType.SEO:
+                raise NotImplementedError(
+                    "Open an issue on github if raise here")
             else:
-                self.bot.log.warning(msg)
-        else:
-            self.bot.log.info(
-                "ControlForm, attr found : {}".format(attr))
-            is_attr = True
-        return is_attr
+                raise ControlException(
+                    message="bad param 'strict_type', invalid value")
+    
+    def is_strict_tags(self, strict_tags=None):
+        """Validate if element.tag is in list of strict_tags
+        
+        Keyword Arguments:
+            strict_tags {[type]} -- [description] (default: {None})
+        
+        Returns:
+            [type] -- [description]
+        """
+        if strict_tags is None:
+            strict_tags = self.strict_tags
+        for strict_tag in strict_tags:
+            if self.tag == strict_tag.name:
+                return True
+        return False
 
-
-class MessageType(Enum):
-    """
-    Just message type enum for warning and errors
-     on control form class
-    """
-
-    BEHAVIOUR = 'BEHAVIOUR'
-    USABILITY = 'USABILITY'
-    SEO = 'SEO'
-
-    @classmethod
-    def get_attr(cls):
-        """Return enum values"""
-        return [item.value for item in MessageType]
-
-    @classmethod
-    def has_attr(cls, value):
-        """Returns True if enum have value"""
-        return any(value == item.value for item in cls)
+    def is_strict_attrs(self, strict_attrs=None):
+        """Validate if element.attrs is in list of strict_attrs
+        
+        Keyword Arguments:
+            strict_attrs {[type]} -- [description] (default: {None})
+        
+        Returns:
+            [type] -- [description]
+        """
+        # TODO: make functional
+        attrs_search = []
+        attrs_found = []
+        if strict_attrs is None:
+            strict_attrs = self.strict_attrs
+        if strict_attrs is None:
+            strict_attrs = self.strict_attrs
+        for strict_attr in strict_attrs:
+            attr_name = self.get_attr_name(strict_attr.value)
+            attrs_search.append(attr_name)
+            if attr_name:
+                attrs_found.append(attr_name)
+        return bool(set(attrs_search).intersection(attrs_found))
