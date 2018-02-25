@@ -3,6 +3,7 @@
 """Testsuite for package pages"""
 
 
+import time
 from unittest import skipIf
 from qacode.core.exceptions.page_exception import PageException
 from qacode.core.loggers.logger_manager import LoggerManager
@@ -17,10 +18,25 @@ SETTINGS = settings()
 SKIP_PAGES = SETTINGS['tests']['skip']['web_pages']
 SKIP_PAGES_MSG = 'web_pages DISABLED by config file'
 LOGGER_MANAGER = LoggerManager(log_level=SETTINGS['bot']['log_level'])
+BOT = None
 
 
 class TestPageBase(TestInfoBot):
     """Test Suite for PageBase class"""
+
+    @classmethod
+    def setUpClass(cls):
+        """Set up test suite"""
+        global BOT
+        if not SKIP_PAGES:
+            BOT = TestInfoBot.bot_open(SETTINGS, LOGGER_MANAGER)
+
+    @classmethod
+    def tearDownClass(cls):
+        """Tear down test suite"""
+        global BOT
+        if not SKIP_PAGES:
+            TestInfoBot.bot_close(BOT)
 
     def __init__(self, method_name="suite_TestPageBase"):
         """Test what probes PageBase class and methods
@@ -30,25 +46,23 @@ class TestPageBase(TestInfoBot):
                 (default: {"suite_TestPageBase"})
         """
         super(TestPageBase, self).__init__(
-            method_name,
-            logger_manager=LOGGER_MANAGER,
-            test_config=SETTINGS
+            method_name=method_name,
+            bot=BOT
         )
 
     def setUp(self):
         """Set up test case"""
         super(TestPageBase, self).setUp()
-        self.url = self.test_config.get(
-            'tests')['functionals']['pages'][0]['url']
-        self.p_login_controls = self.test_config.get(
-            'tests')['functionals']['pages'][0]['controls']
+        self.p_login_config = SETTINGS['tests']['functionals']['pages'][0]
+        self.url = self.p_login_config['url']
+        self.p_login_controls = self.p_login_config['controls']
         self.selectors = [
             self.p_login_controls[0]['selector'],
             self.p_login_controls[1]['selector'],
             self.p_login_controls[2]['selector']
         ]
-        self.url_other = self.test_config.get(
-            'tests')['functionals']['pages'][0]['url_logout']
+        self.url_other = self.p_login_config['url_logout']
+        time.sleep(2)
 
     @skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
     def test_001_instance_url(self):
@@ -61,6 +75,8 @@ class TestPageBase(TestInfoBot):
     @skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
     def test_002_instance_notgourl(self):
         """Testcase: test_002_instance_notgourl"""
+        self.bot.navigation.get_url(self.url_other)
+        time.sleep(3)
         page = PageBase(self.bot, self.url, go_url=False)
         self.assertIsInstance(page, PageBase)
         self.assert_not_equals_url(

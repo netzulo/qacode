@@ -91,7 +91,7 @@ class TestBotBase(TestInfoBase):
         bot.close()
         self.log.debug("TestBotBase: LOCAL terminated for IEXPLORER")
 
-    @skipIf(SKIP_LOCALS, SKIP_LOCALS_MSG)
+    @skipIf(True, "Need to setup on my local before to run this test again")
     def test_005_bot_local_edge(self):
         """Testcase: test_005_bot_local_edge"""
         self.log.debug("TestBotBase: LOCAL started for EDGE")
@@ -195,6 +195,7 @@ class TestBotBase(TestInfoBase):
         bot.close()
         self.log.debug("TestBotBase: REMOTE terminated for OPERA")
 
+    @skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
     def test_013_raises_botconfig_noneconfig(self):
         """Testcase: test_013_raises_botconfig_noneconfig"""
         self.assertRaises(
@@ -203,8 +204,17 @@ class TestBotBase(TestInfoBase):
             None,
             self.logger_manager)
 
-    def test_014_raises_botconfig_nonekeybot(self):
-        """Testcase: test_014_raises_botconfig_nonekeybot"""
+    @skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
+    def test_014_raises_bot_nonebotconfig(self):
+        """Testcase: test_014_raises_bot_nonebotconfig"""
+        self.assertRaises(
+            CoreException,
+            BotBase,
+            None)
+
+    @skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
+    def test_015_raises_botconfig_nonekeybot(self):
+        """Testcase: test_015_raises_botconfig_nonekeybot"""
         config = self.test_config.copy()
         config.pop('bot', None)
         self.assertRaises(
@@ -213,8 +223,9 @@ class TestBotBase(TestInfoBase):
             config,
             self.logger_manager)
 
-    def test_015_raises_botconfig_nonelogger(self):
-        """Testcase: test_015_raises_botconfig_nonelogger"""
+    @skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
+    def test_016_raises_botconfig_nonelogger(self):
+        """Testcase: test_016_raises_botconfig_nonelogger"""
         self.assertRaises(
             CoreException,
             BotConfig,

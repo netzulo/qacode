@@ -15,10 +15,25 @@ SETTINGS = settings()
 SKIP_PAGES = SETTINGS['tests']['skip']['web_pages']
 SKIP_PAGES_MSG = 'web_pages DISABLED by config file'
 LOGGER_MANAGER = LoggerManager(log_level=SETTINGS['bot']['log_level'])
+BOT = None
 
 
 class TestPageLogin(TestInfoBot):
     """Test Suite for class PageLogin"""
+
+    @classmethod
+    def setUpClass(cls):
+        """Set up test suite"""
+        global BOT
+        if not SKIP_PAGES:
+            BOT = TestInfoBot.bot_open(SETTINGS, LOGGER_MANAGER)
+
+    @classmethod
+    def tearDownClass(cls):
+        """Tear down test suite"""
+        global BOT
+        if not SKIP_PAGES:
+            TestInfoBot.bot_close(BOT)
 
     def __init__(self, method_name="suite_TestPageLogin"):
         """Test what probes PageLogin class and methods
@@ -32,25 +47,19 @@ class TestPageLogin(TestInfoBot):
             logger_manager=LOGGER_MANAGER,
             test_config=SETTINGS
         )
-        self.url_login = self.test_config.get(
-            'tests')['functionals']['pages'][0]['url']
-        self.url_logout = self.test_config.get(
-            'tests')['functionals']['pages'][0]['url_logout']
-        self.url_logged = self.test_config.get(
-            'tests')['functionals']['pages'][0]['url_logged']
-        self.url_404 = self.test_config.get(
-            'tests')['functionals']['pages'][0]['url_404']
-        self.p_login_controls = self.test_config.get(
-            'tests')['functionals']['pages'][0]['controls']
+        self.p_login_config = SETTINGS['tests']['functionals']['pages'][0]
+        self.url_login = self.p_login_config['url']
+        self.url_logout = self.p_login_config['url_logout']
+        self.url_logged = self.p_login_config['url_logged']
+        self.url_404 = self.p_login_config['url_404']
+        self.p_login_controls = self.p_login_config['controls']
         self.selectors = [
             self.p_login_controls[0]['selector'],
             self.p_login_controls[1]['selector'],
             self.p_login_controls[2]['selector']
         ]
-        self.creed_user = self.test_config.get(
-            'tests')['functionals']['pages'][0]['creeds']['name']
-        self.creed_pass = self.test_config.get(
-            'tests')['functionals']['pages'][0]['creeds']['pass']
+        self.creed_user = self.p_login_config['creeds']['name']
+        self.creed_pass = self.p_login_config['creeds']['pass']
         self.msg_logged = "Logged success on url={}".format(
             self.url_logged)
         self.msg_fail_ok = "Login fail success on url={}".format(
@@ -65,7 +74,7 @@ class TestPageLogin(TestInfoBot):
                 self.url_login,
                 self.url_logged,
                 selectors=self.selectors)
-            assert self.url_login in self.bot.curr_driver.current_url
+            self.assertFalse(page.is_logged)
         except PageException as err:
             self.bot.log.error(err.args)
             raise Exception(err)
@@ -91,9 +100,9 @@ class TestPageLogin(TestInfoBot):
             self.url_login,
             self.url_logged,
             selectors=self.selectors)
-        assert self.url_login in self.bot.curr_driver.current_url
+        self.assertFalse(page.is_logged)
         page.login(self.creed_user, self.creed_pass)
-        assert self.url_logged in self.bot.curr_driver.current_url
+        self.assertTrue(page.is_logged)
         self.log.debug(self.msg_logged)
 
     @skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
@@ -104,9 +113,9 @@ class TestPageLogin(TestInfoBot):
             self.url_login,
             self.url_logged,
             selectors=self.selectors)
-        assert self.url_login in self.bot.curr_driver.current_url
+        self.assertFalse(page.is_logged)
         page.login(" ", self.creed_pass)
-        assert self.url_404 in self.bot.curr_driver.current_url
+        self.assertFalse(page.is_logged)
         self.log.debug(self.msg_fail_ok)
 
     @skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
@@ -117,9 +126,9 @@ class TestPageLogin(TestInfoBot):
             self.url_login,
             self.url_logged,
             selectors=self.selectors)
-        assert self.url_login in self.bot.curr_driver.current_url
+        self.assertFalse(page.is_logged)
         page.login(self.creed_user, " ")
-        assert self.url_404 in self.bot.curr_driver.current_url
+        self.assertFalse(page.is_logged)
         self.log.debug(self.msg_fail_ok)
 
     @skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
@@ -130,7 +139,7 @@ class TestPageLogin(TestInfoBot):
             self.url_login,
             self.url_logged,
             selectors=self.selectors)
-        assert self.url_login in self.bot.curr_driver.current_url
+        self.assertFalse(page.is_logged)
         page.login(" ", " ")
-        assert self.url_logged in self.bot.curr_driver.current_url
+        self.assertFalse(page.is_logged)
         self.log.debug(self.msg_fail_ok)

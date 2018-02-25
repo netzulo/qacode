@@ -51,46 +51,61 @@ class TestControlBase(TestInfoBot):
     def setUp(self):
         """Set up test case"""
         super(TestControlBase, self).setUp()
-        self.url = SETTINGS.get(
-            'tests')['functionals']['pages'][2]['url']
-        self.ele_searcher = SETTINGS.get(
-            'tests')['functionals']['pages'][2]['controls'][0]['selector']
-        self.ele_menu = SETTINGS.get(
-            'tests')['functionals']['pages'][2]['controls'][1]['selector']
-        self.ele_menu_installation = SETTINGS.get(
-            'tests')['functionals']['pages'][2]['controls'][2]['selector']
-        self.ele_menu_common_errors = SETTINGS.get(
-            'tests')['functionals']['pages'][2]['controls'][3]['selector']
-
+        self.p_tests_config = SETTINGS['tests']['functionals']['pages'][2]
+        self.url = self.p_tests_config['url']
+        self.ele_searcher = self.p_tests_config['controls'][0]['selector']
+        self.ele_menu = self.p_tests_config['controls'][1]['selector']
+        self.ele_menu_installation = self.p_tests_config.get(
+            'controls')[2]['selector']
+        self.ele_menu_common_errors = self.p_tests_config.get(
+            'controls')[3]['selector']
         self.bot.navigation.get_url(self.url)
         self.assert_equals_url(self.bot.curr_driver.current_url, self.url)
 
     @skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    def test_000_instance_byelement(self):
-        """Testcase: test_000_instance_byelement"""
+    def test_001_instance_byelement(self):
+        """Testcase: test_001_instance_byelement"""
         element = self.bot.navigation.find_element(self.ele_menu)
         control = ControlBase(self.bot, element=element)
         self.assertIsInstance(control.element, WebElement)
         self.assertIsInstance(control, ControlBase)
 
     @skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    def test_001_instance_byselector(self):
-        """Testcase: test_001_instance_byselector"""
+    def test_002_instance_byselector(self):
+        """Testcase: test_002_instance_byselector"""
         control = ControlBase(self.bot, selector=self.ele_menu)
         self.assertIsInstance(control.element, WebElement)
         self.assertIsInstance(control, ControlBase)
 
     @skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    def test_002_instance_bydriverload(self):
-        """Testcase: test_002_instance_bydriverload"""
+    def test_003_instance_bydriverload(self):
+        """Testcase: test_003_instance_bydriverload"""
         control = ControlBase(
             self.bot, selector=self.ele_menu, wait_for_load=True)
         self.assertIsInstance(control.element, WebElement)
         self.assertIsInstance(control, ControlBase)
 
     @skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    def test_003_raises_nosearchselector(self):
-        """Testcase: test_002_raises_nosearch"""
+    def test_004_raises_nonebot(self):
+        """Testcase: test_004_raises_nonebot"""
+        self.assertRaises(
+            ControlException,
+            ControlBase,
+            None,
+            self.ele_menu)
+
+    @skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
+    def test_005_raises_noneselector(self):
+        """Testcase: test_005_raises_noneselector"""
+        self.assertRaises(
+            ControlException,
+            ControlBase,
+            self.bot,
+            None)
+
+    @skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
+    def test_006_raises_nosearchselector(self):
+        """Testcase: test_006_raises_nosearchselector"""
         self.assertRaises(
             ControlException,
             ControlBase,
@@ -99,51 +114,45 @@ class TestControlBase(TestInfoBot):
             search=False)
 
     @skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    def test_004_method_findchild(self):
-        """Testcase: test_003_method_findchild"""
+    def test_007_method_findchild(self):
+        """Testcase: test_007_method_findchild"""
         control = ControlBase(self.bot, selector=self.ele_menu)
         self.assertIsInstance(
             control.find_child(self.ele_menu_installation), ControlBase)
 
     @skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    def test_005_property_gettext(self):
-        """Testcase: test_004_property_gettext"""
+    def test_008_property_gettext(self):
+        """Testcase: test_008_property_gettext"""
         control = ControlBase(self.bot, selector=self.ele_menu_installation)
         self.assertEqual(control.text, 'Installation')
 
     @skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    def test_006_method_gettext(self):
-        """Testcase: test_005_method_gettext"""
+    def test_009_method_gettext(self):
+        """Testcase: test_009_method_gettext"""
         control = ControlBase(self.bot, selector=self.ele_menu_installation)
         self.assertEqual(control.get_text(), 'Installation')
 
     @skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    def test_007_property_attr_id(self):
-        """Testcase: test_006_propertyhtml_id"""
+    def test_010_property_attr_id(self):
+        """Testcase: test_010_property_attr_id"""
         control = ControlBase(self.bot, selector=self.ele_searcher)
         self.assertEqual(control.attr_id, 'docsQuery')
 
     @skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    def test_008_property_attr_class(self):
-        """Testcase: test_007_propertyhtml_class"""
+    def test_011_property_attr_class(self):
+        """Testcase: test_011_property_attr_class"""
         control = ControlBase(self.bot, selector=self.ele_searcher)
         self.assertIn('form-control', control.attr_class)
 
     @skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    def test_009_method_getattrname(self):
-        """Testcase: test_008_method_getattrname"""
-        control = ControlBase(self.bot, selector=self.ele_searcher)
-        self.assertEqual(control.get_attr_name('id'), 'id')
-
-    @skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    def test_010_method_getattrvalue(self):
-        """Testcase: test_009_method_getattrvalue"""
+    def test_012_method_getattrvalue(self):
+        """Testcase: test_012_method_getattrvalue"""
         control = ControlBase(self.bot, selector=self.ele_searcher)
         self.assertEqual(control.get_attr_value('id'), 'docsQuery')
 
     @skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    def test_011_method_get_attrs(self):
-        """Testcase: test_010_method_get_attrs"""
+    def test_013_method_get_attrs(self):
+        """Testcase: test_013_method_get_attrs"""
         control = ControlBase(self.bot, selector=self.ele_searcher)
         attrs = control.get_attrs(['id', 'class'])
         self.assertEqual(attrs[0]['name'], 'id')
@@ -152,35 +161,42 @@ class TestControlBase(TestInfoBot):
         self.assertIn('form-control', attrs[1]['value'])
 
     @skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    def test_012_property_tag(self):
-        """Testcase: test_011_property_tag"""
+    def test_014_property_tag(self):
+        """Testcase: test_014_property_tag"""
         control = ControlBase(self.bot, selector=self.ele_menu)
         self.assertEqual(control.tag, 'div')
 
     @skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    def test_013_method_typetext_withproperty(self):
-        """Testcase: test_012_method_typetext_withproperty"""
+    def test_015_method_typetext_withproperty(self):
+        """Testcase: test_015_method_typetext_withproperty"""
         control = ControlBase(self.bot, selector=self.ele_searcher)
         control.type_text('test')
         self.assertEqual(control.text, 'test')
 
     @skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    def test_014_method_typetext_withmethod(self):
-        """Testcase: test_013_method_typetext_withmethod"""
+    def test_016_method_typetext_withmethod(self):
+        """Testcase: test_016_method_typetext_withmethod"""
         control = ControlBase(self.bot, selector=self.ele_searcher)
         control.type_text('test')
         self.assertEqual(control.get_attr_value('value'), 'test')
 
     @skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    def test_015_method_getcssvalue(self):
-        """Testcase: test_014_method_getcssvalue"""
+    def test_017_method_typetext_cleartrue(self):
+        """Testcase: test_017_method_typetext_cleartrue"""
+        control = ControlBase(self.bot, selector=self.ele_searcher)
+        control.type_text('test', clear=True)
+        self.assertEqual(control.get_attr_value('value'), 'test')
+
+    @skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
+    def test_018_method_getcssvalue(self):
+        """Testcase: test_018_method_getcssvalue"""
         control = ControlBase(self.bot, selector=self.ele_searcher)
         self.assertEqual(
             control.get_css_value('color'), 'rgba(136, 136, 136, 1)')
 
     @skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    def test_015_method_setcssrule(self):
-        """Testcase: test_015_method_setcssrule"""
+    def test_019_method_setcssrule(self):
+        """Testcase: test_019_method_setcssrule"""
         control = ControlBase(
             self.bot, selector=self.ele_searcher)
         control.type_text('test')
@@ -189,8 +205,8 @@ class TestControlBase(TestInfoBot):
             control.get_css_value('color'), 'rgba(255, 0, 0, 1)')
 
     @skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    def test_016_method_gettext_onscreenfalse(self):
-        """Testcase: test_016_method_gettext_onscreenfalse"""
+    def test_020_method_gettext_onscreenfalse(self):
+        """Testcase: test_020_method_gettext_onscreenfalse"""
         control = ControlBase(
             self.bot, selector=self.ele_menu_common_errors)
         control
@@ -200,9 +216,9 @@ class TestControlBase(TestInfoBot):
             len(text), 0, msg='Failed at obtain text, open issue on Github')
 
     @skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    def test_017_method_gettext_raises_onscreenfalse_whenisdisplayed(self):
-        """Testcase: test_017_method_gettext_raises_onscreenfalse
-            whenisdisplayed
+    def test_021_method_gettext_raises_onscreenfalse_whenisdisplayed(self):
+        """Testcase:
+            test_021_method_gettext_raises_onscreenfalse_whenisdisplayed
         """
         control = ControlBase(self.bot, selector=self.ele_menu_common_errors)
         self.assertRaises(ControlException, control.get_text, on_screen=False)

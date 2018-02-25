@@ -30,9 +30,9 @@ class ControlBase(object):
             library
 
         Usage:
-            ControlBase(bot, selector, locator) :TODO
-            ControlBase(bot, element) :TODO
-            ControlBase(bot, element, search=True) :TODO, must raise CoreEx
+            ControlBase(bot, selector, locator)
+            ControlBase(bot, element)
+            ControlBase(bot, element, search=True)
 
         Arguments:
             bot {BotBase} -- qacode bot Class to manage control validations
@@ -196,32 +196,10 @@ class ControlBase(object):
         attrs = list()
         for attr_name in attr_names:
             attrs.append({
-                "name": self.get_attr_name(attr_name),
+                "name": attr_name,
                 "value": self.get_attr_value(attr_name)
             })
         return attrs
-
-    def get_attr_name(self, attr_name):
-        """Search and attribute name over self.element and get value,
-            if attr_value is obtained, then compare and raise if not
-
-        Arguments:
-            attr_name {str} -- find an attribute
-                on WebElement with this name
-
-        Raises:
-            if -- attr_name it's None or empty, because doesn't exis
-                at element
-
-        Returns:
-            str -- key value of attr_name search on html element
-        """
-        name, value = self.bot.navigation.ele_attribute(
-            self.element, attr_name)
-        self.bot.log.debug(
-            "get_attr : attr_name={}, name={}, value={}".format(
-                attr_name, name, value))
-        return name
 
     def get_attr_value(self, attr_name):
         """Search and attribute name over self.element and get value,
@@ -234,12 +212,13 @@ class ControlBase(object):
         Returns:
             str -- value of html attr_name
         """
-        name, value = self.bot.navigation.ele_attribute(
-            self.element, attr_name)
-        self.bot.log.debug(
-            "get_attr : attr_name={}, name={}, value={}".format(
-                attr_name, name, value))
-        return value
+        try:
+            value = self.bot.navigation.ele_attribute(self.element, attr_name)
+            self.bot.log.debug(
+                "get_attr : attr_name={}, value={}".format(attr_name, value))
+            return value
+        except CoreException as err:
+            raise ControlException(err, message=err.message)
 
     def get_css_value(self, prop_name):
         """Allows to obtain CSS value based on CSS property name
