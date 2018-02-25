@@ -55,33 +55,19 @@ class BotBase(object):
         """
         if bot_config is None:
             raise CoreException(
-                message=("BotBase configuration can't be none: bad "
-                         "bot_config provided")
-            )
-        else:
-            try:
-                self.bot_config = bot_config
-                self.logger_manager = bot_config.logger_manager
-                self.log = self.bot_config.log
-            except Exception as err:
-                raise CoreException(
-                    err,
-                    message="Error at create LoggerManager for BotBase class"
-                )
-            if self.bot_config.config['mode'] == 'local':
-                self.curr_driver_path = self.driver_name_filter(
-                    driver_name=self.bot_config.config['browser'])
-                self.mode_local()
-            elif self.bot_config.config['mode'] == 'remote':
-                self.mode_remote()
-            else:
-                raise CoreException(
-                    message=("Unkown word for bot mode config value: {}"
-                             .format(self.bot_config.bot_mode))
-                )
-            self.curr_driver_wait = WebDriverWait(self.curr_driver, 10)
-            self.navigation = NavBase(
-                self.curr_driver, self.log, driver_wait=self.curr_driver_wait)
+                message=("BotBase configuration can't be none: bad bot_config"
+                         " provided"))
+        self.bot_config = bot_config
+        self.logger_manager = bot_config.logger_manager
+        self.log = self.bot_config.log
+        if self.bot_config.config['mode'] == 'local':
+            self.mode_local()
+        elif self.bot_config.config['mode'] == 'remote':
+            self.mode_remote()
+        # else: handled at BotConfig
+        self.curr_driver_wait = WebDriverWait(self.curr_driver, 10)
+        self.navigation = NavBase(
+            self.curr_driver, self.log, driver_wait=self.curr_driver_wait)
 
     def driver_name_filter(self, driver_name=None):
         """Filter names of driver to search selected on config list
@@ -126,6 +112,12 @@ class BotBase(object):
                 file is not valid value
         """
         browser_name = self.bot_config.config['browser']
+        driver_name = self.driver_name_filter(driver_name=browser_name)
+        self.curr_driver_path = os.path.abspath("{}/{}".format(
+            self.bot_config.config['drivers_path'],
+            driver_name))
+        # add to path before to open
+        sys.path.append(self.curr_driver_path)
         self.log.debug('Starting browser with mode : LOCAL ...')
         if browser_name == "chrome":
             self.curr_caps = DesiredCapabilities.CHROME.copy()
