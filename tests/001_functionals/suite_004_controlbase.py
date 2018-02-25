@@ -139,8 +139,8 @@ class TestControlBase(TestInfoBot):
         self.assertEqual(control.attr_id, 'docsQuery')
 
     @skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    def test_0011_property_attr_class(self):
-        """Testcase: test_0011_property_attr_class"""
+    def test_011_property_attr_class(self):
+        """Testcase: test_011_property_attr_class"""
         control = ControlBase(self.bot, selector=self.ele_searcher)
         self.assertIn('form-control', control.attr_class)
 
