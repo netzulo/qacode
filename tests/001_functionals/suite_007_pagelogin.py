@@ -3,7 +3,6 @@
 """Test suite for pages package"""
 
 
-import time
 from unittest import skipIf
 from qacode.core.exceptions.page_exception import PageException
 from qacode.core.loggers.logger_manager import LoggerManager
@@ -127,12 +126,9 @@ class TestPageLogin(TestInfoBot):
             self.url_login,
             self.url_logged,
             selectors=self.selectors)
-        self.assert_equals_url(
-            self.bot.curr_driver.current_url, self.url_login)
+        assert self.url_login in self.bot.curr_driver.current_url
         page.login(self.creed_user, " ")
-        time.sleep(2)
-        self.assert_equals_url(
-            self.bot.curr_driver.current_url, self.url_404)
+        assert self.url_logged not in self.bot.curr_driver.current_url
         self.log.debug(self.msg_fail_ok)
 
     @skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
