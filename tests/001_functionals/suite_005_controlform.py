@@ -9,6 +9,8 @@ from qacode.core.loggers.logger_manager import LoggerManager
 from qacode.core.testing.test_info_bot import TestInfoBot
 from qacode.core.utils import settings
 from qacode.core.webs.controls.control_form import ControlForm
+from qacode.core.webs.html_attrs import HtmlAttr
+from qacode.core.webs.html_tags import HtmlTag
 from qacode.core.webs.strict_rules import StrictRule
 from qacode.core.webs.strict_rules import StrictSeverity
 from qacode.core.webs.strict_rules import StrictType
@@ -65,7 +67,7 @@ class TestControlForm(TestInfoBot):
 
     @skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_001_instance_byelement(self):
-        """Testcase: test_000_instance_byelement"""
+        """Testcase: test_001_instance_byelement"""
         element = self.bot.navigation.find_element(
             self.selector_txt_username)
         control = ControlForm(self.bot, element=element)
@@ -74,7 +76,7 @@ class TestControlForm(TestInfoBot):
 
     @skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_002_instance_byselector(self):
-        """Testcase: test_001_instance_byselector"""
+        """Testcase: test_002_instance_byselector"""
         control = ControlForm(
             self.bot, selector=self.selector_txt_username)
         self.assertIsInstance(control.element, WebElement)
@@ -82,7 +84,7 @@ class TestControlForm(TestInfoBot):
 
     @skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_003_instance_notstrictrules(self):
-        """Testcase: test_002_instance_notstrictrules"""
+        """Testcase: test_003_instance_notstrictrules"""
         control = ControlForm(
             self.bot,
             selector=self.selector_txt_username)
@@ -90,32 +92,25 @@ class TestControlForm(TestInfoBot):
         self.assertIsInstance(control, ControlForm)
 
     @skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    def test_004_instance_strictrule_tag(self):
-        """Testcase: test_003_instance_strictrule_tag"""
+    def test_004_instance_strictrules_allstricttypes(self):
+        """Testcase: test_004_instance_strictrules_allstricttypes"""
+        strict_rules = [
+            StrictRule(
+                HtmlTag.TAG_INPUT, StrictType.TAG, StrictSeverity.HIGHT),
+            StrictRule(
+                HtmlAttr.ID, StrictType.HTML_ATTR, StrictSeverity.HIGHT),
+            StrictRule(
+                HtmlAttr.NAME, StrictType.HTML_ATTR, StrictSeverity.HIGHT)
+        ]
         control = ControlForm(
             self.bot,
             selector=self.selector_txt_username,
-            strict_rules=[
-                StrictRule('input', StrictType.TAG, StrictSeverity.HIGHT)
-            ])
+            strict_rules=strict_rules)
         self.assertIsInstance(control.element, WebElement)
         self.assertIsInstance(control, ControlForm)
 
     @skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    def test_001_raises_strictrule_tag_strictmodeenabled(self):
-        """Testcase: test_001_raises_strictrule_tag_strictmodeenabled"""
-        self.assertRaises(
-            ControlException,
-            ControlForm,
-            self.bot,
-            selector=self.selector_txt_username,
-            strict_rules=[
-                StrictRule('div', StrictType.TAG, StrictSeverity.HIGHT)
-            ],
-            strict_mode=True)
-
-    @skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    def test_002_raises_falsesearch(self):
+    def test_001_raises_falsesearch(self):
         """Testcase: test_002_raises_falsesearch"""
         self.assertRaises(
             ControlException,
@@ -123,6 +118,34 @@ class TestControlForm(TestInfoBot):
             self.bot,
             self.selector_txt_username,
             search=False)
+
+    @skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
+    def test_002_raises_strictrule_tag_strictmodeenabled(self):
+        """Testcase: test_001_raises_strictrule_tag_strictmodeenabled"""
+        self.assertRaises(
+            ControlException,
+            ControlForm,
+            self.bot,
+            selector=self.selector_txt_username,
+            strict_rules=[
+                StrictRule(
+                    HtmlTag.TAG_DIV, StrictType.TAG, StrictSeverity.HIGHT)
+            ],
+            strict_mode=True)
+
+    @skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
+    def test_003_raises_strictrule_htmlattr_strictmodeenabled(self):
+        """Testcase: test_001_raises_strictrule_tag_strictmodeenabled"""
+        self.assertRaises(
+            ControlException,
+            ControlForm,
+            self.bot,
+            selector=self.selector_txt_username,
+            strict_rules=[
+                StrictRule(
+                    HtmlAttr.FOR, StrictType.HTML_ATTR, StrictSeverity.HIGHT)
+            ],
+            strict_mode=True)
 
     @skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_003_raises_nonestrictmode(self):

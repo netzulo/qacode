@@ -12,6 +12,7 @@ from selenium.webdriver.common.by import By
 class ControlForm(ControlBase):
     """Requirements: #63"""
 
+    strict_rules = None
     strict_tags = None
     strict_attrs = None
     strict_mode = None
@@ -79,17 +80,18 @@ class ControlForm(ControlBase):
         self.strict_mode = strict_mode
         if not strict_rules or not isinstance(strict_rules, (list, tuple)):
             strict_rules = []
+        self.strict_rules = strict_rules
         self.strict_tags = []
         self.strict_attrs = []
-        self._add_rules(strict_rules, strict_mode)
+        self._add_rules(self.strict_rules, strict_mode)
         if not self.is_strict_tags() and self.strict_mode:
             raise ControlException(
                 message=("Tag obtained for this element html tag not in "
                          "strict_tags list"))
         if not self.is_strict_attrs() and self.strict_mode:
             raise ControlException(
-                message=("Tag obtained for this element html attr not in "
-                         "strict_attrs list"))
+                message=("Html attribute obtained for this element html "
+                         "attr not in strict_attrs list"))
 
     def _add_rules(self, strict_rules, strict_mode):
         """Validate strict rules for each type
@@ -136,9 +138,10 @@ class ControlForm(ControlBase):
         if strict_tags is None:
             strict_tags = self.strict_tags
         for strict_tag in strict_tags:
-            if self.tag == strict_tag.name:
-                return True
-        return False
+            if self.tag != strict_tag.name:
+                return False
+        # because can be empty list
+        return True
 
     def is_strict_attrs(self, strict_attrs=None):
         """Validate if element.attrs is in list of strict_attrs
@@ -154,10 +157,12 @@ class ControlForm(ControlBase):
         attrs_found = []
         if strict_attrs is None:
             strict_attrs = self.strict_attrs
-        if strict_attrs is None:
-            strict_attrs = self.strict_attrs
         for strict_attr in strict_attrs:
-            attr_name = self.get_attr_name(strict_attr.value)
+            try:
+                attr_name = self.get_attr_value(strict_attr.value)
+            except ControlException:
+                if self.strict_mode:
+                    return False
             attrs_search.append(attr_name)
             if attr_name:
                 attrs_found.append(attr_name)

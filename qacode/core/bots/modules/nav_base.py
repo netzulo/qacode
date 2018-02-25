@@ -469,13 +469,22 @@ class NavBase(object):
                     "use when element it's not displayed")
         return text
 
-    def ele_text_input(self, element):
+    def ele_input_value(self, element):
         """Return value of value attribute, usefull for inputs"""
-        return element.get_attribute('value')
+        return self.ele_attribute(element, 'value')
 
     def ele_attribute(self, element, attr_name):
-        """Returns tuple with (attr, value) if founds"""
-        return (attr_name, element.get_attribute(attr_name))
+        """Returns tuple with (attr, value) if founds
+            This method will first try to return the value of a property with
+            the given name. If a property with that name doesn’t exist, it
+            returns the value of the attribute with the same name. If there’s
+            no attribute with that name, None is returned.
+        """
+        value = element.get_attribute(attr_name)
+        if value is None or value == attr_name:
+            raise CoreException(
+                message="Attr '{}' not found".format(attr_name))
+        return value
 
     def ele_tag(self, element):
         """Returns element.tag_name value"""

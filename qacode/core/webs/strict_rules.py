@@ -29,7 +29,10 @@ class StrictRule(object):
         if name is None:
             raise CoreException(
                 message="bad param 'name' can't be None")
-        self.name = name.lower()
+        if isinstance(name, (HtmlTag, HtmlAttr)):
+            self.name = name.value
+        else:
+            self.name = name.lower()
         if not isinstance(strict_type, StrictType):
             raise CoreException(
                 message="bad param 'strict_type' isn't instance of StrictType")
