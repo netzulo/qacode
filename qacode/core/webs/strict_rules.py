@@ -4,6 +4,7 @@
 
 from enum import Enum
 from qacode.core.exceptions.core_exception import CoreException
+from qacode.core.webs.css_properties import CssProperty
 from qacode.core.webs.html_attrs import HtmlAttr
 from qacode.core.webs.html_tags import HtmlTag
 
@@ -29,7 +30,7 @@ class StrictRule(object):
         if name is None:
             raise CoreException(
                 message="bad param 'name' can't be None")
-        if isinstance(name, (HtmlTag, HtmlAttr)):
+        if isinstance(name, (HtmlTag, HtmlAttr, CssProperty)):
             self.name = name.value
         else:
             self.name = name.lower()
@@ -49,7 +50,8 @@ class StrictRule(object):
             if HtmlAttr.has_attr(self.name):
                 self.enum_type = HtmlAttr(self.name)
         elif strict_type == StrictType.CSS_PROP:
-            raise NotImplementedError("Open an issue on github if raise here")
+            if CssProperty.has_css_property(self.name):
+                self.enum_type = CssProperty(self.name)
         elif strict_type == StrictType.JS_EVENT:
             raise NotImplementedError("Open an issue on github if raise here")
         elif strict_type == StrictType.BEHAVIOUR:

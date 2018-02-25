@@ -9,6 +9,7 @@ from qacode.core.loggers.logger_manager import LoggerManager
 from qacode.core.testing.test_info_bot import TestInfoBot
 from qacode.core.utils import settings
 from qacode.core.webs.controls.control_form import ControlForm
+from qacode.core.webs.css_properties import CssProperty
 from qacode.core.webs.html_attrs import HtmlAttr
 from qacode.core.webs.html_tags import HtmlTag
 from qacode.core.webs.strict_rules import StrictRule
@@ -100,7 +101,10 @@ class TestControlForm(TestInfoBot):
             StrictRule(
                 HtmlAttr.ID, StrictType.HTML_ATTR, StrictSeverity.HIGHT),
             StrictRule(
-                HtmlAttr.NAME, StrictType.HTML_ATTR, StrictSeverity.HIGHT)
+                HtmlAttr.NAME, StrictType.HTML_ATTR, StrictSeverity.HIGHT),
+            StrictRule(
+                CssProperty.BORDER_RADIUS, StrictType.CSS_PROP,
+                StrictSeverity.MEDIUM)
         ]
         control = ControlForm(
             self.bot,
@@ -135,7 +139,7 @@ class TestControlForm(TestInfoBot):
 
     @skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_003_raises_strictrule_htmlattr_strictmodeenabled(self):
-        """Testcase: test_001_raises_strictrule_tag_strictmodeenabled"""
+        """Testcase: test_003_raises_strictrule_htmlattr_strictmodeenabled"""
         self.assertRaises(
             ControlException,
             ControlForm,
@@ -147,9 +151,25 @@ class TestControlForm(TestInfoBot):
             ],
             strict_mode=True)
 
+    @skipIf(True, "Can't obtain an element what have not a CSS property")
+    def test_004_raises_strictrule_css_strictmodeenabled(self):
+        """Testcase: test_004_raises_strictrule_css_strictmodeenabled"""
+        self.assertRaises(
+            ControlException,
+            ControlForm,
+            self.bot,
+            selector=self.selector_txt_username,
+            strict_rules=[
+                StrictRule(
+                    CssProperty.TABLE_LAYOUT,
+                    StrictType.CSS_PROP,
+                    StrictSeverity.MEDIUM)
+            ],
+            strict_mode=True)
+
     @skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    def test_003_raises_nonestrictmode(self):
-        """Testcase: test_003_raises_nonestrictmode"""
+    def test_005_raises_nonestrictmode(self):
+        """Testcase: test_005_raises_nonestrictmode"""
         self.assertRaises(
             ControlException,
             ControlForm,

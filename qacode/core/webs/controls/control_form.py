@@ -15,6 +15,7 @@ class ControlForm(ControlBase):
     strict_rules = None
     strict_tags = None
     strict_attrs = None
+    strict_css_props = None
     strict_mode = None
 
     # TODO: follow instructions on #63
@@ -83,6 +84,7 @@ class ControlForm(ControlBase):
         self.strict_rules = strict_rules
         self.strict_tags = []
         self.strict_attrs = []
+        self.strict_css_props = []
         self._add_rules(self.strict_rules, strict_mode)
         if not self.is_strict_tags() and self.strict_mode:
             raise ControlException(
@@ -90,16 +92,19 @@ class ControlForm(ControlBase):
                          "strict_tags list"))
         if not self.is_strict_attrs() and self.strict_mode:
             raise ControlException(
-                message=("Html attribute obtained for this element html "
-                         "attr not in strict_attrs list"))
+                message=("Html attribute obtained for this element not in "
+                         "strict_attrs list"))
+        if not self.is_strict_css_props() and self.strict_mode:
+            raise ControlException(
+                message=("Css property obtained for this element not in "
+                         "strict_css_props list"))
 
     def _add_rules(self, strict_rules, strict_mode):
         """Validate strict rules for each type
 
         Arguments:
             strict_rules {StrictRule} -- strict_rule
-            strict_mode {bool} -- if enabled, load values for
-                future checks
+            strict_mode {bool} -- if enabled, load values for future checks
         """
         # validate rules and add object to respective lists
         for strict_rule in strict_rules:
@@ -108,8 +113,7 @@ class ControlForm(ControlBase):
             elif strict_rule.strict_type == StrictType.HTML_ATTR:
                 self.strict_attrs.append(strict_rule.enum_type)
             elif strict_rule.strict_type == StrictType.CSS_PROP:
-                raise NotImplementedError(
-                    "Open an issue on github if raise here")
+                self.strict_css_props.append(strict_rule.enum_type)
             elif strict_rule.strict_type == StrictType.JS_EVENT:
                 raise NotImplementedError(
                     "Open an issue on github if raise here")
@@ -137,11 +141,13 @@ class ControlForm(ControlBase):
         """
         if strict_tags is None:
             strict_tags = self.strict_tags
+        # empty list doesn't to be checked
+        if len(strict_tags) == 0:
+            return True
         for strict_tag in strict_tags:
-            if self.tag != strict_tag.name:
-                return False
-        # because can be empty list
-        return True
+            if self.tag == strict_tag.name:
+                return True
+        return False
 
     def is_strict_attrs(self, strict_attrs=None):
         """Validate if element.attrs is in list of strict_attrs
@@ -152,11 +158,13 @@ class ControlForm(ControlBase):
         Returns:
             [type] -- [description]
         """
-        # TODO: make functional
         attrs_search = []
         attrs_found = []
         if strict_attrs is None:
             strict_attrs = self.strict_attrs
+        # empty list doesn't to be checked
+        if len(strict_attrs) == 0:
+            return True
         for strict_attr in strict_attrs:
             try:
                 attr_name = self.get_attr_value(strict_attr.value)
@@ -167,3 +175,26 @@ class ControlForm(ControlBase):
             if attr_name:
                 attrs_found.append(attr_name)
         return bool(set(attrs_search).intersection(attrs_found))
+
+    def is_strict_css_props(self, strict_css_props=None):
+        """Validate if element.attrs is in list of strict_attrs
+
+        Keyword Arguments:
+            strict_attrs {[type]} -- [description] (default: {None})
+
+        Returns:
+            [type] -- [description]
+        """
+        css_search = []
+        css_found = []
+        if strict_css_props is None:
+            strict_css_props = self.strict_css_props
+        # empty list doesn't to be checked
+        if len(strict_css_props) == 0:
+            return True
+        for strict_css_prop in strict_css_props:
+            css_prop = self.get_css_value(strict_css_prop.value)
+            css_search.append(css_prop)
+            if css_prop:
+                css_found.append(css_prop)
+        return len(css_search) == len(css_found)
