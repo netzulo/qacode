@@ -127,10 +127,12 @@ class TestPageLogin(TestInfoBot):
             self.url_login,
             self.url_logged,
             selectors=self.selectors)
-        assert self.url_login in self.bot.curr_driver.current_url
+        self.assert_equals_url(
+            self.bot.curr_driver.current_url, self.url_login)
         page.login(self.creed_user, " ")
-        time.sleep(3)
-        assert self.url_404 in self.bot.curr_driver.current_url
+        time.sleep(2)
+        self.assert_equals_url(
+            self.bot.curr_driver.current_url, self.url_404)
         self.log.debug(self.msg_fail_ok)
 
     @skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
