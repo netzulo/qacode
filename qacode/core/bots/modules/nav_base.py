@@ -476,8 +476,8 @@ class NavBase(object):
     def ele_attribute(self, element, attr_name):
         """Returns tuple with (attr, value) if founds
             This method will first try to return the value of a property with
-            the given name. If a property with that name doesn’t exist, it
-            returns the value of the attribute with the same name. If there’s
+            the given name. If a property with that name doesn't exist, it
+            returns the value of the attribute with the same name. If there's
             no attribute with that name, None is returned.
         """
         value = element.get_attribute(attr_name)
