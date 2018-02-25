@@ -74,7 +74,7 @@ class TestPageLogin(TestInfoBot):
                 self.url_login,
                 self.url_logged,
                 selectors=self.selectors)
-            assert self.url_login in self.bot.curr_driver.current_url
+            self.assertFalse(page.is_logged)
         except PageException as err:
             self.bot.log.error(err.args)
             raise Exception(err)
@@ -100,7 +100,7 @@ class TestPageLogin(TestInfoBot):
             self.url_login,
             self.url_logged,
             selectors=self.selectors)
-        assert self.url_login in self.bot.curr_driver.current_url
+        self.assertFalse(page.is_logged)
         page.login(self.creed_user, self.creed_pass)
         self.assertTrue(page.is_logged)
         self.log.debug(self.msg_logged)
@@ -113,12 +113,12 @@ class TestPageLogin(TestInfoBot):
             self.url_login,
             self.url_logged,
             selectors=self.selectors)
-        assert self.url_login in self.bot.curr_driver.current_url
+        self.assertFalse(page.is_logged)
         page.login(" ", self.creed_pass)
         self.assertFalse(page.is_logged)
         self.log.debug(self.msg_fail_ok)
 
-    @skipIf(True, "working at local, failing at CI appveyor, ill check later")
+    @skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
     def test_005_login_emptypass(self):
         """Testcase: test_005_login_emptypass"""
         page = PageLogin(
@@ -126,7 +126,7 @@ class TestPageLogin(TestInfoBot):
             self.url_login,
             self.url_logged,
             selectors=self.selectors)
-        assert self.url_login in self.bot.curr_driver.current_url
+        self.assertFalse(page.is_logged)
         page.login(self.creed_user, " ")
         self.assertFalse(page.is_logged)
         self.log.debug(self.msg_fail_ok)
@@ -139,7 +139,7 @@ class TestPageLogin(TestInfoBot):
             self.url_login,
             self.url_logged,
             selectors=self.selectors)
-        assert self.url_login in self.bot.curr_driver.current_url
+        self.assertFalse(page.is_logged)
         page.login(" ", " ")
-        assert self.url_logged in self.bot.curr_driver.current_url
+        self.assertFalse(page.is_logged)
         self.log.debug(self.msg_fail_ok)
