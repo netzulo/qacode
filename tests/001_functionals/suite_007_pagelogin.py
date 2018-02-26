@@ -74,7 +74,6 @@ class TestPageLogin(TestInfoBot):
                 self.url_login,
                 self.url_logged,
                 selectors=self.selectors)
-            self.assertFalse(page.is_logged)
         except PageException as err:
             self.bot.log.error(err.args)
             raise Exception(err)
