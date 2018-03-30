@@ -2,9 +2,8 @@
 """Testsuite for package bots"""
 
 
-from unittest import skipIf
+import pytest
 from qacode.core.bots.bot_base import BotBase
-from qacode.core.bots.bot_config import BotConfig
 from qacode.core.exceptions.core_exception import CoreException
 from qacode.core.loggers.logger_manager import LoggerManager
 from qacode.core.testing.test_info_base import TestInfoBase
@@ -24,210 +23,47 @@ LOGGER_MANAGER = LoggerManager(log_level=SETTINGS['bot']['log_level'])
 class TestBotBase(TestInfoBase):
     """Testcases for class BotBase"""
 
-    def __init__(self, method_name='suite_TestBotBase'):
-        """Just call to parent constructor class, see TestInfoBase
+    def teardown_method(self, method):
+        try:
+            if self.bot:
+                self.bot.close()
+        except Exception:
+            print(
+                "Fail at try to close bot, maybe never opened")
 
-        Keyword Arguments:
-            method_name {str} -- name for test info base testsuite
-                (default: {"suite_TestBotBase"})
-        """
-        super(TestBotBase, self).__init__(
-            method_name,
-            logger_manager=LOGGER_MANAGER,
-            test_config=SETTINGS
-        )
-
-    def setUp(self):
-        """Testcases setup"""
-        self.bot_config = BotConfig(
-            config=self.test_config,
-            logger_manager=self.logger_manager)
-
-    @skipIf(SKIP_LOCALS, SKIP_LOCALS_MSG)
-    def test_001_bot_local_chrome(self):
+    @pytest.mark.parametrize("browser_name", [
+        "chrome",
+        "firefox",
+        "phantomjs",
+        "iexplorer",
+        "edge",
+        "opera"
+    ])
+    @pytest.mark.parametrize("driver_mode", ["local", "remote"])
+    def test_bot_modes_and_names(self, driver_mode, browser_name):
         """Testcase: test_001_bot_local_chrome"""
-        self.log.debug('TestBotBase: LOCAL started for CHROME')
-        self.bot_config.config['browser'] = 'chrome'
-        self.bot_config.config['mode'] = 'local'
-        bot = BotBase(self.bot_config)
+        if SKIP_LOCALS and driver_mode == 'local':
+            pytest.skip(SKIP_LOCALS_MSG)
+        if SKIP_REMOTES and driver_mode == 'remote':
+            pytest.skip(SKIP_REMOTES_MSG)
+        settings = SETTINGS.copy()
+        settings.get('bot').update({
+            'browser': str(browser_name),
+            'mode': str(driver_mode)
+        })
+        if browser_name == 'edge':
+            browser_name = 'MicrosoftEdge'
+            pytest.skip(msg="Browser not configured")
+        if browser_name == 'iexplorer':
+            browser_name = 'internet explorer'
+        if browser_name == 'opera':
+            pytest.skip(
+                msg=("Issue opened on official opera"
+                     " chromium github: "
+                     "https://github.com/operasoftware"
+                     "/operachromiumdriver/issues/9"))
+        self.bot = BotBase(**settings)
         self.timer(wait=WAIT_TO_CLOSE)
-        self.assertEqual(bot.curr_caps['browserName'], 'chrome')
-        bot.close()
-        self.log.debug("TestBotBase: LOCAL terminated for CHROME")
-
-    @skipIf(SKIP_LOCALS, SKIP_LOCALS_MSG)
-    def test_002_bot_local_firefox(self):
-        """Testcase: test_002_bot_local_firefox"""
-        self.log.debug("TestBotBase: LOCAL started for FIREFOX")
-        self.bot_config.config['browser'] = 'firefox'
-        self.bot_config.config['mode'] = 'local'
-        bot = BotBase(self.bot_config)
-        self.timer(wait=WAIT_TO_CLOSE)
-        self.assertEqual(bot.curr_caps['browserName'], 'firefox')
-        bot.close()
-        self.log.debug("TestBotBase: LOCAL terminated for FIREFOX")
-
-    @skipIf(SKIP_LOCALS, SKIP_LOCALS_MSG)
-    def test_003_bot_local_phantomjs(self):
-        """Testcase: test_003_bot_local_phantomjs"""
-        self.log.debug("TestBotBase: LOCAL started for PHANTOMJS")
-        self.bot_config.config['browser'] = 'phantomjs'
-        self.bot_config.config['mode'] = 'local'
-        bot = BotBase(self.bot_config)
-        self.timer(wait=WAIT_TO_CLOSE)
-        self.assertEqual(bot.curr_caps['browserName'], 'phantomjs')
-        bot.close()
-        self.log.debug("TestBotBase: LOCAL terminated for PHANTOMJS")
-
-    @skipIf(SKIP_LOCALS, SKIP_LOCALS_MSG)
-    def test_004_bot_local_iexplorer(self):
-        """Testcase: test_004_bot_local_iexplorer"""
-        self.log.debug("TestBotBase: LOCAL started for IEXPLORER")
-        self.bot_config.config['browser'] = 'iexplorer'
-        self.bot_config.config['mode'] = 'local'
-        bot = BotBase(self.bot_config)
-        self.timer(wait=WAIT_TO_CLOSE)
-        self.assertEqual(bot.curr_caps['browserName'], 'internet explorer')
-        bot.close()
-        self.log.debug("TestBotBase: LOCAL terminated for IEXPLORER")
-
-    @skipIf(True, "Need to setup on my local before to run this test again")
-    def test_005_bot_local_edge(self):
-        """Testcase: test_005_bot_local_edge"""
-        self.log.debug("TestBotBase: LOCAL started for EDGE")
-        self.bot_config.config['browser'] = 'edge'
-        self.bot_config.config['mode'] = 'local'
-        bot = BotBase(self.bot_config)
-        self.timer(wait=WAIT_TO_CLOSE)
-        self.assertEqual(bot.curr_caps['browserName'], 'MicrosoftEdge')
-        bot.close()
-        self.log.debug("TestBotBase: LOCAL terminated for EDGE")
-
-    @skipIf(True, 'Issue opened on official opera chromium github')
-    def test_006_bot_local_opera(self):
-        """Testcase: test_006_bot_local_opera
-
-        ISSUE OPENED :
-         https://github.com/operasoftware/operachromiumdriver/issues/9
-        """
-        self.log.debug("TestBotBase: REMOTE started for OPERA")
-        self.bot_config.config['browser'] = 'opera'
-        self.bot_config.config['mode'] = 'local'
-        bot = BotBase(self.bot_config)
-        self.timer(wait=WAIT_TO_CLOSE)
-        self.assertEqual(bot.curr_caps['browserName'], 'opera')
-        bot.close()
-        self.log.debug("TestBotBase: REMOTE terminated for OPERA")
-
-    @skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
-    def test_007_bot_remote_chrome(self):
-        """Testcase: test_007_bot_remote_chrome"""
-        self.log.debug("TestBotBase: REMOTE started for CHROME")
-        self.bot_config.config['browser'] = 'chrome'
-        self.bot_config.config['mode'] = 'remote'
-        bot = BotBase(self.bot_config)
-        self.assertEqual(bot.curr_caps['browserName'], 'chrome')
-        self.timer(wait=WAIT_TO_CLOSE)
-        bot.close()
-        self.log.debug("TestBotBase: REMOTE terminated for CHROME")
-
-    @skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
-    def test_008_bot_remote_firefox(self):
-        """Testcase: test_008_bot_remote_firefox"""
-        self.log.debug("TestBotBase: REMOTE started for FIREFOX")
-        self.bot_config.config['browser'] = 'firefox'
-        self.bot_config.config['mode'] = 'remote'
-        bot = BotBase(self.bot_config)
-        self.timer(wait=WAIT_TO_CLOSE)
-        self.assertEqual(bot.curr_caps['browserName'], 'firefox')
-        bot.close()
-        self.log.debug("TestBotBase: REMOTE terminated for FIREFOX")
-
-    @skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
-    def test_009_bot_remote_phantomjs(self):
-        """Testcase: test_009_bot_remote_phantomjs"""
-        self.log.debug("TestBotBase: REMOTE started for PHANTOMJS")
-        self.bot_config.config['browser'] = "phantomjs"
-        self.bot_config.config['mode'] = "remote"
-        bot = BotBase(self.bot_config)
-        self.timer(wait=WAIT_TO_CLOSE)
-        self.assertEqual(bot.curr_caps['browserName'], 'phantomjs')
-        bot.close()
-        self.log.debug("TestBotBase: REMOTE terminated for PHANTOMJS")
-
-    @skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
-    def test_010_bot_remote_iexplorer(self):
-        """Testcase: test_010_bot_remote_iexplorer"""
-        self.log.debug("TestBotBase: REMOTE started for IEXPLORER")
-        self.bot_config.config['browser'] = 'iexplorer'
-        self.bot_config.config['mode'] = 'remote'
-        bot = BotBase(self.bot_config)
-        self.timer(wait=WAIT_TO_CLOSE)
-        self.assertEqual(bot.curr_caps['browserName'], 'internet explorer')
-        bot.close()
-        self.log.debug("TestBotBase: REMOTE terminated for IEXPLORER")
-
-    @skipIf(True, 'Still not public node with edge support')
-    def test_011_bot_remote_edge(self):
-        """Testcase: test_011_bot_remote_edge"""
-        self.log.debug("TestBotBase: REMOTE started for EDGE")
-        self.bot_config.config['browser'] = 'edge'
-        self.bot_config.config['mode'] = 'remote'
-        bot = BotBase(self.bot_config)
-        self.timer(wait=WAIT_TO_CLOSE)
-        self.assertEqual(bot.curr_caps['browserName'], 'MicrosoftEdge')
-        bot.close()
-        self.log.debug("TestBotBase: REMOTE terminated for EDGE")
-
-    @skipIf(True, 'Issue opened on official opera chromium github')
-    def test_012_bot_remote_opera(self):
-        """Testcase: test_012_bot_remote_opera
-
-        ISSUE OPENED :
-         https://github.com/operasoftware/operachromiumdriver/issues/9
-        """
-        self.log.debug("TestBotBase: REMOTE started for OPERA")
-        self.bot_config.config['browser'] = 'opera'
-        self.bot_config.config['mode'] = 'remote'
-        bot = BotBase(self.bot_config)
-        self.timer(wait=WAIT_TO_CLOSE)
-        self.assertEqual(bot.curr_caps['browserName'], 'opera')
-        bot.close()
-        self.log.debug("TestBotBase: REMOTE terminated for OPERA")
-
-    @skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
-    def test_013_raises_botconfig_noneconfig(self):
-        """Testcase: test_013_raises_botconfig_noneconfig"""
-        self.assertRaises(
-            CoreException,
-            BotConfig,
-            None,
-            self.logger_manager)
-
-    @skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
-    def test_014_raises_bot_nonebotconfig(self):
-        """Testcase: test_014_raises_bot_nonebotconfig"""
-        self.assertRaises(
-            CoreException,
-            BotBase,
-            None)
-
-    @skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
-    def test_015_raises_botconfig_nonekeybot(self):
-        """Testcase: test_015_raises_botconfig_nonekeybot"""
-        config = self.test_config.copy()
-        config.pop('bot', None)
-        self.assertRaises(
-            CoreException,
-            BotConfig,
-            config,
-            self.logger_manager)
-
-    @skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
-    def test_016_raises_botconfig_nonelogger(self):
-        """Testcase: test_016_raises_botconfig_nonelogger"""
-        self.assertRaises(
-            CoreException,
-            BotConfig,
-            self.test_config,
-            None)
+        self.assert_equals(
+            self.bot.curr_caps['browserName'],
+            browser_name)

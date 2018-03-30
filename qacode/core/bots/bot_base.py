@@ -10,6 +10,8 @@ from selenium import webdriver as WebDriver
 from selenium.webdriver import DesiredCapabilities
 from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
 from selenium.webdriver.support.ui import WebDriverWait
+from qacode.core.loggers.logger_manager import LoggerManager
+from qacode.core.utils import settings
 
 
 class BotBase(object):
@@ -25,46 +27,72 @@ class BotBase(object):
 
         bot_config -- Bot configuration object
 
-        logger_manager -- logger manager class loaded from BotConfig object
+        logger_manager -- logger manager class loaded from
+            LoggerManager object
 
         log -- log class to write messages
     """
+
+    settings = None
 
     curr_caps = None
     curr_driver = None
     curr_driver_path = None
     navigation = None
-    bot_config = None
     logger_manager = None
     log = None
     IS_64BITS = sys.maxsize > 2**32
     IS_WIN = os.name == 'nt'
 
-    def __init__(self, bot_config):
+    def __init__(self, **kwargs):
         """Create new Bot browser based on options object what can be
             (help for each option can be found on settings.json)
 
         Arguments:
-            bot_config {BotConfig} -- object containing configuration
-                for new bot instance
+            settings {dict} -- configuracion obtained from JSON
+                file to dict instance
 
         Raises:
             CoreException -- Fail at instance LoggerManager class
-            CoreException -- bot_config param is None
-            CoreException -- bot_config.mode is not in [local, remote]
+            CoreException -- settings is None
+            CoreException -- settings.get('mode') is not in [local, remote]
         """
-        if bot_config is None:
-            raise CoreException(
-                message=("BotBase configuration can't be none: bad bot_config"
-                         " provided"))
-        self.bot_config = bot_config
-        self.logger_manager = bot_config.logger_manager
-        self.log = self.bot_config.log
-        if self.bot_config.config['mode'] == 'local':
+        self.settings = kwargs.get("bot")
+        # default read from qacode.configs, file named 'settings.json'
+        if not self.settings:
+            self.settings = settings().get('bot')
+        self._load()
+
+    def _load(self):
+        self.logger_manager = LoggerManager(
+            log_path=self.settings.get('log_output_file'),
+            log_name=self.settings.get('log_name'),
+            log_level=self.settings.get('log_level')
+        )
+        self.log = self.logger_manager.logger
+        required_keys = [
+            'mode',
+            'browser',
+            'url_hub',
+            'drivers_path',
+            'drivers_names',
+            'log_name',
+            'log_output_file',
+            'log_level'
+        ]
+        for setting in self.settings.keys():
+            if setting not in required_keys:
+                raise CoreException(
+                    message=("Key for config isn't "
+                             "valid for key='{}'").format(setting))
+        if self.settings.get('mode') == 'local':
             self.mode_local()
-        elif self.bot_config.config['mode'] == 'remote':
+        elif self.settings.get('mode') == 'remote':
             self.mode_remote()
-        # else: handled at BotConfig
+        else:
+            raise CoreException(
+                message=("Bad mode selected, mode={}"
+                         "").format(self.settings.get('mode')))
         self.curr_driver_wait = WebDriverWait(self.curr_driver, 10)
         self.navigation = NavBase(
             self.curr_driver, self.log, driver_wait=self.curr_driver_wait)
@@ -97,7 +125,7 @@ class BotBase(object):
             driver_name_format = driver_name_format.format('driver_64')
         else:
             driver_name_format = driver_name_format.format('driver_32')
-        for name in self.bot_config.config['drivers_names']:
+        for name in self.settings.get('drivers_names'):
             if name.endswith(driver_name_format):
                 return driver_name_format
         raise CoreException(
@@ -111,10 +139,10 @@ class BotBase(object):
             CoreException -- driver_name on config JSON
                 file is not valid value
         """
-        browser_name = self.bot_config.config['browser']
+        browser_name = self.settings.get('browser')
         driver_name = self.driver_name_filter(driver_name=browser_name)
         self.curr_driver_path = os.path.abspath("{}/{}".format(
-            self.bot_config.config['drivers_path'],
+            self.settings.get('drivers_path'),
             driver_name))
         # add to path before to open
         sys.path.append(self.curr_driver_path)
@@ -169,8 +197,8 @@ class BotBase(object):
         Raises:
             CoreException -- browser name is not in valid values list
         """
-        browser_name = self.bot_config.config['browser']
-        url_hub = self.bot_config.config['url_hub']
+        browser_name = self.settings.get('browser')
+        url_hub = self.settings.get('url_hub')
         self.log.debug('Starting browser with mode : REMOTE ...')
         if browser_name == 'firefox':
             self.curr_caps = DesiredCapabilities.FIREFOX.copy()
