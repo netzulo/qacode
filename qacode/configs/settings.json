@@ -47,9 +47,6 @@
       "web_controls": true,
       "web_pages": true
     },
-    "unitaries": {
-      "url": "https://www.netzulo.com"
-    },
     "functionals": {
       "pages": [
         {

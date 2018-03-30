@@ -2,14 +2,46 @@
 """Base module for inherit new Test Suites"""
 
 
+import os
+import re
 import time
+from qacode.core.utils import settings
+from qacode.core.loggers.logger_manager import LoggerManager
+from qacode.core.bots.bot_base import BotBase
 
 
 ASSERT_MSG_DEFAULT = "Fails at '{}': actual={}, expected={}"
+ASSERT_REGEX_URL = r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+"  # noqa: E501
+SETTINGS = settings()
+SETTINGS_BOT = SETTINGS.get('bot')
+LOGGER_MANAGER = LoggerManager(
+    log_path="{}/".format(
+        SETTINGS_BOT.get('log_output_file')),
+    log_name=SETTINGS_BOT.get('log_name'),
+    log_level=SETTINGS_BOT.get('log_level')
+)
 
 
 class TestInfoBase(object):
     """Base class for inherit new Test classes"""
+
+    unique_bot = None
+    log = None
+
+    def setup_method(self, test_method):
+        """Configure self.attribute"""
+        self.add_property('unique_bot', value=True)
+        self.add_property('log', value=LOGGER_MANAGER.logger)
+        self.log.info("Started testcase named='{}'".format(
+            test_method.__name__))
+
+    def teardown_method(self, test_method):
+        """Unload self.attribute"""
+        self.log.info("Finished testcase named='{}'".format(
+            test_method.__name__))
+
+    def add_property(self, name, value=None):
+        setattr(self, name, value)
 
     def timer(self, wait=5, print_each=5):
         """Timer to sleep browser on testcases
@@ -91,7 +123,7 @@ class TestInfoBase(object):
         self.sleep(wait)
         if actual not in contains:
             raise AssertionError(actual, contains, msg)
-    
+
     def assert_not_contains_url(self, actual, contains, msg=None, wait=0):
         """Allow to compare 2 urls and check if 1st not contains 2nd url"""
         if not msg:
@@ -141,3 +173,101 @@ class TestInfoBase(object):
                 "assert_greater", actual, lower)
         if actual < lower:
             raise AssertionError(actual, lower, msg)
+
+    def assert_in(self, actual, valid_values, msg=None):
+        if not msg:
+            msg = ASSERT_MSG_DEFAULT.format(
+                "assert_in", actual, valid_values)
+        if actual not in valid_values:
+            raise AssertionError(actual, valid_values, msg)
+
+    def assert_not_in(self, actual, invalid_values, msg=None):
+        if not msg:
+            msg = ASSERT_MSG_DEFAULT.format(
+                "assert_in", actual, invalid_values)
+        if actual in invalid_values:
+            raise AssertionError(actual, invalid_values, msg)
+
+    def assert_regex(self, actual, pattern, msg=None):
+        if not msg:
+            msg = ASSERT_MSG_DEFAULT.format(
+                "assert_regex", actual, pattern)
+        is_match = re.match(pattern, actual)
+        if not is_match:
+            raise AssertionError(actual, pattern, msg)
+
+    def assert_not_regex(self, actual, pattern, msg=None):
+        if not msg:
+            msg = ASSERT_MSG_DEFAULT.format(
+                "assert_not_regex", actual, pattern)
+        is_match = re.match(pattern, actual)
+        if is_match:
+            raise AssertionError(actual, pattern, msg)
+
+    def assert_regex_url(self, actual, pattern=None, msg=None):
+        if not msg:
+            msg = ASSERT_MSG_DEFAULT.format(
+                "assert_regex_url", actual, pattern)
+        if not pattern:
+            pattern = ASSERT_REGEX_URL
+        self.assert_regex(actual, pattern, msg=msg)
+
+    def assert_path_exist(self, actual, is_dir=True, msg=None):
+        if not msg:
+            msg = ASSERT_MSG_DEFAULT.format(
+                "assert_path_exist",
+                actual,
+                "is_dir={}".format(is_dir))
+        if not os.path.exists(actual):
+            raise AssertionError(actual, "NEED_PATH_FOUND", msg)
+        _is_dir = os.path.isdir(actual)
+        if is_dir:
+            if not _is_dir:
+                raise AssertionError(actual, "NEED_PATH_IS_DIR", msg)
+        else:
+            if _is_dir:
+                raise AssertionError(actual, "NEED_PATH_NOT_DIR", msg)
+
+    def assert_path_not_exist(self, actual, msg=None):
+        if not msg:
+            msg = ASSERT_MSG_DEFAULT.format(
+                "assert_path_not_exist", actual, "")
+        if os.path.exists(actual):
+            raise AssertionError(actual, "NEED_PATH_NOT_FOUND", msg)
+
+    def assert_true(self, actual, msg=None):
+        if not msg:
+            msg = ASSERT_MSG_DEFAULT.format(
+                "assert_true", actual, "")
+        self.assert_is_instance(actual, bool)
+        if not actual:
+            raise AssertionError(actual, True, msg)
+
+    def assert_false(self, actual, msg=None):
+        if not msg:
+            msg = ASSERT_MSG_DEFAULT.format(
+                "assert_false", actual, "")
+        self.assert_is_instance(actual, bool)
+        if actual:
+            raise AssertionError(actual, False, msg)
+
+
+class TestInfoBot(TestInfoBase):
+    """Inherit class what implements bot on each testcase"""
+
+    bot = None
+
+    def teardown_method(self, test_method):
+        """Unload self.attribute"""
+        super(TestInfoBot, self).teardown_method(test_method)
+        try:
+            self.bot.close()
+        except Exception as err:
+            self.log.error("Fails at try to close bot: {}".format(
+                err
+            ))
+
+    def setup_method(self, test_method):
+        """Configure self.attribute"""
+        super(TestInfoBot, self).setup_method(test_method)
+        self.add_property('bot', BotBase(**SETTINGS))

@@ -6,7 +6,7 @@ import pytest
 from qacode.core.bots.bot_base import BotBase
 from qacode.core.exceptions.core_exception import CoreException
 from qacode.core.loggers.logger_manager import LoggerManager
-from qacode.core.testing.test_info_base import TestInfoBase
+from qacode.core.testing.test_info import TestInfoBase
 from qacode.core.utils import settings
 
 
