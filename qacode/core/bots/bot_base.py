@@ -6,12 +6,12 @@ import os
 import sys
 from qacode.core.bots.modules.nav_base import NavBase
 from qacode.core.exceptions.core_exception import CoreException
+from qacode.core.loggers.logger_manager import LoggerManager
+from qacode.core.utils import settings
 from selenium import webdriver as WebDriver
 from selenium.webdriver import DesiredCapabilities
 from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
 from selenium.webdriver.support.ui import WebDriverWait
-from qacode.core.loggers.logger_manager import LoggerManager
-from qacode.core.utils import settings
 
 
 class BotBase(object):

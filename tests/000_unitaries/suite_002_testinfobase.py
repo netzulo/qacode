@@ -4,7 +4,6 @@
 
 import logging
 import pytest
-from qacode.core.bots.bot_base import BotBase
 from qacode.core.testing.test_info import TestInfoBase
 
 
@@ -19,14 +18,13 @@ class TestTestInfoBase(TestInfoBase):
         """Test: test_001_inheritance"""
         self.assert_is_instance(self, object)
         self.assert_is_instance(self, TestInfoBase)
-        self.assert_equals(self.unique_bot, True)
         self.assert_is_instance(self.log, logging.Logger)
-
 
     @pytest.mark.parametrize("log_level", [
         "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"
     ])
     def test_002_log_levels(self, log_level):
+        """TODO: doc method"""
         msg = "Unitary test, checking level type'{}'".format(
             log_level)
         if log_level == 'DEBUG':

@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=deprecated-method
-# pylint: disable=invalid-name
 """Test Suite module for configs"""
 
 
-import os
 import pytest
 from qacode.core.loggers.logger_manager import LoggerManager
 from qacode.core.testing.test_info import TestInfoBase
@@ -32,12 +29,12 @@ class TestConfig(TestInfoBase):
         """Test : test_000_config_exist"""
         self.assert_path_exist(self.PATH_SETTINGS, is_dir=False)
 
-
     @pytest.mark.parametrize("key_name", [
         "mode", "browser", "url_hub", "drivers_path",
         "drivers_names", "log_output_file", "log_name", "log_level"
     ])
     def test_config_bot_keys(self, key_name):
+        """TODO: doc method"""
         key_value = settings()['bot'][key_name]
         if key_name == 'mode':
             valid_values = ["local", "remote"]
@@ -63,9 +60,10 @@ class TestConfig(TestInfoBase):
             self.assert_not_equals(key_value, "")
 
     @pytest.mark.parametrize("key_name", [
-        "skip", "functionals"
+        "skip", "apps"
     ])
     def test_config_tests_keys(self, key_name):
+        """TODO: doc method"""
         key_value = settings()['tests'][key_name]
         if key_name == 'skip':
             self.assert_is_instance(key_value, dict)
@@ -77,6 +75,18 @@ class TestConfig(TestInfoBase):
                 key_value.get('web_controls'), bool)
             self.assert_is_instance(
                 key_value.get('web_pages'), bool)
-        if key_name == 'functionals':
-            self.assert_is_instance(key_value, dict)
-            self.assert_is_instance(key_value.get('pages'), list)
+        if key_name == 'apps':
+            self.assert_is_instance(key_value, list)
+            for app_config in key_value:
+                self.assert_is_instance(app_config, dict)
+                self.assert_is_instance(app_config.get('name'), str)
+                self.assert_is_instance(app_config.get('pages'), list)
+                for page_config in app_config.get('pages'):
+                    self.assert_is_instance(page_config.get('name'), str)
+                    self.assert_is_instance(page_config.get('url'), str)
+                    self.assert_is_instance(page_config.get('locator'), str)
+                    self.assert_is_instance(page_config.get('go_url'), bool)
+                    self.assert_is_instance(page_config.get('wait_url'), int)
+                    self.assert_is_instance(page_config.get('maximize'), bool)
+                    self.assert_is_instance(page_config.get('controls'), list)
+                    # TODO: handle control list

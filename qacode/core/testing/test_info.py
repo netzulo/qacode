@@ -5,9 +5,9 @@
 import os
 import re
 import time
-from qacode.core.utils import settings
-from qacode.core.loggers.logger_manager import LoggerManager
 from qacode.core.bots.bot_base import BotBase
+from qacode.core.loggers.logger_manager import LoggerManager
+from qacode.core.utils import settings
 
 
 ASSERT_MSG_DEFAULT = "Fails at '{}': actual={}, expected={}"
@@ -25,12 +25,43 @@ LOGGER_MANAGER = LoggerManager(
 class TestInfoBase(object):
     """Base class for inherit new Test classes"""
 
-    unique_bot = None
     log = None
+
+    @classmethod
+    def bot_open(cls):
+        """Open browser using BotBase instance
+
+        Returns:
+            BotBase -- wrapper browser handler for selenium
+        """
+        return BotBase(**SETTINGS)
+
+    @classmethod
+    def bot_close(cls, bot):
+        """TODO: doc method"""
+        return bot.close()
+
+    @classmethod
+    def app_config(cls, app_name):
+        """TODO: doc method"""
+        app_configs = SETTINGS['tests']['apps']
+        for app_config in app_configs:
+            if app_config.get('name') == app_name:
+                return app_config
+        raise Exception("App name not found")
+
+    @classmethod
+    def app_page(cls, page_name):
+        """TODO: doc method"""
+        app_configs = SETTINGS['tests']['apps']
+        for app_config in app_configs:
+            for page_config in app_config.get('pages'):
+                if page_config.get('name') == page_name:
+                    return page_config
+        raise Exception("App name not found")
 
     def setup_method(self, test_method):
         """Configure self.attribute"""
-        self.add_property('unique_bot', value=True)
         self.add_property('log', value=LOGGER_MANAGER.logger)
         self.log.info("Started testcase named='{}'".format(
             test_method.__name__))
@@ -41,6 +72,7 @@ class TestInfoBase(object):
             test_method.__name__))
 
     def add_property(self, name, value=None):
+        """TODO: doc method"""
         setattr(self, name, value)
 
     def timer(self, wait=5, print_each=5):
@@ -72,6 +104,7 @@ class TestInfoBase(object):
             time.sleep(wait)
 
     def assert_equals(self, actual, expected, msg=None):
+        """TODO: doc method"""
         if not msg:
             msg = ASSERT_MSG_DEFAULT.format(
                 "assert_equals", actual, expected)
@@ -79,6 +112,7 @@ class TestInfoBase(object):
             raise AssertionError(actual, expected, msg)
 
     def assert_not_equals(self, actual, expected, msg=None):
+        """TODO: doc method"""
         if not msg:
             msg = ASSERT_MSG_DEFAULT.format(
                 "assert_not_equals", actual, expected)
@@ -175,6 +209,7 @@ class TestInfoBase(object):
             raise AssertionError(actual, lower, msg)
 
     def assert_in(self, actual, valid_values, msg=None):
+        """TODO: doc method"""
         if not msg:
             msg = ASSERT_MSG_DEFAULT.format(
                 "assert_in", actual, valid_values)
@@ -182,6 +217,7 @@ class TestInfoBase(object):
             raise AssertionError(actual, valid_values, msg)
 
     def assert_not_in(self, actual, invalid_values, msg=None):
+        """TODO: doc method"""
         if not msg:
             msg = ASSERT_MSG_DEFAULT.format(
                 "assert_in", actual, invalid_values)
@@ -189,6 +225,7 @@ class TestInfoBase(object):
             raise AssertionError(actual, invalid_values, msg)
 
     def assert_regex(self, actual, pattern, msg=None):
+        """TODO: doc method"""
         if not msg:
             msg = ASSERT_MSG_DEFAULT.format(
                 "assert_regex", actual, pattern)
@@ -197,6 +234,7 @@ class TestInfoBase(object):
             raise AssertionError(actual, pattern, msg)
 
     def assert_not_regex(self, actual, pattern, msg=None):
+        """TODO: doc method"""
         if not msg:
             msg = ASSERT_MSG_DEFAULT.format(
                 "assert_not_regex", actual, pattern)
@@ -205,6 +243,7 @@ class TestInfoBase(object):
             raise AssertionError(actual, pattern, msg)
 
     def assert_regex_url(self, actual, pattern=None, msg=None):
+        """TODO: doc method"""
         if not msg:
             msg = ASSERT_MSG_DEFAULT.format(
                 "assert_regex_url", actual, pattern)
@@ -213,6 +252,7 @@ class TestInfoBase(object):
         self.assert_regex(actual, pattern, msg=msg)
 
     def assert_path_exist(self, actual, is_dir=True, msg=None):
+        """TODO: doc method"""
         if not msg:
             msg = ASSERT_MSG_DEFAULT.format(
                 "assert_path_exist",
@@ -229,6 +269,7 @@ class TestInfoBase(object):
                 raise AssertionError(actual, "NEED_PATH_NOT_DIR", msg)
 
     def assert_path_not_exist(self, actual, msg=None):
+        """TODO: doc method"""
         if not msg:
             msg = ASSERT_MSG_DEFAULT.format(
                 "assert_path_not_exist", actual, "")
@@ -236,20 +277,34 @@ class TestInfoBase(object):
             raise AssertionError(actual, "NEED_PATH_NOT_FOUND", msg)
 
     def assert_true(self, actual, msg=None):
+        """TODO: doc method"""
         if not msg:
             msg = ASSERT_MSG_DEFAULT.format(
                 "assert_true", actual, "")
         self.assert_is_instance(actual, bool)
-        if not actual:
-            raise AssertionError(actual, True, msg)
+        self.assert_equals(actual, True, msg=msg)
 
     def assert_false(self, actual, msg=None):
+        """TODO: doc method"""
         if not msg:
             msg = ASSERT_MSG_DEFAULT.format(
                 "assert_false", actual, "")
         self.assert_is_instance(actual, bool)
-        if actual:
-            raise AssertionError(actual, False, msg)
+        self.assert_equals(actual, False, msg=msg)
+
+    def assert_none(self, actual, msg=None):
+        """TODO: doc method"""
+        if not msg:
+            msg = ASSERT_MSG_DEFAULT.format(
+                "assert_false", actual, "")
+        self.assert_equals(actual, None, msg=msg)
+
+    def assert_not_none(self, actual, msg=None):
+        """TODO: doc method"""
+        if not msg:
+            msg = ASSERT_MSG_DEFAULT.format(
+                "assert_false", actual, "")
+        self.assert_not_equals(actual, None, msg=msg)
 
 
 class TestInfoBot(TestInfoBase):
@@ -257,17 +312,40 @@ class TestInfoBot(TestInfoBase):
 
     bot = None
 
-    def teardown_method(self, test_method):
+    def teardown_method(self, test_method, close=True):
         """Unload self.attribute"""
         super(TestInfoBot, self).teardown_method(test_method)
         try:
-            self.bot.close()
+            if close:
+                self.log.debug(
+                    "Not closing bot by optional param 'close'")
+                self.bot_close(self.bot)
         except Exception as err:
-            self.log.error("Fails at try to close bot: {}".format(
-                err
-            ))
+            self.log.error(
+                "Fails at try to close bot: {}".format(
+                    err))
 
     def setup_method(self, test_method):
         """Configure self.attribute"""
         super(TestInfoBot, self).setup_method(test_method)
-        self.add_property('bot', BotBase(**SETTINGS))
+        if not isinstance(self.bot, BotBase):
+            self.add_property('bot', value=self.bot_open())
+
+
+class TestInfoBotUnique(TestInfoBot):
+    """Inherit class what implements bot on each testcase"""
+
+    @classmethod
+    def setup_class(cls):
+        """TODO: doc method"""
+        cls.add_property(cls, 'bot', cls.bot_open())
+
+    @classmethod
+    def teardown_class(cls):
+        """TODO: doc method"""
+        cls.bot_close(cls.bot)
+
+    def teardown_method(self, test_method, close=False):
+        """Unload self.attribute"""
+        super(TestInfoBotUnique, self).teardown_method(
+            test_method, close=close)
