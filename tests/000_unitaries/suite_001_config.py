@@ -72,6 +72,10 @@ class TestConfig(TestInfoBase):
             self.assert_is_instance(
                 key_value.get('drivers_remote'), bool)
             self.assert_is_instance(
+                key_value.get('bot_multiple'), bool)
+            self.assert_is_instance(
+                key_value.get('bot_unique'), bool)
+            self.assert_is_instance(
                 key_value.get('web_controls'), bool)
             self.assert_is_instance(
                 key_value.get('web_pages'), bool)

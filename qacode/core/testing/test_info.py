@@ -5,6 +5,7 @@
 import os
 import re
 import time
+import pytest
 from qacode.core.bots.bot_base import BotBase
 from qacode.core.loggers.logger_manager import LoggerManager
 from qacode.core.utils import settings
@@ -326,8 +327,14 @@ class TestInfoBot(TestInfoBase):
                     err))
 
     def setup_method(self, test_method):
-        """Configure self.attribute"""
+        """Configure self.attribute.
+        If skipIf mark applied and True as first param for args tuple
+            then not open bot
+        """
         super(TestInfoBot, self).setup_method(test_method)
+        if 'skipIf' in dir(test_method) and test_method.skipIf.args[0]:
+            pytest.skip(test_method.skipIf.args[1])
+            return
         if not isinstance(self.bot, BotBase):
             self.add_property('bot', value=self.bot_open())
 
@@ -337,13 +344,21 @@ class TestInfoBotUnique(TestInfoBot):
 
     @classmethod
     def setup_class(cls):
-        """TODO: doc method"""
+        """If name start with 'test_' and have decorator skipIf
+            with value True, then not open bot
+        """
+        for method_name in dir(cls):
+            if method_name.startswith("test_"):
+                method = getattr(cls, method_name)
+                if 'skipIf' in dir(method) and method.skipIf.args[0]:
+                    return
         cls.add_property(cls, 'bot', cls.bot_open())
 
     @classmethod
     def teardown_class(cls):
         """TODO: doc method"""
-        cls.bot_close(cls.bot)
+        if cls.bot:
+            cls.bot_close(cls.bot)
 
     def teardown_method(self, test_method, close=False):
         """Unload self.attribute"""
