@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=too-many-arguments
-"""TODO: doc module"""
+"""Package module qacode.core.webs.control_base"""
 
 
+from qacode.core.bots.bot_base import BotBase
 from qacode.core.exceptions.control_exception import ControlException
 from qacode.core.exceptions.core_exception import CoreException
-from qacode.core.bots.bot_base import BotBase
+
 from selenium.webdriver.common.by import By
 
 
@@ -62,6 +62,7 @@ class ControlBase(object):
         self._load_properties(enabled=self.on_instance_load)
 
     def load_settings_keys(self, settings):
+        """Load default setting for ControlBase instance"""
         self.bot.log.debug("control | load_settings_keys: loading keys...")
         for key in settings.keys():
             value = settings.get(key)
@@ -81,7 +82,7 @@ class ControlBase(object):
                                  "key={}, value={}").format(
                                      key, value))
             setattr(self, key, value)
-        self.bot.log.debug("control | load_settings_keys: loaded keys...")
+        self.bot.log.debug("control | load_settings_keys: loaded keys!")
 
     def _load_search(self, enabled=False):
         if not enabled:
@@ -169,11 +170,13 @@ class ControlBase(object):
         """Clear input element text value"""
         self.bot.log.debug("control | clear : clearing text...")
         self.bot.navigation.ele_clear(self.element)
+        self.bot.log.debug("control | clear : cleared text!")
 
     def click(self):
         """Click on element"""
         self.bot.log.debug("control | click : clicking element...")
         self.bot.navigation.ele_click(element=self.element)
+        self.bot.log.debug("control | click : clicked!")
 
     def get_text(self, on_screen=True):
         """Get element content text.

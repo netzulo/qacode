@@ -7,8 +7,6 @@ from qacode.core.testing.test_info import TestInfoBotUnique
 from qacode.core.utils import settings
 from qacode.core.webs.controls.control_base import ControlBase
 from qacode.core.webs.controls.control_form import ControlForm
-from qacode.core.webs.strict_rules import StrictType
-from qacode.core.webs.strict_rules import StrictSeverity
 from selenium.webdriver.remote.webelement import WebElement
 
 

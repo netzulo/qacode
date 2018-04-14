@@ -95,7 +95,7 @@ class TestControlBase(TestInfoBotUnique):
         control = ControlBase(
             self.bot, **login_container_title_config)
         self.assert_equals(control.text, 'Login Page')
-    
+
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_006_property_raises_gettext(self):
         """Testcase: test_006_property_raises_gettext"""

@@ -5,8 +5,9 @@
 from qacode.core.exceptions.control_exception import ControlException
 from qacode.core.exceptions.core_exception import CoreException
 from qacode.core.exceptions.page_exception import PageException
-from qacode.core.webs.controls.control_form import ControlForm
 from qacode.core.webs.controls.control_base import ControlBase
+from qacode.core.webs.controls.control_form import ControlForm
+
 from selenium.webdriver.common.by import By
 
 
@@ -100,26 +101,20 @@ class PageBase(object):
             self._set_control(cfg_control)
 
     def _set_control(self, cfg_control):
+        """Set control as property of PageBase instance
+
+        Arguments:
+            cfg_control {dict} -- config dictionary for manage WebElement
+
+        Raises:
+            PageException -- if param cfg_control is None
+        """
         if not cfg_control:
             raise PageException(message='cfg_control can not be None')
         setattr(
             self,
             cfg_control.get('name'),
-            cfg_control.get('instance')
-        )
-
-    def __repr__(self):
-        """Show basic properties for this object
-
-        Returns:
-
-            str -- format text with values for
-                'PageBase: url={}, bot.browser={}, bot.mode={}'
-        """
-        return 'PageBase: url={}, bot.browser={}, bot.mode={}'.format(
-            self.settings.get('url'),
-            self.bot.settings.get('browser'),
-            self.bot.settings.get('mode'))
+            cfg_control.get('instance'))
 
     def get_element(self, config_control):
         """Search element on Bot instance
@@ -154,7 +149,8 @@ class PageBase(object):
                 if isinstance(instance, (ControlBase, ControlForm)):
                     controls.append(control)
                 else:
-                    raise PageException(message="Bad instance name for control")
+                    raise PageException(
+                        message="Bad instance name for control")
             except (ControlException, Exception) as err:
                 if not isinstance(err, ControlException):
                     raise Exception(err)
@@ -171,7 +167,6 @@ class PageBase(object):
                 (default: {self.settings.get('url')})
             wait_for_load {int} -- [description] (default: {0})
         """
-
         if url is None:
             url = self.settings.get('url')
         self.log.debug('page action: navigate to url={}'.format(url))
@@ -192,3 +187,10 @@ class PageBase(object):
             return self.bot.navigation.is_url(url, ignore_raises=ignore_raises)
         except CoreException as err:
             raise PageException(err, "'Current url' is not 'page url'")
+
+    def __repr__(self):
+        """Show basic properties for this object"""
+        return 'PageBase: url={}, bot.browser={}, bot.mode={}'.format(
+            self.settings.get('url'),
+            self.bot.settings.get('browser'),
+            self.bot.settings.get('mode'))

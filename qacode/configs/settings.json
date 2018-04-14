@@ -42,11 +42,11 @@
   },
   "tests": {
     "skip":{
-      "drivers_local": true,
-      "drivers_remote": true,
-      "bot_multiple": true,
-      "bot_unique": true,
-      "web_controls": true,
+      "drivers_local": false,
+      "drivers_remote": false,
+      "bot_multiple": false,
+      "bot_unique": false,
+      "web_controls": false,
       "web_pages": false
     },
     "apps": [

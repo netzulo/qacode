@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=too-many-arguments
-"""TODO: doc module"""
+"""Package module qacode.core.webs.control_form"""
 
 
 from qacode.core.exceptions.control_exception import ControlException
 from qacode.core.webs.controls.control_base import ControlBase
 from qacode.core.webs.html_tags import HtmlTag
 from qacode.core.webs.strict_rules import StrictRule
-from qacode.core.webs.strict_rules import StrictType
 from qacode.core.webs.strict_rules import StrictSeverity
+from qacode.core.webs.strict_rules import StrictType
 
 
 class ControlForm(ControlBase):
@@ -24,6 +23,7 @@ class ControlForm(ControlBase):
 
     # TODO: follow instructions on #63
     def __init__(self, bot, **kwargs):
+        """Instance of ControlForm"""
         super(ControlForm, self).__init__(bot, **kwargs)
         self._load(**kwargs)
 
@@ -48,7 +48,9 @@ class ControlForm(ControlBase):
         self._load_strict(enabled=self.on_instance_strict)
 
     def load_settings_keys(self, settings):
-        self.bot.log.debug("control_form | load_settings_keys: loading keys...")
+        """Load default setting for ControlForm instance"""
+        self.bot.log.debug(
+            "control_form | load_settings_keys: loading keys...")
         for key in self.settings.keys():
             value = self.settings.get(key)
             if not value:
@@ -63,7 +65,7 @@ class ControlForm(ControlBase):
                                  "key={}, value={}").format(
                                      key, value))
             setattr(self, key, value)
-        self.bot.log.debug("control_form | load_settings_keys: loaded keys...")
+        self.bot.log.debug("control_form | load_settings_keys: loaded keys!")
 
     def _load_strict(self, enabled=False):
         if not enabled:
