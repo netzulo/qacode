@@ -42,7 +42,7 @@
   },
   "tests": {
     "skip":{
-      "drivers_local": false,
+      "drivers_local": true,
       "drivers_remote": false,
       "bot_multiple": false,
       "bot_unique": false,
