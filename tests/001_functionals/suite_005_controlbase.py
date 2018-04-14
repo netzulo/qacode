@@ -214,7 +214,7 @@ class TestControlBase(TestInfoBotUnique):
         control.type_text('test', clear=True)
         self.assert_equals(control.get_attr_value('value'), 'test')
 
-    @pytest.mark.skipIf(True, SKIP_CONTROLS_MSG)
+    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_016_method_getcssvalue(self):
         """Testcase: test_016_method_getcssvalue"""
         txt_username_config = self.settings_control(
@@ -226,7 +226,7 @@ class TestControlBase(TestInfoBotUnique):
         self.assert_equals(
             control.get_css_value('color'), 'rgba(0, 0, 0, 0.75)')
 
-    @pytest.mark.skipIf(True, SKIP_CONTROLS_MSG)
+    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_017_method_setcssrule(self):
         """Testcase: test_017_method_setcssrule"""
         txt_username_config = self.settings_control(
@@ -240,7 +240,7 @@ class TestControlBase(TestInfoBotUnique):
         self.assert_equals(
             control.get_css_value('color'), 'rgba(255, 0, 0, 1)')
 
-    @pytest.mark.skipIf(True, SKIP_CONTROLS_MSG)
+    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_018_method_gettext_onscreenfalse(self):
         """Testcase: test_018_method_gettext_onscreenfalse"""
         login_container_title_config = self.settings_control(

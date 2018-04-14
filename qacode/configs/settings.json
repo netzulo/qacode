@@ -42,6 +42,7 @@
   },
   "tests": {
     "skip":{
+      "test_configs": true,
       "drivers_local": true,
       "drivers_remote": false,
       "bot_multiple": false,

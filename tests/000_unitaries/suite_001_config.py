@@ -3,13 +3,14 @@
 
 
 import pytest
-from qacode.core.loggers.logger_manager import LoggerManager
 from qacode.core.testing.test_info import TestInfoBase
 from qacode.core.utils import settings
 
 
-LOGGER_MANAGER = LoggerManager()
+SETTINGS = settings()
 MSG_OBSOLETE = "Test obsolete, need new tests for key tests.functionals.pages"
+SKIP_CONFIG = SETTINGS['tests']['skip']['test_configs']
+SKIP_CONFIG_MSG = 'test_configs DISABLED by config file'
 
 
 class TestConfig(TestInfoBase):
@@ -35,6 +36,8 @@ class TestConfig(TestInfoBase):
     ])
     def test_config_bot_keys(self, key_name):
         """TODO: doc method"""
+        if SKIP_CONFIG:
+            pytest.skip(msg=SKIP_CONFIG_MSG)
         key_value = settings()['bot'][key_name]
         if key_name == 'mode':
             valid_values = ["local", "remote"]
@@ -64,9 +67,13 @@ class TestConfig(TestInfoBase):
     ])
     def test_config_tests_keys(self, key_name):
         """TODO: doc method"""
+        if SKIP_CONFIG:
+            pytest.skip(msg=SKIP_CONFIG_MSG)
         key_value = settings()['tests'][key_name]
         if key_name == 'skip':
             self.assert_is_instance(key_value, dict)
+            self.assert_is_instance(
+                key_value.get('test_configs'), bool)
             self.assert_is_instance(
                 key_value.get('drivers_local'), bool)
             self.assert_is_instance(
