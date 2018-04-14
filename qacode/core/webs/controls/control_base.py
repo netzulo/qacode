@@ -5,6 +5,7 @@
 
 from qacode.core.exceptions.control_exception import ControlException
 from qacode.core.exceptions.core_exception import CoreException
+from qacode.core.bots.bot_base import BotBase
 from selenium.webdriver.common.by import By
 
 
@@ -13,9 +14,15 @@ class ControlBase(object):
 
     # Instance properties
     bot = None
+    settings = None
+    # Settings properties
+    name = None
+    locator = None
     selector = None
-    element = None
+    on_instance_search = None
+    on_instance_load = None
     # Element properties
+    element = None
     tag = None
     text = None
     is_displayed = None
@@ -24,90 +31,93 @@ class ControlBase(object):
     attr_id = None
     attr_class = None
 
-    def __init__(self, bot, selector='', locator=By.CSS_SELECTOR,
-                 element=None, search=True, wait_for_load=False):
-        """Base class to manage web element through page system of qacode
-            library
-
-        Usage:
-            ControlBase(bot, selector, locator)
-            ControlBase(bot, element)
-            ControlBase(bot, element, search=True)
+    def __init__(self, bot, **kwargs):
+        """Wrapper for Selenium class named 'WebElement' using
+            wrapper of WebDriver named qacode.core.bots.BotBase
 
         Arguments:
-            bot {BotBase} -- qacode bot Class to manage control validations
-
-        Keyword Arguments:
-            selector {str} -- can be empty string to use element insteadof of
-                params to load WebElement
-            locator {By} -- selenium search strategy
-                (default: {By.CSS_SELECTOR})
-            element {WebElement} -- instanced WebElement class
-                (default: {None})
-            search {bool} -- [description] (default: {True})
-            wait_for_load {bool} -- wait for expected condition from selenium
-                before to load element (default: {False})
-
-        Raises:
-            CoreEx -- param 'bot' can't be None
-            ControlException -- param 'selector' can't be None, don't use if
-                want to instance with 'element'
-            ControlException -- param 'element' can't be None, don't use if
-                want to instance with 'selector'
-            ControlException -- 'element' found isn't valid to use, check
-                selector and element
+            bot {BotBase} -- BotBase instance
         """
-        message_errors = [
-            "param 'bot' can't be None",
-            ("param 'selector' can't be None, don't use if want to instance "
-             "with 'element'"),
-            ("param 'element' can't be None, don't use if want to instance "
-             "with 'selector'"),
-            ("'element' found isn't valid to use, check ur selector={} and "
-             "element={}"),
-        ]
-        if bot is None:
-            raise ControlException(message_errors[0])
+        if not bot or not isinstance(bot, BotBase):
+            raise ControlException(message="Bad param 'bot'")
         self.bot = bot
-        if selector is None:
-            raise ControlException(message_errors[1])
-        self.selector = selector
-        if element is not None:
-            search = False
-        if search:
-            self.element = self.load_element(
-                selector, locator=locator, wait_for_load=wait_for_load)
-        else:
-            self.element = element
-        # noqa for this logic, yet
-        if self.element is None:
-            raise ControlException(
-                message_errors[2].format(
-                    self.selector, self.element))
+        # load settings before try to instance
+        self._load(**kwargs)
+
+    def _load(self, **kwargs):
+        """Load properties from settings dict.
+            Some elements need to search False to be search at future
+        """
+        self.settings = {
+            "selector": kwargs.get('selector'),
+            "name": kwargs.get('name'),
+            "locator": kwargs.get('locator'),
+            "on_instance_search": kwargs.get('on_instance_search'),
+            "on_instance_load": kwargs.get('on_instance_load'),
+        }
+        # needed for self._load_* functions
+        self.load_settings_keys(self.settings)
+        # instance logic
+        self._load_search(enabled=self.on_instance_search)
+        self._load_properties(enabled=self.on_instance_load)
+
+    def load_settings_keys(self, settings):
+        self.bot.log.debug("control | load_settings_keys: loading keys...")
+        for key in settings.keys():
+            value = settings.get(key)
+            if not value:
+                # Optional params
+                if key == 'name':
+                    value = "UNNAMED"
+                elif key == 'locator':
+                    value = By.CSS_SELECTOR
+                elif key == 'on_instance_search':
+                    value = True
+                elif key == 'on_instance_load':
+                    value = False
+                else:
+                    raise ControlException(
+                        message=("Bad settings: "
+                                 "key={}, value={}").format(
+                                     key, value))
+            setattr(self, key, value)
+        self.bot.log.debug("control | load_settings_keys: loaded keys...")
+
+    def _load_search(self, enabled=False):
+        if not enabled:
+            self.bot.log.warning(
+                "control | _load_search: !Disabled searching element!")
+            return False
+        self.bot.log.debug("control | _load_search: searching element...")
+        try:
+            self.element = self.bot.navigation.find_element(
+                self.selector, locator=self.locator)
+        except CoreException:
+            self.bot.log.warning(
+                "control | _load_search: waiting for element...")
+            self.element = self.bot.navigation.find_element_wait(
+                self.selector, locator=self.locator)
+        self.bot.log.debug("control | _load_search: element found!")
+        return True
+
+    def _load_properties(self, enabled=False):
+        if not enabled:
+            self.bot.log.warning(
+                ("control | _load_properties: "
+                 "!Disabled loading ControlBase properties!"))
+            return False
+        self.bot.log.debug(
+            "control | _load_properties: loading ControlBase properties...")
         self.tag = self.get_tag()
         self.text = self.get_text()
         self.is_displayed = self.bot.navigation.ele_is_displayed(self.element)
         self.is_enabled = self.bot.navigation.ele_is_enabled(self.element)
         self.is_selected = self.bot.navigation.ele_is_selected(self.element)
         self.attr_id = self.get_attr_value('id')
-        self.attr_class = self.get_attr_value('class')
-
-    def load_element(self, selector, locator=By.CSS_SELECTOR,
-                     wait_for_load=False):
-        """
-        Find element using bot with default By.CSS_SELECTOR
-            strategy for internal element
-        """
-        self.bot.log.debug("load_element: selector={}".format(selector))
-        try:
-            if wait_for_load:
-                return self.bot.navigation.find_element_wait(
-                    selector, locator=locator)
-            return self.bot.navigation.find_element(
-                selector, locator=locator)
-        except CoreException as err:
-            raise ControlException(
-                err, message='Element not found at load control_base')
+        self.attr_class = self.get_attr_value('class').split()
+        self.bot.log.debug(
+            "control | _load_properties: loaded ControlBase properties!")
+        return True
 
     def find_child(self, selector, locator=By.CSS_SELECTOR):
         """Find child element using bot with default By.CSS_SELECTOR strategy
@@ -124,15 +134,19 @@ class ControlBase(object):
         Returns:
             ControlBase -- instanced base element using qacode library object
         """
-        self.bot.log.debug("find_child: selector={}".format(selector))
-        return ControlBase(
-            self.bot, element=self.element.find_element(
-                locator, selector))
+        self.bot.log.debug(
+            "control | find_child: selector={}".format(selector))
+        settings = {
+            "locator": locator,
+            "selector": selector
+        }
+        return ControlBase(self.bot, **settings)
 
     def get_tag(self):
         """Returns tag_name from Webelement"""
         tag_name = self.bot.navigation.ele_tag(self.element)
-        self.bot.log.debug("get_tag : tag={}".format(tag_name))
+        self.bot.log.debug(
+            "control | get_tag : tag={}".format(tag_name))
         return tag_name
 
     def type_text(self, text, clear=False):
@@ -144,7 +158,8 @@ class ControlBase(object):
         Keyword Arguments:
             clear {bool} -- clear text element at enable key (default: {False})
         """
-        self.bot.log.debug("type_text : text={}".format(text))
+        self.bot.log.debug(
+            "control | type_text : text={}".format(text))
         if clear:
             self.clear()
         self.bot.navigation.ele_write(self.element, text)
@@ -152,11 +167,12 @@ class ControlBase(object):
 
     def clear(self):
         """Clear input element text value"""
+        self.bot.log.debug("control | clear : clearing text...")
         self.bot.navigation.ele_clear(self.element)
 
     def click(self):
         """Click on element"""
-        self.bot.log.debug("click : clicking element...")
+        self.bot.log.debug("control | click : clicking element...")
         self.bot.navigation.ele_click(element=self.element)
 
     def get_text(self, on_screen=True):
@@ -173,6 +189,7 @@ class ControlBase(object):
         Returns:
             str -- Return element content text (innerText property)
         """
+        self.bot.log.debug("control | get_text : obtaining text...")
         try:
             return self.bot.navigation.ele_text(
                 self.element, on_screen=on_screen)
@@ -193,6 +210,7 @@ class ControlBase(object):
         Returns:
             dict -- a dict list of {name, value}
         """
+        self.bot.log.debug("control | get_attrs : obtaining attrs...")
         attrs = list()
         for attr_name in attr_names:
             attrs.append({
@@ -212,10 +230,15 @@ class ControlBase(object):
         Returns:
             str -- value of html attr_name
         """
+        self.bot.log.debug(
+            ("control | get_attr_value : "
+             "obtaining value for attr_name='{}'...").format(attr_name))
         try:
-            value = self.bot.navigation.ele_attribute(self.element, attr_name)
+            value = self.bot.navigation.ele_attribute(
+                self.element, attr_name)
             self.bot.log.debug(
-                "get_attr : attr_name={}, value={}".format(attr_name, value))
+                ("control | get_attr_value : obtained "
+                 "attr_name={}, value={}").format(attr_name, value))
             return value
         except CoreException as err:
             raise ControlException(err, message=err.message)
@@ -243,10 +266,15 @@ class ControlBase(object):
             css_important {bool} -- Allow to include '!important' to rule for
                 overrite others values applied (default: {True})
         """
+        self.bot.log.debug(
+            ("control | set_css_value : setting new CSS rule, "
+             "prop_name={}, prop_value={}").format(
+                prop_name, prop_value))
         self.bot.navigation.set_css_rule(
             self.selector, prop_name, prop_value,
             css_important=css_important)
         if self.selector is None:
             raise ControlException(message="Couldn't reload element")
         # reload WebElement
-        self.element = self.load_element(self.selector)
+        self._load_search(enabled=self.on_instance_search)
+        self._load_properties(enabled=self.on_instance_load)

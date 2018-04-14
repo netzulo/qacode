@@ -43,23 +43,71 @@ class TestInfoBase(object):
         return bot.close()
 
     @classmethod
-    def app_config(cls, app_name):
+    def settings_apps(cls):
         """TODO: doc method"""
-        app_configs = SETTINGS['tests']['apps']
-        for app_config in app_configs:
-            if app_config.get('name') == app_name:
-                return app_config
-        raise Exception("App name not found")
+        return SETTINGS['tests']['apps']
 
     @classmethod
-    def app_page(cls, page_name):
+    def settings_app(cls, app_name):
         """TODO: doc method"""
-        app_configs = SETTINGS['tests']['apps']
-        for app_config in app_configs:
-            for page_config in app_config.get('pages'):
-                if page_config.get('name') == page_name:
-                    return page_config
-        raise Exception("App name not found")
+        for app in cls.settings_apps():
+            if app.get('name') == app_name:
+                return app
+        raise Exception(
+            "Not found for: app_name={}".format(
+                app_name))
+
+    @classmethod
+    def settings_page(cls, page_name, app_name=None):
+        """TODO: doc method"""
+        page_selected = None
+        apps = cls.settings_apps()
+        if isinstance(app_name, str):
+            apps = [cls.settings_app(app_name)]
+        for app in apps:
+            for page in app.get('pages'):
+                if page.get('name') == page_name:
+                    page_selected = page
+        return page_selected
+
+    @classmethod
+    def settings_control(cls, control_name, page_name=None, app_name=None):
+        """TODO: doc method"""
+        page_selected = None
+        if isinstance(page_name, str):
+            page_selected = cls.settings_page(
+                page_name, app_name=app_name)
+        if page_selected:
+            for control in page_selected.get('controls'):
+                if control.get('name') == control_name:
+                    return control
+        else:
+            apps = cls.settings_apps()
+            for app in apps:
+                for page in app.get('pages'):
+                    for control in page.get('controls'):
+                        if control.get('name') == control_name:
+                            return control
+
+    @classmethod
+    def settings_filter(cls, key_type, key_name):
+        """TODO: doc method"""
+        apps = cls.settings_apps()
+        if key_type == 'app':
+            cls.settings_app(key_name)
+        elif key_type == 'page':
+            cls.settings_page(key_name)
+            raise Exception(
+                "Not found for: key_type={}, key_name={}".format(
+                    key_type, key_name))
+        elif key_type == 'control':
+            for app in apps:
+                for page in app.get('pages'):
+                    for control in app.get('controls'):
+                        if control.get('name') == key_name:
+                            return control
+        else:
+            raise Exception("key_type not found")
 
     def setup_method(self, test_method):
         """Configure self.attribute"""
@@ -72,9 +120,10 @@ class TestInfoBase(object):
         self.log.info("Finished testcase named='{}'".format(
             test_method.__name__))
 
-    def add_property(self, name, value=None):
+    @classmethod
+    def add_property(cls, name, value=None):
         """TODO: doc method"""
-        setattr(self, name, value)
+        setattr(cls, name, value)
 
     def timer(self, wait=5, print_each=5):
         """Timer to sleep browser on testcases
@@ -179,26 +228,31 @@ class TestInfoBase(object):
             raise AssertionError(instance, class_type, msg)
         return True
 
-    def assert_raises(self, actual_exception, expected_exception, msg=None):
-        """Allow to encapsulate method TODO: last time used failed,
-            need to confirm bug assertRaises
-            ( expected_exception, function_ref, args, kwargs )
+    def assert_raises(self, expected_exception, function, *args, **kwargs):
+        """Allow to encapsulate pytest.raises method(
+            *args=(
+                expected_exception,
+                function,
+            ),
+            **kwargs={
+                msg: ASSERT_MSG_DEFAULT
+            }
+        )
         """
+        msg = kwargs.get('msg')
         if not msg:
             msg = ASSERT_MSG_DEFAULT.format(
                 "assert_raises",
-                actual_exception,
+                "TODO:not implemented value",
                 expected_exception)
-        if not isinstance(actual_exception, expected_exception):
-            raise AssertionError(
-                actual_exception, expected_exception, msg)
+        pytest.raises(expected_exception, function, *args, **kwargs)
 
     def assert_greater(self, actual, greater, msg=None):
         """Allow to encapsulate method assertGreater(a, b, msg=msg)"""
         if not msg:
             msg = ASSERT_MSG_DEFAULT.format(
                 "assert_greater", actual, greater)
-        if actual > greater:
+        if actual < greater:
             raise AssertionError(actual, greater, msg)
 
     def assert_lower(self, actual, lower, msg=None):
@@ -206,7 +260,7 @@ class TestInfoBase(object):
         if not msg:
             msg = ASSERT_MSG_DEFAULT.format(
                 "assert_greater", actual, lower)
-        if actual < lower:
+        if actual > lower:
             raise AssertionError(actual, lower, msg)
 
     def assert_in(self, actual, valid_values, msg=None):
@@ -318,9 +372,10 @@ class TestInfoBot(TestInfoBase):
         super(TestInfoBot, self).teardown_method(test_method)
         try:
             if close:
+                self.bot_close(self.bot)
+            else:
                 self.log.debug(
                     "Not closing bot by optional param 'close'")
-                self.bot_close(self.bot)
         except Exception as err:
             self.log.error(
                 "Fails at try to close bot: {}".format(
@@ -347,12 +402,20 @@ class TestInfoBotUnique(TestInfoBot):
         """If name start with 'test_' and have decorator skipIf
             with value True, then not open bot
         """
+        tests_methods = []
+        skip_methods = []
         for method_name in dir(cls):
             if method_name.startswith("test_"):
                 method = getattr(cls, method_name)
+                tests_methods.append(method)
                 if 'skipIf' in dir(method) and method.skipIf.args[0]:
-                    return
-        cls.add_property(cls, 'bot', cls.bot_open())
+                    skip_methods.append(method)
+        if tests_methods == skip_methods:
+            pytest.skip("Testsuite skipped")
+        else:
+            if not isinstance(cls.bot, BotBase):
+                cls.add_property('bot', value=cls.bot_open())
+                cls.add_property('log', value=LOGGER_MANAGER.logger)
 
     @classmethod
     def teardown_class(cls):

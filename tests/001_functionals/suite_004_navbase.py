@@ -2,7 +2,7 @@
 """Package for suites and tests related to bots.modules package"""
 
 
-from unittest import skipIf
+import pytest
 from qacode.core.bots.modules.nav_base import NavBase
 from qacode.core.testing.test_info import TestInfoBotUnique
 from qacode.core.utils import settings
@@ -20,33 +20,33 @@ class TestNavBase(TestInfoBotUnique):
     page_home = None
 
     def setup_method(self, test_method, close=True):
-        """Unload self.attribute"""
+        """Configure self.attribute"""
         super(TestNavBase, self).setup_method(test_method)
-        self.add_property('app', self.app_config('nav_tests'))
-        self.add_property('page_home', self.app_page('nav_tests_home'))
+        self.add_property('app', self.settings_app('nav_tests'))
+        self.add_property('page_home', self.settings_page('nav_tests_home'))
 
-    @skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
+    @pytest.mark.skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
     def test_001_navbase_instance(self):
         """Testcase: test_000_navbase_instance"""
         self.assert_is_instance(self.bot.navigation, NavBase)
 
-    @skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
+    @pytest.mark.skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
     def test_002_gourl_without_waits(self):
         """Testcase: test_001_gourl_without_waitsparam"""
         self.bot.navigation.get_url(self.page_home.get('url'))
 
-    @skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
+    @pytest.mark.skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
     def test_003_gourl_with_waitsparam(self):
         """Testcase: test_002_gourl_with_waitsparam"""
         self.bot.navigation.get_url(
             self.page_home.get('url'), wait_for_load=0)
 
-    @skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
+    @pytest.mark.skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
     def test_004_getmaximizewindow(self):
         """Testcase: test_003_getmaximizewindow"""
         self.bot.navigation.get_maximize_window()
 
-    @skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
+    @pytest.mark.skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
     def test_005_getcapabilities(self):
         """Testcase: test_004_getcapabilities"""
         caps = self.bot.navigation.get_capabilities()
@@ -54,7 +54,7 @@ class TestNavBase(TestInfoBotUnique):
         self.assert_is_instance(caps['chrome'], dict)
         self.assert_equals(caps['browserName'], 'chrome')
 
-    @skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
+    @pytest.mark.skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
     def test_006_getlog(self):
         """Testcase: test_005_getlog"""
         self.bot.navigation.get_url(self.page_home.get('url'))
@@ -62,7 +62,7 @@ class TestNavBase(TestInfoBotUnique):
         self.assert_not_none(log_data)
         self.log.debug("selenium logs, browser={}".format(log_data))
 
-    @skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
+    @pytest.mark.skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
     def test_007_getlog_browser(self):
         """Testcase: test_006_getlog_browser"""
         self.bot.navigation.get_url(self.page_home.get('url'))
@@ -70,7 +70,7 @@ class TestNavBase(TestInfoBotUnique):
         self.assert_not_none(log_data)
         self.log.debug("selenium logs, browser={}".format(log_data))
 
-    @skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
+    @pytest.mark.skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
     def test_008_getlog_driver(self):
         """Testcase: test_007_getlog_driver"""
         self.bot.navigation.get_url(self.page_home.get('url'))
@@ -78,7 +78,7 @@ class TestNavBase(TestInfoBotUnique):
         self.assert_not_none(log_data)
         self.log.debug("selenium logs, driver={}".format(log_data))
 
-    @skipIf(True, 'Issue opened on github selenium, waiting...')
+    @pytest.mark.skip('Issue opened on github selenium, waiting...')
     def test_009_getlog_client(self):
         """Testcase: test_008_getlog_client
         https://github.com/SeleniumHQ/selenium/issues/5410
@@ -88,7 +88,7 @@ class TestNavBase(TestInfoBotUnique):
         self.assert_not_none(log_data)
         self.log.debug("selenium logs, client={}".format(log_data))
 
-    @skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
+    @pytest.mark.skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
     def test_010_getlog_server(self):
         """Testcase: test_008_getlog_client"""
         self.bot.navigation.get_url(self.page_home.get('url'))

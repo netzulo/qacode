@@ -461,7 +461,7 @@ class NavBase(object):
         if on_screen:
             text = element.text
         else:
-            text = self.ele_attribute(element, 'innerText')[1]
+            text = self.ele_attribute(element, 'innerText')
             self.log.warning("text obtained from innerText")
             if self.ele_is_displayed(element):
                 raise CoreException(

@@ -47,7 +47,7 @@
       "bot_multiple": true,
       "bot_unique": true,
       "web_controls": true,
-      "web_pages": true
+      "web_pages": false
     },
     "apps": [
       {
@@ -101,9 +101,25 @@
                 "on_instance_load": false
               },
               {
-                "name": "property_control_form",
+                "name": "btn_submit",
                 "locator": "css selector",
                 "selector": "button[type='submit']",
+                "instance": "ControlBase",
+                "on_instance_search": true,
+                "on_instance_load": false
+              },
+              {
+                "name": "login_container",
+                "locator": "css selector",
+                "selector": "#content",
+                "instance": "ControlBase",
+                "on_instance_search": true,
+                "on_instance_load": false
+              },
+              {
+                "name": "login_container_title",
+                "locator": "css selector",
+                "selector": "h2",
                 "instance": "ControlBase",
                 "on_instance_search": true,
                 "on_instance_load": false

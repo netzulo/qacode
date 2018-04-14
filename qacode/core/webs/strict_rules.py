@@ -70,13 +70,13 @@ class StrictType(Enum):
         or inherits
     """
 
-    TAG = 'TAG'
-    HTML_ATTR = 'HTML_ATTR'
-    CSS_PROP = 'CSS_PROP'
-    JS_EVENT = 'JS_EVENT'
-    BEHAVIOUR = 'BEHAVIOUR'
-    USABILITY = 'USABILITY'
-    SEO = 'SEO'
+    TAG = 'tag'
+    HTML_ATTR = 'html_attr'
+    CSS_PROP = 'css_prop'
+    JS_EVENT = 'js_event'
+    BEHAVIOUR = 'behaviour'
+    USABILITY = 'usability'
+    SEO = 'seo'
 
     @classmethod
     def get_strict_types(cls):

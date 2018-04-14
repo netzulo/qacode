@@ -5,87 +5,85 @@
 
 from qacode.core.exceptions.control_exception import ControlException
 from qacode.core.webs.controls.control_base import ControlBase
+from qacode.core.webs.html_tags import HtmlTag
+from qacode.core.webs.strict_rules import StrictRule
 from qacode.core.webs.strict_rules import StrictType
-from selenium.webdriver.common.by import By
+from qacode.core.webs.strict_rules import StrictSeverity
 
 
 class ControlForm(ControlBase):
     """Requirements: #63"""
 
+    # Settings properties
+    on_instance_strict = None
     strict_rules = None
+    # Strict properties
     strict_tags = None
     strict_attrs = None
     strict_css_props = None
-    strict_mode = None
 
     # TODO: follow instructions on #63
-    def __init__(self, bot, selector='', locator=By.CSS_SELECTOR, element=None,
-                 search=True, wait_for_load=False,
-                 strict_rules=None,
-                 strict_mode=False):
-        """Base class to manage form web element through page system of qacode
-            library. Apply for elements tagged with
-                <label> : must validate attrs= id, class, for
-                <input> : must validate attrs= id, class
-                <select> + <option> : must validate attrs= id, class
-                <textarea> : must validate attrs= id, class
-                <datalist> + <option> : must validate attrs= id, class
-                <output> : must validate attrs= id, class
-            Apply also on parent elements
-                <form> : must validate attrs= id, class
-                <legend> : must validate attrs= id, class
-                <fieldset> : must validate attrs= id, class
+    def __init__(self, bot, **kwargs):
+        super(ControlForm, self).__init__(bot, **kwargs)
+        self._load(**kwargs)
 
-        Usage:
-            ControlBase(bot, selector, locator)
-            ControlBase(bot, element)
-            ControlBase(bot, element, search=True)
-
-        Arguments:
-            bot {BotBase} -- qacode bot Class to manage control validations
-
-        Keyword Arguments:
-            selector {str} -- can be empty string to use element insteadof of
-                params to load WebElement
-            locator {By} -- selenium search strategy
-                (default: {By.CSS_SELECTOR})
-            element {WebElement} -- instanced WebElement class
-                (default: {None})
-            search {bool} -- [description] (default: {True})
-            wait_for_load {bool} -- wait for expected condition from selenium
-                before to load element (default: {False})
-            strict_rules {list(StrictRule)} -- a list of strict rules to be
-                applied to a element
-            strict_mode {bool} -- allows to raise validation when warning
-                it's received
-
-        Raises:
-            CoreEx -- param 'bot' can't be None
-            ControlException -- param 'selector' can't be None, don't use if
-                want to instance with 'element'
-            ControlException -- param 'element' can't be None, don't use if
-                want to instance with 'selector'
-            ControlException -- 'element' found isn't valid to use, check
-                selector and element
+    def _load(self, **kwargs):
+        """Load properties from settings dict.
+            Some elements need to search False to be search at future
         """
-        super(ControlForm, self).__init__(
-            bot,
-            selector=selector,
-            locator=locator,
-            element=element,
-            search=search,
-            wait_for_load=wait_for_load)
-        if strict_mode is None:
-            raise ControlException(
-                message="bad param 'strict_mode' is None")
-        self.strict_mode = strict_mode
-        if not strict_rules or not isinstance(strict_rules, (list, tuple)):
-            strict_rules = []
-        self.strict_rules = strict_rules
+        self.settings = {
+            "selector": kwargs.get('selector'),
+            "name": kwargs.get('name'),
+            "locator": kwargs.get('locator'),
+            "on_instance_search": kwargs.get('on_instance_search'),
+            "on_instance_load": kwargs.get('on_instance_load'),
+            "on_instance_strict": kwargs.get('on_instance_strict'),
+            "strict_rules": kwargs.get('strict_rules')
+        }
+        # needed for self._load_* functions
+        self.load_settings_keys(self.settings)
+        # instance logic
+        self._load_search(enabled=self.on_instance_search)
+        self._load_properties(enabled=self.on_instance_load)
+        self._load_strict(enabled=self.on_instance_strict)
+
+    def load_settings_keys(self, settings):
+        self.bot.log.debug("control_form | load_settings_keys: loading keys...")
+        for key in self.settings.keys():
+            value = self.settings.get(key)
+            if not value:
+                # Optional params
+                if key == 'on_instance_strict':
+                    value = False
+                elif key == 'strict_rules':
+                    value = list()
+                else:
+                    raise ControlException(
+                        message=("Bad settings: "
+                                 "key={}, value={}").format(
+                                     key, value))
+            setattr(self, key, value)
+        self.bot.log.debug("control_form | load_settings_keys: loaded keys...")
+
+    def _load_strict(self, enabled=False):
+        if not enabled:
+            self.bot.log.debug(
+                ("control | _load_strict: "
+                 "!Disabled loading StrictRules!"))
+            return False
+        typed_rules = list()
+        for strict_rule_config in self.settings.get('strict_rules'):
+            strict_tag = HtmlTag(strict_rule_config.get('tag'))
+            strict_type = StrictType(strict_rule_config.get('type'))
+            strict_severity = StrictSeverity(
+                strict_rule_config.get('severity', d=100))
+            rule = StrictRule(strict_tag, strict_type, strict_severity)
+            typed_rules.append(rule)
+        self.strict_rules = typed_rules
         self.strict_tags = []
         self.strict_attrs = []
         self.strict_css_props = []
-        self._add_rules(self.strict_rules, strict_mode)
+        self._add_rules(self.strict_rules)
         if not self.is_strict_tags() and self.strict_mode:
             raise ControlException(
                 message=("Tag obtained for this element html tag not in "
@@ -98,8 +96,9 @@ class ControlForm(ControlBase):
             raise ControlException(
                 message=("Css property obtained for this element not in "
                          "strict_css_props list"))
+        return True
 
-    def _add_rules(self, strict_rules, strict_mode):
+    def _add_rules(self, strict_rules):
         """Validate strict rules for each type
 
         Arguments:
