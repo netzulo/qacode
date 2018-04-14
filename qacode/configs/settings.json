@@ -1,7 +1,7 @@
 { "bot": {
     "mode": "remote",
     "browser": "chrome",
-    "url_hub": "http://localhost:11000/wd/hub",
+    "url_hub": "http://qalab.tk:11000/wd/hub",
     "drivers_path": "../qadrivers",
     "drivers_names": [
       "chromedriver_32.exe",
