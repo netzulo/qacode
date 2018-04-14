@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=broad-except
-"""qacode module can be installed and configured from here"""
+"""Package qacode module can be installed and configured from here"""
 
 from os import path
 from setuptools import setup, find_packages
@@ -57,6 +56,7 @@ setup(
         'nose==1.3.7',
         'nose-testconfig==0.10',
         'pytest',
+        'qatestlink==0.0.7',
     ],
     setup_requires=[
         'pytest-runner',

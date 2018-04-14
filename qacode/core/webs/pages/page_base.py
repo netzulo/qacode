@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
-"""TODO"""
+"""package module qacode.core.webs.pages.page_base"""
 
 
+from qacode.core.exceptions.control_exception import ControlException
 from qacode.core.exceptions.core_exception import CoreException
 from qacode.core.exceptions.page_exception import PageException
 from qacode.core.webs.controls.control_base import ControlBase
+from qacode.core.webs.controls.control_form import ControlForm
+
 from selenium.webdriver.common.by import By
 
 
@@ -15,123 +18,159 @@ class PageBase(object):
     """
 
     bot = None
-    url = None
-    selectors = None
-    go_url = None
-    elements = []
-    locator = None
+    log = None
+    settings = None
 
-    def __init__(self, bot, url, selectors=None, locator=By.CSS_SELECTOR,
-                 go_url=True, maximize=False):
+    def __init__(self, bot, **kwargs):
+        """Instance of PageBase class
+
+        Arguments:
+            bot {BotBase} -- BotBase or inherit class instance
+
+        Keyword Arguments:
+            url {str} -- string for url of page
+            locator {BY} -- strategy used to search all selectors
+                passed, default value it's locator.CSS_SELECTOR
+                (default: {BY.CSS_SELECTOR})
+            go_url {bool} -- navigate to 'self.url' at instance
+                (default: {False})
+            wait_url {int} -- seconds to wait for 'self.url' load
+                at instance (default: {0})
+            maximize {bool} -- allow to maximize browser window
+                before to load elements at instance (default: {False})
+            controls {list(dict)} -- list of dicts with settings for each
+                control which want to load
+
+        Raises:
+            PageException -- if required param 'bot' is None
+            PageException -- if required param 'url' is None or empty str
         """
-        :Args:
-         required:
-          bot: BotBase or inherit class instance
-          url: page url for class, can be empty string
-         optionals:
-          locator: strategy used to search all selectors passed,
-              default value it's locator.CSS_SELECTOR
-          selectors: list of CSS_SELECTOR strings to search elements
-          go_url: allow to disable go to url at instance page
-            class locator default
-        """
-        if bot is None:
+        if not bot:
             raise PageException(message="param bot is None")
         self.bot = bot
-        if url is None:
+        if not isinstance(kwargs, dict):
+            raise PageException(message='Optional params must be a dict')
+        self.settings = kwargs
+        if not self.settings.get('url'):
             raise PageException(
                 message='Param url can\'t be None, just empty string')
-        self.url = url
-        if locator is None:
-            raise PageException(message='Param locator can\'t be None')
-        self.locator = locator
-        if go_url is None:
-            raise PageException(message='Param go_url can\'t be None')
-        if maximize is None:
-            raise PageException(message='Param maximize can\'t be None')
-        self.go_url = go_url
-        self._load_page(selectors, go_url=self.go_url, maximize=maximize)
+        if not self.settings.get('locator'):
+            self.settings.update({'locator': By.CSS_SELECTOR})
+        if not self.settings.get('go_url'):
+            self.settings.update({'go_url': False})
+        if not self.settings.get('wait_url'):
+            self.settings.update({'wait_url': 0})
+        if not self.settings.get('maximize'):
+            self.settings.update({'maximize': False})
+        if not self.settings.get('controls'):
+            self.settings.update({'controls': []})
+        self._load()
 
-    def _load_page(self, selectors, go_url=True, maximize=True):
+    def _load(self, settings=None):
         """Loads page elements and maximize browser window"""
-        self.selectors = selectors
-        if go_url:
-            self.go_page_url()
-        if maximize:
-            self.bot.log.debug('maximizing page window')
+        # TODO: tests passed ?
+        self.log = self.bot.log
+        if not settings:
+            settings = self.settings
+        if settings.get('url'):
+            self.url = settings.get('url')
+        if settings.get('go_url'):
+            self.go_url()
+        if settings.get('maximize'):
+            self.log.debug('page action: maximizing browser window')
             self.bot.navigation.get_maximize_window()
-        if self.selectors is None:
-            self.bot.log.debug(
-                'Not searching elements if it\'s None')
-        else:
-            self.bot.log.debug(
-                'Searching page elements with selectors')
-            self.elements = self.get_elements(
-                self.selectors, as_controls=True)
-
-    def get_element(self, selector, as_control=False):
-        """
-        Search element on Bot instance, choose selector
-          from instance or locator param
-        :Args:
-        :optionals:
-            :selector:
-                if not selector passed,
-                then use instance property
-            :as_control:
-                if True, return
-                ControlBase element loaded
-                from selector
-        """
-        return self.get_elements([selector], as_controls=as_control)[0]
-
-    def get_elements(self, selectors, as_controls=False):
-        """
-        Search elements on Bot instance, choose selectors
-          from instance or locator param
-        :Args:
-        :optionals:
-            :selectors:
-                if not selectors passed,
-                then use instance property
-            :as_controls:
-                if True, return list
-                of ControlBase elements loaded
-                from selectors
-        """
-        msg_page_element_notfound = "Page element not found: "
-        "url={}, selector={}"
-        elements = []
-        if selectors is None:
-            raise PageException(
-                message='Can\'t use None selectors to get elements')
-        for selector in list(selectors):
-            self.bot.log.debug(
-                "Searching element: with selector={} locator={}".format(
-                    selector, self.locator))
-            if as_controls:
-                element = ControlBase(self.bot, selector, self.locator)
+        if not settings.get('controls'):
+            self.log.debug(
+                'page action: empty list of controls for this page')
+            return
+        for cfg_control in settings.get('controls'):
+            self.log.debug(
+                ("page action: Loading element "
+                 "as property name='{}'").format(cfg_control.get('name')))
+            control = None
+            instance = cfg_control.get('instance')
+            if instance == 'ControlBase' or type(instance) == ControlBase:
+                control = ControlBase(self.bot, **cfg_control)
+            elif instance == 'ControlForm' or type(instance) == ControlForm:
+                control = ControlForm(self.bot, **cfg_control)
             else:
-                try:
-                    element = self.bot.navigation.find_element(
-                        selector, self.locator)
-                except CoreException:
-                    raise PageException(
-                        message=msg_page_element_notfound.format(
-                            self.bot.navigation.get_current_url(),
-                            selector))
-            self.bot.log.debug("Element Found, adding to return method")
-            elements.append(element)
-        return elements
+                raise PageException(
+                    message=("Bad instance name selected for "
+                             "cfg_control={}").format(cfg_control))
+            cfg_control.update({'instance': control})
+            self._set_control(cfg_control)
 
-    def go_page_url(self, url=None, wait_for_load=0):
-        """Go to url, choose url from instance or locator params"""
+    def _set_control(self, cfg_control):
+        """Set control as property of PageBase instance
+
+        Arguments:
+            cfg_control {dict} -- config dictionary for manage WebElement
+
+        Raises:
+            PageException -- if param cfg_control is None
+        """
+        if not cfg_control:
+            raise PageException(message='cfg_control can not be None')
+        setattr(
+            self,
+            cfg_control.get('name'),
+            cfg_control.get('instance'))
+
+    def get_element(self, config_control):
+        """Search element on Bot instance
+
+        Arguments:
+            config_controls {dict} -- base dict for ControlBase class
+
+        Returns:
+            ControlBase -- an element to be use
+                throught selenium
+        """
+        return self.get_elements([config_control])[0]
+
+    def get_elements(self, config_controls):
+        """Search element on Bot instance, choose selector
+            from instance or locator param
+
+        Arguments:
+            config_controls {dict} -- base dict for ControlBase class
+
+        Returns:
+            list(ControlBase) -- an element to be use as wrapper
+                for selenium functionality
+        """
+        msg_notfound = "Page element not found: "
+        "url={}, selector={}"
+        controls = []
+        for config_control in config_controls:
+            instance = config_control.get("instance")
+            control = None
+            try:
+                if isinstance(instance, (ControlBase, ControlForm)):
+                    controls.append(control)
+                else:
+                    raise PageException(
+                        message="Bad instance name for control")
+            except (ControlException, Exception) as err:
+                if not isinstance(err, ControlException):
+                    raise Exception(err)
+                self.log.warning(msg_notfound.format(
+                    self.url,
+                    config_control.get('selector')))
+        return controls
+
+    def go_url(self, url=None, wait_for_load=0):
+        """Go to url, choose url from instance or locator params
+
+        Keyword Arguments:
+            url {str} -- string of FQDN, if None, load value from settings
+                (default: {self.settings.get('url')})
+            wait_for_load {int} -- [description] (default: {0})
+        """
         if url is None:
-            self.bot.log.debug('go to url={}'.format(self.url))
-            self.bot.navigation.get_url(self.url, wait_for_load=wait_for_load)
-        else:
-            self.bot.log.debug('go to url={}'.format(url))
-            self.bot.navigation.get_url(url, wait_for_load=wait_for_load)
+            url = self.settings.get('url')
+        self.log.debug('page action: navigate to url={}'.format(url))
+        self.bot.navigation.get_url(url, wait_for_load=wait_for_load)
 
     def is_url(self, url=None, ignore_raises=True):
         """Allows to check if current selenium visible url it's the same
@@ -143,8 +182,15 @@ class PageBase(object):
             ignore_raises: not raise exceptions if enabled
         """
         if url is None:
-            url = self.url
+            url = self.settings.get('url')
         try:
             return self.bot.navigation.is_url(url, ignore_raises=ignore_raises)
         except CoreException as err:
             raise PageException(err, "'Current url' is not 'page url'")
+
+    def __repr__(self):
+        """Show basic properties for this object"""
+        return 'PageBase: url={}, bot.browser={}, bot.mode={}'.format(
+            self.settings.get('url'),
+            self.bot.settings.get('browser'),
+            self.bot.settings.get('mode'))
