@@ -61,15 +61,25 @@ Code Metrics by sonarqube
   :target: http://qalab.tk:82/api/badges/gate?key=qacode
 
 
-PIP install
------------
+INSTALLATION
+------------
+
+With **PIP**
+~~~~~~~~~~~~
 
 ``pip install qacode``
 
-SETUP.py install
-----------------
+With **SETUP.py** file
+~~~~~~~~~~~~~~~~~~~~~~
 
 ``python setup.py install``
+
+
+Documentation
+-------------
+
++ How to use library, searching for `Usage Guide`_.
+
 
 Tests
 -----
@@ -78,7 +88,7 @@ Tests
 
 
 TOX environments
-****************
+~~~~~~~~~~~~~~~~
 
 +---------------------+--------------------------------+
 | Env name            | Env description                |
@@ -94,7 +104,7 @@ TOX environments
 
 
 Configuration File
-------------------
+^^^^^^^^^^^^^^^^^^
 
 
 ::
@@ -132,3 +142,7 @@ Configuration File
         "log_level": "DEBUG"
       }
     }
+
+
+
+.. _Usage Guide: USAGE.rst
