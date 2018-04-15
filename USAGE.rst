@@ -4,7 +4,7 @@ Usage Guide
 Bots
 ----
 
-Have classes for this down package: `qacode.core.bots`
+Have classes for this down package: ``qacode.core.bots``
 
 
 .. code:: python
@@ -57,14 +57,14 @@ Have classes for this down package: `qacode.core.bots.webs.controls`
 ControlBase
 ~~~~~~~~~~~
 
-It's base control to load web element from `WebDriver + browser session` , *this class must be use to inherit new* `ControlAwesome` *classes*
+It's base control to load web element from ``WebDriver + browser session`` , *this class must be use to inherit new* `ControlAwesome` *classes*
 
-+ Param **name** : allows to set value to `ControlBase.name` property, also it's used by pages to set property page with `control.name` value
-+ Param **locator** : This text it's parsed down selenium class `selenium.webdriver.common.by.By` (*default:* `css selector` == `By.CSS_SELECTOR`)
++ Param **name** : allows to set value to ``ControlBase.name`` property, also it's used by pages to set property page with ``control.name`` value
++ Param **locator** : This text it's parsed down selenium class ``selenium.webdriver.common.by.By`` (*default:* ``css selector`` == ``By.CSS_SELECTOR``)
 + Param **selector** : valid selector for locator selected
-+ Param **instance** : allow to generate your own inherit classes from `ControlBase` and instance them  using qacode strategy (*default:* `ControlBase`)
++ Param **instance** : allow to generate your own inherit classes from ``ControlBase`` and instance them  using qacode strategy (*default:* ``ControlBase``)
 + Param **on_instance_search** : enable searching element at instance `ControlBase` (*default:* `True`)
-+ Param **on_instance_load** : enable loading `ControlBase` properties when element it's loaded (*default:* `False`) , will need enabled if want to access to base properties values obtained from selenium methods at `BotBase.navigation`
++ Param **on_instance_load** : enable loading ``ControlBase`` properties when element it's loaded (*default:* ``False``) , will need enabled if want to access to base properties values obtained from selenium methods at ``BotBase.navigation``
 
 Example of usage
 ^^^^^^^^^^^^^^^^
@@ -128,7 +128,7 @@ ControlForm
 Pages
 -----
 
-Have classes for this down package: `qacode.core.bots.webs.pages`
+Have classes for this down package: ``qacode.core.bots.webs.pages``
 
 PageBase
 ~~~~~~~~
@@ -177,7 +177,7 @@ Example : just using pages methods
 Tests
 -----
 
-Have classes for this down package: `qacode.core.testing.test_info`
+Have classes for this down package: ``qacode.core.testing.test_info``
 
 TestInfoBase
 ~~~~~~~~~~~~
@@ -204,6 +204,7 @@ TestInfoBase
   + method **timer** : ``TODO: document this, open issue on github``
   + method **sleep** : ``TODO: document this, open issue on github``
 - Methods for **Asserts**
+
   + method **assert_equals** : ``TODO: document this, open issue on github``
   + method **assert_not_equals** : ``TODO: document this, open issue on github``
   + method **assert_equals_url** : ``TODO: document this, open issue on github``
@@ -223,6 +224,7 @@ TestInfoBase
   + method **assert_false** : ``TODO: document this, open issue on github``
   + method **assert_none** : ``TODO: document this, open issue on github``
   + method **assert_not_none** : ``TODO: document this, open issue on github``
+
 
 Example : inherit from TestInfoBase class
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
