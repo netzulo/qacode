@@ -7,7 +7,7 @@ Bots
 Have classes for this down package: `qacode.core.bots`
 
 
-.. code-block:: python
+.. code:: python
    :linenos:
 
     from qacode.core.utils import settings
@@ -69,7 +69,7 @@ It's base control to load web element from `WebDriver + browser session` , *this
 Example of usage
 ^^^^^^^^^^^^^^^^
 
-.. code-block:: python
+.. code:: python
    :linenos:
 
     from qacode.core.utils import settings
@@ -121,8 +121,8 @@ Example of usage
 ControlForm
 ~~~~~~~~~~~
 
-+ Param **on_instance_strict** : `TODO: document this, open issue on github`
-+ Param **strict_rules** : `TODO: document this, open issue on github`
++ Param **on_instance_strict** : ``TODO: document this, open issue on github``
++ Param **strict_rules** : ``TODO: document this, open issue on github``
 
 
 Pages
@@ -133,18 +133,18 @@ Have classes for this down package: `qacode.core.bots.webs.pages`
 PageBase
 ~~~~~~~~
 
-+ Param **name** : `TODO: document this, open issue on github`
-+ Param **url** : `TODO: document this, open issue on github`
-+ Param **locator** : `TODO: document this, open issue on github`
-+ Param **go_url** : `TODO: document this, open issue on github`
-+ Param **wait_url** : `TODO: document this, open issue on github`
-+ Param **maximize** : `TODO: document this, open issue on github`
-+ Param **controls** : `TODO: document this, open issue on github`
++ Param **name** : ``TODO: document this, open issue on github``
++ Param **url** : ``TODO: document this, open issue on github``
++ Param **locator** : ``TODO: document this, open issue on github``
++ Param **go_url** : ``TODO: document this, open issue on github``
++ Param **wait_url** : ``TODO: document this, open issue on github``
++ Param **maximize** : ``TODO: document this, open issue on github``
++ Param **controls** : ``TODO: document this, open issue on github``
 
 Example : just using pages methods
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. code-block:: python
+.. code:: python
    :linenos:
 
     from qacode.core.utils import settings
@@ -186,48 +186,48 @@ TestInfoBase
   + constructor : If use on inherit classes, **pytest will fail at execute tests!**
 - Methods for **Settings**
 
-  + method **bot_open** : `TODO: document this, open issue on github`
-  + method **bot_close** : `TODO: document this, open issue on github`
-  + method **settings_apps** : `TODO: document this, open issue on github`
-  + method **settings_app** : `TODO: document this, open issue on github`
-  + method **settings_page** : `TODO: document this, open issue on github`
-  + method **settings_control** : `TODO: document this, open issue on github`
+  + method **bot_open** : ``TODO: document this, open issue on github``
+  + method **bot_close** : ``TODO: document this, open issue on github``
+  + method **settings_apps** : ``TODO: document this, open issue on github``
+  + method **settings_app** : ``TODO: document this, open issue on github``
+  + method **settings_page** : ``TODO: document this, open issue on github``
+  + method **settings_control** : ``TODO: document this, open issue on github``
 - Methods for **Test Suites + Test Cases**
 
-  + method **setup_class** : `TODO: document this, open issue on github`
-  + method **teardown_class** : `TODO: document this, open issue on github`
-  + method **setup_method** : `TODO: document this, open issue on github`
-  + method **teardown_method** : `TODO: document this, open issue on github`
-  + method **add_property** : `TODO: document this, open issue on github`
+  + method **setup_class** : ``TODO: document this, open issue on github``
+  + method **teardown_class** : ``TODO: document this, open issue on github``
+  + method **setup_method** : ``TODO: document this, open issue on github``
+  + method **teardown_method** : ``TODO: document this, open issue on github``
+  + method **add_property** : ``TODO: document this, open issue on github``
 - Methods for **utilities**
 
-  + method **timer** : `TODO: document this, open issue on github`
-  + method **sleep** : `TODO: document this, open issue on github`
+  + method **timer** : ``TODO: document this, open issue on github``
+  + method **sleep** : ``TODO: document this, open issue on github``
 - Methods for **Asserts**
-  + method **assert_equals** : `TODO: document this, open issue on github`
-  + method **assert_not_equals** : `TODO: document this, open issue on github`
-  + method **assert_equals_url** : `TODO: document this, open issue on github`
-  + method **assert_not_equals_url** : `TODO: document this, open issue on github`
-  + method **assert_contains_url** : `TODO: document this, open issue on github`
-  + method **assert_raises** : `TODO: document this, open issue on github`
-  + method **assert_greater** : `TODO: document this, open issue on github`
-  + method **assert_lower** : `TODO: document this, open issue on github`
-  + method **assert_in** : `TODO: document this, open issue on github`
-  + method **assert_not_in** : `TODO: document this, open issue on github`
-  + method **assert_regex** : `TODO: document this, open issue on github`
-  + method **assert_not_regex** : `TODO: document this, open issue on github`
-  + method **assert_regex_url** : `TODO: document this, open issue on github`
-  + method **assert_path_exist** : `TODO: document this, open issue on github`
-  + method **assert_path_not_exist** : `TODO: document this, open issue on github`
-  + method **assert_true** : `TODO: document this, open issue on github`
-  + method **assert_false** : `TODO: document this, open issue on github`
-  + method **assert_none** : `TODO: document this, open issue on github`
-  + method **assert_not_none** : `TODO: document this, open issue on github`
+  + method **assert_equals** : ``TODO: document this, open issue on github``
+  + method **assert_not_equals** : ``TODO: document this, open issue on github``
+  + method **assert_equals_url** : ``TODO: document this, open issue on github``
+  + method **assert_not_equals_url** : ``TODO: document this, open issue on github``
+  + method **assert_contains_url** : ``TODO: document this, open issue on github``
+  + method **assert_raises** : ``TODO: document this, open issue on github``
+  + method **assert_greater** : ``TODO: document this, open issue on github``
+  + method **assert_lower** : ``TODO: document this, open issue on github``
+  + method **assert_in** : ``TODO: document this, open issue on github``
+  + method **assert_not_in** : ``TODO: document this, open issue on github``
+  + method **assert_regex** : ``TODO: document this, open issue on github``
+  + method **assert_not_regex** : ``TODO: document this, open issue on github``
+  + method **assert_regex_url** : ``TODO: document this, open issue on github``
+  + method **assert_path_exist** : ``TODO: document this, open issue on github``
+  + method **assert_path_not_exist** : ``TODO: document this, open issue on github``
+  + method **assert_true** : ``TODO: document this, open issue on github``
+  + method **assert_false** : ``TODO: document this, open issue on github``
+  + method **assert_none** : ``TODO: document this, open issue on github``
+  + method **assert_not_none** : ``TODO: document this, open issue on github``
 
 Example : inherit from TestInfoBase class
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. code-block:: python
+.. code:: python
    :linenos:
 
     from qacode.core.bots import BotBase
