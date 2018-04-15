@@ -8,7 +8,7 @@ Have classes for this down package: ``qacode.core.bots``
 
 
 .. code:: python
-   :linenos:
+
 
     from qacode.core.utils import settings
     from qacode.core.bots import BotBase
@@ -70,7 +70,7 @@ Example of usage
 ^^^^^^^^^^^^^^^^
 
 .. code:: python
-   :linenos:
+
 
     from qacode.core.utils import settings
     from qacode.core.bots import BotBase
@@ -145,7 +145,7 @@ Example : just using pages methods
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code:: python
-   :linenos:
+
 
     from qacode.core.utils import settings
     from qacode.core.bots import BotBase
@@ -230,7 +230,7 @@ Example : inherit from TestInfoBase class
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code:: python
-   :linenos:
+
 
     from qacode.core.bots import BotBase
     from qacode.core.testing.test_info import TestInfoBase
