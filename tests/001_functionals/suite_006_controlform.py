@@ -21,9 +21,16 @@ class TestControlForm(TestInfoBotUnique):
     app = None
     page_login_config = None
 
+    @classmethod
+    def setup_class(cls, **kwargs):
+        super(TestControlForm, cls).setup_class(
+            config=settings(),
+            skip_force=SKIP_CONTROLS)
+
     def setup_method(self, test_method):
         """Configure self.attribute"""
-        super(TestControlForm, self).setup_method(test_method)
+        super(TestControlForm, self).setup_method(
+            test_method, config=settings())
         self.add_property(
             'app', value=self.settings_app('pages_tests'))
         self.add_property(

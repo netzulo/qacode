@@ -19,9 +19,15 @@ class TestNavBase(TestInfoBotUnique):
     app = None
     page_home = None
 
+    @classmethod
+    def setup_class(cls, **kwargs):
+        super(TestNavBase, cls).setup_class(
+            config=settings(),
+            skip_force=SKIP_REMOTES)
+
     def setup_method(self, test_method, close=True):
         """Configure self.attribute"""
-        super(TestNavBase, self).setup_method(test_method)
+        super(TestNavBase, self).setup_method(test_method, config=settings())
         self.add_property('app', self.settings_app('nav_tests'))
         self.add_property('page_home', self.settings_page('nav_tests_home'))
 
