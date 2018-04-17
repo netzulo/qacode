@@ -22,9 +22,16 @@ class TestPageBase(TestInfoBotUnique):
     page_base_config = None
     page_login_config = None
 
+    @classmethod
+    def setup_class(cls, **kwargs):
+        super(TestPageBase, cls).setup_class(
+            config=settings(),
+            skip_force=SKIP_PAGES)
+
     def setup_method(self, test_method, close=True):
         """Unload self.attribute"""
-        super(TestPageBase, self).setup_method(test_method)
+        super(TestPageBase, self).setup_method(
+            test_method, config=settings())
         self.add_property('app', self.settings_app('pages_tests'))
         self.page_base_config = self.settings_page('page_base')
         self.page_login_config = self.settings_page('page_login')

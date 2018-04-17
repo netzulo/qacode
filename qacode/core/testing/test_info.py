@@ -6,36 +6,48 @@ import os
 import re
 import time
 import pytest
+from qacode.core.exceptions.core_exception import CoreException
 from qacode.core.bots.bot_base import BotBase
 from qacode.core.loggers.logger_manager import LoggerManager
-from qacode.core.utils import settings
 
 
 ASSERT_MSG_DEFAULT = "Fails at '{}': actual={}, expected={}"
 ASSERT_REGEX_URL = r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+"  # noqa: E501
-SETTINGS = settings()
-SETTINGS_BOT = SETTINGS.get('bot')
-LOGGER_MANAGER = LoggerManager(
-    log_path="{}/".format(
-        SETTINGS_BOT.get('log_output_file')),
-    log_name=SETTINGS_BOT.get('log_name'),
-    log_level=SETTINGS_BOT.get('log_level')
-)
 
 
 class TestInfoBase(object):
     """Base class for inherit new Test classes"""
 
+    is_loaded = False
     log = None
+    config = None
 
     @classmethod
-    def bot_open(cls):
+    def load(cls, config):
+        """Load default config dict"""            
+        if config is None and not cls.is_loaded:
+            raise CoreException(message="Bad param 'config' provided")
+        cls.add_property('config', value=config)
+        if cls.log is None:
+            config_bot = cls.config.get('bot')
+            log_path = "{}/".format(
+                config_bot.get('log_output_file'))
+            lgm = LoggerManager(
+                log_path=log_path,
+                log_name=config_bot.get('log_name'),
+                log_level=config_bot.get('log_level')
+            )
+            cls.add_property('log', lgm.logger)
+        cls.is_loaded = True
+
+    @classmethod
+    def bot_open(cls, config):
         """Open browser using BotBase instance
 
         Returns:
             BotBase -- wrapper browser handler for selenium
         """
-        return BotBase(**SETTINGS)
+        return BotBase(**config)
 
     @classmethod
     def bot_close(cls, bot):
@@ -45,7 +57,9 @@ class TestInfoBase(object):
     @classmethod
     def settings_apps(cls):
         """TODO: doc method"""
-        return SETTINGS['tests']['apps']
+        if cls.config is None:
+            raise CoreException(message="Call to cls.load() first")
+        return cls.config.get('tests').get('apps')
 
     @classmethod
     def settings_app(cls, app_name):
@@ -109,9 +123,9 @@ class TestInfoBase(object):
         else:
             raise Exception("key_type not found")
 
-    def setup_method(self, test_method):
+    def setup_method(self, test_method, **kwargs):
         """Configure self.attribute"""
-        self.add_property('log', value=LOGGER_MANAGER.logger)
+        self.load(kwargs.get('config'))
         self.log.info("Started testcase named='{}'".format(
             test_method.__name__))
 
@@ -381,41 +395,43 @@ class TestInfoBot(TestInfoBase):
                 "Fails at try to close bot: {}".format(
                     err))
 
-    def setup_method(self, test_method):
+    def setup_method(self, test_method, **kwargs):
         """Configure self.attribute.
         If skipIf mark applied and True as first param for args tuple
             then not open bot
         """
-        super(TestInfoBot, self).setup_method(test_method)
+        super(TestInfoBot, self).setup_method(test_method, **kwargs)
         if 'skipIf' in dir(test_method) and test_method.skipIf.args[0]:
             pytest.skip(test_method.skipIf.args[1])
             return
         if not isinstance(self.bot, BotBase):
-            self.add_property('bot', value=self.bot_open())
+            self.add_property('bot', value=self.bot_open(self.config))
 
 
 class TestInfoBotUnique(TestInfoBot):
     """Inherit class what implements bot on each testcase"""
 
     @classmethod
-    def setup_class(cls):
+    def setup_class(cls, **kwargs):
         """If name start with 'test_' and have decorator skipIf
             with value True, then not open bot
         """
         tests_methods = []
         skip_methods = []
+        skip_force = kwargs.get('skip_force')
         for method_name in dir(cls):
             if method_name.startswith("test_"):
                 method = getattr(cls, method_name)
                 tests_methods.append(method)
                 if 'skipIf' in dir(method) and method.skipIf.args[0]:
                     skip_methods.append(method)
-        if tests_methods == skip_methods:
+        if tests_methods == skip_methods or skip_force:
             pytest.skip("Testsuite skipped")
         else:
             if not isinstance(cls.bot, BotBase):
-                cls.add_property('bot', value=cls.bot_open())
-                cls.add_property('log', value=LOGGER_MANAGER.logger)
+                cls.load(kwargs.get('config'))
+                cls.add_property(
+                    'bot', value=cls.bot_open(cls.config))
 
     @classmethod
     def teardown_class(cls):

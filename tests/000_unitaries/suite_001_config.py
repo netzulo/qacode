@@ -16,6 +16,9 @@ SKIP_CONFIG_MSG = 'test_configs DISABLED by config file'
 class TestConfig(TestInfoBase):
     """Testcases for class TestInfoBase"""
 
+    def setup_method(self, test_method):
+        super(TestConfig, self).setup_method(test_method, config=settings())
+
     # Error Messages
     ERR_KEY_NOT_FOUND = "Required key '{}', can't be None"
     ERR_KEY_INVALID_VALUE = "Required key '{}', just can be in '{}'"

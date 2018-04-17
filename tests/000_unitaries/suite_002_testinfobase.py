@@ -5,20 +5,22 @@
 import logging
 import pytest
 from qacode.core.testing.test_info import TestInfoBase
+from qacode.core.utils import settings
 
 
 class TestTestInfoBase(TestInfoBase):
     """Testcases for class TestInfoBase"""
 
     def setup_method(self, test_method):
-        """Configure self.attribute"""
-        super(TestTestInfoBase, self).setup_method(test_method)
+        super(TestTestInfoBase, self).setup_method(
+            test_method, config=settings())
 
     def test_001_inheritance(self):
         """Test: test_001_inheritance"""
         self.assert_is_instance(self, object)
         self.assert_is_instance(self, TestInfoBase)
         self.assert_is_instance(self.log, logging.Logger)
+        self.assert_is_instance(self.config, dict)
 
     @pytest.mark.parametrize("log_level", [
         "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"
