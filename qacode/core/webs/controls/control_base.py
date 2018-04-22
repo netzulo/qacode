@@ -58,8 +58,8 @@ class ControlBase(object):
         # needed for self._load_* functions
         self.load_settings_keys(self.settings)
         # instance logic
-        self._load_search(enabled=self.on_instance_search)
-        self._load_properties(enabled=self.on_instance_load)
+        self._load_search(enabled=self.settings.get('on_instance_search'))
+        self._load_properties(enabled=self.settings.get('on_instance_load'))
 
     def load_settings_keys(self, settings):
         """Load default setting for ControlBase instance"""
@@ -85,7 +85,7 @@ class ControlBase(object):
         self.bot.log.debug("control | load_settings_keys: loaded keys!")
 
     def _load_search(self, enabled=False):
-        if not enabled:
+        if not enabled or enabled is None:
             self.bot.log.warning(
                 "control | _load_search: !Disabled searching element!")
             return False
@@ -102,7 +102,7 @@ class ControlBase(object):
         return True
 
     def _load_properties(self, enabled=False):
-        if not enabled:
+        if not enabled or enabled is None:
             self.bot.log.warning(
                 ("control | _load_properties: "
                  "!Disabled loading ControlBase properties!"))
@@ -278,6 +278,18 @@ class ControlBase(object):
             css_important=css_important)
         if self.selector is None:
             raise ControlException(message="Couldn't reload element")
-        # reload WebElement
-        self._load_search(enabled=self.on_instance_search)
-        self._load_properties(enabled=self.on_instance_load)
+        self.reload()
+
+    def reload(self, on_instance_search=False, on_instance_load=False):
+        """Reload ControlBase
+
+        Keyword Arguments:
+            on_instance_search {bool} -- [description] (default: {False})
+            on_instance_load {bool} -- [description] (default: {False})
+        """        
+        if on_instance_search is None:
+            on_instance_search = self.on_instance_search
+        if on_instance_load is None:
+            on_instance_load = self.on_instance_load
+        self._load_search(enabled=on_instance_search)
+        self._load_properties(enabled=on_instance_load)
