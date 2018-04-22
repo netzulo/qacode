@@ -51,19 +51,23 @@ class TestInfoBase(object):
 
     @classmethod
     def bot_close(cls, bot):
-        """TODO: doc method"""
+        """Close bot calling bot.close() from param"""
         return bot.close()
 
     @classmethod
     def settings_apps(cls):
-        """TODO: doc method"""
+        """Obtain inherit dict from 'cls.config' dict named
+            'config.tests.apps'
+        """
         if cls.config is None:
             raise CoreException(message="Call to cls.load() first")
         return cls.config.get('tests').get('apps')
 
     @classmethod
     def settings_app(cls, app_name):
-        """TODO: doc method"""
+        """Obtain inherit dict from 'cls.config' dict named
+            'config.tests.apps' filtering by 'app_name' param
+        """
         for app in cls.settings_apps():
             if app.get('name') == app_name:
                 return app
@@ -73,7 +77,9 @@ class TestInfoBase(object):
 
     @classmethod
     def settings_page(cls, page_name, app_name=None):
-        """TODO: doc method"""
+        """Obtain inherit dict from 'cls.config' dict named
+            'config.tests.apps[i].pages' filtering by 'page_name' param
+        """
         page_selected = None
         apps = cls.settings_apps()
         if isinstance(app_name, str):
@@ -86,7 +92,10 @@ class TestInfoBase(object):
 
     @classmethod
     def settings_control(cls, control_name, page_name=None, app_name=None):
-        """TODO: doc method"""
+        """Obtain inherit dict from 'cls.config' dict named
+            'config.tests.apps[i].pages[j].controls' filtering by
+            'control_name' param
+        """
         page_selected = None
         if isinstance(page_name, str):
             page_selected = cls.settings_page(
@@ -103,26 +112,6 @@ class TestInfoBase(object):
                         if control.get('name') == control_name:
                             return control
 
-    @classmethod
-    def settings_filter(cls, key_type, key_name):
-        """TODO: doc method"""
-        apps = cls.settings_apps()
-        if key_type == 'app':
-            cls.settings_app(key_name)
-        elif key_type == 'page':
-            cls.settings_page(key_name)
-            raise Exception(
-                "Not found for: key_type={}, key_name={}".format(
-                    key_type, key_name))
-        elif key_type == 'control':
-            for app in apps:
-                for page in app.get('pages'):
-                    for control in app.get('controls'):
-                        if control.get('name') == key_name:
-                            return control
-        else:
-            raise Exception("key_type not found")
-
     def setup_method(self, test_method, **kwargs):
         """Configure self.attribute"""
         self.load(kwargs.get('config'))
@@ -136,7 +125,9 @@ class TestInfoBase(object):
 
     @classmethod
     def add_property(cls, name, value=None):
-        """TODO: doc method"""
+        """Add property to test instance using param 'name', will setup
+            None if any value it's passed by param
+        """
         setattr(cls, name, value)
 
     def timer(self, wait=5, print_each=5):
@@ -168,7 +159,9 @@ class TestInfoBase(object):
             time.sleep(wait)
 
     def assert_equals(self, actual, expected, msg=None):
-        """TODO: doc method"""
+        """Allow to compare 2 values and check if 1st it's equals to
+            2nd value
+        """
         if not msg:
             msg = ASSERT_MSG_DEFAULT.format(
                 "assert_equals", actual, expected)
@@ -176,7 +169,9 @@ class TestInfoBase(object):
             raise AssertionError(actual, expected, msg)
 
     def assert_not_equals(self, actual, expected, msg=None):
-        """TODO: doc method"""
+        """Allow to compare 2 value to check if 1st isn't equals to
+            2nd value
+        """
         if not msg:
             msg = ASSERT_MSG_DEFAULT.format(
                 "assert_not_equals", actual, expected)
@@ -278,7 +273,7 @@ class TestInfoBase(object):
             raise AssertionError(actual, lower, msg)
 
     def assert_in(self, actual, valid_values, msg=None):
-        """TODO: doc method"""
+        """Allow to compare if value it's in to 2nd list of values"""
         if not msg:
             msg = ASSERT_MSG_DEFAULT.format(
                 "assert_in", actual, valid_values)
@@ -286,7 +281,7 @@ class TestInfoBase(object):
             raise AssertionError(actual, valid_values, msg)
 
     def assert_not_in(self, actual, invalid_values, msg=None):
-        """TODO: doc method"""
+        """Allow to compare if value it's not in to 2nd list of values"""
         if not msg:
             msg = ASSERT_MSG_DEFAULT.format(
                 "assert_in", actual, invalid_values)
@@ -294,7 +289,7 @@ class TestInfoBase(object):
             raise AssertionError(actual, invalid_values, msg)
 
     def assert_regex(self, actual, pattern, msg=None):
-        """TODO: doc method"""
+        """Allow to compare if value match pattern"""
         if not msg:
             msg = ASSERT_MSG_DEFAULT.format(
                 "assert_regex", actual, pattern)
@@ -303,7 +298,7 @@ class TestInfoBase(object):
             raise AssertionError(actual, pattern, msg)
 
     def assert_not_regex(self, actual, pattern, msg=None):
-        """TODO: doc method"""
+        """Allow to compare if value not match pattern"""
         if not msg:
             msg = ASSERT_MSG_DEFAULT.format(
                 "assert_not_regex", actual, pattern)
@@ -312,7 +307,9 @@ class TestInfoBase(object):
             raise AssertionError(actual, pattern, msg)
 
     def assert_regex_url(self, actual, pattern=None, msg=None):
-        """TODO: doc method"""
+        """Allow to compare if value match url pattern, can use
+            custom pattern
+        """
         if not msg:
             msg = ASSERT_MSG_DEFAULT.format(
                 "assert_regex_url", actual, pattern)
@@ -321,7 +318,7 @@ class TestInfoBase(object):
         self.assert_regex(actual, pattern, msg=msg)
 
     def assert_path_exist(self, actual, is_dir=True, msg=None):
-        """TODO: doc method"""
+        """Allow to check if path exist, can check if is_dir also"""
         if not msg:
             msg = ASSERT_MSG_DEFAULT.format(
                 "assert_path_exist",
@@ -338,7 +335,7 @@ class TestInfoBase(object):
                 raise AssertionError(actual, "NEED_PATH_NOT_DIR", msg)
 
     def assert_path_not_exist(self, actual, msg=None):
-        """TODO: doc method"""
+        """Allow to check if path not exist, can check if is_dir also"""
         if not msg:
             msg = ASSERT_MSG_DEFAULT.format(
                 "assert_path_not_exist", actual, "")
@@ -346,7 +343,7 @@ class TestInfoBase(object):
             raise AssertionError(actual, "NEED_PATH_NOT_FOUND", msg)
 
     def assert_true(self, actual, msg=None):
-        """TODO: doc method"""
+        """Allow to compare and check if value it's equals to 'True'"""
         if not msg:
             msg = ASSERT_MSG_DEFAULT.format(
                 "assert_true", actual, "")
@@ -354,7 +351,7 @@ class TestInfoBase(object):
         self.assert_equals(actual, True, msg=msg)
 
     def assert_false(self, actual, msg=None):
-        """TODO: doc method"""
+        """Allow to compare and check if value it's equals to 'False'"""
         if not msg:
             msg = ASSERT_MSG_DEFAULT.format(
                 "assert_false", actual, "")
@@ -362,14 +359,14 @@ class TestInfoBase(object):
         self.assert_equals(actual, False, msg=msg)
 
     def assert_none(self, actual, msg=None):
-        """TODO: doc method"""
+        """Allow to compare and check if value it's equals to 'None'"""
         if not msg:
             msg = ASSERT_MSG_DEFAULT.format(
                 "assert_false", actual, "")
         self.assert_equals(actual, None, msg=msg)
 
     def assert_not_none(self, actual, msg=None):
-        """TODO: doc method"""
+        """Allow to compare and check if value it's not equals to 'None'"""
         if not msg:
             msg = ASSERT_MSG_DEFAULT.format(
                 "assert_false", actual, "")
@@ -380,20 +377,6 @@ class TestInfoBot(TestInfoBase):
     """Inherit class what implements bot on each testcase"""
 
     bot = None
-
-    def teardown_method(self, test_method, close=True):
-        """Unload self.attribute"""
-        super(TestInfoBot, self).teardown_method(test_method)
-        try:
-            if close:
-                self.bot_close(self.bot)
-            else:
-                self.log.debug(
-                    "Not closing bot by optional param 'close'")
-        except Exception as err:
-            self.log.error(
-                "Fails at try to close bot: {}".format(
-                    err))
 
     def setup_method(self, test_method, **kwargs):
         """Configure self.attribute.
@@ -407,14 +390,28 @@ class TestInfoBot(TestInfoBase):
         if not isinstance(self.bot, BotBase):
             self.add_property('bot', value=self.bot_open(self.config))
 
+    def teardown_method(self, test_method, close=True):
+        """Unload self.attribute, also close bot"""
+        super(TestInfoBot, self).teardown_method(test_method)
+        try:
+            if close:
+                self.bot_close(self.bot)
+            else:
+                self.log.debug(
+                    "Not closing bot by optional param 'close'")
+        except Exception as err:
+            self.log.error(
+                "Fails at try to close bot: {}".format(
+                    err))
+
 
 class TestInfoBotUnique(TestInfoBot):
     """Inherit class what implements bot on each testcase"""
 
     @classmethod
     def setup_class(cls, **kwargs):
-        """If name start with 'test_' and have decorator skipIf
-            with value True, then not open bot
+        """Configure 'cls.attribute'. If name start with 'test_' and have
+            decorator skipIf with value True, then not open bot
         """
         tests_methods = []
         skip_methods = []
@@ -435,11 +432,11 @@ class TestInfoBotUnique(TestInfoBot):
 
     @classmethod
     def teardown_class(cls):
-        """TODO: doc method"""
+        """Unload self.attribute, closing bot from 'cls.bot' property"""
         if cls.bot:
             cls.bot_close(cls.bot)
 
     def teardown_method(self, test_method, close=False):
-        """Unload self.attribute"""
+        """Unload self.attribute, also disable closing bot from TestInfoBot"""
         super(TestInfoBotUnique, self).teardown_method(
             test_method, close=close)

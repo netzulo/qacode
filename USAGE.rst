@@ -121,8 +121,8 @@ Example of usage
 ControlForm
 ~~~~~~~~~~~
 
-+ Param **on_instance_strict** : ``TODO: document this, open issue on github``
-+ Param **strict_rules** : ``TODO: document this, open issue on github``
++ Param **on_instance_strict** : by default it's disabled, at enable raises when strict_rules type warning logs message with 'hight severity' or when type error log messages with 'medium or more severity'
++ Param **strict_rules** : Allow to add strict_rules configuration to laod StrictRule class for each rule ( example: ``strict_rule = StrictRule('my_named_rule', StrictType.TAG, StrictSeverity.HIGHT)`` )
 
 
 Pages
@@ -133,13 +133,12 @@ Have classes for this down package: ``qacode.core.bots.webs.pages``
 PageBase
 ~~~~~~~~
 
-+ Param **name** : ``TODO: document this, open issue on github``
-+ Param **url** : ``TODO: document this, open issue on github``
-+ Param **locator** : ``TODO: document this, open issue on github``
-+ Param **go_url** : ``TODO: document this, open issue on github``
-+ Param **wait_url** : ``TODO: document this, open issue on github``
-+ Param **maximize** : ``TODO: document this, open issue on github``
-+ Param **controls** : ``TODO: document this, open issue on github``
++ Param **url** : string for url of page
++ Param **locator** : strategy used to search all selectors passed, default value it's locator.CSS_SELECTOR (default: {BY.CSS_SELECTOR})
++ Param **go_url** : navigate to 'self.url' at instance (default: {False})
++ Param **wait_url** : seconds to wait for 'self.url' load at instance (default: {0})
++ Param **maximize** : allow to maximize browser window before to load elements at instance (default: {False})
++ Param **controls** : list of dicts with settings for each control which want to load
 
 Example : just using pages methods
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -151,7 +150,7 @@ Example : just using pages methods
     from qacode.core.bots import BotBase
 
     # Load settings for bot and pages
-    SETTINGS = settings()
+    SETTINGS = settings('settings.json')
     PAGES = [
         {
             "name": "nav_tests_home",
@@ -186,44 +185,45 @@ TestInfoBase
   + constructor : If use on inherit classes, **pytest will fail at execute tests!**
 - Methods for **Settings**
 
-  + method **bot_open** : ``TODO: document this, open issue on github``
-  + method **bot_close** : ``TODO: document this, open issue on github``
-  + method **settings_apps** : ``TODO: document this, open issue on github``
-  + method **settings_app** : ``TODO: document this, open issue on github``
-  + method **settings_page** : ``TODO: document this, open issue on github``
-  + method **settings_control** : ``TODO: document this, open issue on github``
+  + method **load** : Load default config dict
+  + method **bot_open** : Open browser using BotBase instance
+  + method **bot_close** : Close bot calling bot.close() from param
+  + method **settings_apps** : Obtain inherit dict from 'cls.config' dict named 'config.tests.apps'
+  + method **settings_app** : Obtain inherit dict from 'cls.config' dict named 'config.tests.apps' filtering by 'app_name' param
+  + method **settings_page** : Obtain inherit dict from 'cls.config' dict named 'config.tests.apps[i].pages' filtering by 'page_name' param
+  + method **settings_control** : Obtain inherit dict from 'cls.config' dict named 'config.tests.apps[i].pages[j].controls' filtering by 'control_name' param
 - Methods for **Test Suites + Test Cases**
 
-  + method **setup_class** : ``TODO: document this, open issue on github``
-  + method **teardown_class** : ``TODO: document this, open issue on github``
-  + method **setup_method** : ``TODO: document this, open issue on github``
-  + method **teardown_method** : ``TODO: document this, open issue on github``
-  + method **add_property** : ``TODO: document this, open issue on github``
+  + method **setup_method** : Configure self.attribute
+  + method **teardown_method** : Unload self.attribute
+  + method **add_property** : Add property to test instance using param 'name', will setup None if any value it's passed by param
 - Methods for **utilities**
 
-  + method **timer** : ``TODO: document this, open issue on github``
-  + method **sleep** : ``TODO: document this, open issue on github``
+  + method **timer** : Timer to sleep browser on testcases
+  + method **sleep** : Just call to native python time.sleep method
 - Methods for **Asserts**
 
-  + method **assert_equals** : ``TODO: document this, open issue on github``
-  + method **assert_not_equals** : ``TODO: document this, open issue on github``
-  + method **assert_equals_url** : ``TODO: document this, open issue on github``
-  + method **assert_not_equals_url** : ``TODO: document this, open issue on github``
-  + method **assert_contains_url** : ``TODO: document this, open issue on github``
-  + method **assert_raises** : ``TODO: document this, open issue on github``
-  + method **assert_greater** : ``TODO: document this, open issue on github``
-  + method **assert_lower** : ``TODO: document this, open issue on github``
-  + method **assert_in** : ``TODO: document this, open issue on github``
-  + method **assert_not_in** : ``TODO: document this, open issue on github``
-  + method **assert_regex** : ``TODO: document this, open issue on github``
-  + method **assert_not_regex** : ``TODO: document this, open issue on github``
-  + method **assert_regex_url** : ``TODO: document this, open issue on github``
-  + method **assert_path_exist** : ``TODO: document this, open issue on github``
-  + method **assert_path_not_exist** : ``TODO: document this, open issue on github``
-  + method **assert_true** : ``TODO: document this, open issue on github``
-  + method **assert_false** : ``TODO: document this, open issue on github``
-  + method **assert_none** : ``TODO: document this, open issue on github``
-  + method **assert_not_none** : ``TODO: document this, open issue on github``
+  + method **assert_equals** : Allow to compare 2 values and check if 1st it's equals to 2nd value
+  + method **assert_not_equals** : Allow to compare 2 value to check if 1st isn't equals to 2nd value
+  + method **assert_equals_url** : Allow to compare 2 urls and check if 1st it's equals to 2nd url
+  + method **assert_not_equals_url** : Allow to compare 2 urls to check if 1st isn't equals to 2nd url
+  + method **assert_contains_url** : Allow to compare 2 urls and check if 1st contains 2nd url
+  + method **assert_not_contains_url** : Allow to compare 2 urls and check if 1st not contains 2nd url
+  + method **assert_is_instance** : Allow to encapsulate method assertIsInstance(obj, cls, msg='')
+  + method **assert_raises** : Allow to encapsulate pytest.raises
+  + method **assert_greater** : Allow to encapsulate method assertGreater(a, b, msg=msg)
+  + method **assert_lower** : Allow to encapsulate method assertLower(a, b, msg=msg)
+  + method **assert_in** : Allow to compare if value it's in to 2nd list of values
+  + method **assert_not_in** : Allow to compare if value it's not in to 2nd list of values
+  + method **assert_regex** : Allow to compare if value match pattern
+  + method **assert_not_regex** : Allow to compare if value not match pattern
+  + method **assert_regex_url** : Allow to compare if value match url pattern, can use custom pattern
+  + method **assert_path_exist** : Allow to check if path exist, can check if is_dir also
+  + method **assert_path_not_exist** : Allow to check if path not exist, can check if is_dir also
+  + method **assert_true** : Allow to compare and check if value it's equals to 'True'
+  + method **assert_false** : Allow to compare and check if value it's equals to 'False'
+  + method **assert_none** : Allow to compare and check if value it's equals to 'None'
+  + method **assert_not_none** : Allow to compare and check if value it's not equals to 'None'
 
 
 Example : inherit from TestInfoBase class
@@ -232,6 +232,7 @@ Example : inherit from TestInfoBase class
 .. code:: python
 
 
+    from qacode.core.utils import settings
     from qacode.core.bots import BotBase
     from qacode.core.testing.test_info import TestInfoBase
 
@@ -240,8 +241,73 @@ Example : inherit from TestInfoBase class
 
         def test_some_method(self):
             try:
-                bot = self.bot_open(
+                _settings = settings('settings.json')
+                bot = self.bot_open(**_settings)
                 self.log.info("Bot opened for new test method down new test suite")
                 self.assert_is_instance(bot, BotBase)
+            except AssertionError as err:
+                self.log.error("Bot Fails at assert %s", err.message)
+
+
+TestInfoBot
+~~~~~~~~~~~
+
+- Methods for **Class**
+
+  + constructor : If use on inherit classes, **pytest will fail at execute tests!**
+  + method **setup_method** : Configure self.attribute. If skipIf mark applied and True as first param for args tuple then not open bot
+  + method **teardown_method** : Unload self.attribute, also close bot
+
+Example : inherit from TestInfoBot class
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code:: python
+
+
+    from qacode.core.testing.test_info import TestInfoBot
+
+
+    class TestAwesome(TestInfoBot):
+
+        def test_some_method(self):
+            try:
+                self.assert_is_instance(self.bot, BotBase)
+            except AssertionError as err:
+                self.log.error("Bot Fails at assert %s", err.message)
+
+
+TestInfoBotUnique
+~~~~~~~~~~~~~~~~~
+
+- Methods for **Class**
+
+  + constructor : If use on inherit classes, **pytest will fail at execute tests!**
+  + method **setup_class** : Configure 'cls.attribute'. If name start with 'test_' and have decorator skipIf with value True, then not open bot
+  + method **teardown_class** : Unload self.attribute, closing bot from 'cls.bot' property
+  + method **teardown_method** : Unload self.attribute, also disable closing bot from TestInfoBot
+
+
+
+Example : inherit from TestInfoBotUnique class
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code:: python
+
+
+    from qacode.core.testing.test_info import TestInfoBotUnique
+
+
+    class TestAwesomeUnique(TestInfoBotUnique):
+
+        def test_some_method(self):
+            try:
+                self.assert_is_instance(self.bot, BotBase)
+            except AssertionError as err:
+                self.log.error("Bot Fails at assert %s", err.message)
+        
+        def test_some_another_method(self):
+            try:
+                # Same bot that was used for 'test_some_method' test
+                self.assert_is_instance(self.bot, BotBase)
             except AssertionError as err:
                 self.log.error("Bot Fails at assert %s", err.message)
