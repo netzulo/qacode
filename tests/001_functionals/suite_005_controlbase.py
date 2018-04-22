@@ -23,6 +23,7 @@ class TestControlBase(TestInfoBotUnique):
 
     @classmethod
     def setup_class(cls, **kwargs):
+        """TODO: doc method"""
         super(TestControlBase, cls).setup_class(
             config=settings(),
             skip_force=SKIP_CONTROLS)

@@ -24,6 +24,7 @@ class TestPageBase(TestInfoBotUnique):
 
     @classmethod
     def setup_class(cls, **kwargs):
+        """TODO: doc method"""
         super(TestPageBase, cls).setup_class(
             config=settings(),
             skip_force=SKIP_PAGES)
@@ -37,7 +38,7 @@ class TestPageBase(TestInfoBotUnique):
         self.page_login_config = self.settings_page('page_login')
 
     @pytest.mark.skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
-    def test_001_instance_url(self):
+    def test_instance_url(self):
         """Testcase: test_001_instance_url"""
         cfg = self.page_base_config.copy()
         cfg.update({
@@ -50,7 +51,7 @@ class TestPageBase(TestInfoBotUnique):
             self.page_base_config.get('url'))
 
     @pytest.mark.skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
-    def test_002_instance_notgourl(self):
+    def test_instance_notgourl(self):
         """Testcase: test_002_instance_notgourl"""
         cfg = self.page_login_config.copy()
         cfg.update({
@@ -64,7 +65,7 @@ class TestPageBase(TestInfoBotUnique):
             cfg.get('url'))
 
     @pytest.mark.skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
-    def test_003_instance_element(self):
+    def test_instance_element(self):
         """Testcase: test_003_instance_element"""
         cfg = self.page_login_config.copy()
         page = PageBase(self.bot, **cfg)
@@ -79,7 +80,7 @@ class TestPageBase(TestInfoBotUnique):
             self.assert_is_instance(element, ControlBase)
 
     @pytest.mark.skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
-    def test_004_instance_maximized(self):
+    def test_instance_maximized(self):
         """Testcase: test_004_instance_maximized"""
         cfg = self.page_login_config.copy()
         cfg.update({
@@ -94,7 +95,7 @@ class TestPageBase(TestInfoBotUnique):
             cfg.get('url'))
 
     @pytest.mark.skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
-    def test_005_method_getelement(self):
+    def test_method_getelement(self):
         """Testcase: test_004_instance_maximized"""
         cfg = self.page_login_config.copy()
         page = PageBase(self.bot, **cfg)

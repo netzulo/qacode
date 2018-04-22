@@ -18,12 +18,13 @@ class TestTestInfoBot(TestInfoBot):
     """Testcases for class TestInfoBot"""
 
     def setup_method(self, test_method):
+        """TODO: doc method"""
         super(TestTestInfoBot, self).setup_method(
             test_method, config=settings())
 
     @pytest.mark.parametrize('run_time', [1, 2])
     @pytest.mark.skipIf(SKIP_BOT_MULTIPLE, SKIP_BOT_MULTIPLE_MSG)
-    def test_002_multiple_bots(self, run_time):
+    def test_multiple_bots(self, run_time):
         """TODO: doc method"""
         self.log.debug("TestInfoBotUnique, test='{}'".format(run_time))
         self.assert_is_instance(self, object)

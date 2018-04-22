@@ -23,6 +23,7 @@ class TestControlForm(TestInfoBotUnique):
 
     @classmethod
     def setup_class(cls, **kwargs):
+        """TODO: doc method"""
         super(TestControlForm, cls).setup_class(
             config=settings(),
             skip_force=SKIP_CONTROLS)
@@ -48,8 +49,8 @@ class TestControlForm(TestInfoBotUnique):
     @pytest.mark.parametrize("on_instance_load", [True])
     @pytest.mark.parametrize("on_instance_strict", [True, False])
     @pytest.mark.parametrize("strict_rules", [[]])
-    def test_001_instance(self, selector, instance, on_instance_search,
-                          on_instance_load, on_instance_strict, strict_rules):
+    def test_instance(self, selector, instance, on_instance_search,
+                      on_instance_load, on_instance_strict, strict_rules):
         """Testcase: test_001_instance_selector"""
         control_config = {
             "name": "txt_username_strict",
