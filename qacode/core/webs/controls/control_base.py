@@ -73,7 +73,7 @@ class ControlBase(object):
                 elif key == 'locator':
                     value = By.CSS_SELECTOR
                 elif key == 'on_instance_search':
-                    value = True
+                    value = False
                 elif key == 'on_instance_load':
                     value = False
                 else:
@@ -284,12 +284,17 @@ class ControlBase(object):
         """Reload ControlBase
 
         Keyword Arguments:
-            on_instance_search {bool} -- [description] (default: {False})
-            on_instance_load {bool} -- [description] (default: {False})
-        """        
+            on_instance_search {bool} -- allow to search self.element property
+                (default: {False})
+            on_instance_load {bool} -- allow to load ControlBase properties
+                (default: {False})
+        """
         if on_instance_search is None:
             on_instance_search = self.on_instance_search
         if on_instance_load is None:
             on_instance_load = self.on_instance_load
+        # needed for self._load_* functions
+        self.load_settings_keys(self.settings)
+        # instance logic
         self._load_search(enabled=on_instance_search)
         self._load_properties(enabled=on_instance_load)
