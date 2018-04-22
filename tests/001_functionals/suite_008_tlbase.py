@@ -14,7 +14,7 @@ class TestTlBase(TestInfoBase):
     """Test Suite for class TlBase"""
 
     def setup_method(self, test_method):
-        """Unload self.attribute"""
+        """Configure self.attribute"""
         super(TestTlBase, self).setup_method(
             test_method, config=settings())
 

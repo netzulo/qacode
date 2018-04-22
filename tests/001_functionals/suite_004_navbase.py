@@ -21,6 +21,7 @@ class TestNavBase(TestInfoBotUnique):
 
     @classmethod
     def setup_class(cls, **kwargs):
+        """TODO: doc method"""
         super(TestNavBase, cls).setup_class(
             config=settings(),
             skip_force=SKIP_REMOTES)
@@ -32,28 +33,28 @@ class TestNavBase(TestInfoBotUnique):
         self.add_property('page_home', self.settings_page('nav_tests_home'))
 
     @pytest.mark.skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
-    def test_001_navbase_instance(self):
+    def test_navbase_instance(self):
         """Testcase: test_000_navbase_instance"""
         self.assert_is_instance(self.bot.navigation, NavBase)
 
     @pytest.mark.skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
-    def test_002_gourl_without_waits(self):
+    def test_gourl_without_waits(self):
         """Testcase: test_001_gourl_without_waitsparam"""
         self.bot.navigation.get_url(self.page_home.get('url'))
 
     @pytest.mark.skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
-    def test_003_gourl_with_waitsparam(self):
+    def test_gourl_with_waitsparam(self):
         """Testcase: test_002_gourl_with_waitsparam"""
         self.bot.navigation.get_url(
             self.page_home.get('url'), wait_for_load=0)
 
     @pytest.mark.skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
-    def test_004_getmaximizewindow(self):
+    def test_getmaximizewindow(self):
         """Testcase: test_003_getmaximizewindow"""
         self.bot.navigation.get_maximize_window()
 
     @pytest.mark.skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
-    def test_005_getcapabilities(self):
+    def test_getcapabilities(self):
         """Testcase: test_004_getcapabilities"""
         caps = self.bot.navigation.get_capabilities()
         self.assert_is_instance(caps, dict)
@@ -61,7 +62,7 @@ class TestNavBase(TestInfoBotUnique):
         self.assert_equals(caps['browserName'], 'chrome')
 
     @pytest.mark.skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
-    def test_006_getlog(self):
+    def test_getlog(self):
         """Testcase: test_005_getlog"""
         self.bot.navigation.get_url(self.page_home.get('url'))
         log_data = self.bot.navigation.get_log()
@@ -69,7 +70,7 @@ class TestNavBase(TestInfoBotUnique):
         self.log.debug("selenium logs, browser={}".format(log_data))
 
     @pytest.mark.skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
-    def test_007_getlog_browser(self):
+    def test_getlog_browser(self):
         """Testcase: test_006_getlog_browser"""
         self.bot.navigation.get_url(self.page_home.get('url'))
         log_data = self.bot.navigation.get_log(log_name='browser')
@@ -77,7 +78,7 @@ class TestNavBase(TestInfoBotUnique):
         self.log.debug("selenium logs, browser={}".format(log_data))
 
     @pytest.mark.skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
-    def test_008_getlog_driver(self):
+    def test_getlog_driver(self):
         """Testcase: test_007_getlog_driver"""
         self.bot.navigation.get_url(self.page_home.get('url'))
         log_data = self.bot.navigation.get_log(log_name='driver')
@@ -85,7 +86,7 @@ class TestNavBase(TestInfoBotUnique):
         self.log.debug("selenium logs, driver={}".format(log_data))
 
     @pytest.mark.skip('Issue opened on github selenium, waiting...')
-    def test_009_getlog_client(self):
+    def test_getlog_client(self):
         """Testcase: test_008_getlog_client
         https://github.com/SeleniumHQ/selenium/issues/5410
         """
@@ -95,7 +96,7 @@ class TestNavBase(TestInfoBotUnique):
         self.log.debug("selenium logs, client={}".format(log_data))
 
     @pytest.mark.skipIf(SKIP_REMOTES, SKIP_REMOTES_MSG)
-    def test_010_getlog_server(self):
+    def test_getlog_server(self):
         """Testcase: test_008_getlog_client"""
         self.bot.navigation.get_url(self.page_home.get('url'))
         log_data = self.bot.navigation.get_log(log_name='server')

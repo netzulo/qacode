@@ -23,6 +23,7 @@ class TestBotBase(TestInfoBase):
     """Testcases for class BotBase"""
 
     def setup_method(self, test_method):
+        """TODO: doc method"""
         super(TestBotBase, self).setup_method(
             test_method, config=settings())
 

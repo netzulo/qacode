@@ -6,8 +6,8 @@ import os
 import re
 import time
 import pytest
-from qacode.core.exceptions.core_exception import CoreException
 from qacode.core.bots.bot_base import BotBase
+from qacode.core.exceptions.core_exception import CoreException
 from qacode.core.loggers.logger_manager import LoggerManager
 
 
@@ -24,7 +24,7 @@ class TestInfoBase(object):
 
     @classmethod
     def load(cls, config):
-        """Load default config dict"""            
+        """Load default config dict"""
         if config is None and not cls.is_loaded:
             raise CoreException(message="Bad param 'config' provided")
         cls.add_property('config', value=config)

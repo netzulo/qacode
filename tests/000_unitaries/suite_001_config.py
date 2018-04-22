@@ -17,6 +17,7 @@ class TestConfig(TestInfoBase):
     """Testcases for class TestInfoBase"""
 
     def setup_method(self, test_method):
+        """TODO: doc method"""
         super(TestConfig, self).setup_method(test_method, config=settings())
 
     # Error Messages
