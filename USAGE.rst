@@ -63,7 +63,7 @@ It's base control to load web element from ``WebDriver + browser session`` , *th
 + Param **locator** : This text it's parsed down selenium class ``selenium.webdriver.common.by.By`` (*default:* ``css selector`` == ``By.CSS_SELECTOR``)
 + Param **selector** : valid selector for locator selected
 + Param **instance** : allow to generate your own inherit classes from ``ControlBase`` and instance them  using qacode strategy (*default:* ``ControlBase``)
-+ Param **on_instance_search** : enable searching element at instance `ControlBase` (*default:* `True`)
++ Param **on_instance_search** : enable searching element at instance `ControlBase` (*default:* `False`)
 + Param **on_instance_load** : enable loading ``ControlBase`` properties when element it's loaded (*default:* ``False``) , will need enabled if want to access to base properties values obtained from selenium methods at ``BotBase.navigation``
 
 Example of usage
@@ -289,7 +289,7 @@ TestInfoBotUnique
 
 
 Example : inherit from TestInfoBotUnique class
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code:: python
 
