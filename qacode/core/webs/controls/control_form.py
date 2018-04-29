@@ -8,6 +8,7 @@ from qacode.core.webs.html_tags import HtmlTag
 from qacode.core.webs.strict_rules import StrictRule
 from qacode.core.webs.strict_rules import StrictSeverity
 from qacode.core.webs.strict_rules import StrictType
+from selenium.webdriver.support.ui import Select
 
 
 class ControlForm(ControlBase):
@@ -16,10 +17,13 @@ class ControlForm(ControlBase):
     # Settings properties
     on_instance_strict = None
     strict_rules = None
+    strict_rules_typed = None
     # Strict properties
     strict_tags = None
     strict_attrs = None
     strict_css_props = None
+    # Tags: select
+    dropdown = None
 
     # TODO: follow instructions on #63
     def __init__(self, bot, **kwargs):
@@ -42,6 +46,11 @@ class ControlForm(ControlBase):
         }
         # needed for self._load_* functions
         self.load_settings_keys(self.settings)
+        # needed for self._load_strict function
+        self.strict_rules_typed = []
+        self.strict_tags = []
+        self.strict_attrs = []
+        self.strict_css_props = []
         # instance logic
         self._load_search(enabled=self.on_instance_search)
         self._load_properties(enabled=self.on_instance_load)
@@ -68,71 +77,76 @@ class ControlForm(ControlBase):
         self.bot.log.debug("control_form | load_settings_keys: loaded keys!")
 
     def _load_strict(self, enabled=False):
+        """Load default setting for ControlForm instance"""
+        self.bot.log.debug(
+            "control_form | _load_strict: loading strict_rules...")
         if not enabled:
             self.bot.log.debug(
                 ("control | _load_strict: "
                  "!Disabled loading StrictRules!"))
             return False
-        typed_rules = list()
-        for strict_rule_config in self.settings.get('strict_rules'):
-            strict_tag = HtmlTag(strict_rule_config.get('tag'))
-            strict_type = StrictType(strict_rule_config.get('type'))
-            strict_severity = StrictSeverity(
-                strict_rule_config.get('severity', d=100))
-            rule = StrictRule(strict_tag, strict_type, strict_severity)
-            typed_rules.append(rule)
-        self.strict_rules = typed_rules
-        self.strict_tags = []
-        self.strict_attrs = []
-        self.strict_css_props = []
-        self._add_rules(self.strict_rules)
-        if not self.is_strict_tags() and self.strict_mode:
-            raise ControlException(
-                message=("Tag obtained for this element html tag not in "
-                         "strict_tags list"))
-        if not self.is_strict_attrs() and self.strict_mode:
-            raise ControlException(
-                message=("Html attribute obtained for this element not in "
-                         "strict_attrs list"))
-        if not self.is_strict_css_props() and self.strict_mode:
-            raise ControlException(
-                message=("Css property obtained for this element not in "
-                         "strict_css_props list"))
-        return True
+        # Parse to enums
+        typed_rules = self.parse_rules(self.strict_rules)
+        self.add_rules(typed_rules, typed=True)
+        # Logic for strict_rules here
+        self.is_strict_tags = self.load_strict_tags()
+        self.is_strict_attrs = self.load_strict_attrs()
+        self.is_strict_css_props = self.load_strict_css_props()
+        self.bot.log.debug(
+            "control_form | _load_strict: loaded strict_rules!")
 
-    def _add_rules(self, strict_rules):
+    def add_rules(self, strict_rules, typed=False):
         """Validate strict rules for each type
 
         Arguments:
             strict_rules {StrictRule} -- strict_rule
-            strict_mode {bool} -- if enabled, load values for future checks
+            on_instance_strict {bool} -- if enabled, load values for
+                future checks
         """
-        # validate rules and add object to respective lists
-        for strict_rule in strict_rules:
-            if strict_rule.strict_type == StrictType.TAG:
-                self.strict_tags.append(strict_rule.enum_type)
-            elif strict_rule.strict_type == StrictType.HTML_ATTR:
-                self.strict_attrs.append(strict_rule.enum_type)
-            elif strict_rule.strict_type == StrictType.CSS_PROP:
-                self.strict_css_props.append(strict_rule.enum_type)
-            elif strict_rule.strict_type == StrictType.JS_EVENT:
-                raise NotImplementedError(
-                    "Open an issue on github if raise here")
-            elif strict_rule.strict_type == StrictType.BEHAVIOUR:
-                raise NotImplementedError(
-                    "Open an issue on github if raise here")
-            elif strict_rule.strict_type == StrictType.USABILITY:
-                raise NotImplementedError(
-                    "Open an issue on github if raise here")
-            elif strict_rule.strict_type == StrictType.SEO:
-                raise NotImplementedError(
-                    "Open an issue on github if raise here")
-            else:
-                raise ControlException(
-                    message="bad param 'strict_type', invalid value")
+        if not typed:
+            self.bot.log.debug(
+                ("control_form | add_rules: "
+                 "adding base list of strict_rules..."))
+            self.strict_rules.append(strict_rules)
+            self.bot.log.debug(
+                "control_form | add_rules: added base list of strict_rules!")
+            return
+        else:
+            self.bot.log.debug(
+                ("control_form | add_rules: "
+                 "adding typed list of strict_rules..."))
+            self.strict_rules_typed.extend(strict_rules)
+            # validate rules and add object to respective lists
+            for strict_rule in self.strict_rules_typed:
+                if strict_rule.strict_type == StrictType.TAG:
+                    self.strict_tags.append(strict_rule.enum_type)
+                elif strict_rule.strict_type == StrictType.HTML_ATTR:
+                    self.strict_attrs.append(strict_rule.enum_type)
+                elif strict_rule.strict_type == StrictType.CSS_PROP:
+                    self.strict_css_props.append(strict_rule.enum_type)
+                elif strict_rule.strict_type == StrictType.JS_EVENT:
+                    raise NotImplementedError(
+                        "Open an issue on github if raise here")
+                elif strict_rule.strict_type == StrictType.BEHAVIOUR:
+                    raise NotImplementedError(
+                        "Open an issue on github if raise here")
+                elif strict_rule.strict_type == StrictType.USABILITY:
+                    raise NotImplementedError(
+                        "Open an issue on github if raise here")
+                elif strict_rule.strict_type == StrictType.SEO:
+                    raise NotImplementedError(
+                        "Open an issue on github if raise here")
+                else:
+                    raise ControlException(
+                        message="bad param 'strict_type', invalid value")
+            self.bot.log.debug(
+                "control_form | add_rules: added typed list of strict_rules!")
 
-    def is_strict_tags(self, strict_tags=None):
-        """Validate if element.tag is in list of strict_tags
+    def load_strict_tags(self, strict_tags=None):
+        """Validate if element.tag is in list of strict_tags and
+            instance ControlForm specific properties
+
+            tag=select, instance down 'dropdown' property
 
         Keyword Arguments:
             strict_tags {[type]} -- [description] (default: {None})
@@ -140,17 +154,27 @@ class ControlForm(ControlBase):
         Returns:
             [type] -- [description]
         """
+        self.bot.log.debug(
+            "control_form | load_strict_tags: loading strict_tags...")
         if strict_tags is None:
             strict_tags = self.strict_tags
         # empty list doesn't to be checked
         if len(strict_tags) == 0:
             return True
         for strict_tag in strict_tags:
-            if self.tag == strict_tag.name:
+            if self.tag == strict_tag.value:
+                # specific elements logic
+                if self.tag == 'select':
+                    self.dropdown = Select(self.element)
                 return True
+        if self.on_instance_strict:
+            raise ControlException(
+                message=("Validation raises for strict_tags for this element:"
+                         "control={}, strict_tags=[{}]").format(
+                             self, strict_tags))
         return False
 
-    def is_strict_attrs(self, strict_attrs=None):
+    def load_strict_attrs(self, strict_attrs=None):
         """Validate if element.attrs is in list of strict_attrs
 
         Keyword Arguments:
@@ -170,18 +194,30 @@ class ControlForm(ControlBase):
             try:
                 attr_name = self.get_attr_value(strict_attr.value)
             except ControlException:
-                if self.strict_mode:
+                if not self.on_instance_strict:
                     return False
+                raise ControlException(
+                    message=("Validation raises for strict_attrs "
+                             "for this element:"
+                             "control={}, strict_attrs=[{}]").format(
+                                 self, strict_attrs))
             attrs_search.append(attr_name)
             if attr_name:
                 attrs_found.append(attr_name)
-        return bool(set(attrs_search).intersection(attrs_found))
+        is_attrs = bool(set(attrs_search).intersection(attrs_found))
+        if not is_attrs and self.on_instance_strict:
+            raise ControlException(
+                message=("Validation raises for strict_attrs "
+                         "for this element:"
+                         "control={}, strict_attrs=[{}]").format(
+                             self, strict_attrs))
+        return is_attrs
 
-    def is_strict_css_props(self, strict_css_props=None):
+    def load_strict_css_props(self, strict_css_props=None):
         """Validate if element.attrs is in list of strict_attrs
 
         Keyword Arguments:
-            strict_attrs {[type]} -- [description] (default: {None})
+            strict_css_props {[type]} -- [description] (default: {None})
 
         Returns:
             [type] -- [description]
@@ -198,4 +234,35 @@ class ControlForm(ControlBase):
             css_search.append(css_prop)
             if css_prop:
                 css_found.append(css_prop)
-        return len(css_search) == len(css_found)
+        is_css = len(css_search) == len(css_found)
+        if not is_css and self.on_instance_strict:
+            raise ControlException(
+                message=("Validation raises for strict_css_props "
+                         "for this element:"
+                         "control={}, strict_css_props=[{}]").format(
+                             self, strict_css_props))
+        return is_css
+
+    def parse_rules(self, strict_rules=None):
+        """Parse array of configurations dicts of strict_rules to
+            instances list of StrictRule
+        """
+        typed_rules = list()
+        if strict_rules is None:
+            strict_rules = self.settings.get('strict_rules')
+        # parsing rules > to enums > to instance
+        for strict_rule_config in strict_rules:
+            strict_config = {
+                "tag": strict_rule_config.get('tag'),
+                "type": strict_rule_config.get('type'),
+                "severity": strict_rule_config.get('severity')
+            }
+            if strict_config.get('severity') is None:
+                strict_config.update({"severity": "low"})
+            strict_tag = HtmlTag(strict_config.get('tag'))
+            strict_type = StrictType(strict_config.get('type'))
+            strict_severity = StrictSeverity(strict_config.get('severity'))
+            rule = StrictRule(strict_tag, strict_type, strict_severity)
+            typed_rules.append(rule)
+        # parsed rules at this point
+        return typed_rules

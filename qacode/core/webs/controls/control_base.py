@@ -102,6 +102,11 @@ class ControlBase(object):
         return True
 
     def _load_properties(self, enabled=False):
+        if enabled and not self.settings.get('on_instance_search'):
+            msg = ("Can't call to load_properties "
+                   "wihout call first to load_search")
+            self.bot.log.error(msg)
+            raise ControlException(message=msg)
         if not enabled or enabled is None:
             self.bot.log.warning(
                 ("control | _load_properties: "

@@ -126,6 +126,28 @@
                 "on_instance_load": false
               }
             ]
+          },
+          {
+            "name": "page_dropdown",
+            "url": "http://the-internet.herokuapp.com/dropdown",
+            "locator": "css selector",
+            "go_url": true,
+            "wait_url": 0,
+            "maximize": false,
+            "controls": [
+              {
+                "name": "dropdown",
+                "locator": "css selector",
+                "selector": "#dropdown",
+                "instance": "ControlForm",
+                "on_instance_search": true,
+                "on_instance_load": true,
+                "on_instance_strict": true,
+                "strict_rules": [
+                  { "tag": "select", "type": "tag", "severity": "hight" }
+                ]
+              }
+            ]
           }
         ]
       }

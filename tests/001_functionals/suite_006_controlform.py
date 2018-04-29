@@ -8,6 +8,7 @@ from qacode.core.utils import settings
 from qacode.core.webs.controls.control_base import ControlBase
 from qacode.core.webs.controls.control_form import ControlForm
 from selenium.webdriver.remote.webelement import WebElement
+from selenium.webdriver.support.ui import Select
 
 
 SETTINGS = settings()
@@ -19,7 +20,7 @@ class TestControlForm(TestInfoBotUnique):
     """Test Suite for ControlBase class"""
 
     app = None
-    page_login_config = None
+    page_dropdown_config = None
 
     @classmethod
     def setup_class(cls, **kwargs):
@@ -35,22 +36,26 @@ class TestControlForm(TestInfoBotUnique):
         self.add_property(
             'app', value=self.settings_app('pages_tests'))
         self.add_property(
-            'page_login_config', value=self.settings_page('page_login'))
+            'page_dropdown_config', value=self.settings_page('page_dropdown'))
         self.add_property(
-            'url', value=self.page_login_config.get('url'))
+            'url', value=self.page_dropdown_config.get('url'))
         self.bot.navigation.get_url(self.url)
         curr_url = self.bot.curr_driver.current_url
         self.assert_equals_url(curr_url, self.url)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    @pytest.mark.parametrize("selector", ["#username"])
+    @pytest.mark.parametrize("selector", ["#dropdown"])
     @pytest.mark.parametrize("instance", ["ControlForm"])
     @pytest.mark.parametrize("on_instance_search", [True])
     @pytest.mark.parametrize("on_instance_load", [True])
     @pytest.mark.parametrize("on_instance_strict", [True, False])
-    @pytest.mark.parametrize("strict_rules", [[]])
-    def test_instance(self, selector, instance, on_instance_search,
-                      on_instance_load, on_instance_strict, strict_rules):
+    @pytest.mark.parametrize("strict_rules", [
+        [
+            {"tag": "select", "type": "tag", "severity": "hight"}
+        ]
+    ])
+    def test_instance_form(self, selector, instance, on_instance_search,
+                           on_instance_load, on_instance_strict, strict_rules):
         """Testcase: test_001_instance_selector"""
         control_config = {
             "name": "txt_username_strict",
@@ -84,3 +89,10 @@ class TestControlForm(TestInfoBotUnique):
         self.assert_equals(
             len(control.strict_rules),
             len(control_config.get('strict_rules')))
+        if control.tag == 'select' and on_instance_strict:
+            self.assert_is_instance(
+                control.dropdown,
+                Select)
+        elif control.tag == 'select' and not on_instance_strict:
+            self.assert_none(
+                control.dropdown)

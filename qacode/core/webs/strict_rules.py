@@ -92,9 +92,9 @@ class StrictType(Enum):
 class StrictSeverity(Enum):
     """Integer type enum to indicates severity at apply StrictRule"""
 
-    LOW = 100
-    MEDIUM = 101
-    HIGHT = 102
+    LOW = "low"
+    MEDIUM = "medium"
+    HIGHT = "hight"
 
     @classmethod
     def get_attr(cls):

@@ -47,9 +47,12 @@ class TestControlBase(TestInfoBotUnique):
     @pytest.mark.parametrize("instance", ["ControlBase"])
     @pytest.mark.parametrize("on_instance_search", [False, True])
     @pytest.mark.parametrize("on_instance_load", [False, True])
-    def test_instance(self, selector, instance, on_instance_search,
-                      on_instance_load):
-        """Testcase: test_001_instance_selector"""
+    def test_instance_base(self, selector, instance, on_instance_search,
+                           on_instance_load):
+        """Testcase: test_instance_base"""
+        # must be supported at: test_instance_raises_base
+        if not on_instance_search and on_instance_load:
+            pytest.skip("Test must be supported at: test_instance_raises_base")
         # must be supported
         control_config = {
             "name": "txt_username_base",
@@ -83,12 +86,15 @@ class TestControlBase(TestInfoBotUnique):
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize("on_instance_load", [None])
-    @pytest.mark.parametrize("on_instance_search", [None])
+    @pytest.mark.parametrize("on_instance_search", [None, True])
     @pytest.mark.parametrize("instance", ["ControlBase"])
     @pytest.mark.parametrize("selector", [None, "#username"])
-    def test_instance_raises(self, selector, instance, on_instance_search,
-                             on_instance_load):
-        """Testcase: test_001_instance_selector"""
+    def test_instance_base_raises(self, selector, instance, on_instance_search,
+                                  on_instance_load):
+        """Testcase: test_instance_raises_base"""
+        # must be supported at: test_instance_base
+        if on_instance_search and on_instance_load is None:
+            pytest.skip("Test must be supported at: test_instance_base")
         # must be supported
         control_config = {
             "name": "txt_username_base",
@@ -120,7 +126,7 @@ class TestControlBase(TestInfoBotUnique):
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_instance_raises_nonebot(self):
-        """Testcase: test_002_raises_nonebot"""
+        """Testcase: test_instance_raises_nonebot"""
         self.assert_raises(
             ControlException,
             ControlBase,
@@ -128,7 +134,7 @@ class TestControlBase(TestInfoBotUnique):
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_instance_raises_nonesettings(self):
-        """Testcase: test_003_raises_nonesettings"""
+        """Testcase: test_instance_raises_nonesettings"""
         self.assert_raises(
             ControlException,
             ControlBase,
@@ -136,7 +142,7 @@ class TestControlBase(TestInfoBotUnique):
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_method_findchild(self):
-        """Testcase: test_004_method_findchild"""
+        """Testcase: test_method_findchild"""
         login_container_config = self.settings_control('login_container')
         login_container_title_config = self.settings_control(
             'login_container_title')
@@ -148,7 +154,7 @@ class TestControlBase(TestInfoBotUnique):
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_property_gettext(self):
-        """Testcase: test_005_property_gettext"""
+        """Testcase: test_property_gettext"""
         login_container_title_config = self.settings_control(
             'login_container_title').copy()
         login_container_title_config.update({
@@ -160,7 +166,7 @@ class TestControlBase(TestInfoBotUnique):
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_property_raises_gettext(self):
-        """Testcase: test_006_property_raises_gettext"""
+        """Testcase: test_property_raises_gettext"""
         login_container_title_config = self.settings_control(
             'login_container_title')
         control = ControlBase(
@@ -169,7 +175,7 @@ class TestControlBase(TestInfoBotUnique):
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_method_gettext(self):
-        """Testcase: test_007_method_gettext"""
+        """Testcase: test_method_gettext"""
         login_container_title_config = self.settings_control(
             'login_container_title')
         login_container_title_config.update({
@@ -181,7 +187,7 @@ class TestControlBase(TestInfoBotUnique):
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_property_attr_id(self):
-        """Testcase: test_008_property_attr_id"""
+        """Testcase: test_property_attr_id"""
         txt_username_config = self.settings_control(
             'txt_username')
         txt_username_config.update({
@@ -192,7 +198,7 @@ class TestControlBase(TestInfoBotUnique):
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_property_attr_class(self):
-        """Testcase: test_009_property_attr_class"""
+        """Testcase: test_property_attr_class"""
         login_container_config = self.settings_control(
             'login_container')
         login_container_config.update({
@@ -204,7 +210,7 @@ class TestControlBase(TestInfoBotUnique):
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_method_getattrvalue(self):
-        """Testcase: test_010_method_getattrvalue"""
+        """Testcase: test_method_getattrvalue"""
         login_container_config = self.settings_control(
             'login_container')
         login_container_config.update({
@@ -215,7 +221,7 @@ class TestControlBase(TestInfoBotUnique):
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_method_get_attrs(self):
-        """Testcase: test_011_method_get_attrs"""
+        """Testcase: test_method_get_attrs"""
         login_container_config = self.settings_control(
             'login_container')
         login_container_config.update({
@@ -231,7 +237,7 @@ class TestControlBase(TestInfoBotUnique):
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_property_tag(self):
-        """Testcase: test_012_property_tag"""
+        """Testcase: test_property_tag"""
         login_container_config = self.settings_control(
             'login_container')
         login_container_config.update({
@@ -242,7 +248,7 @@ class TestControlBase(TestInfoBotUnique):
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_method_typetext_withproperty(self):
-        """Testcase: test_013_method_typetext_withproperty"""
+        """Testcase: test_method_typetext_withproperty"""
         txt_username_config = self.settings_control(
             'txt_username')
         txt_username_config.update({
@@ -254,7 +260,7 @@ class TestControlBase(TestInfoBotUnique):
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_method_typetext_withmethod(self):
-        """Testcase: test_014_method_typetext_withmethod"""
+        """Testcase: test_method_typetext_withmethod"""
         txt_username_config = self.settings_control(
             'txt_username')
         txt_username_config.update({
@@ -266,7 +272,7 @@ class TestControlBase(TestInfoBotUnique):
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_method_typetext_cleartrue(self):
-        """Testcase: test_015_method_typetext_cleartrue"""
+        """Testcase: test_method_typetext_cleartrue"""
         txt_username_config = self.settings_control(
             'txt_username')
         txt_username_config.update({
@@ -278,7 +284,7 @@ class TestControlBase(TestInfoBotUnique):
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_method_getcssvalue(self):
-        """Testcase: test_016_method_getcssvalue"""
+        """Testcase: test_method_getcssvalue"""
         txt_username_config = self.settings_control(
             'txt_username')
         txt_username_config.update({
@@ -290,7 +296,7 @@ class TestControlBase(TestInfoBotUnique):
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_method_setcssrule(self):
-        """Testcase: test_017_method_setcssrule"""
+        """Testcase: test_method_setcssrule"""
         txt_username_config = self.settings_control(
             'txt_username')
         txt_username_config.update({
@@ -304,7 +310,7 @@ class TestControlBase(TestInfoBotUnique):
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_method_gettext_onscreenfalse(self):
-        """Testcase: test_018_method_gettext_onscreenfalse"""
+        """Testcase: test_method_gettext_onscreenfalse"""
         login_container_title_config = self.settings_control(
             'login_container_title')
         login_container_title_config.update({
