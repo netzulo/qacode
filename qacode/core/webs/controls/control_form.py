@@ -82,7 +82,7 @@ class ControlForm(ControlBase):
             "control_form | _load_strict: loading strict_rules...")
         if not enabled:
             self.bot.log.debug(
-                ("control | _load_strict: "
+                ("control_form | _load_strict: "
                  "!Disabled loading StrictRules!"))
             return False
         # Parse to enums
@@ -166,12 +166,21 @@ class ControlForm(ControlBase):
                 # specific elements logic
                 if self.tag == 'select':
                     self.dropdown = Select(self.element)
+                self.bot.log.debug(
+                    ("control_form | load_strict_tags: "
+                     "loaded strict_tags!"))
                 return True
         if self.on_instance_strict:
+            self.bot.log.error(
+                    ("control_form | load_strict_tags: "
+                     "not loaded strict_tags with enabled strict_mode!"))
             raise ControlException(
                 message=("Validation raises for strict_tags for this element:"
                          "control={}, strict_tags=[{}]").format(
                              self, strict_tags))
+        self.bot.log.warning(
+            ("control_form | load_strict_tags: "
+             "not loaded strict_tags!"))
         return False
 
     def load_strict_attrs(self, strict_attrs=None):
@@ -183,6 +192,8 @@ class ControlForm(ControlBase):
         Returns:
             [type] -- [description]
         """
+        self.bot.log.debug(
+            "control_form | load_strict_attrs: loading strict_attrs...")
         attrs_search = []
         attrs_found = []
         if strict_attrs is None:
@@ -195,7 +206,13 @@ class ControlForm(ControlBase):
                 attr_name = self.get_attr_value(strict_attr.value)
             except ControlException:
                 if not self.on_instance_strict:
+                    self.bot.log.warning(
+                        ("control_form | load_strict_attrs: "
+                         "not loaded strict_attrs!"))
                     return False
+                self.bot.log.error(
+                    ("control_form | load_strict_attrs: "
+                     "not loaded strict_attrs with enabled strict_mode!"))
                 raise ControlException(
                     message=("Validation raises for strict_attrs "
                              "for this element:"
@@ -206,11 +223,16 @@ class ControlForm(ControlBase):
                 attrs_found.append(attr_name)
         is_attrs = bool(set(attrs_search).intersection(attrs_found))
         if not is_attrs and self.on_instance_strict:
+            self.bot.log.error(
+                ("control_form | load_strict_attrs: "
+                 "not loaded strict_attrs with enabled strict_mode!"))
             raise ControlException(
                 message=("Validation raises for strict_attrs "
                          "for this element:"
                          "control={}, strict_attrs=[{}]").format(
                              self, strict_attrs))
+        self.bot.log.debug(
+            "control_form | load_strict_attrs: loaded strict_attrs!")
         return is_attrs
 
     def load_strict_css_props(self, strict_css_props=None):
@@ -222,6 +244,8 @@ class ControlForm(ControlBase):
         Returns:
             [type] -- [description]
         """
+        self.bot.log.debug(
+            "control_form | load_strict_css_props: loading strict_attrs...")
         css_search = []
         css_found = []
         if strict_css_props is None:
@@ -241,12 +265,16 @@ class ControlForm(ControlBase):
                          "for this element:"
                          "control={}, strict_css_props=[{}]").format(
                              self, strict_css_props))
+        self.bot.log.debug(
+            "control_form | load_strict_css_props: loaded strict_attrs!")
         return is_css
 
     def parse_rules(self, strict_rules=None):
         """Parse array of configurations dicts of strict_rules to
             instances list of StrictRule
         """
+        self.bot.log.debug(
+            "control_form | parse_rules: parsing strict_rules...")
         typed_rules = list()
         if strict_rules is None:
             strict_rules = self.settings.get('strict_rules')
@@ -265,4 +293,6 @@ class ControlForm(ControlBase):
             rule = StrictRule(strict_tag, strict_type, strict_severity)
             typed_rules.append(rule)
         # parsed rules at this point
+        self.bot.log.debug(
+            "control_form | parse_rules: parsed strict_rules!")
         return typed_rules

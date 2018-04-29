@@ -41,7 +41,7 @@ Have classes for this down package: ``qacode.core.bots``
                 "operadriver_32",
                 "operadriver_64"
             ],
-            "log_output_file": "logs",
+            "log_output_file": "logs/",
             "log_name": "qacode",
             "log_level": "DEBUG"
         }
