@@ -303,3 +303,13 @@ class ControlBase(object):
         # instance logic
         self._load_search(enabled=on_instance_search)
         self._load_properties(enabled=on_instance_load)
+
+    def __repr__(self):
+        """Show basic properties for this object"""
+        return ("ControlBase: name={}, "
+                "bot.browser={}, bot.mode={} \n"
+                "settings={}").format(
+            self.settings.get('url'),
+            self.bot.settings.get('browser'),
+            self.bot.settings.get('mode'),
+            self.settings)
