@@ -172,8 +172,8 @@ class ControlForm(ControlBase):
                 return True
         if self.on_instance_strict:
             self.bot.log.error(
-                    ("control_form | load_strict_tags: "
-                     "not loaded strict_tags with enabled strict_mode!"))
+                ("control_form | load_strict_tags: "
+                 "not loaded strict_tags with enabled strict_mode!"))
             raise ControlException(
                 message=("Validation raises for strict_tags for this element:"
                          "control={}, strict_tags=[{}]").format(
