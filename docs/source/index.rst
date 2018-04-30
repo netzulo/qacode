@@ -6,10 +6,6 @@
 Welcome to Qacode's documentation!
 ==================================
 
-.. toctree::
-   :maxdepth: 4
-   :caption: Contents:
-
 Indices and tables
 ==================
 
@@ -17,33 +13,13 @@ Indices and tables
 * :ref:`modindex`
 * :ref:`search`
 
-qacode.core.bots
-################
 
-_static/bots
-
-
-qacode.core.webs.controls
-#########################
-
-_static/controls
-
-
-qacode.core.webs.pages
-######################
-
-_static/pages
-
-
-qacode.core.testing
-###################
-
-_static/tests
-
-
-qacode.core.testing.testlink
-############################
-
-.. autoclass::  qacode.core.testing.testlink.testlink_base.TlBase
-    :members:
-
+.. toctree::
+   :maxdepth: 4
+   :caption: Contents:
+   
+   _static/bots
+   _static/controls
+   _static/pages
+   _static/tests
+   _static/testlink
