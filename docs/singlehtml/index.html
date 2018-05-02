@@ -1,0 +1,2737 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Qacode v0.4.7 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="welcome-to-qacode-s-documentation">
+<h1>Welcome to Qacode’s documentation!<a class="headerlink" href="#welcome-to-qacode-s-documentation" title="Permalink to this headline">¶</a></h1>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
+<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+</ul>
+<div class="toctree-wrapper compound">
+<span id="document-_static/bots"></span><div class="section" id="package-qacode-core-bots">
+<h2>package: qacode.core.bots<a class="headerlink" href="#package-qacode-core-bots" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-qacode.core.bots.bot_base">
+<span id="class-botbase"></span><h3>Class: BotBase<a class="headerlink" href="#module-qacode.core.bots.bot_base" title="Permalink to this headline">¶</a></h3>
+<p>TODO</p>
+<dl class="class">
+<dt id="qacode.core.bots.bot_base.BotBase">
+<em class="property">class </em><code class="descclassname">qacode.core.bots.bot_base.</code><code class="descname">BotBase</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.bots.bot_base.BotBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class Base for handle selenium functionality throught this wrapper</p>
+<p>curr_caps – Capabilities class</p>
+<p>curr_driver – WebDriver class</p>
+<p>curr_driver_path – WebDriver browser executable path</p>
+<p>navigation – Bot methods to brigde selenium functions</p>
+<p>bot_config – Bot configuration object</p>
+<dl class="docutils">
+<dt>logger_manager – logger manager class loaded from</dt>
+<dd>LoggerManager object</dd>
+</dl>
+<p>log – log class to write messages</p>
+<dl class="attribute">
+<dt id="qacode.core.bots.bot_base.BotBase.IS_64BITS">
+<code class="descname">IS_64BITS</code><em class="property"> = True</em><a class="headerlink" href="#qacode.core.bots.bot_base.BotBase.IS_64BITS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.bots.bot_base.BotBase.IS_WIN">
+<code class="descname">IS_WIN</code><em class="property"> = True</em><a class="headerlink" href="#qacode.core.bots.bot_base.BotBase.IS_WIN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.bots.bot_base.BotBase.close">
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.bots.bot_base.BotBase.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close curr_driver browser</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.bots.bot_base.BotBase.curr_caps">
+<code class="descname">curr_caps</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.bots.bot_base.BotBase.curr_caps" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.bots.bot_base.BotBase.curr_driver">
+<code class="descname">curr_driver</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.bots.bot_base.BotBase.curr_driver" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.bots.bot_base.BotBase.curr_driver_path">
+<code class="descname">curr_driver_path</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.bots.bot_base.BotBase.curr_driver_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.bots.bot_base.BotBase.driver_name_filter">
+<code class="descname">driver_name_filter</code><span class="sig-paren">(</span><em>driver_name=None</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.bots.bot_base.BotBase.driver_name_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter names of driver to search selected on config list</p>
+<dl class="docutils">
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>driver_name {str} – driver_name_format is</dt>
+<dd>{driver_name}{arch}{os} (default: {None})</dd>
+</dl>
+</dd>
+<dt>Raises:</dt>
+<dd>CoreException – driver_name param is None
+CoreException – driver_name not in</dd>
+<dt>Returns:</dt>
+<dd><dl class="first last docutils">
+<dt>str – name of driver</dt>
+<dd>(example: chromedriver_32.exe)</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.bots.bot_base.BotBase.log">
+<code class="descname">log</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.bots.bot_base.BotBase.log" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.bots.bot_base.BotBase.logger_manager">
+<code class="descname">logger_manager</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.bots.bot_base.BotBase.logger_manager" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.bots.bot_base.BotBase.mode_local">
+<code class="descname">mode_local</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.bots.bot_base.BotBase.mode_local" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open new brower on local mode</p>
+<dl class="docutils">
+<dt>Raises:</dt>
+<dd><dl class="first last docutils">
+<dt>CoreException – driver_name on config JSON</dt>
+<dd>file is not valid value</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.bots.bot_base.BotBase.mode_remote">
+<code class="descname">mode_remote</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.bots.bot_base.BotBase.mode_remote" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open new brower on remote mode</p>
+<dl class="docutils">
+<dt>Raises:</dt>
+<dd>CoreException – browser name is not in valid values list</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.bots.bot_base.BotBase.navigation">
+<code class="descname">navigation</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.bots.bot_base.BotBase.navigation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.bots.bot_base.BotBase.settings">
+<code class="descname">settings</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.bots.bot_base.BotBase.settings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt>
+<em class="property">class </em><code class="descclassname">qacode.core.bots.bot_base.</code><code class="descname">BotBase</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span></dt>
+<dd><p>Class Base for handle selenium functionality throught this wrapper</p>
+<p>curr_caps – Capabilities class</p>
+<p>curr_driver – WebDriver class</p>
+<p>curr_driver_path – WebDriver browser executable path</p>
+<p>navigation – Bot methods to brigde selenium functions</p>
+<p>bot_config – Bot configuration object</p>
+<dl class="docutils">
+<dt>logger_manager – logger manager class loaded from</dt>
+<dd>LoggerManager object</dd>
+</dl>
+<p>log – log class to write messages</p>
+<dl class="method">
+<dt>
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Close curr_driver browser</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">driver_name_filter</code><span class="sig-paren">(</span><em>driver_name=None</em><span class="sig-paren">)</span></dt>
+<dd><p>Filter names of driver to search selected on config list</p>
+<dl class="docutils">
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>driver_name {str} – driver_name_format is</dt>
+<dd>{driver_name}{arch}{os} (default: {None})</dd>
+</dl>
+</dd>
+<dt>Raises:</dt>
+<dd>CoreException – driver_name param is None
+CoreException – driver_name not in</dd>
+<dt>Returns:</dt>
+<dd><dl class="first last docutils">
+<dt>str – name of driver</dt>
+<dd>(example: chromedriver_32.exe)</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">mode_local</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Open new brower on local mode</p>
+<dl class="docutils">
+<dt>Raises:</dt>
+<dd><dl class="first last docutils">
+<dt>CoreException – driver_name on config JSON</dt>
+<dd>file is not valid value</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">mode_remote</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Open new brower on remote mode</p>
+<dl class="docutils">
+<dt>Raises:</dt>
+<dd>CoreException – browser name is not in valid values list</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-qacode.core.bots.modules.nav_base">
+<span id="class-navbase-used-at-bot-navigation-as-property"></span><h3>Class: NavBase (<em>used at bot.navigation as property</em>)<a class="headerlink" href="#module-qacode.core.bots.modules.nav_base" title="Permalink to this headline">¶</a></h3>
+<p>Created on 04 march 2017</p>
+<p>&#64;author: ntz</p>
+<dl class="class">
+<dt id="qacode.core.bots.modules.nav_base.NavBase">
+<em class="property">class </em><code class="descclassname">qacode.core.bots.modules.nav_base.</code><code class="descname">NavBase</code><span class="sig-paren">(</span><em>driver</em>, <em>log</em>, <em>driver_wait=None</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.bots.modules.nav_base.NavBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Main navigation methods to use on selenium scripts</p>
+<dl class="method">
+<dt id="qacode.core.bots.modules.nav_base.NavBase.delete_cookie_by_key">
+<code class="descname">delete_cookie_by_key</code><span class="sig-paren">(</span><em>key_name</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.bots.modules.nav_base.NavBase.delete_cookie_by_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes a single cookie with the given name</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.bots.modules.nav_base.NavBase.delete_cookies">
+<code class="descname">delete_cookies</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.bots.modules.nav_base.NavBase.delete_cookies" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete all cookies in the scope of the session</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.bots.modules.nav_base.NavBase.driver">
+<code class="descname">driver</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.bots.modules.nav_base.NavBase.driver" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.bots.modules.nav_base.NavBase.ele_attribute">
+<code class="descname">ele_attribute</code><span class="sig-paren">(</span><em>element</em>, <em>attr_name</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.bots.modules.nav_base.NavBase.ele_attribute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns tuple with (attr, value) if founds
+This method will first try to return the value of a property with
+the given name. If a property with that name doesn’t exist, it
+returns the value of the attribute with the same name. If there’s
+no attribute with that name, None is returned.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.bots.modules.nav_base.NavBase.ele_clear">
+<code class="descname">ele_clear</code><span class="sig-paren">(</span><em>element</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.bots.modules.nav_base.NavBase.ele_clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear element text</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.bots.modules.nav_base.NavBase.ele_click">
+<code class="descname">ele_click</code><span class="sig-paren">(</span><em>element=None</em>, <em>selector=None</em>, <em>locator='css selector'</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.bots.modules.nav_base.NavBase.ele_click" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Perform click webelement with locator param or search it by default</dt>
+<dd>CSS_SELECTOR value if element it’s none but selector
+it’s not default value</dd>
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>element {WebElement} – selenium object, instance of WebElement</dt>
+<dd>(default: {None})</dd>
+<dt>selector {str} – selector to search and element to click</dt>
+<dd>(default: {None})</dd>
+<dt>locator {By} – locator selenium strategy</dt>
+<dd>(default: {By.CSS_SELECTOR})</dd>
+</dl>
+</dd>
+<dt>Raises:</dt>
+<dd><dl class="first last docutils">
+<dt>CoreException – Bad params combination, need element</dt>
+<dd>or selector to search element</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>WebElement – returns element clicked (to allow chaining)</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.bots.modules.nav_base.NavBase.ele_css">
+<code class="descname">ele_css</code><span class="sig-paren">(</span><em>element</em>, <em>prop_name</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.bots.modules.nav_base.NavBase.ele_css" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allows to obtain CSS value based on CSS property name</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd>element {WebElement} – WebElement to modify CSS property
+prop_name {str} – CSS property name</dd>
+<dt>Returns:</dt>
+<dd>str – Value of CSS property searched</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.bots.modules.nav_base.NavBase.ele_input_value">
+<code class="descname">ele_input_value</code><span class="sig-paren">(</span><em>element</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.bots.modules.nav_base.NavBase.ele_input_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return value of value attribute, usefull for inputs</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.bots.modules.nav_base.NavBase.ele_is_displayed">
+<code class="descname">ele_is_displayed</code><span class="sig-paren">(</span><em>element</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.bots.modules.nav_base.NavBase.ele_is_displayed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the element is visible to a user</p>
+<dl class="docutils">
+<dt>Webdriver spec to determine if element it’s displayed:</dt>
+<dd><a class="reference external" href="https://w3c.github.io/webdriver/webdriver-spec.html#widl-WebElement-isDisplayed-boolean">https://w3c.github.io/webdriver/webdriver-spec.html#widl-WebElement-isDisplayed-boolean</a></dd>
+<dt>Arguments:</dt>
+<dd>element {WebElement} – selenium web element</dd>
+<dt>Returns:</dt>
+<dd><dl class="first last docutils">
+<dt>bool – Value based on selenium SPEC to determine if an element</dt>
+<dd>is enabled</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.bots.modules.nav_base.NavBase.ele_is_enabled">
+<code class="descname">ele_is_enabled</code><span class="sig-paren">(</span><em>element</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.bots.modules.nav_base.NavBase.ele_is_enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether the element is enabled</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd>element {WebElement} – selenium web element</dd>
+<dt>Returns:</dt>
+<dd><dl class="first last docutils">
+<dt>bool – Value based on selenium SPEC to determine if an element</dt>
+<dd>is enabled</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.bots.modules.nav_base.NavBase.ele_is_selected">
+<code class="descname">ele_is_selected</code><span class="sig-paren">(</span><em>element</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.bots.modules.nav_base.NavBase.ele_is_selected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether the element is selected</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd>element {WebElement} – selenium web element</dd>
+<dt>Returns:</dt>
+<dd><dl class="first last docutils">
+<dt>bool – Value based on selenium SPEC to determine if an element</dt>
+<dd>is enabled</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.bots.modules.nav_base.NavBase.ele_tag">
+<code class="descname">ele_tag</code><span class="sig-paren">(</span><em>element</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.bots.modules.nav_base.NavBase.ele_tag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns element.tag_name value</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.bots.modules.nav_base.NavBase.ele_text">
+<code class="descname">ele_text</code><span class="sig-paren">(</span><em>element</em>, <em>on_screen=True</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.bots.modules.nav_base.NavBase.ele_text" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Get element content text.</dt>
+<dd>If the isDisplayed() method can sometimes trip over when
+the element is not really hidden but outside the viewport
+get_text() returns an empty string for such an element.</dd>
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>on_screen {bool} – allow to obtain text if element</dt>
+<dd>it not displayed to this element before
+read text (default: {True})</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>str – Return element content text (innerText property)</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.bots.modules.nav_base.NavBase.ele_write">
+<code class="descname">ele_write</code><span class="sig-paren">(</span><em>element</em>, <em>text=None</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.bots.modules.nav_base.NavBase.ele_write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Over element perform send_keys , if not sended text, then will write
+empty over element
+:param element: WebElement
+:return: None</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.bots.modules.nav_base.NavBase.execute_js">
+<code class="descname">execute_js</code><span class="sig-paren">(</span><em>script</em>, <em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.bots.modules.nav_base.NavBase.execute_js" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute arbitrary Javascript code</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd>script {str} – JS code to be executed on WebDriver
+<a href="#id1"><span class="problematic" id="id2">*</span></a>args {[type]} – More arguments ( like element selector )</dd>
+<dt>Returns:</dt>
+<dd>str – JS script returns</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.bots.modules.nav_base.NavBase.find_element">
+<code class="descname">find_element</code><span class="sig-paren">(</span><em>selector</em>, <em>locator='css selector'</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.bots.modules.nav_base.NavBase.find_element" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Just divided execution ways for search web element</dt>
+<dd>throught selenium</dd>
+<dt>Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>selector {str} – string selector used to locate one</dt>
+<dd>element or first obtained</dd>
+</dl>
+</dd>
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>locator {By} – locator strategy used to find</dt>
+<dd>WebElement selector (default: {By.CSS_SELECTOR})</dd>
+</dl>
+</dd>
+<dt>Raises:</dt>
+<dd><p class="first">CoreException – If locator is None
+CoreException – Element selector+locator strategy raises</p>
+<blockquote class="last">
+<div>selenium NoSuchElementException</div></blockquote>
+</dd>
+<dt>Returns:</dt>
+<dd>WebElement – selenium representation for a web element</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.bots.modules.nav_base.NavBase.find_element_wait">
+<code class="descname">find_element_wait</code><span class="sig-paren">(</span><em>selector</em>, <em>locator='css selector'</em>, <em>driver_wait=None</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.bots.modules.nav_base.NavBase.find_element_wait" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Search element using WebDriverWait class</dt>
+<dd>and ElementConditions presence_of_element_located</dd>
+<dt>Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>selector {str} – string selector used to locate one</dt>
+<dd>element or first obtained</dd>
+</dl>
+</dd>
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>locator {By} – locator strategy used to find</dt>
+<dd>WebElement selector (default: {By.CSS_SELECTOR})</dd>
+<dt>driver_wait {WebDriverWait} – driver that supports</dt>
+<dd>ExpectedConditions methods (default: {None})</dd>
+</dl>
+</dd>
+<dt>Raises:</dt>
+<dd><dl class="first last docutils">
+<dt>CoreException – if NavBase instanced</dt>
+<dd>without driver_wait</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd><dl class="first last docutils">
+<dt>WebElement – element through selenium</dt>
+<dd>WebDriverWait class</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.bots.modules.nav_base.NavBase.find_elements">
+<code class="descname">find_elements</code><span class="sig-paren">(</span><em>selector</em>, <em>locator='css selector'</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.bots.modules.nav_base.NavBase.find_elements" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Just divided execution ways for search web elements</dt>
+<dd>throught selenium</dd>
+<dt>Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>selector {str} – string selector used to locate</dt>
+<dd>one or more elements</dd>
+</dl>
+</dd>
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>locator {By} – locator strategy used to find</dt>
+<dd>WebElement selector (default: {By.CSS_SELECTOR})</dd>
+</dl>
+</dd>
+<dt>Raises:</dt>
+<dd><p class="first">CoreException – If locator is None
+CoreException – Element selector+locator strategy raises</p>
+<blockquote class="last">
+<div>selenium NoSuchElementException</div></blockquote>
+</dd>
+<dt>Returns:</dt>
+<dd><dl class="first last docutils">
+<dt>list(WebElement) – selenium representation for a</dt>
+<dd>list of web elements</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.bots.modules.nav_base.NavBase.forward">
+<code class="descname">forward</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.bots.modules.nav_base.NavBase.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Go forward using browser functionality</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.bots.modules.nav_base.NavBase.get_capabilities">
+<code class="descname">get_capabilities</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.bots.modules.nav_base.NavBase.get_capabilities" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve current capabilities applied to selenium driver</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.bots.modules.nav_base.NavBase.get_current_url">
+<code class="descname">get_current_url</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.bots.modules.nav_base.NavBase.get_current_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return current url from opened bot</p>
+<dl class="docutils">
+<dt>Raises:</dt>
+<dd><dl class="first last docutils">
+<dt>CoreException – if can’t obtains url with this</dt>
+<dd>selenium driver</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>str – string representation of current driver url</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.bots.modules.nav_base.NavBase.get_log">
+<code class="descname">get_log</code><span class="sig-paren">(</span><em>log_name='browser'</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.bots.modules.nav_base.NavBase.get_log" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Get selenium log by name, this depends of</dt>
+<dd>driver mode and browser what it’s using each time</dd>
+<dt>Keyword Arguments:</dt>
+<dd>log_name {str} – get log type lanes (default: {‘browser’})</dd>
+<dt>Raises:</dt>
+<dd><dl class="first last docutils">
+<dt>CoreException – if log_name value not in list</dt>
+<dd>of valid values : browser, driver, client, server</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>list() – list of messages typed on a log_name</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.bots.modules.nav_base.NavBase.get_maximize_window">
+<code class="descname">get_maximize_window</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.bots.modules.nav_base.NavBase.get_maximize_window" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maximize browser window</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.bots.modules.nav_base.NavBase.get_screenshot_as_base64">
+<code class="descname">get_screenshot_as_base64</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.bots.modules.nav_base.NavBase.get_screenshot_as_base64" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the screenshot of the current window as a base64 encoded string
+which is useful in embedded images in HTML</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.bots.modules.nav_base.NavBase.get_screenshot_as_file">
+<code class="descname">get_screenshot_as_file</code><span class="sig-paren">(</span><em>file_name</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.bots.modules.nav_base.NavBase.get_screenshot_as_file" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Gets the screenshot of the current window. Returns False</dt>
+<dd>if there is any IOError, else returns True. Use full paths
+in your filename.</dd>
+<dt>Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>file_name {str} – name of file path where</dt>
+<dd>want to save screenshot</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>list(byte) – file binary object of screenshot bytes</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.bots.modules.nav_base.NavBase.get_screenshot_as_png">
+<code class="descname">get_screenshot_as_png</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.bots.modules.nav_base.NavBase.get_screenshot_as_png" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Gets the screenshot of the current window as a</dt>
+<dd>binary data.</dd>
+<dt>Returns:</dt>
+<dd>File – file binary object of screenshot with PNG format</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.bots.modules.nav_base.NavBase.get_screenshot_save">
+<code class="descname">get_screenshot_save</code><span class="sig-paren">(</span><em>file_name</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.bots.modules.nav_base.NavBase.get_screenshot_save" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Gets the screenshot of the current window. Returns False</dt>
+<dd>if there is any IOError, else returns True.
+Use full paths in your filename.</dd>
+<dt>Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>file_name {str} – name of file path where</dt>
+<dd>want to save screenshot</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>list(byte) – file binary object of screenshot bytes</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.bots.modules.nav_base.NavBase.get_title">
+<code class="descname">get_title</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.bots.modules.nav_base.NavBase.get_title" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtains the title of the current page and return it</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>str – title of current page opened</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.bots.modules.nav_base.NavBase.get_url">
+<code class="descname">get_url</code><span class="sig-paren">(</span><em>url</em>, <em>wait_for_load=0</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.bots.modules.nav_base.NavBase.get_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Do get_url including implicit wait for page load</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.bots.modules.nav_base.NavBase.get_window_handle">
+<code class="descname">get_window_handle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.bots.modules.nav_base.NavBase.get_window_handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get window object to handle with selenium on scripts</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.bots.modules.nav_base.NavBase.is_url">
+<code class="descname">is_url</code><span class="sig-paren">(</span><em>url</em>, <em>ignore_raises=True</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.bots.modules.nav_base.NavBase.is_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if url it’s the same what selenium current and visible url</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd>url {str} – string value used to verify url</dd>
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>ignore_raises {bool} – allows to ignore errors</dt>
+<dd>when executes if raises errors (default: {True})</dd>
+</dl>
+</dd>
+<dt>Raises:</dt>
+<dd>exceptions – [description]
+CoreException – [description]</dd>
+<dt>Returns:</dt>
+<dd><dl class="first last docutils">
+<dt>bool – if current driver url match with param url,</dt>
+<dd>then returns True, False if not</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.bots.modules.nav_base.NavBase.js_set_timeout">
+<code class="descname">js_set_timeout</code><span class="sig-paren">(</span><em>timeout=60</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.bots.modules.nav_base.NavBase.js_set_timeout" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Set the amount of time that the script should wait during an</dt>
+<dd>execute_async_script call before throwing an error.</dd>
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>timeout {int} – seconds to raise script</dt>
+<dd>wait (default: {60})</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.bots.modules.nav_base.NavBase.log">
+<code class="descname">log</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.bots.modules.nav_base.NavBase.log" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.bots.modules.nav_base.NavBase.reload">
+<code class="descname">reload</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.bots.modules.nav_base.NavBase.reload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Go reload page using browser functionality</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.bots.modules.nav_base.NavBase.set_css_rule">
+<code class="descname">set_css_rule</code><span class="sig-paren">(</span><em>css_selector</em>, <em>css_prop</em>, <em>css_value</em>, <em>css_important=False</em>, <em>index=0</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.bots.modules.nav_base.NavBase.set_css_rule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set new value for given CSS property name</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd>css_selector {str} – CSS selector to apply rule
+css_prop {str} – CSS property to be applied to rule
+css_value {str} – CSS property value to be applied to rule</dd>
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>css_important {bool} – Allow to include ‘!important’</dt>
+<dd>to rule (default: {False})</dd>
+<dt>index {int} – Position to insert new CSS rule</dt>
+<dd>on first stylesheet (default: {0})</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>str – JS script returns</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.bots.modules.nav_base.NavBase.set_web_element">
+<code class="descname">set_web_element</code><span class="sig-paren">(</span><em>new_attr_id</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.bots.modules.nav_base.NavBase.set_web_element" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create web element using selenium adding to DOM</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>new_attr_id {str} – html attribute ID for</dt>
+<dd>new web element</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.bots.modules.nav_base.NavBase.set_window_size">
+<code class="descname">set_window_size</code><span class="sig-paren">(</span><em>pos_x=800</em>, <em>pos_y=600</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.bots.modules.nav_base.NavBase.set_window_size" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Sets the width and height of the current</dt>
+<dd>window. (window.resizeTo)</dd>
+<dt>Keyword Arguments:</dt>
+<dd>pos_x {int} – width of new window size (default: {800})
+pos_y {int} – height of new window size (default: {600})</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt>
+<em class="property">class </em><code class="descclassname">qacode.core.bots.modules.nav_base.</code><code class="descname">NavBase</code><span class="sig-paren">(</span><em>driver</em>, <em>log</em>, <em>driver_wait=None</em><span class="sig-paren">)</span></dt>
+<dd><p>Main navigation methods to use on selenium scripts</p>
+<dl class="method">
+<dt>
+<code class="descname">delete_cookie_by_key</code><span class="sig-paren">(</span><em>key_name</em><span class="sig-paren">)</span></dt>
+<dd><p>Deletes a single cookie with the given name</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">delete_cookies</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Delete all cookies in the scope of the session</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">ele_attribute</code><span class="sig-paren">(</span><em>element</em>, <em>attr_name</em><span class="sig-paren">)</span></dt>
+<dd><p>Returns tuple with (attr, value) if founds
+This method will first try to return the value of a property with
+the given name. If a property with that name doesn’t exist, it
+returns the value of the attribute with the same name. If there’s
+no attribute with that name, None is returned.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">ele_clear</code><span class="sig-paren">(</span><em>element</em><span class="sig-paren">)</span></dt>
+<dd><p>Clear element text</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">ele_click</code><span class="sig-paren">(</span><em>element=None</em>, <em>selector=None</em>, <em>locator='css selector'</em><span class="sig-paren">)</span></dt>
+<dd><dl class="docutils">
+<dt>Perform click webelement with locator param or search it by default</dt>
+<dd>CSS_SELECTOR value if element it’s none but selector
+it’s not default value</dd>
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>element {WebElement} – selenium object, instance of WebElement</dt>
+<dd>(default: {None})</dd>
+<dt>selector {str} – selector to search and element to click</dt>
+<dd>(default: {None})</dd>
+<dt>locator {By} – locator selenium strategy</dt>
+<dd>(default: {By.CSS_SELECTOR})</dd>
+</dl>
+</dd>
+<dt>Raises:</dt>
+<dd><dl class="first last docutils">
+<dt>CoreException – Bad params combination, need element</dt>
+<dd>or selector to search element</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>WebElement – returns element clicked (to allow chaining)</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">ele_css</code><span class="sig-paren">(</span><em>element</em>, <em>prop_name</em><span class="sig-paren">)</span></dt>
+<dd><p>Allows to obtain CSS value based on CSS property name</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd>element {WebElement} – WebElement to modify CSS property
+prop_name {str} – CSS property name</dd>
+<dt>Returns:</dt>
+<dd>str – Value of CSS property searched</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">ele_input_value</code><span class="sig-paren">(</span><em>element</em><span class="sig-paren">)</span></dt>
+<dd><p>Return value of value attribute, usefull for inputs</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">ele_is_displayed</code><span class="sig-paren">(</span><em>element</em><span class="sig-paren">)</span></dt>
+<dd><p>Whether the element is visible to a user</p>
+<dl class="docutils">
+<dt>Webdriver spec to determine if element it’s displayed:</dt>
+<dd><a class="reference external" href="https://w3c.github.io/webdriver/webdriver-spec.html#widl-WebElement-isDisplayed-boolean">https://w3c.github.io/webdriver/webdriver-spec.html#widl-WebElement-isDisplayed-boolean</a></dd>
+<dt>Arguments:</dt>
+<dd>element {WebElement} – selenium web element</dd>
+<dt>Returns:</dt>
+<dd><dl class="first last docutils">
+<dt>bool – Value based on selenium SPEC to determine if an element</dt>
+<dd>is enabled</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">ele_is_enabled</code><span class="sig-paren">(</span><em>element</em><span class="sig-paren">)</span></dt>
+<dd><p>Returns whether the element is enabled</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd>element {WebElement} – selenium web element</dd>
+<dt>Returns:</dt>
+<dd><dl class="first last docutils">
+<dt>bool – Value based on selenium SPEC to determine if an element</dt>
+<dd>is enabled</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">ele_is_selected</code><span class="sig-paren">(</span><em>element</em><span class="sig-paren">)</span></dt>
+<dd><p>Returns whether the element is selected</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd>element {WebElement} – selenium web element</dd>
+<dt>Returns:</dt>
+<dd><dl class="first last docutils">
+<dt>bool – Value based on selenium SPEC to determine if an element</dt>
+<dd>is enabled</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">ele_tag</code><span class="sig-paren">(</span><em>element</em><span class="sig-paren">)</span></dt>
+<dd><p>Returns element.tag_name value</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">ele_text</code><span class="sig-paren">(</span><em>element</em>, <em>on_screen=True</em><span class="sig-paren">)</span></dt>
+<dd><dl class="docutils">
+<dt>Get element content text.</dt>
+<dd>If the isDisplayed() method can sometimes trip over when
+the element is not really hidden but outside the viewport
+get_text() returns an empty string for such an element.</dd>
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>on_screen {bool} – allow to obtain text if element</dt>
+<dd>it not displayed to this element before
+read text (default: {True})</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>str – Return element content text (innerText property)</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">ele_write</code><span class="sig-paren">(</span><em>element</em>, <em>text=None</em><span class="sig-paren">)</span></dt>
+<dd><p>Over element perform send_keys , if not sended text, then will write
+empty over element
+:param element: WebElement
+:return: None</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">execute_js</code><span class="sig-paren">(</span><em>script</em>, <em>*args</em><span class="sig-paren">)</span></dt>
+<dd><p>Execute arbitrary Javascript code</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd>script {str} – JS code to be executed on WebDriver
+<a href="#id3"><span class="problematic" id="id4">*</span></a>args {[type]} – More arguments ( like element selector )</dd>
+<dt>Returns:</dt>
+<dd>str – JS script returns</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">find_element</code><span class="sig-paren">(</span><em>selector</em>, <em>locator='css selector'</em><span class="sig-paren">)</span></dt>
+<dd><dl class="docutils">
+<dt>Just divided execution ways for search web element</dt>
+<dd>throught selenium</dd>
+<dt>Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>selector {str} – string selector used to locate one</dt>
+<dd>element or first obtained</dd>
+</dl>
+</dd>
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>locator {By} – locator strategy used to find</dt>
+<dd>WebElement selector (default: {By.CSS_SELECTOR})</dd>
+</dl>
+</dd>
+<dt>Raises:</dt>
+<dd><p class="first">CoreException – If locator is None
+CoreException – Element selector+locator strategy raises</p>
+<blockquote class="last">
+<div>selenium NoSuchElementException</div></blockquote>
+</dd>
+<dt>Returns:</dt>
+<dd>WebElement – selenium representation for a web element</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">find_element_wait</code><span class="sig-paren">(</span><em>selector</em>, <em>locator='css selector'</em>, <em>driver_wait=None</em><span class="sig-paren">)</span></dt>
+<dd><dl class="docutils">
+<dt>Search element using WebDriverWait class</dt>
+<dd>and ElementConditions presence_of_element_located</dd>
+<dt>Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>selector {str} – string selector used to locate one</dt>
+<dd>element or first obtained</dd>
+</dl>
+</dd>
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>locator {By} – locator strategy used to find</dt>
+<dd>WebElement selector (default: {By.CSS_SELECTOR})</dd>
+<dt>driver_wait {WebDriverWait} – driver that supports</dt>
+<dd>ExpectedConditions methods (default: {None})</dd>
+</dl>
+</dd>
+<dt>Raises:</dt>
+<dd><dl class="first last docutils">
+<dt>CoreException – if NavBase instanced</dt>
+<dd>without driver_wait</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd><dl class="first last docutils">
+<dt>WebElement – element through selenium</dt>
+<dd>WebDriverWait class</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">find_elements</code><span class="sig-paren">(</span><em>selector</em>, <em>locator='css selector'</em><span class="sig-paren">)</span></dt>
+<dd><dl class="docutils">
+<dt>Just divided execution ways for search web elements</dt>
+<dd>throught selenium</dd>
+<dt>Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>selector {str} – string selector used to locate</dt>
+<dd>one or more elements</dd>
+</dl>
+</dd>
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>locator {By} – locator strategy used to find</dt>
+<dd>WebElement selector (default: {By.CSS_SELECTOR})</dd>
+</dl>
+</dd>
+<dt>Raises:</dt>
+<dd><p class="first">CoreException – If locator is None
+CoreException – Element selector+locator strategy raises</p>
+<blockquote class="last">
+<div>selenium NoSuchElementException</div></blockquote>
+</dd>
+<dt>Returns:</dt>
+<dd><dl class="first last docutils">
+<dt>list(WebElement) – selenium representation for a</dt>
+<dd>list of web elements</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">forward</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Go forward using browser functionality</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">get_capabilities</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Retrieve current capabilities applied to selenium driver</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">get_current_url</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Return current url from opened bot</p>
+<dl class="docutils">
+<dt>Raises:</dt>
+<dd><dl class="first last docutils">
+<dt>CoreException – if can’t obtains url with this</dt>
+<dd>selenium driver</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>str – string representation of current driver url</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">get_log</code><span class="sig-paren">(</span><em>log_name='browser'</em><span class="sig-paren">)</span></dt>
+<dd><dl class="docutils">
+<dt>Get selenium log by name, this depends of</dt>
+<dd>driver mode and browser what it’s using each time</dd>
+<dt>Keyword Arguments:</dt>
+<dd>log_name {str} – get log type lanes (default: {‘browser’})</dd>
+<dt>Raises:</dt>
+<dd><dl class="first last docutils">
+<dt>CoreException – if log_name value not in list</dt>
+<dd>of valid values : browser, driver, client, server</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>list() – list of messages typed on a log_name</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">get_maximize_window</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Maximize browser window</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">get_screenshot_as_base64</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Gets the screenshot of the current window as a base64 encoded string
+which is useful in embedded images in HTML</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">get_screenshot_as_file</code><span class="sig-paren">(</span><em>file_name</em><span class="sig-paren">)</span></dt>
+<dd><dl class="docutils">
+<dt>Gets the screenshot of the current window. Returns False</dt>
+<dd>if there is any IOError, else returns True. Use full paths
+in your filename.</dd>
+<dt>Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>file_name {str} – name of file path where</dt>
+<dd>want to save screenshot</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>list(byte) – file binary object of screenshot bytes</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">get_screenshot_as_png</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><dl class="docutils">
+<dt>Gets the screenshot of the current window as a</dt>
+<dd>binary data.</dd>
+<dt>Returns:</dt>
+<dd>File – file binary object of screenshot with PNG format</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">get_screenshot_save</code><span class="sig-paren">(</span><em>file_name</em><span class="sig-paren">)</span></dt>
+<dd><dl class="docutils">
+<dt>Gets the screenshot of the current window. Returns False</dt>
+<dd>if there is any IOError, else returns True.
+Use full paths in your filename.</dd>
+<dt>Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>file_name {str} – name of file path where</dt>
+<dd>want to save screenshot</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>list(byte) – file binary object of screenshot bytes</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">get_title</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Obtains the title of the current page and return it</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>str – title of current page opened</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">get_url</code><span class="sig-paren">(</span><em>url</em>, <em>wait_for_load=0</em><span class="sig-paren">)</span></dt>
+<dd><p>Do get_url including implicit wait for page load</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">get_window_handle</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Get window object to handle with selenium on scripts</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">is_url</code><span class="sig-paren">(</span><em>url</em>, <em>ignore_raises=True</em><span class="sig-paren">)</span></dt>
+<dd><p>Check if url it’s the same what selenium current and visible url</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd>url {str} – string value used to verify url</dd>
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>ignore_raises {bool} – allows to ignore errors</dt>
+<dd>when executes if raises errors (default: {True})</dd>
+</dl>
+</dd>
+<dt>Raises:</dt>
+<dd>exceptions – [description]
+CoreException – [description]</dd>
+<dt>Returns:</dt>
+<dd><dl class="first last docutils">
+<dt>bool – if current driver url match with param url,</dt>
+<dd>then returns True, False if not</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">js_set_timeout</code><span class="sig-paren">(</span><em>timeout=60</em><span class="sig-paren">)</span></dt>
+<dd><dl class="docutils">
+<dt>Set the amount of time that the script should wait during an</dt>
+<dd>execute_async_script call before throwing an error.</dd>
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>timeout {int} – seconds to raise script</dt>
+<dd>wait (default: {60})</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">reload</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Go reload page using browser functionality</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">set_css_rule</code><span class="sig-paren">(</span><em>css_selector</em>, <em>css_prop</em>, <em>css_value</em>, <em>css_important=False</em>, <em>index=0</em><span class="sig-paren">)</span></dt>
+<dd><p>Set new value for given CSS property name</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd>css_selector {str} – CSS selector to apply rule
+css_prop {str} – CSS property to be applied to rule
+css_value {str} – CSS property value to be applied to rule</dd>
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>css_important {bool} – Allow to include ‘!important’</dt>
+<dd>to rule (default: {False})</dd>
+<dt>index {int} – Position to insert new CSS rule</dt>
+<dd>on first stylesheet (default: {0})</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>str – JS script returns</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">set_web_element</code><span class="sig-paren">(</span><em>new_attr_id</em><span class="sig-paren">)</span></dt>
+<dd><p>Create web element using selenium adding to DOM</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>new_attr_id {str} – html attribute ID for</dt>
+<dd>new web element</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">set_window_size</code><span class="sig-paren">(</span><em>pos_x=800</em>, <em>pos_y=600</em><span class="sig-paren">)</span></dt>
+<dd><dl class="docutils">
+<dt>Sets the width and height of the current</dt>
+<dd>window. (window.resizeTo)</dd>
+<dt>Keyword Arguments:</dt>
+<dd>pos_x {int} – width of new window size (default: {800})
+pos_y {int} – height of new window size (default: {600})</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<span id="document-_static/controls"></span><div class="section" id="package-qacode-core-webs-controls">
+<h2>package: qacode.core.webs.controls<a class="headerlink" href="#package-qacode-core-webs-controls" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-qacode.core.webs.controls.control_base">
+<span id="class-controlbase"></span><h3>Class: ControlBase<a class="headerlink" href="#module-qacode.core.webs.controls.control_base" title="Permalink to this headline">¶</a></h3>
+<p>Package module qacode.core.webs.control_base</p>
+<dl class="class">
+<dt id="qacode.core.webs.controls.control_base.ControlBase">
+<em class="property">class </em><code class="descclassname">qacode.core.webs.controls.control_base.</code><code class="descname">ControlBase</code><span class="sig-paren">(</span><em>bot</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Requirements: #35, #70</p>
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.attr_class">
+<code class="descname">attr_class</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.attr_class" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.attr_id">
+<code class="descname">attr_id</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.attr_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.bot">
+<code class="descname">bot</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.bot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear input element text value</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.click">
+<code class="descname">click</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.click" title="Permalink to this definition">¶</a></dt>
+<dd><p>Click on element</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.element">
+<code class="descname">element</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.element" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.find_child">
+<code class="descname">find_child</code><span class="sig-paren">(</span><em>selector</em>, <em>locator='css selector'</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.find_child" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Find child element using bot with default By.CSS_SELECTOR strategy</dt>
+<dd>for internal element trought selenium WebElement</dd>
+<dt>Arguments:</dt>
+<dd>selector {str} – string search for locator type</dd>
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>locator {[selenium.webdriver.common.by.By]} – string type to</dt>
+<dd>use on this selenium search request
+(default: {By.CSS_SELECTOR})</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>ControlBase – instanced base element using qacode library object</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.get_attr_value">
+<code class="descname">get_attr_value</code><span class="sig-paren">(</span><em>attr_name</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.get_attr_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search and attribute name over self.element and get value,
+if attr_value is obtained, then compare and raise if not</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>attr_name {str} – find an attribute on WebElement</dt>
+<dd>with this name</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>str – value of html attr_name</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.get_attrs">
+<code class="descname">get_attrs</code><span class="sig-paren">(</span><em>attr_names</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.get_attrs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find a list of attributes on WebElement
+and returns a dict list of {name, value}</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>attr_names {list of str} – list of attr_name to search</dt>
+<dd>for each one name and value on self.element</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>dict – a dict list of {name, value}</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.get_css_value">
+<code class="descname">get_css_value</code><span class="sig-paren">(</span><em>prop_name</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.get_css_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allows to obtain CSS value based on CSS property name</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd>prop_name {str} – CSS property name</dd>
+<dt>Returns:</dt>
+<dd>str – Value of CSS property searched</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.get_tag">
+<code class="descname">get_tag</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.get_tag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns tag_name from Webelement</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.get_text">
+<code class="descname">get_text</code><span class="sig-paren">(</span><em>on_screen=True</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.get_text" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Get element content text.</dt>
+<dd>If the isDisplayed() method can sometimes trip over when
+the element is not really hidden but outside the viewport
+get_text() returns an empty string for such an element.</dd>
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>on_screen {bool} – allow to obtain text if element</dt>
+<dd>it not displayed to this element before
+read text (default: {True})</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>str – Return element content text (innerText property)</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.is_displayed">
+<code class="descname">is_displayed</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.is_displayed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.is_enabled">
+<code class="descname">is_enabled</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.is_enabled" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.is_selected">
+<code class="descname">is_selected</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.is_selected" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.load_settings_keys">
+<code class="descname">load_settings_keys</code><span class="sig-paren">(</span><em>settings</em>, <em>update=False</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.load_settings_keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load default setting for ControlBase instance</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.locator">
+<code class="descname">locator</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.locator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.name">
+<code class="descname">name</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.on_instance_load">
+<code class="descname">on_instance_load</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.on_instance_load" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.on_instance_search">
+<code class="descname">on_instance_search</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.on_instance_search" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.reload">
+<code class="descname">reload</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.reload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reload ‘self.settings’ property:dict and call to instance
+logic with new configuration</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.selector">
+<code class="descname">selector</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.selector" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.set_css_value">
+<code class="descname">set_css_value</code><span class="sig-paren">(</span><em>prop_name</em>, <em>prop_value</em>, <em>css_important=True</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.set_css_value" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Set new value for given CSS property name</dt>
+<dd>on ControlBase selector</dd>
+<dt>Arguments:</dt>
+<dd>prop_name {str} – CSS property name
+prop_value {str} – CSS property value</dd>
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>css_important {bool} – Allow to include ‘!important’ to rule for</dt>
+<dd>overrite others values applied (default: {True})</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.settings">
+<code class="descname">settings</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.settings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.tag">
+<code class="descname">tag</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.tag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.text">
+<code class="descname">text</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.text" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.type_text">
+<code class="descname">type_text</code><span class="sig-paren">(</span><em>text</em>, <em>clear=False</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.type_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Type text on input element</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd>text {str} – string to be typed on web element</dd>
+<dt>Keyword Arguments:</dt>
+<dd>clear {bool} – clear text element at enable key (default: {False})</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt>
+<em class="property">class </em><code class="descclassname">qacode.core.webs.controls.control_base.</code><code class="descname">ControlBase</code><span class="sig-paren">(</span><em>bot</em>, <em>**kwargs</em><span class="sig-paren">)</span></dt>
+<dd><p>Requirements: #35, #70</p>
+<dl class="method">
+<dt>
+<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Clear input element text value</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">click</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Click on element</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">find_child</code><span class="sig-paren">(</span><em>selector</em>, <em>locator='css selector'</em><span class="sig-paren">)</span></dt>
+<dd><dl class="docutils">
+<dt>Find child element using bot with default By.CSS_SELECTOR strategy</dt>
+<dd>for internal element trought selenium WebElement</dd>
+<dt>Arguments:</dt>
+<dd>selector {str} – string search for locator type</dd>
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>locator {[selenium.webdriver.common.by.By]} – string type to</dt>
+<dd>use on this selenium search request
+(default: {By.CSS_SELECTOR})</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>ControlBase – instanced base element using qacode library object</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">get_attr_value</code><span class="sig-paren">(</span><em>attr_name</em><span class="sig-paren">)</span></dt>
+<dd><p>Search and attribute name over self.element and get value,
+if attr_value is obtained, then compare and raise if not</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>attr_name {str} – find an attribute on WebElement</dt>
+<dd>with this name</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>str – value of html attr_name</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">get_attrs</code><span class="sig-paren">(</span><em>attr_names</em><span class="sig-paren">)</span></dt>
+<dd><p>Find a list of attributes on WebElement
+and returns a dict list of {name, value}</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>attr_names {list of str} – list of attr_name to search</dt>
+<dd>for each one name and value on self.element</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>dict – a dict list of {name, value}</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">get_css_value</code><span class="sig-paren">(</span><em>prop_name</em><span class="sig-paren">)</span></dt>
+<dd><p>Allows to obtain CSS value based on CSS property name</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd>prop_name {str} – CSS property name</dd>
+<dt>Returns:</dt>
+<dd>str – Value of CSS property searched</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">get_tag</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Returns tag_name from Webelement</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">get_text</code><span class="sig-paren">(</span><em>on_screen=True</em><span class="sig-paren">)</span></dt>
+<dd><dl class="docutils">
+<dt>Get element content text.</dt>
+<dd>If the isDisplayed() method can sometimes trip over when
+the element is not really hidden but outside the viewport
+get_text() returns an empty string for such an element.</dd>
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>on_screen {bool} – allow to obtain text if element</dt>
+<dd>it not displayed to this element before
+read text (default: {True})</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>str – Return element content text (innerText property)</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">load_settings_keys</code><span class="sig-paren">(</span><em>settings</em>, <em>update=False</em><span class="sig-paren">)</span></dt>
+<dd><p>Load default setting for ControlBase instance</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">reload</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span></dt>
+<dd><p>Reload ‘self.settings’ property:dict and call to instance
+logic with new configuration</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">set_css_value</code><span class="sig-paren">(</span><em>prop_name</em>, <em>prop_value</em>, <em>css_important=True</em><span class="sig-paren">)</span></dt>
+<dd><dl class="docutils">
+<dt>Set new value for given CSS property name</dt>
+<dd>on ControlBase selector</dd>
+<dt>Arguments:</dt>
+<dd>prop_name {str} – CSS property name
+prop_value {str} – CSS property value</dd>
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>css_important {bool} – Allow to include ‘!important’ to rule for</dt>
+<dd>overrite others values applied (default: {True})</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">type_text</code><span class="sig-paren">(</span><em>text</em>, <em>clear=False</em><span class="sig-paren">)</span></dt>
+<dd><p>Type text on input element</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd>text {str} – string to be typed on web element</dd>
+<dt>Keyword Arguments:</dt>
+<dd>clear {bool} – clear text element at enable key (default: {False})</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-qacode.core.webs.controls.control_form">
+<span id="class-controlform"></span><h3>Class: ControlForm<a class="headerlink" href="#module-qacode.core.webs.controls.control_form" title="Permalink to this headline">¶</a></h3>
+<p>Package module qacode.core.webs.control_form</p>
+<dl class="class">
+<dt id="qacode.core.webs.controls.control_form.ControlForm">
+<em class="property">class </em><code class="descclassname">qacode.core.webs.controls.control_form.</code><code class="descname">ControlForm</code><span class="sig-paren">(</span><em>bot</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#qacode.core.webs.controls.control_base.ControlBase" title="qacode.core.webs.controls.control_base.ControlBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">qacode.core.webs.controls.control_base.ControlBase</span></code></a></p>
+<p>Requirements: #63</p>
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.add_rules">
+<code class="descname">add_rules</code><span class="sig-paren">(</span><em>strict_rules</em>, <em>typed=False</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.add_rules" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validate strict rules for each type</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><p class="first">strict_rules {StrictRule} – strict_rule
+on_instance_strict {bool} – if enabled, load values for</p>
+<blockquote class="last">
+<div>future checks</div></blockquote>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.dropdown">
+<code class="descname">dropdown</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.dropdown" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.load_settings_keys">
+<code class="descname">load_settings_keys</code><span class="sig-paren">(</span><em>settings</em>, <em>update=False</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.load_settings_keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load default setting for ControlForm instance</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.load_strict_attrs">
+<code class="descname">load_strict_attrs</code><span class="sig-paren">(</span><em>strict_attrs=None</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.load_strict_attrs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validate if element.attrs is in list of strict_attrs</p>
+<dl class="docutils">
+<dt>Keyword Arguments:</dt>
+<dd>strict_attrs {[type]} – [description] (default: {None})</dd>
+<dt>Returns:</dt>
+<dd>[type] – [description]</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.load_strict_css_props">
+<code class="descname">load_strict_css_props</code><span class="sig-paren">(</span><em>strict_css_props=None</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.load_strict_css_props" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validate if element.attrs is in list of strict_attrs</p>
+<dl class="docutils">
+<dt>Keyword Arguments:</dt>
+<dd>strict_css_props {[type]} – [description] (default: {None})</dd>
+<dt>Returns:</dt>
+<dd>[type] – [description]</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.load_strict_tags">
+<code class="descname">load_strict_tags</code><span class="sig-paren">(</span><em>strict_tags=None</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.load_strict_tags" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Validate if element.tag is in list of strict_tags and</dt>
+<dd><p class="first">instance ControlForm specific properties</p>
+<p class="last">tag=select, instance down ‘dropdown’ property</p>
+</dd>
+<dt>Keyword Arguments:</dt>
+<dd>strict_tags {[type]} – [description] (default: {None})</dd>
+<dt>Returns:</dt>
+<dd>[type] – [description]</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.on_instance_strict">
+<code class="descname">on_instance_strict</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.on_instance_strict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.parse_rules">
+<code class="descname">parse_rules</code><span class="sig-paren">(</span><em>strict_rules=None</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.parse_rules" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse array of configurations dicts of strict_rules to
+instances list of StrictRule</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.reload">
+<code class="descname">reload</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.reload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reload ‘self.settings’ property:dict and call to instance
+logic with new configuration</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.strict_attrs">
+<code class="descname">strict_attrs</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.strict_attrs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.strict_css_props">
+<code class="descname">strict_css_props</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.strict_css_props" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.strict_rules">
+<code class="descname">strict_rules</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.strict_rules" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.strict_rules_typed">
+<code class="descname">strict_rules_typed</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.strict_rules_typed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.strict_tags">
+<code class="descname">strict_tags</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.strict_tags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt>
+<em class="property">class </em><code class="descclassname">qacode.core.webs.controls.control_form.</code><code class="descname">ControlForm</code><span class="sig-paren">(</span><em>bot</em>, <em>**kwargs</em><span class="sig-paren">)</span></dt>
+<dd><p>Requirements: #63</p>
+<dl class="method">
+<dt>
+<code class="descname">add_rules</code><span class="sig-paren">(</span><em>strict_rules</em>, <em>typed=False</em><span class="sig-paren">)</span></dt>
+<dd><p>Validate strict rules for each type</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><p class="first">strict_rules {StrictRule} – strict_rule
+on_instance_strict {bool} – if enabled, load values for</p>
+<blockquote class="last">
+<div>future checks</div></blockquote>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">load_settings_keys</code><span class="sig-paren">(</span><em>settings</em>, <em>update=False</em><span class="sig-paren">)</span></dt>
+<dd><p>Load default setting for ControlForm instance</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">load_strict_attrs</code><span class="sig-paren">(</span><em>strict_attrs=None</em><span class="sig-paren">)</span></dt>
+<dd><p>Validate if element.attrs is in list of strict_attrs</p>
+<dl class="docutils">
+<dt>Keyword Arguments:</dt>
+<dd>strict_attrs {[type]} – [description] (default: {None})</dd>
+<dt>Returns:</dt>
+<dd>[type] – [description]</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">load_strict_css_props</code><span class="sig-paren">(</span><em>strict_css_props=None</em><span class="sig-paren">)</span></dt>
+<dd><p>Validate if element.attrs is in list of strict_attrs</p>
+<dl class="docutils">
+<dt>Keyword Arguments:</dt>
+<dd>strict_css_props {[type]} – [description] (default: {None})</dd>
+<dt>Returns:</dt>
+<dd>[type] – [description]</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">load_strict_tags</code><span class="sig-paren">(</span><em>strict_tags=None</em><span class="sig-paren">)</span></dt>
+<dd><dl class="docutils">
+<dt>Validate if element.tag is in list of strict_tags and</dt>
+<dd><p class="first">instance ControlForm specific properties</p>
+<p class="last">tag=select, instance down ‘dropdown’ property</p>
+</dd>
+<dt>Keyword Arguments:</dt>
+<dd>strict_tags {[type]} – [description] (default: {None})</dd>
+<dt>Returns:</dt>
+<dd>[type] – [description]</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">parse_rules</code><span class="sig-paren">(</span><em>strict_rules=None</em><span class="sig-paren">)</span></dt>
+<dd><p>Parse array of configurations dicts of strict_rules to
+instances list of StrictRule</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">reload</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span></dt>
+<dd><p>Reload ‘self.settings’ property:dict and call to instance
+logic with new configuration</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<span id="document-_static/pages"></span><div class="section" id="package-qacode-core-webs-pages">
+<h2>package: qacode.core.webs.pages<a class="headerlink" href="#package-qacode-core-webs-pages" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-qacode.core.webs.pages.page_base">
+<span id="class-pagebase"></span><h3>Class: PageBase<a class="headerlink" href="#module-qacode.core.webs.pages.page_base" title="Permalink to this headline">¶</a></h3>
+<p>package module qacode.core.webs.pages.page_base</p>
+<dl class="class">
+<dt id="qacode.core.webs.pages.page_base.PageBase">
+<em class="property">class </em><code class="descclassname">qacode.core.webs.pages.page_base.</code><code class="descname">PageBase</code><span class="sig-paren">(</span><em>bot</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.webs.pages.page_base.PageBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base class for all Inehrit Page classes wich need selenium functionality
+througth qacode bot</p>
+<dl class="attribute">
+<dt id="qacode.core.webs.pages.page_base.PageBase.bot">
+<code class="descname">bot</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.pages.page_base.PageBase.bot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.pages.page_base.PageBase.get_element">
+<code class="descname">get_element</code><span class="sig-paren">(</span><em>config_control</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.webs.pages.page_base.PageBase.get_element" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search element on Bot instance</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd>config_controls {dict} – base dict for ControlBase class</dd>
+<dt>Returns:</dt>
+<dd><dl class="first last docutils">
+<dt>ControlBase – an element to be use</dt>
+<dd>throught selenium</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.pages.page_base.PageBase.get_elements">
+<code class="descname">get_elements</code><span class="sig-paren">(</span><em>config_controls</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.webs.pages.page_base.PageBase.get_elements" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Search element on Bot instance, choose selector</dt>
+<dd>from instance or locator param</dd>
+<dt>Arguments:</dt>
+<dd>config_controls {dict} – base dict for ControlBase class</dd>
+<dt>Returns:</dt>
+<dd><dl class="first last docutils">
+<dt>list(ControlBase) – an element to be use as wrapper</dt>
+<dd>for selenium functionality</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.pages.page_base.PageBase.go_url">
+<code class="descname">go_url</code><span class="sig-paren">(</span><em>url=None</em>, <em>wait_for_load=0</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.webs.pages.page_base.PageBase.go_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Go to url, choose url from instance or locator params</p>
+<dl class="docutils">
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first docutils">
+<dt>url {str} – string of FQDN, if None, load value from settings</dt>
+<dd>(default: {self.settings.get(‘url’)})</dd>
+</dl>
+<p class="last">wait_for_load {int} – [description] (default: {0})</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.pages.page_base.PageBase.is_url">
+<code class="descname">is_url</code><span class="sig-paren">(</span><em>url=None</em>, <em>ignore_raises=True</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.webs.pages.page_base.PageBase.is_url" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Allows to check if current selenium visible url it’s the same</dt>
+<dd>what self.url value</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Attributes:</th><td class="field-body"><dl class="first docutils">
+<dt>url: default page url but can be string</dt>
+<dd><p class="first last">value used to verify url</p>
+</dd>
+</dl>
+<p class="last">ignore_raises: not raise exceptions if enabled</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.pages.page_base.PageBase.log">
+<code class="descname">log</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.pages.page_base.PageBase.log" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.pages.page_base.PageBase.settings">
+<code class="descname">settings</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.pages.page_base.PageBase.settings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt>
+<em class="property">class </em><code class="descclassname">qacode.core.webs.pages.page_base.</code><code class="descname">PageBase</code><span class="sig-paren">(</span><em>bot</em>, <em>**kwargs</em><span class="sig-paren">)</span></dt>
+<dd><p>Base class for all Inehrit Page classes wich need selenium functionality
+througth qacode bot</p>
+<dl class="method">
+<dt>
+<code class="descname">get_element</code><span class="sig-paren">(</span><em>config_control</em><span class="sig-paren">)</span></dt>
+<dd><p>Search element on Bot instance</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd>config_controls {dict} – base dict for ControlBase class</dd>
+<dt>Returns:</dt>
+<dd><dl class="first last docutils">
+<dt>ControlBase – an element to be use</dt>
+<dd>throught selenium</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">get_elements</code><span class="sig-paren">(</span><em>config_controls</em><span class="sig-paren">)</span></dt>
+<dd><dl class="docutils">
+<dt>Search element on Bot instance, choose selector</dt>
+<dd>from instance or locator param</dd>
+<dt>Arguments:</dt>
+<dd>config_controls {dict} – base dict for ControlBase class</dd>
+<dt>Returns:</dt>
+<dd><dl class="first last docutils">
+<dt>list(ControlBase) – an element to be use as wrapper</dt>
+<dd>for selenium functionality</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">go_url</code><span class="sig-paren">(</span><em>url=None</em>, <em>wait_for_load=0</em><span class="sig-paren">)</span></dt>
+<dd><p>Go to url, choose url from instance or locator params</p>
+<dl class="docutils">
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first docutils">
+<dt>url {str} – string of FQDN, if None, load value from settings</dt>
+<dd>(default: {self.settings.get(‘url’)})</dd>
+</dl>
+<p class="last">wait_for_load {int} – [description] (default: {0})</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">is_url</code><span class="sig-paren">(</span><em>url=None</em>, <em>ignore_raises=True</em><span class="sig-paren">)</span></dt>
+<dd><dl class="docutils">
+<dt>Allows to check if current selenium visible url it’s the same</dt>
+<dd>what self.url value</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Attributes:</th><td class="field-body"><dl class="first docutils">
+<dt>url: default page url but can be string</dt>
+<dd><p class="first last">value used to verify url</p>
+</dd>
+</dl>
+<p class="last">ignore_raises: not raise exceptions if enabled</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<span id="document-_static/tests"></span><div class="section" id="package-qacode-core-testing">
+<h2>package: qacode.core.testing<a class="headerlink" href="#package-qacode-core-testing" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-qacode.core.testing.test_info">
+<span id="class-testinfobase"></span><h3>Class: TestInfoBase<a class="headerlink" href="#module-qacode.core.testing.test_info" title="Permalink to this headline">¶</a></h3>
+<p>Base module for inherit new Test Suites</p>
+<dl class="class">
+<dt id="qacode.core.testing.test_info.TestInfoBase">
+<em class="property">class </em><code class="descclassname">qacode.core.testing.test_info.</code><code class="descname">TestInfoBase</code><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base class for inherit new Test classes</p>
+<dl class="classmethod">
+<dt id="qacode.core.testing.test_info.TestInfoBase.add_property">
+<em class="property">classmethod </em><code class="descname">add_property</code><span class="sig-paren">(</span><em>name</em>, <em>value=None</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBase.add_property" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add property to test instance using param ‘name’, will setup
+None if any value it’s passed by param</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.testing.test_info.TestInfoBase.assert_contains_url">
+<code class="descname">assert_contains_url</code><span class="sig-paren">(</span><em>actual</em>, <em>contains</em>, <em>msg=None</em>, <em>wait=0</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBase.assert_contains_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allow to compare 2 urls and check if 1st contains 2nd url</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.testing.test_info.TestInfoBase.assert_equals">
+<code class="descname">assert_equals</code><span class="sig-paren">(</span><em>actual</em>, <em>expected</em>, <em>msg=None</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBase.assert_equals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allow to compare 2 values and check if 1st it’s equals to
+2nd value</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.testing.test_info.TestInfoBase.assert_equals_url">
+<code class="descname">assert_equals_url</code><span class="sig-paren">(</span><em>actual</em>, <em>expected</em>, <em>msg=None</em>, <em>wait=0</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBase.assert_equals_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allow to compare 2 urls and check if 1st it’s equals to 2nd url</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd>actual {type} – actual value
+expected {type} – expected value</dd>
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>wait {int} – Wait time on Runtime execution before execute</dt>
+<dd>next lane of code (default: {0})</dd>
+</dl>
+</dd>
+<dt>Raises:</dt>
+<dd>AssertionError – [description]</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.testing.test_info.TestInfoBase.assert_false">
+<code class="descname">assert_false</code><span class="sig-paren">(</span><em>actual</em>, <em>msg=None</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBase.assert_false" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allow to compare and check if value it’s equals to ‘False’</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.testing.test_info.TestInfoBase.assert_greater">
+<code class="descname">assert_greater</code><span class="sig-paren">(</span><em>actual</em>, <em>greater</em>, <em>msg=None</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBase.assert_greater" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allow to encapsulate method assertGreater(a, b, msg=msg)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.testing.test_info.TestInfoBase.assert_in">
+<code class="descname">assert_in</code><span class="sig-paren">(</span><em>actual</em>, <em>valid_values</em>, <em>msg=None</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBase.assert_in" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allow to compare if value it’s in to 2nd list of values</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.testing.test_info.TestInfoBase.assert_is_instance">
+<code class="descname">assert_is_instance</code><span class="sig-paren">(</span><em>instance</em>, <em>class_type</em>, <em>msg=None</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBase.assert_is_instance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allow to encapsulate method assertIsInstance(obj, cls, msg=’‘)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.testing.test_info.TestInfoBase.assert_lower">
+<code class="descname">assert_lower</code><span class="sig-paren">(</span><em>actual</em>, <em>lower</em>, <em>msg=None</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBase.assert_lower" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allow to encapsulate method assertLower(a, b, msg=msg)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.testing.test_info.TestInfoBase.assert_none">
+<code class="descname">assert_none</code><span class="sig-paren">(</span><em>actual</em>, <em>msg=None</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBase.assert_none" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allow to compare and check if value it’s equals to ‘None’</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.testing.test_info.TestInfoBase.assert_not_contains_url">
+<code class="descname">assert_not_contains_url</code><span class="sig-paren">(</span><em>actual</em>, <em>contains</em>, <em>msg=None</em>, <em>wait=0</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBase.assert_not_contains_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allow to compare 2 urls and check if 1st not contains 2nd url</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.testing.test_info.TestInfoBase.assert_not_equals">
+<code class="descname">assert_not_equals</code><span class="sig-paren">(</span><em>actual</em>, <em>expected</em>, <em>msg=None</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBase.assert_not_equals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allow to compare 2 value to check if 1st isn’t equals to
+2nd value</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.testing.test_info.TestInfoBase.assert_not_equals_url">
+<code class="descname">assert_not_equals_url</code><span class="sig-paren">(</span><em>actual</em>, <em>expected</em>, <em>msg=None</em>, <em>wait=0</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBase.assert_not_equals_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allow to compare 2 urls to check if 1st isn’t equals to 2nd url</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.testing.test_info.TestInfoBase.assert_not_in">
+<code class="descname">assert_not_in</code><span class="sig-paren">(</span><em>actual</em>, <em>invalid_values</em>, <em>msg=None</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBase.assert_not_in" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allow to compare if value it’s not in to 2nd list of values</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.testing.test_info.TestInfoBase.assert_not_none">
+<code class="descname">assert_not_none</code><span class="sig-paren">(</span><em>actual</em>, <em>msg=None</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBase.assert_not_none" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allow to compare and check if value it’s not equals to ‘None’</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.testing.test_info.TestInfoBase.assert_not_regex">
+<code class="descname">assert_not_regex</code><span class="sig-paren">(</span><em>actual</em>, <em>pattern</em>, <em>msg=None</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBase.assert_not_regex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allow to compare if value not match pattern</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.testing.test_info.TestInfoBase.assert_path_exist">
+<code class="descname">assert_path_exist</code><span class="sig-paren">(</span><em>actual</em>, <em>is_dir=True</em>, <em>msg=None</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBase.assert_path_exist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allow to check if path exist, can check if is_dir also</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.testing.test_info.TestInfoBase.assert_path_not_exist">
+<code class="descname">assert_path_not_exist</code><span class="sig-paren">(</span><em>actual</em>, <em>msg=None</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBase.assert_path_not_exist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allow to check if path not exist, can check if is_dir also</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.testing.test_info.TestInfoBase.assert_raises">
+<code class="descname">assert_raises</code><span class="sig-paren">(</span><em>expected_exception</em>, <em>function</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBase.assert_raises" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Allow to encapsulate pytest.raises method(</dt>
+<dd><dl class="first docutils">
+<dt><a href="#id1"><span class="problematic" id="id2">*</span></a>args=(</dt>
+<dd>expected_exception,
+function,</dd>
+</dl>
+<p>),
+<a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs={</p>
+<blockquote>
+<div>msg: ASSERT_MSG_DEFAULT</div></blockquote>
+<p class="last">}</p>
+</dd>
+</dl>
+<p>)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.testing.test_info.TestInfoBase.assert_regex">
+<code class="descname">assert_regex</code><span class="sig-paren">(</span><em>actual</em>, <em>pattern</em>, <em>msg=None</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBase.assert_regex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allow to compare if value match pattern</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.testing.test_info.TestInfoBase.assert_regex_url">
+<code class="descname">assert_regex_url</code><span class="sig-paren">(</span><em>actual</em>, <em>pattern=None</em>, <em>msg=None</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBase.assert_regex_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allow to compare if value match url pattern, can use
+custom pattern</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.testing.test_info.TestInfoBase.assert_true">
+<code class="descname">assert_true</code><span class="sig-paren">(</span><em>actual</em>, <em>msg=None</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBase.assert_true" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allow to compare and check if value it’s equals to ‘True’</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="qacode.core.testing.test_info.TestInfoBase.bot_close">
+<em class="property">classmethod </em><code class="descname">bot_close</code><span class="sig-paren">(</span><em>bot</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBase.bot_close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close bot calling bot.close() from param</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="qacode.core.testing.test_info.TestInfoBase.bot_open">
+<em class="property">classmethod </em><code class="descname">bot_open</code><span class="sig-paren">(</span><em>config</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBase.bot_open" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open browser using BotBase instance</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>BotBase – wrapper browser handler for selenium</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.testing.test_info.TestInfoBase.config">
+<code class="descname">config</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBase.config" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.testing.test_info.TestInfoBase.is_loaded">
+<code class="descname">is_loaded</code><em class="property"> = False</em><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBase.is_loaded" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="qacode.core.testing.test_info.TestInfoBase.load">
+<em class="property">classmethod </em><code class="descname">load</code><span class="sig-paren">(</span><em>config</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBase.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load default config dict</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.testing.test_info.TestInfoBase.log">
+<code class="descname">log</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBase.log" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="qacode.core.testing.test_info.TestInfoBase.settings_app">
+<em class="property">classmethod </em><code class="descname">settings_app</code><span class="sig-paren">(</span><em>app_name</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBase.settings_app" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain inherit dict from ‘cls.config’ dict named
+‘config.tests.apps’ filtering by ‘app_name’ param</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="qacode.core.testing.test_info.TestInfoBase.settings_apps">
+<em class="property">classmethod </em><code class="descname">settings_apps</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBase.settings_apps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain inherit dict from ‘cls.config’ dict named
+‘config.tests.apps’</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="qacode.core.testing.test_info.TestInfoBase.settings_control">
+<em class="property">classmethod </em><code class="descname">settings_control</code><span class="sig-paren">(</span><em>control_name</em>, <em>page_name=None</em>, <em>app_name=None</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBase.settings_control" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain inherit dict from ‘cls.config’ dict named
+‘config.tests.apps[i].pages[j].controls’ filtering by
+‘control_name’ param</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="qacode.core.testing.test_info.TestInfoBase.settings_page">
+<em class="property">classmethod </em><code class="descname">settings_page</code><span class="sig-paren">(</span><em>page_name</em>, <em>app_name=None</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBase.settings_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain inherit dict from ‘cls.config’ dict named
+‘config.tests.apps[i].pages’ filtering by ‘page_name’ param</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.testing.test_info.TestInfoBase.setup_method">
+<code class="descname">setup_method</code><span class="sig-paren">(</span><em>test_method</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBase.setup_method" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configure self.attribute</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.testing.test_info.TestInfoBase.sleep">
+<code class="descname">sleep</code><span class="sig-paren">(</span><em>wait=0</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBase.sleep" title="Permalink to this definition">¶</a></dt>
+<dd><p>Just call to native python time.sleep method</p>
+<dl class="docutils">
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>wait {int} – Wait time on Runtime execution before execute</dt>
+<dd>next lane of code (default: {0})</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.testing.test_info.TestInfoBase.teardown_method">
+<code class="descname">teardown_method</code><span class="sig-paren">(</span><em>test_method</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBase.teardown_method" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unload self.attribute</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.testing.test_info.TestInfoBase.timer">
+<code class="descname">timer</code><span class="sig-paren">(</span><em>wait=5</em>, <em>print_each=5</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBase.timer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Timer to sleep browser on testcases</p>
+<dl class="docutils">
+<dt>Keyword Arguments:</dt>
+<dd><p class="first">wait {int} – seconds to wait (default: {5})
+print_each {int} – print message each seconds, must be divisible</p>
+<blockquote class="last">
+<div>by 5, negatives are accepted (default: {5})</div></blockquote>
+</dd>
+<dt>Raises:</dt>
+<dd>Exception – [description]</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="qacode.core.testing.test_info.TestInfoBot">
+<em class="property">class </em><code class="descclassname">qacode.core.testing.test_info.</code><code class="descname">TestInfoBot</code><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#qacode.core.testing.test_info.TestInfoBase" title="qacode.core.testing.test_info.TestInfoBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">qacode.core.testing.test_info.TestInfoBase</span></code></a></p>
+<p>Inherit class what implements bot on each testcase</p>
+<dl class="attribute">
+<dt id="qacode.core.testing.test_info.TestInfoBot.bot">
+<code class="descname">bot</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBot.bot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.testing.test_info.TestInfoBot.setup_method">
+<code class="descname">setup_method</code><span class="sig-paren">(</span><em>test_method</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBot.setup_method" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configure self.attribute.
+If skipIf mark applied and True as first param for args tuple</p>
+<blockquote>
+<div>then not open bot</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.testing.test_info.TestInfoBot.teardown_method">
+<code class="descname">teardown_method</code><span class="sig-paren">(</span><em>test_method</em>, <em>close=True</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBot.teardown_method" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unload self.attribute, also close bot</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="qacode.core.testing.test_info.TestInfoBotUnique">
+<em class="property">class </em><code class="descclassname">qacode.core.testing.test_info.</code><code class="descname">TestInfoBotUnique</code><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBotUnique" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#qacode.core.testing.test_info.TestInfoBot" title="qacode.core.testing.test_info.TestInfoBot"><code class="xref py py-class docutils literal notranslate"><span class="pre">qacode.core.testing.test_info.TestInfoBot</span></code></a></p>
+<p>Inherit class what implements bot on each testcase</p>
+<dl class="classmethod">
+<dt id="qacode.core.testing.test_info.TestInfoBotUnique.setup_class">
+<em class="property">classmethod </em><code class="descname">setup_class</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBotUnique.setup_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configure ‘cls.attribute’. If name start with ‘<a href="#id9"><span class="problematic" id="id10">test_</span></a>’ and have
+decorator skipIf with value True, then not open bot</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="qacode.core.testing.test_info.TestInfoBotUnique.teardown_class">
+<em class="property">classmethod </em><code class="descname">teardown_class</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBotUnique.teardown_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unload self.attribute, closing bot from ‘cls.bot’ property</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.testing.test_info.TestInfoBotUnique.teardown_method">
+<code class="descname">teardown_method</code><span class="sig-paren">(</span><em>test_method</em>, <em>close=False</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.testing.test_info.TestInfoBotUnique.teardown_method" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unload self.attribute, also disable closing bot from TestInfoBot</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt>
+<em class="property">class </em><code class="descclassname">qacode.core.testing.test_info.</code><code class="descname">TestInfoBase</code></dt>
+<dd><p>Base class for inherit new Test classes</p>
+<dl class="classmethod">
+<dt>
+<em class="property">classmethod </em><code class="descname">add_property</code><span class="sig-paren">(</span><em>name</em>, <em>value=None</em><span class="sig-paren">)</span></dt>
+<dd><p>Add property to test instance using param ‘name’, will setup
+None if any value it’s passed by param</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">assert_contains_url</code><span class="sig-paren">(</span><em>actual</em>, <em>contains</em>, <em>msg=None</em>, <em>wait=0</em><span class="sig-paren">)</span></dt>
+<dd><p>Allow to compare 2 urls and check if 1st contains 2nd url</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">assert_equals</code><span class="sig-paren">(</span><em>actual</em>, <em>expected</em>, <em>msg=None</em><span class="sig-paren">)</span></dt>
+<dd><p>Allow to compare 2 values and check if 1st it’s equals to
+2nd value</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">assert_equals_url</code><span class="sig-paren">(</span><em>actual</em>, <em>expected</em>, <em>msg=None</em>, <em>wait=0</em><span class="sig-paren">)</span></dt>
+<dd><p>Allow to compare 2 urls and check if 1st it’s equals to 2nd url</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd>actual {type} – actual value
+expected {type} – expected value</dd>
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>wait {int} – Wait time on Runtime execution before execute</dt>
+<dd>next lane of code (default: {0})</dd>
+</dl>
+</dd>
+<dt>Raises:</dt>
+<dd>AssertionError – [description]</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">assert_false</code><span class="sig-paren">(</span><em>actual</em>, <em>msg=None</em><span class="sig-paren">)</span></dt>
+<dd><p>Allow to compare and check if value it’s equals to ‘False’</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">assert_greater</code><span class="sig-paren">(</span><em>actual</em>, <em>greater</em>, <em>msg=None</em><span class="sig-paren">)</span></dt>
+<dd><p>Allow to encapsulate method assertGreater(a, b, msg=msg)</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">assert_in</code><span class="sig-paren">(</span><em>actual</em>, <em>valid_values</em>, <em>msg=None</em><span class="sig-paren">)</span></dt>
+<dd><p>Allow to compare if value it’s in to 2nd list of values</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">assert_is_instance</code><span class="sig-paren">(</span><em>instance</em>, <em>class_type</em>, <em>msg=None</em><span class="sig-paren">)</span></dt>
+<dd><p>Allow to encapsulate method assertIsInstance(obj, cls, msg=’‘)</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">assert_lower</code><span class="sig-paren">(</span><em>actual</em>, <em>lower</em>, <em>msg=None</em><span class="sig-paren">)</span></dt>
+<dd><p>Allow to encapsulate method assertLower(a, b, msg=msg)</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">assert_none</code><span class="sig-paren">(</span><em>actual</em>, <em>msg=None</em><span class="sig-paren">)</span></dt>
+<dd><p>Allow to compare and check if value it’s equals to ‘None’</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">assert_not_contains_url</code><span class="sig-paren">(</span><em>actual</em>, <em>contains</em>, <em>msg=None</em>, <em>wait=0</em><span class="sig-paren">)</span></dt>
+<dd><p>Allow to compare 2 urls and check if 1st not contains 2nd url</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">assert_not_equals</code><span class="sig-paren">(</span><em>actual</em>, <em>expected</em>, <em>msg=None</em><span class="sig-paren">)</span></dt>
+<dd><p>Allow to compare 2 value to check if 1st isn’t equals to
+2nd value</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">assert_not_equals_url</code><span class="sig-paren">(</span><em>actual</em>, <em>expected</em>, <em>msg=None</em>, <em>wait=0</em><span class="sig-paren">)</span></dt>
+<dd><p>Allow to compare 2 urls to check if 1st isn’t equals to 2nd url</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">assert_not_in</code><span class="sig-paren">(</span><em>actual</em>, <em>invalid_values</em>, <em>msg=None</em><span class="sig-paren">)</span></dt>
+<dd><p>Allow to compare if value it’s not in to 2nd list of values</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">assert_not_none</code><span class="sig-paren">(</span><em>actual</em>, <em>msg=None</em><span class="sig-paren">)</span></dt>
+<dd><p>Allow to compare and check if value it’s not equals to ‘None’</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">assert_not_regex</code><span class="sig-paren">(</span><em>actual</em>, <em>pattern</em>, <em>msg=None</em><span class="sig-paren">)</span></dt>
+<dd><p>Allow to compare if value not match pattern</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">assert_path_exist</code><span class="sig-paren">(</span><em>actual</em>, <em>is_dir=True</em>, <em>msg=None</em><span class="sig-paren">)</span></dt>
+<dd><p>Allow to check if path exist, can check if is_dir also</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">assert_path_not_exist</code><span class="sig-paren">(</span><em>actual</em>, <em>msg=None</em><span class="sig-paren">)</span></dt>
+<dd><p>Allow to check if path not exist, can check if is_dir also</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">assert_raises</code><span class="sig-paren">(</span><em>expected_exception</em>, <em>function</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span></dt>
+<dd><dl class="docutils">
+<dt>Allow to encapsulate pytest.raises method(</dt>
+<dd><dl class="first docutils">
+<dt><a href="#id5"><span class="problematic" id="id6">*</span></a>args=(</dt>
+<dd>expected_exception,
+function,</dd>
+</dl>
+<p>),
+<a href="#id7"><span class="problematic" id="id8">**</span></a>kwargs={</p>
+<blockquote>
+<div>msg: ASSERT_MSG_DEFAULT</div></blockquote>
+<p class="last">}</p>
+</dd>
+</dl>
+<p>)</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">assert_regex</code><span class="sig-paren">(</span><em>actual</em>, <em>pattern</em>, <em>msg=None</em><span class="sig-paren">)</span></dt>
+<dd><p>Allow to compare if value match pattern</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">assert_regex_url</code><span class="sig-paren">(</span><em>actual</em>, <em>pattern=None</em>, <em>msg=None</em><span class="sig-paren">)</span></dt>
+<dd><p>Allow to compare if value match url pattern, can use
+custom pattern</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">assert_true</code><span class="sig-paren">(</span><em>actual</em>, <em>msg=None</em><span class="sig-paren">)</span></dt>
+<dd><p>Allow to compare and check if value it’s equals to ‘True’</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt>
+<em class="property">classmethod </em><code class="descname">bot_close</code><span class="sig-paren">(</span><em>bot</em><span class="sig-paren">)</span></dt>
+<dd><p>Close bot calling bot.close() from param</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt>
+<em class="property">classmethod </em><code class="descname">bot_open</code><span class="sig-paren">(</span><em>config</em><span class="sig-paren">)</span></dt>
+<dd><p>Open browser using BotBase instance</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>BotBase – wrapper browser handler for selenium</dd>
+</dl>
+</dd></dl>
+
+<dl class="classmethod">
+<dt>
+<em class="property">classmethod </em><code class="descname">load</code><span class="sig-paren">(</span><em>config</em><span class="sig-paren">)</span></dt>
+<dd><p>Load default config dict</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt>
+<em class="property">classmethod </em><code class="descname">settings_app</code><span class="sig-paren">(</span><em>app_name</em><span class="sig-paren">)</span></dt>
+<dd><p>Obtain inherit dict from ‘cls.config’ dict named
+‘config.tests.apps’ filtering by ‘app_name’ param</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt>
+<em class="property">classmethod </em><code class="descname">settings_apps</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Obtain inherit dict from ‘cls.config’ dict named
+‘config.tests.apps’</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt>
+<em class="property">classmethod </em><code class="descname">settings_control</code><span class="sig-paren">(</span><em>control_name</em>, <em>page_name=None</em>, <em>app_name=None</em><span class="sig-paren">)</span></dt>
+<dd><p>Obtain inherit dict from ‘cls.config’ dict named
+‘config.tests.apps[i].pages[j].controls’ filtering by
+‘control_name’ param</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt>
+<em class="property">classmethod </em><code class="descname">settings_page</code><span class="sig-paren">(</span><em>page_name</em>, <em>app_name=None</em><span class="sig-paren">)</span></dt>
+<dd><p>Obtain inherit dict from ‘cls.config’ dict named
+‘config.tests.apps[i].pages’ filtering by ‘page_name’ param</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">setup_method</code><span class="sig-paren">(</span><em>test_method</em>, <em>**kwargs</em><span class="sig-paren">)</span></dt>
+<dd><p>Configure self.attribute</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">sleep</code><span class="sig-paren">(</span><em>wait=0</em><span class="sig-paren">)</span></dt>
+<dd><p>Just call to native python time.sleep method</p>
+<dl class="docutils">
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>wait {int} – Wait time on Runtime execution before execute</dt>
+<dd>next lane of code (default: {0})</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">teardown_method</code><span class="sig-paren">(</span><em>test_method</em><span class="sig-paren">)</span></dt>
+<dd><p>Unload self.attribute</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">timer</code><span class="sig-paren">(</span><em>wait=5</em>, <em>print_each=5</em><span class="sig-paren">)</span></dt>
+<dd><p>Timer to sleep browser on testcases</p>
+<dl class="docutils">
+<dt>Keyword Arguments:</dt>
+<dd><p class="first">wait {int} – seconds to wait (default: {5})
+print_each {int} – print message each seconds, must be divisible</p>
+<blockquote class="last">
+<div>by 5, negatives are accepted (default: {5})</div></blockquote>
+</dd>
+<dt>Raises:</dt>
+<dd>Exception – [description]</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<span id="document-_static/testlink"></span><div class="section" id="package-qacode-core-testing-testlink">
+<h2>package: qacode.core.testing.testlink<a class="headerlink" href="#package-qacode-core-testing-testlink" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-qacode.core.testing.testlink.testlink_base">
+<span id="class-tlbase"></span><h3>Class: TlBase<a class="headerlink" href="#module-qacode.core.testing.testlink.testlink_base" title="Permalink to this headline">¶</a></h3>
+<p>TODO: making new library , totally outdated testlink</p>
+<dl class="class">
+<dt id="qacode.core.testing.testlink.testlink_base.TlBase">
+<em class="property">class </em><code class="descclassname">qacode.core.testing.testlink.testlink_base.</code><code class="descname">TlBase</code><span class="sig-paren">(</span><em>logger_manager=None</em>, <em>url_api=None</em>, <em>dev_key=None</em>, <em>data=None</em>, <em>generate=False</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.testing.testlink.testlink_base.TlBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Testlink API manager class</p>
+<dl class="attribute">
+<dt id="qacode.core.testing.testlink.testlink_base.TlBase.builds">
+<code class="descname">builds</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.testing.testlink.testlink_base.TlBase.builds" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.testing.testlink.testlink_base.TlBase.conn">
+<code class="descname">conn</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.testing.testlink.testlink_base.TlBase.conn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.testing.testlink.testlink_base.TlBase.connect">
+<code class="descname">connect</code><span class="sig-paren">(</span><em>url_api=None</em>, <em>dev_key=None</em><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.testing.testlink.testlink_base.TlBase.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect to testlink XMLRPC</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.testing.testlink.testlink_base.TlBase.load">
+<code class="descname">load</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qacode.core.testing.testlink.testlink_base.TlBase.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load all TestProyects, TestPlans, Builds, Testsuites y TestCases</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.testing.testlink.testlink_base.TlBase.plans">
+<code class="descname">plans</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.testing.testlink.testlink_base.TlBase.plans" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.testing.testlink.testlink_base.TlBase.proyects">
+<code class="descname">proyects</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.testing.testlink.testlink_base.TlBase.proyects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt>
+<em class="property">class </em><code class="descclassname">qacode.core.testing.testlink.testlink_base.</code><code class="descname">TlBase</code><span class="sig-paren">(</span><em>logger_manager=None</em>, <em>url_api=None</em>, <em>dev_key=None</em>, <em>data=None</em>, <em>generate=False</em><span class="sig-paren">)</span></dt>
+<dd><p>Testlink API manager class</p>
+<dl class="method">
+<dt>
+<code class="descname">connect</code><span class="sig-paren">(</span><em>url_api=None</em>, <em>dev_key=None</em><span class="sig-paren">)</span></dt>
+<dd><p>Connect to testlink XMLRPC</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">load</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Load all TestProyects, TestPlans, Builds, Testsuites y TestCases</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html#document-index">Table Of Contents</a></h3>
+  <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-_static/bots">package: qacode.core.bots</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="index.html#module-qacode.core.bots.bot_base">Class: BotBase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#module-qacode.core.bots.modules.nav_base">Class: NavBase (<em>used at bot.navigation as property</em>)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-_static/controls">package: qacode.core.webs.controls</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="index.html#module-qacode.core.webs.controls.control_base">Class: ControlBase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#module-qacode.core.webs.controls.control_form">Class: ControlForm</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-_static/pages">package: qacode.core.webs.pages</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="index.html#module-qacode.core.webs.pages.page_base">Class: PageBase</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-_static/tests">package: qacode.core.testing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="index.html#module-qacode.core.testing.test_info">Class: TestInfoBase</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-_static/testlink">package: qacode.core.testing.testlink</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="index.html#module-qacode.core.testing.testlink.testlink_base">Class: TlBase</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html#document-index">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Netzulo.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
