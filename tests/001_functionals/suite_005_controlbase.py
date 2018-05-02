@@ -321,3 +321,32 @@ class TestControlBase(TestInfoBotUnique):
         text = control.get_text(on_screen=False)
         self.assert_greater(
             len(text), 0, msg='Failed at obtain text, open issue on Github')
+
+    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
+    @pytest.mark.parametrize("selector", ["#username"])
+    @pytest.mark.parametrize("instance", ["ControlBase"])
+    def test_method_reload_base(self, selector, instance):
+        """Testcase: test_method_setcssrule"""
+        # must be supported
+        control_config = {
+            "name": "txt_username_base",
+            "locator": "css selector",
+            "selector": selector,
+            "instance": instance,
+            "on_instance_search": False,
+            "on_instance_load": False,
+        }
+        control = ControlBase(self.bot, **control_config)
+        self.assert_equals(control.on_instance_search, False)
+        self.assert_equals(control.on_instance_load, False)
+        self.assert_none(control.element)
+        # Real test behaviour
+        update_config = {
+            "on_instance_search": True,
+            "on_instance_load": True
+        }
+        control_config.update(update_config)
+        control.reload(**control_config)
+        self.assert_equals(control.on_instance_search, True)
+        self.assert_equals(control.on_instance_load, True)
+        self.assert_is_instance(control.element, WebElement)

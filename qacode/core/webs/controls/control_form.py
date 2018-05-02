@@ -56,18 +56,29 @@ class ControlForm(ControlBase):
         self._load_properties(enabled=self.on_instance_load)
         self._load_strict(enabled=self.on_instance_strict)
 
-    def load_settings_keys(self, settings):
+    def load_settings_keys(self, settings, update=False):
         """Load default setting for ControlForm instance"""
         self.bot.log.debug(
             "control_form | load_settings_keys: loading keys...")
-        for key in self.settings.keys():
-            value = self.settings.get(key)
+        # Update instance settings
+        if update:
+            self.settings = settings
+        for key in settings.keys():
+            value = settings.get(key)
             if not value:
                 # Optional params
-                if key == 'on_instance_strict':
+                if key == 'name':
+                    value = "UNNAMED"
+                elif key == 'locator':
+                    value = 'css selector'
+                elif key == 'on_instance_search':
+                    value = False
+                elif key == 'on_instance_load':
+                    value = False
+                elif key == 'on_instance_strict':
                     value = False
                 elif key == 'strict_rules':
-                    value = list()
+                    value = []
                 else:
                     raise ControlException(
                         message=("Bad settings: "
@@ -296,3 +307,23 @@ class ControlForm(ControlBase):
         self.bot.log.debug(
             "control_form | parse_rules: parsed strict_rules!")
         return typed_rules
+
+    def reload(self, **kwargs):
+        """Reload 'self.settings' property:dict and call to instance
+            logic with new configuration
+        """
+        self.bot.log.debug(
+            "control_form | reload: reloading control...")
+        # load settings again
+        config = kwargs.copy()
+        # needed for self._load_* functions
+        self.load_settings_keys(config, update=True)
+        # instance logic
+        self._load_search(
+            enabled=config.get('on_instance_search'))
+        self._load_properties(
+            enabled=config.get('on_instance_load'))
+        self._load_strict(
+            enabled=config.get('on_instance_strict'))
+        self.bot.log.debug(
+            "control_form | reload: reloaded control!")

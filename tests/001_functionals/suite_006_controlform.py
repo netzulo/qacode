@@ -96,3 +96,38 @@ class TestControlForm(TestInfoBotUnique):
         elif control.tag == 'select' and not on_instance_strict:
             self.assert_none(
                 control.dropdown)
+
+
+    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
+    @pytest.mark.parametrize("selector", ["#dropdown"])
+    @pytest.mark.parametrize("instance", ["ControlForm"])
+    def test_method_reload_form(self, selector, instance):
+        """Testcase: test_method_setcssrule"""
+        # must be supported
+        control_config = {
+            "name": "txt_username_base",
+            "locator": "css selector",
+            "selector": selector,
+            "instance": instance,
+            "on_instance_search": False,
+            "on_instance_load": False,
+            "on_instance_strict": False,
+            "strict_rules": [],
+        }
+        control = ControlForm(self.bot, **control_config)
+        self.assert_equals(control.on_instance_search, False)
+        self.assert_equals(control.on_instance_load, False)
+        self.assert_equals(control.on_instance_strict, False)
+        self.assert_none(control.element)
+        # Real test behaviour
+        update_config = {
+            "on_instance_search": True,
+            "on_instance_load": True,
+            "on_instance_strict": True,
+        }
+        control_config.update(update_config)
+        control.reload(**control_config)
+        self.assert_equals(control.on_instance_search, True)
+        self.assert_equals(control.on_instance_load, True)
+        self.assert_equals(control.on_instance_strict, True)
+        self.assert_is_instance(control.element, WebElement)
