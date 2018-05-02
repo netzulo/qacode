@@ -1,6 +1,13 @@
 # -*- coding: utf-8 -*-
-"""package qacode.core
+"""package qacode.core"""
 
-Created on 04 march 2017
-@author: ntz
-"""
+
+from qacode.core import bots
+from qacode.core import exceptions
+from qacode.core import loggers
+from qacode.core import testing
+from qacode.core import utils
+from qacode.core import webs
+
+
+__all__ = ['bots', 'exceptions', 'loggers', 'testing', 'utils', 'webs']
