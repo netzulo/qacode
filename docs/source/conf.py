@@ -24,9 +24,9 @@ copyright = '2018, Netzulo'
 author = 'Netzulo'
 
 # The short X.Y version
-version = '4.8'
+version = '4.9'
 # The full version, including alpha/beta/rc tags
-release = 'v0.4.8'
+release = 'v0.4.9'
 
 
 # -- General configuration ---------------------------------------------------
