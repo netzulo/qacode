@@ -61,9 +61,12 @@ class ControlBase(object):
         self._load_search(enabled=self.settings.get('on_instance_search'))
         self._load_properties(enabled=self.settings.get('on_instance_load'))
 
-    def load_settings_keys(self, settings):
+    def load_settings_keys(self, settings, update=False):
         """Load default setting for ControlBase instance"""
         self.bot.log.debug("control | load_settings_keys: loading keys...")
+        # Update instance settings
+        if update:
+            self.settings = settings
         for key in settings.keys():
             value = settings.get(key)
             if not value:
@@ -283,26 +286,25 @@ class ControlBase(object):
             css_important=css_important)
         if self.selector is None:
             raise ControlException(message="Couldn't reload element")
-        self.reload()
+        self.reload(**self.settings)
 
-    def reload(self, on_instance_search=False, on_instance_load=False):
-        """Reload ControlBase
-
-        Keyword Arguments:
-            on_instance_search {bool} -- allow to search self.element property
-                (default: {False})
-            on_instance_load {bool} -- allow to load ControlBase properties
-                (default: {False})
+    def reload(self, **kwargs):
+        """Reload 'self.settings' property:dict and call to instance
+            logic with new configuration
         """
-        if on_instance_search is None:
-            on_instance_search = self.on_instance_search
-        if on_instance_load is None:
-            on_instance_load = self.on_instance_load
+        self.bot.log.debug(
+            "control | reload: reloading control...")
+        # load settings again
+        config = kwargs.copy()
         # needed for self._load_* functions
-        self.load_settings_keys(self.settings)
+        self.load_settings_keys(config, update=True)
         # instance logic
-        self._load_search(enabled=on_instance_search)
-        self._load_properties(enabled=on_instance_load)
+        self._load_search(
+            enabled=config.get('on_instance_search'))
+        self._load_properties(
+            enabled=config.get('on_instance_load'))
+        self.bot.log.debug(
+            "control | reload: reloaded control!")
 
     def __repr__(self):
         """Show basic properties for this object"""
