@@ -97,7 +97,6 @@ class TestControlForm(TestInfoBotUnique):
             self.assert_none(
                 control.dropdown)
 
-
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize("selector", ["#dropdown"])
     @pytest.mark.parametrize("instance", ["ControlForm"])
