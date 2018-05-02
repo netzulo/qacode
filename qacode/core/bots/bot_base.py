@@ -10,9 +10,9 @@ from qacode.core.loggers.logger_manager import LoggerManager
 from qacode.core.utils import settings
 from selenium import webdriver as WebDriver
 from selenium.webdriver import DesiredCapabilities
+from selenium.webdriver.common.touch_actions import TouchActions
 from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.common.touch_actions import TouchActions
 
 
 class BotBase(object):
