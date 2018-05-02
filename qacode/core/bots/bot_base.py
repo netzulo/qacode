@@ -10,6 +10,7 @@ from qacode.core.loggers.logger_manager import LoggerManager
 from qacode.core.utils import settings
 from selenium import webdriver as WebDriver
 from selenium.webdriver import DesiredCapabilities
+from selenium.webdriver.common.touch_actions import TouchActions
 from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
 from selenium.webdriver.support.ui import WebDriverWait
 
@@ -22,6 +23,10 @@ class BotBase(object):
         curr_driver -- WebDriver class
 
         curr_driver_path -- WebDriver browser executable path
+
+        curr_driver_wait -- Wait for expected conditions
+
+        curr_driver_actions -- Performs actions on elements
 
         navigation -- Bot methods to brigde selenium functions
 
@@ -38,6 +43,10 @@ class BotBase(object):
     curr_caps = None
     curr_driver = None
     curr_driver_path = None
+    # Wait for expected conditions
+    curr_driver_wait = None
+    # Performs actions on elements
+    curr_driver_actions = None
     navigation = None
     logger_manager = None
     log = None
@@ -94,8 +103,13 @@ class BotBase(object):
                 message=("Bad mode selected, mode={}"
                          "").format(self.settings.get('mode')))
         self.curr_driver_wait = WebDriverWait(self.curr_driver, 10)
+        self.curr_driver_actions = TouchActions(self.curr_driver)
         self.navigation = NavBase(
-            self.curr_driver, self.log, driver_wait=self.curr_driver_wait)
+            self.curr_driver,
+            self.log,
+            driver_wait=self.curr_driver_wait,
+            driver_actions=self.curr_driver_actions
+        )
 
     def driver_name_filter(self, driver_name=None):
         """Filter names of driver to search selected on config list

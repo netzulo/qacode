@@ -19,8 +19,10 @@ class NavBase(object):
 
     driver = None
     log = None
+    driver_wait = None
+    driver_actions = None
 
-    def __init__(self, driver, log, driver_wait=None):
+    def __init__(self, driver, log, driver_wait=None, driver_actions=None):
         """Initialize self properties
 
         Arguments:
@@ -30,10 +32,14 @@ class NavBase(object):
         Keyword Arguments:
             driver_wait {selenium.webdriver.support.ui.WebDriverWait}
                 -- web driver wait for conditions (default: {None})
+            driver_actions
+                {selenium.webdriver.common.touch_actions.TouchActions}
+                -- web driver for perform actions on elements
         """
         self.driver = driver
         self.log = log
         self.driver_wait = driver_wait
+        self.driver_actions = driver_actions
 
     def get_url(self, url, wait_for_load=0):
         """Do get_url including implicit wait for page load"""

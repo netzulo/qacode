@@ -69,6 +69,9 @@ class TestBotBase(TestInfoBase):
                      "/operachromiumdriver/issues/9"))
         self.bot = BotBase(**settings)
         self.timer(wait=WAIT_TO_CLOSE)
+        self.assert_is_instance(self.bot, BotBase)
         self.assert_equals(
-            self.bot.curr_caps['browserName'],
-            browser_name)
+            self.bot.settings.get('browser'),
+            settings.get('bot').get('browser'))
+        self.assert_equals(self.bot.settings.get('mode'), driver_mode)
+        self.assert_equals(self.bot.curr_caps['browserName'], browser_name)
