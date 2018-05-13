@@ -20,6 +20,7 @@ Indices and tables
    
    _static/bots
    _static/controls
+   _static/loggers
    _static/pages
    _static/tests
    _static/testlink
