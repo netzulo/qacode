@@ -100,7 +100,7 @@ setup(
         'packaging==16.8',
         'pyparsing',
         'six==1.10.0',
-        'selenium==3.5.0',
+        'selenium==3.12.0',
         'enum34',
         'nose==1.3.7',
         'nose-testconfig==0.10',
