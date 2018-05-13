@@ -8,6 +8,7 @@
 
 
 from qacode.core.exceptions.core_exception import CoreException
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions as EC
@@ -134,7 +135,6 @@ class NavBase(object):
         Returns:
             WebElement -- selenium representation for a web element
         """
-        from selenium.common.exceptions import NoSuchElementException
         msg = "Locator not selected at find_element, selector={}".format(
             selector)
         msg_err = "Error at find_element: selector={}".format(
@@ -167,7 +167,6 @@ class NavBase(object):
             list(WebElement) -- selenium representation for a
                 list of web elements
         """
-        from selenium.common.exceptions import NoSuchElementException
         msg = "Locator not selected at find_element, selector={}".format(
             selector)
         msg_err = "Error at find_elements: selector={}".format(
