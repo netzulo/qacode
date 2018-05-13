@@ -15,6 +15,8 @@ SKIP_MSG = 'benchmarks DISABLED by config file'
 # TODO: must be setteable from config JSON
 WAIT_TO_CLOSE = int(3)
 LOGGER_MANAGER = LoggerManager(log_level=SETTINGS['bot']['log_level'])
+ITERATIONS = 1
+ROUNDS = 1
 
 
 class TestBotBase(TestInfoBase):
@@ -74,8 +76,9 @@ class TestBotBase(TestInfoBase):
         "opera"
     ])
     @pytest.mark.parametrize("driver_mode", ["local", "remote"])
+    @pytest.mark.skipIf(SKIP, SKIP_MSG)
     def test_benchmark_browsers(self, benchmark, browser_name, driver_mode):
         """Testcase: test_benchmark_local_chrome"""
         cfg_local = {'browser_name': browser_name, 'driver_mode': driver_mode}
         benchmark.pedantic(
-            self.bot_benchmark, kwargs=cfg_local, iterations=1, rounds=1)
+            self.bot_benchmark, kwargs=cfg_local, iterations=ITERATIONS, rounds=ROUNDS)
