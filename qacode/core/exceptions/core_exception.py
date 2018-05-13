@@ -3,7 +3,6 @@
 
 
 from qacode.core.loggers.logger_manager import LoggerManager
-from selenium.common.exceptions import NoSuchElementException
 
 
 class CoreException(Exception):
@@ -25,6 +24,7 @@ class CoreException(Exception):
             self.log = LoggerManager().logger
         else:
             self.log = log
+        from selenium.common.exceptions import NoSuchElementException
         if err is not None and isinstance(err, NoSuchElementException):
             self.log.warning(err.args)
         self.log.error(self.message)
