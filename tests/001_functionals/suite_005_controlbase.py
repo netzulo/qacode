@@ -47,8 +47,9 @@ class TestControlBase(TestInfoBotUnique):
     @pytest.mark.parametrize("instance", ["ControlBase"])
     @pytest.mark.parametrize("on_instance_search", [False, True])
     @pytest.mark.parametrize("on_instance_load", [False, True])
+    @pytest.mark.parametrize("auto_reload", [True])
     def test_instance_base(self, selector, instance, on_instance_search,
-                           on_instance_load):
+                           on_instance_load, auto_reload):
         """Testcase: test_instance_base"""
         # must be supported at: test_instance_raises_base
         if not on_instance_search and on_instance_load:
@@ -61,6 +62,7 @@ class TestControlBase(TestInfoBotUnique):
             "instance": instance,
             "on_instance_search": on_instance_search,
             "on_instance_load": on_instance_load,
+            "auto_reload": auto_reload,
         }
         control = ControlBase(self.bot, **control_config)
         self.assert_is_instance(control, ControlBase)
@@ -83,14 +85,18 @@ class TestControlBase(TestInfoBotUnique):
         self.assert_equals(
             control.on_instance_load,
             control_config.get('on_instance_load'))
+        self.assert_equals(
+            control.auto_reload,
+            control_config.get('auto_reload'))
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize("on_instance_load", [None])
     @pytest.mark.parametrize("on_instance_search", [None, True])
     @pytest.mark.parametrize("instance", ["ControlBase"])
     @pytest.mark.parametrize("selector", [None, "#username"])
+    @pytest.mark.parametrize("auto_reload", [False])
     def test_instance_base_raises(self, selector, instance, on_instance_search,
-                                  on_instance_load):
+                                  on_instance_load, auto_reload):
         """Testcase: test_instance_raises_base"""
         # must be supported at: test_instance_base
         if on_instance_search and on_instance_load is None:
@@ -103,6 +109,7 @@ class TestControlBase(TestInfoBotUnique):
             "instance": instance,
             "on_instance_search": on_instance_search,
             "on_instance_load": on_instance_load,
+            "auto_reload": auto_reload,
         }
         if (
                 on_instance_search is None and

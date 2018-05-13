@@ -21,6 +21,7 @@ class ControlBase(object):
     selector = None
     on_instance_search = None
     on_instance_load = None
+    auto_reload = None
     # Element properties
     element = None
     tag = None
@@ -54,6 +55,7 @@ class ControlBase(object):
             "locator": kwargs.get('locator'),
             "on_instance_search": kwargs.get('on_instance_search'),
             "on_instance_load": kwargs.get('on_instance_load'),
+            "auto_reload": kwargs.get('auto_reload')
         }
         # needed for self._load_* functions
         self.load_settings_keys(self.settings)
@@ -79,6 +81,8 @@ class ControlBase(object):
                     value = False
                 elif key == 'on_instance_load':
                     value = False
+                elif key == 'auto_reload':
+                    value = True
                 else:
                     raise ControlException(
                         message=("Bad settings: "
@@ -153,6 +157,9 @@ class ControlBase(object):
 
     def get_tag(self):
         """Returns tag_name from Webelement"""
+        self.bot.log.debug("control | get_tag : obtaining tag...")
+        if not self.element:
+            self.reload(**self.settings)
         tag_name = self.bot.navigation.ele_tag(self.element)
         self.bot.log.debug(
             "control | get_tag : tag={}".format(tag_name))
@@ -169,6 +176,8 @@ class ControlBase(object):
         """
         self.bot.log.debug(
             "control | type_text : text={}".format(text))
+        if not self.element:
+            self.reload(**self.settings)
         if clear:
             self.clear()
         self.bot.navigation.ele_write(self.element, text)
@@ -177,12 +186,16 @@ class ControlBase(object):
     def clear(self):
         """Clear input element text value"""
         self.bot.log.debug("control | clear : clearing text...")
+        if not self.element:
+            self.reload(**self.settings)
         self.bot.navigation.ele_clear(self.element)
         self.bot.log.debug("control | clear : cleared text!")
 
     def click(self):
         """Click on element"""
         self.bot.log.debug("control | click : clicking element...")
+        if not self.element:
+            self.reload(**self.settings)
         self.bot.navigation.ele_click(element=self.element)
         self.bot.log.debug("control | click : clicked!")
 
@@ -201,6 +214,8 @@ class ControlBase(object):
             str -- Return element content text (innerText property)
         """
         self.bot.log.debug("control | get_text : obtaining text...")
+        if not self.element:
+            self.reload(**self.settings)
         try:
             return self.bot.navigation.ele_text(
                 self.element, on_screen=on_screen)
@@ -222,6 +237,8 @@ class ControlBase(object):
             dict -- a dict list of {name, value}
         """
         self.bot.log.debug("control | get_attrs : obtaining attrs...")
+        if not self.element:
+            self.reload(**self.settings)
         attrs = list()
         for attr_name in attr_names:
             attrs.append({
@@ -244,6 +261,8 @@ class ControlBase(object):
         self.bot.log.debug(
             ("control | get_attr_value : "
              "obtaining value for attr_name='{}'...").format(attr_name))
+        if not self.element:
+            self.reload(**self.settings)
         try:
             value = self.bot.navigation.ele_attribute(
                 self.element, attr_name)
@@ -263,7 +282,13 @@ class ControlBase(object):
         Returns:
             str -- Value of CSS property searched
         """
-        return self.bot.navigation.ele_css(self.element, prop_name)
+        self.bot.log.debug("control | get_css_value : obtaining css_value...")
+        if not self.element:
+            self.reload(**self.settings)
+        css_value = self.bot.navigation.ele_css(self.element, prop_name)
+        self.bot.log.debug(
+            "control | get_css_value : css_value={}".format(css_value))
+        return css_value
 
     def set_css_value(self, prop_name, prop_value, css_important=True):
         """Set new value for given CSS property name
@@ -281,6 +306,8 @@ class ControlBase(object):
             ("control | set_css_value : setting new CSS rule, "
              "prop_name={}, prop_value={}").format(
                 prop_name, prop_value))
+        if not self.element:
+            self.reload(**self.settings)
         self.bot.navigation.set_css_rule(
             self.selector, prop_name, prop_value,
             css_important=css_important)
