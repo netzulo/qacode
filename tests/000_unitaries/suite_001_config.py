@@ -90,6 +90,8 @@ class TestConfig(TestInfoBase):
                 key_value.get('web_controls'), bool)
             self.assert_is_instance(
                 key_value.get('web_pages'), bool)
+            self.assert_is_instance(
+                key_value.get('benchmarks'), bool)
         if key_name == 'apps':
             self.assert_is_instance(key_value, list)
             for app_config in key_value:

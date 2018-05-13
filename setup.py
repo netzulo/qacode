@@ -11,6 +11,32 @@ from sys import version_info
 VERSION = "0.5.0"
 CURR_PATH = "{}{}".format(path.abspath(path.dirname(__file__)), '/')
 
+INSTALL_PYBASE = [
+    'appdirs',
+    'packaging==16.8',
+    'pyparsing',
+    'six==1.10.0',
+    'selenium==3.12.0',
+    'enum34',
+    'nose==1.3.7',
+    'nose-testconfig==0.10',
+    'pytest',
+    'qatestlink==0.0.7',
+]
+INSTALL_PY36 = INSTALL_PYBASE.remove('enum34')
+
+
+def get_install_names():
+    """Get a list of pypi python package dependencies
+
+    Returns:
+        list -- list of dependecy package names
+    """
+    if version_info.major == 3 and version_info.minor >= 5:
+        return INSTALL_PY36
+    else:
+        return INSTALL_PYBASE
+
 
 def path_format(file_path=None, file_name=None, is_abspath=False,
                 ignore_raises=False):
@@ -95,18 +121,7 @@ setup(
     download_url='https://github.com/netzulo/qacode/tarball/v{}'.format(
         VERSION),
     keywords=['testing', 'logging', 'functional', 'selenium', 'test'],
-    install_requires=[
-        'appdirs',
-        'packaging==16.8',
-        'pyparsing',
-        'six==1.10.0',
-        'selenium==3.12.0',
-        'enum34',
-        'nose==1.3.7',
-        'nose-testconfig==0.10',
-        'pytest',
-        'qatestlink==0.0.7',
-    ],
+    install_requires=get_install_names(),
     setup_requires=[
         'pytest-runner',
         'tox',
@@ -115,6 +130,7 @@ setup(
         'pytest-html',
         'pytest-dependency',
         'pytest-cov',
+        'pytest-benchmark'
     ],
     classifiers=[
         'Development Status :: 4 - Beta',

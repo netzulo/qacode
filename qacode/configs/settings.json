@@ -48,7 +48,8 @@
       "bot_multiple": false,
       "bot_unique": false,
       "web_controls": false,
-      "web_pages": false
+      "web_pages": false,
+      "benchmarks": true
     },
     "apps": [
       {
