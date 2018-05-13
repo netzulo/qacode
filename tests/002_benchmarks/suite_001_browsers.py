@@ -26,6 +26,13 @@ class TestBotBase(TestInfoBase):
             test_method, config=settings())
 
     def bot_benchmark(self, browser_name, driver_mode):
+        """Allow to open and close any browser_name with
+            any driver_mode configuration
+
+        Arguments:
+            browser_name {str} -- browser name
+            driver_mode {str} -- driver mode (local, remote)
+        """
         settings = SETTINGS.copy()
         settings.get('bot').update({
             'browser': str(browser_name),
@@ -57,7 +64,7 @@ class TestBotBase(TestInfoBase):
             print(
                 "Fail at try to close bot, maybe never opened")
 
-    @pytest.mark.benchmark(group='CHROME_QACODE')
+    @pytest.mark.benchmark(group='BROWSERS')
     @pytest.mark.parametrize("browser_name", [
         "chrome",
         "firefox",

@@ -130,7 +130,8 @@ setup(
         'pytest-html',
         'pytest-dependency',
         'pytest-cov',
-        'pytest-benchmark'
+        'pytest-benchmark',
+        'pytest-benchmark[histogram]'
     ],
     classifiers=[
         'Development Status :: 4 - Beta',
