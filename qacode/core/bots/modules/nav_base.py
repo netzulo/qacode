@@ -7,8 +7,10 @@
 """
 
 
-from qacode.core.exceptions.core_exception import CoreException
-from selenium.common.exceptions import NoSuchElementException
+from qacode.core.exceptions.core_exception import (
+    CoreException,
+    NoSuchElementException
+)
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions as EC
