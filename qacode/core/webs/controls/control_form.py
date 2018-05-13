@@ -41,6 +41,7 @@ class ControlForm(ControlBase):
             "locator": kwargs.get('locator'),
             "on_instance_search": kwargs.get('on_instance_search'),
             "on_instance_load": kwargs.get('on_instance_load'),
+            "auto_reload": kwargs.get('auto_reload'),
             "on_instance_strict": kwargs.get('on_instance_strict'),
             "strict_rules": kwargs.get('strict_rules')
         }
@@ -75,6 +76,8 @@ class ControlForm(ControlBase):
                     value = False
                 elif key == 'on_instance_load':
                     value = False
+                elif key == 'auto_reload':
+                    value = True
                 elif key == 'on_instance_strict':
                     value = False
                 elif key == 'strict_rules':

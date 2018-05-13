@@ -48,6 +48,7 @@ class TestControlForm(TestInfoBotUnique):
     @pytest.mark.parametrize("instance", ["ControlForm"])
     @pytest.mark.parametrize("on_instance_search", [True])
     @pytest.mark.parametrize("on_instance_load", [True])
+    @pytest.mark.parametrize("auto_reload", [True])
     @pytest.mark.parametrize("on_instance_strict", [True, False])
     @pytest.mark.parametrize("strict_rules", [
         [
@@ -55,7 +56,8 @@ class TestControlForm(TestInfoBotUnique):
         ]
     ])
     def test_instance_form(self, selector, instance, on_instance_search,
-                           on_instance_load, on_instance_strict, strict_rules):
+                           on_instance_load, on_instance_strict, strict_rules,
+                           auto_reload):
         """Testcase: test_001_instance_selector"""
         control_config = {
             "name": "txt_username_strict",
@@ -64,6 +66,7 @@ class TestControlForm(TestInfoBotUnique):
             "instance": instance,
             "on_instance_search": on_instance_search,
             "on_instance_load": on_instance_load,
+            "auto_reload": auto_reload,
             "on_instance_strict": on_instance_strict,
             "strict_rules": strict_rules
         }
@@ -83,6 +86,9 @@ class TestControlForm(TestInfoBotUnique):
         self.assert_equals(
             control.on_instance_load,
             control_config.get('on_instance_load'))
+        self.assert_equals(
+            control.auto_reload,
+            control_config.get('auto_reload'))
         self.assert_equals(
             control.on_instance_strict,
             control_config.get('on_instance_strict'))
