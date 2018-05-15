@@ -11,7 +11,7 @@ from sys import version_info
 VERSION = "0.5.0"
 CURR_PATH = "{}{}".format(path.abspath(path.dirname(__file__)), '/')
 
-INSTALL_PYBASE = [
+INSTALL_REQUIRES = [
     'appdirs',
     'packaging==16.8',
     'pyparsing',
@@ -23,19 +23,17 @@ INSTALL_PYBASE = [
     'pytest',
     'qatestlink==0.0.7',
 ]
-INSTALL_PY36 = INSTALL_PYBASE.remove('enum34')
 
 
-def get_install_names():
+def get_install_requires():
     """Get a list of pypi python package dependencies
 
     Returns:
         list -- list of dependecy package names
     """
-    if version_info.major == 3 and version_info.minor >= 5:
-        return INSTALL_PY36
-    else:
-        return INSTALL_PYBASE
+    if version_info <= (3, 4):
+        INSTALL_REQUIRES.append('enum34')
+    return INSTALL_REQUIRES
 
 
 def path_format(file_path=None, file_name=None, is_abspath=False,
@@ -121,7 +119,7 @@ setup(
     download_url='https://github.com/netzulo/qacode/tarball/v{}'.format(
         VERSION),
     keywords=['testing', 'logging', 'functional', 'selenium', 'test'],
-    install_requires=get_install_names(),
+    install_requires=get_install_requires(),
     setup_requires=[
         'pytest-runner',
         'tox',

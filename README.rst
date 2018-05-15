@@ -111,6 +111,7 @@ Configuration File
       "bot": {
         "mode": "remote",
         "browser": "chrome",
+        "options": { "headless": false },
         "url_hub": "http://localhost:11000/wd/hub",
         "drivers_path": "../qadrivers",
         "drivers_names": [

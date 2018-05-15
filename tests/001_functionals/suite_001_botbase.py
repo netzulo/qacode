@@ -39,7 +39,6 @@ class TestBotBase(TestInfoBase):
     @pytest.mark.parametrize("browser_name", [
         "chrome",
         "firefox",
-        "phantomjs",
         "iexplorer",
         "edge",
         "opera"
@@ -61,6 +60,37 @@ class TestBotBase(TestInfoBase):
             pytest.skip(msg="Browser not configured")
         if browser_name == 'iexplorer':
             browser_name = 'internet explorer'
+        if browser_name == 'opera':
+            pytest.skip(
+                msg=("Issue opened on official opera"
+                     " chromium github: "
+                     "https://github.com/operasoftware"
+                     "/operachromiumdriver/issues/9"))
+        self.bot = BotBase(**settings)
+        self.timer(wait=WAIT_TO_CLOSE)
+        self.assert_is_instance(self.bot, BotBase)
+        self.assert_equals(
+            self.bot.settings.get('browser'),
+            settings.get('bot').get('browser'))
+        self.assert_equals(self.bot.settings.get('mode'), driver_mode)
+        self.assert_equals(self.bot.curr_caps['browserName'], browser_name)
+
+    @pytest.mark.parametrize("browser_name", [
+        "chrome", "firefox", "opera"
+    ])
+    @pytest.mark.parametrize("driver_mode", ["local", "remote"])
+    def test_bot_modes_headless(self, driver_mode, browser_name):
+        """Testcase: test_bot_modes_headless"""
+        if SKIP_LOCALS and driver_mode == 'local':
+            pytest.skip(SKIP_LOCALS_MSG)
+        if SKIP_REMOTES and driver_mode == 'remote':
+            pytest.skip(SKIP_REMOTES_MSG)
+        settings = SETTINGS.copy()
+        settings.get('bot').update({
+            'browser': str(browser_name),
+            'mode': str(driver_mode),
+            'options': {"headless": True}
+        })
         if browser_name == 'opera':
             pytest.skip(
                 msg=("Issue opened on official opera"
