@@ -1,7 +1,8 @@
 { "bot": {
     "mode": "remote",
     "browser": "chrome",
-    "url_hub": "http://qalab.tk:11000/wd/hub",
+    "options": { "headless": false },
+    "url_hub": "http://localhost:11000/wd/hub",
     "drivers_path": "../qadrivers",
     "drivers_names": [
       "chromedriver_32.exe",
@@ -12,10 +13,6 @@
       "firefoxdriver_64.exe",
       "firefoxdriver_64.exe",
       "firefoxdriver_32",
-      "phantomjsdriver_32.exe",
-      "phantomjsdriver_64.exe",
-      "phantomjsdriver_32",
-      "phantomjsdriver_64",
       "iexplorerdriver_32.exe",
       "iexplorerdriver_64.exe",
       "edgedriver_32.exe",

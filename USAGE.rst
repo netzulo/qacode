@@ -17,6 +17,7 @@ Have classes for this down package: ``qacode.core.bots``
         "bot": {
             "mode": "remote",
             "browser": "chrome",
+            "options": { "headless": false },
             "url_hub": "http://qalab.tk:11000/wd/hub",
             "drivers_path": "../qadrivers",
             "drivers_names": [
