@@ -22,8 +22,8 @@ INSTALL_PYBASE = [
     'nose-testconfig==0.10',
     'pytest',
     'qatestlink==0.0.7',
+    'enum34;python_version<"3.4"',
 ]
-INSTALL_PY36 = INSTALL_PYBASE.remove('enum34')
 
 
 def get_install_names():
@@ -32,10 +32,7 @@ def get_install_names():
     Returns:
         list -- list of dependecy package names
     """
-    if version_info.major == 3 and version_info.minor >= 5:
-        return INSTALL_PY36
-    else:
-        return INSTALL_PYBASE
+    return INSTALL_PYBASE
 
 
 def path_format(file_path=None, file_name=None, is_abspath=False,
