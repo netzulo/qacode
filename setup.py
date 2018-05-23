@@ -21,7 +21,7 @@ INSTALL_REQUIRES = [
     'nose==1.3.7',
     'nose-testconfig==0.10',
     'pytest',
-    'qatestlink==0.0.7',
+    'qatestlink==0.0.8',
 ]
 
 
