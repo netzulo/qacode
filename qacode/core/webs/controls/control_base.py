@@ -2,6 +2,7 @@
 """Package module qacode.core.webs.control_base"""
 
 
+from collections import defaultdict
 from qacode.core.bots.bot_base import BotBase
 from qacode.core.exceptions.control_exception import ControlException
 from qacode.core.exceptions.core_exception import CoreException
@@ -49,16 +50,8 @@ class ControlBase(object):
         """Load properties from settings dict.
             Some elements need to search False to be search at future
         """
-        self.settings = {
-            "selector": kwargs.get('selector'),
-            "name": kwargs.get('name'),
-            "locator": kwargs.get('locator'),
-            "on_instance_search": kwargs.get('on_instance_search'),
-            "on_instance_load": kwargs.get('on_instance_load'),
-            "auto_reload": kwargs.get('auto_reload')
-        }
         # needed for self._load_* functions
-        self.load_settings_keys(self.settings)
+        self.load_settings_keys(kwargs.copy(), update=True)
         # instance logic
         self._load_search(enabled=self.settings.get('on_instance_search'))
         self._load_properties(enabled=self.settings.get('on_instance_load'))
@@ -66,29 +59,31 @@ class ControlBase(object):
     def load_settings_keys(self, settings, update=False):
         """Load default setting for ControlBase instance"""
         self.bot.log.debug("control | load_settings_keys: loading keys...")
-        # Update instance settings
-        if update:
-            self.settings = settings
-        for key in settings.keys():
+        # generate default dict
+        default_keys = [
+            ("selector", None), # required
+            ("name", "UNNAMED"),
+            ("locator", By.CSS_SELECTOR),
+            ("on_instance_search", False),
+            ("on_instance_load", False),
+            ("auto_reload", True),
+            ("instance", 'ControlBase')
+        ]
+        default_settings = defaultdict(list, default_keys)
+        # Parse param settings
+        for key in default_settings.keys():
+            # value from params dict
+            import pdb; pdb.set_trace()
             value = settings.get(key)
-            if not value:
-                # Optional params
-                if key == 'name':
-                    value = "UNNAMED"
-                elif key == 'locator':
-                    value = By.CSS_SELECTOR
-                elif key == 'on_instance_search':
-                    value = False
-                elif key == 'on_instance_load':
-                    value = False
-                elif key == 'auto_reload':
-                    value = True
-                else:
-                    raise ControlException(
-                        message=("Bad settings: "
-                                 "key={}, value={}").format(
-                                     key, value))
-            setattr(self, key, value)
+            # check properties
+            if value is None and value == 'selector':
+                msg = "Bad settings: key={}, value={}".format(
+                    key, value)
+                raise ControlException(message=msg)
+            if update:
+                default_settings.update({ key : value})
+            # update object property value
+            setattr(self, key, default_settings.get(key))
         self.bot.log.debug("control | load_settings_keys: loaded keys!")
 
     def _load_search(self, enabled=False):

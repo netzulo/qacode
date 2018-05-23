@@ -109,6 +109,9 @@ Configuration File
 
     {
       "bot": {
+        "log_output_file": "logs/",
+        "log_name": "qacode",
+        "log_level": "DEBUG",
         "mode": "remote",
         "browser": "chrome",
         "options": { "headless": false },
@@ -135,10 +138,7 @@ Configuration File
           "operadriver_64.exe",
           "operadriver_32",
           "operadriver_64"
-        ],
-        "log_output_file": "logs/",
-        "log_name": "qacode",
-        "log_level": "DEBUG"
+        ]
       }
     }
 

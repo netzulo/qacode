@@ -15,6 +15,9 @@ Have classes for this down package: ``qacode.core.bots``
     # SETTINGS = settings()
     SETTINGS = {
         "bot": {
+            "log_output_file": "logs/",
+            "log_name": "qacode",
+            "log_level": "DEBUG"
             "mode": "remote",
             "browser": "chrome",
             "options": { "headless": false },
@@ -41,10 +44,7 @@ Have classes for this down package: ``qacode.core.bots``
                 "operadriver_64.exe",
                 "operadriver_32",
                 "operadriver_64"
-            ],
-            "log_output_file": "logs/",
-            "log_name": "qacode",
-            "log_level": "DEBUG"
+            ]
         }
     }
     # Open bot now
