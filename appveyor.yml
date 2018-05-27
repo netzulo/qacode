@@ -35,24 +35,25 @@ environment:
       PYTHON_ARCH: "64"
 
 install:
-# Prepend newly installed Python to the PATH of this build (this cannot be
-# done from inside the powershell script as it would require to restart
-# the parent CMD process).
-- "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
-# Check that we have the expected version and architecture for Python
-- "python --version"
-- "python -c \"import struct; print(struct.calcsize('P') * 8)\""
-# Upgrade to the latest version of pip to avoid it displaying warnings
-# about it being out of date.
-- "python -m pip install wheel"
-- "python -m pip install --pre -U tox"
-- "python setup.py clean"
-- "python setup.py build"
-- "python setup.py install"
-- "python setup.py sdist"
+  # Prepend newly installed Python to the PATH of this build (this cannot be
+  # done from inside the powershell script as it would require to restart
+  # the parent CMD process).
+  - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
+  # Check that we have the expected version and architecture for Python
+  - "python --version"
+  - "python -c \"import struct; print(struct.calcsize('P') * 8)\""
+  # Upgrade to the latest version of pip to avoid it displaying warnings
+  # about it being out of date.
+  - "python -m pip install wheel"
+  - "python -m pip install --pre -U tox"
+  - "python setup.py clean"
+  - "python setup.py build"
 
 test_script:
-- "tox -e %TOXENV%,flake8,docs"
+ - "tox -e %TOXENV%,flake8,docs"
+
+after_script:
+  - "python setup.py sdist"
 
 artifacts:
 - path: "dist\\*"
