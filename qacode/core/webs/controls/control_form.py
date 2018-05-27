@@ -3,8 +3,8 @@
 
 
 from qacode.core.exceptions.control_exception import ControlException
-from qacode.core.webs.controls.control_base import ControlBase
 from qacode.core.webs.controls.control_base import By
+from qacode.core.webs.controls.control_base import ControlBase
 from qacode.core.webs.html_tags import HtmlTag
 from qacode.core.webs.strict_rules import StrictRule
 from qacode.core.webs.strict_rules import StrictSeverity
