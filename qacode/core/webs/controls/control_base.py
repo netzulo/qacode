@@ -44,46 +44,52 @@ class ControlBase(object):
             raise ControlException(message="Bad param 'bot'")
         self.bot = bot
         # load settings before try to instance
-        self._load(**kwargs)
+        self.load(**kwargs)
 
-    def _load(self, **kwargs):
+    def load(self, **kwargs):
         """Load properties from settings dict.
             Some elements need to search False to be search at future
         """
         # needed for self._load_* functions
         self.load_settings_keys(kwargs.copy(), update=True)
         # instance logic
-        self._load_search(enabled=self.settings.get('on_instance_search'))
-        self._load_properties(enabled=self.settings.get('on_instance_load'))
+        self._load_search(enabled=self.on_instance_search)
+        self._load_properties(enabled=self.on_instance_load)
 
-    def load_settings_keys(self, settings, update=False):
+    def load_settings_keys(self, settings, update=False, default_keys=None):
         """Load default setting for ControlBase instance"""
         self.bot.log.debug("control | load_settings_keys: loading keys...")
         # generate default dict
-        default_keys = [
-            ("selector", None), # required
-            ("name", "UNNAMED"),
-            ("locator", By.CSS_SELECTOR),
-            ("on_instance_search", False),
-            ("on_instance_load", False),
-            ("auto_reload", True),
-            ("instance", 'ControlBase')
-        ]
+        if default_keys is None:
+            default_keys = [
+                ("selector", None),  # required
+                ("name", "UNNAMED"),
+                ("locator", By.CSS_SELECTOR),
+                ("on_instance_search", False),
+                ("on_instance_load", False),
+                ("auto_reload", True),
+                ("instance", 'ControlBase')
+            ]
         default_settings = defaultdict(list, default_keys)
-        # Parse param settings
+        updated_settings = {}
+        # Parse param settings, key is each one of default_keys
         for key in default_settings.keys():
             # value from params dict
-            import pdb; pdb.set_trace()
             value = settings.get(key)
-            # check properties
-            if value is None and value == 'selector':
+            # required keys checks
+            if value is None and key == 'selector':
                 msg = "Bad settings: key={}, value={}".format(
                     key, value)
                 raise ControlException(message=msg)
-            if update:
-                default_settings.update({ key : value})
-            # update object property value
-            setattr(self, key, default_settings.get(key))
+            # optional keys, update with default value
+            if value is None:
+                value = default_settings.get(key)
+            # update object property value and prepare
+            # settings to be updated
+            updated_settings.update({key: value})
+            setattr(self, key, updated_settings.get(key))
+        if update:
+            self.settings = updated_settings
         self.bot.log.debug("control | load_settings_keys: loaded keys!")
 
     def _load_search(self, enabled=False):
@@ -332,8 +338,14 @@ class ControlBase(object):
         """Show basic properties for this object"""
         return ("ControlBase: name={}, "
                 "bot.browser={}, bot.mode={} \n"
-                "settings={}").format(
-            self.settings.get('url'),
+                "settings={} \n"
+                "tag={}, is_displayed={}, "
+                "is_enabled={}, is_selected={}").format(
+            self.name,
             self.bot.settings.get('browser'),
             self.bot.settings.get('mode'),
-            self.settings)
+            self.settings,
+            self.tag,
+            self.is_displayed,
+            self.is_enabled,
+            self.is_selected)
