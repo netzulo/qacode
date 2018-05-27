@@ -167,6 +167,7 @@ class TestInfoBase(object):
                 "assert_equals", actual, expected)
         if actual != expected:
             raise AssertionError(actual, expected, msg)
+        return True
 
     def assert_not_equals(self, actual, expected, msg=None):
         """Allow to compare 2 value to check if 1st isn't equals to
@@ -177,6 +178,7 @@ class TestInfoBase(object):
                 "assert_not_equals", actual, expected)
         if actual == expected:
             raise AssertionError(actual, expected, msg)
+        return True
 
     def assert_equals_url(self, actual, expected, msg=None, wait=0):
         """Allow to compare 2 urls and check if 1st it's equals to 2nd url
@@ -198,6 +200,7 @@ class TestInfoBase(object):
         self.sleep(wait)
         if actual != expected:
             raise AssertionError(actual, expected, msg)
+        return True
 
     def assert_not_equals_url(self, actual, expected, msg=None, wait=0):
         """Allow to compare 2 urls to check if 1st isn't equals to 2nd url"""
@@ -207,6 +210,7 @@ class TestInfoBase(object):
         self.sleep(wait)
         if actual == expected:
             raise AssertionError(actual, expected, msg)
+        return True
 
     def assert_contains_url(self, actual, contains, msg=None, wait=0):
         """Allow to compare 2 urls and check if 1st contains 2nd url"""
@@ -216,6 +220,7 @@ class TestInfoBase(object):
         self.sleep(wait)
         if actual not in contains:
             raise AssertionError(actual, contains, msg)
+        return True
 
     def assert_not_contains_url(self, actual, contains, msg=None, wait=0):
         """Allow to compare 2 urls and check if 1st not contains 2nd url"""
@@ -225,6 +230,7 @@ class TestInfoBase(object):
         self.sleep(wait)
         if actual in contains:
             raise AssertionError(actual, contains, msg)
+        return True
 
     def assert_is_instance(self, instance, class_type, msg=None):
         """Allow to encapsulate method assertIsInstance(obj, cls, msg='')"""
@@ -254,7 +260,7 @@ class TestInfoBase(object):
                 "assert_raises",
                 "TODO:not implemented value",
                 expected_exception)
-        pytest.raises(expected_exception, function, *args, **kwargs)
+        return pytest.raises(expected_exception, function, *args, **kwargs)
 
     def assert_greater(self, actual, greater, msg=None):
         """Allow to encapsulate method assertGreater(a, b, msg=msg)"""
@@ -263,6 +269,7 @@ class TestInfoBase(object):
                 "assert_greater", actual, greater)
         if actual < greater:
             raise AssertionError(actual, greater, msg)
+        return True
 
     def assert_lower(self, actual, lower, msg=None):
         """Allow to encapsulate method assertLower(a, b, msg=msg)"""
@@ -271,6 +278,7 @@ class TestInfoBase(object):
                 "assert_greater", actual, lower)
         if actual > lower:
             raise AssertionError(actual, lower, msg)
+        return True
 
     def assert_in(self, actual, valid_values, msg=None):
         """Allow to compare if value it's in to 2nd list of values"""
@@ -279,6 +287,7 @@ class TestInfoBase(object):
                 "assert_in", actual, valid_values)
         if actual not in valid_values:
             raise AssertionError(actual, valid_values, msg)
+        return True
 
     def assert_not_in(self, actual, invalid_values, msg=None):
         """Allow to compare if value it's not in to 2nd list of values"""
@@ -287,6 +296,7 @@ class TestInfoBase(object):
                 "assert_in", actual, invalid_values)
         if actual in invalid_values:
             raise AssertionError(actual, invalid_values, msg)
+        return True
 
     def assert_regex(self, actual, pattern, msg=None):
         """Allow to compare if value match pattern"""
@@ -296,6 +306,7 @@ class TestInfoBase(object):
         is_match = re.match(pattern, actual)
         if not is_match:
             raise AssertionError(actual, pattern, msg)
+        return True
 
     def assert_not_regex(self, actual, pattern, msg=None):
         """Allow to compare if value not match pattern"""
@@ -305,6 +316,7 @@ class TestInfoBase(object):
         is_match = re.match(pattern, actual)
         if is_match:
             raise AssertionError(actual, pattern, msg)
+        return True
 
     def assert_regex_url(self, actual, pattern=None, msg=None):
         """Allow to compare if value match url pattern, can use
@@ -315,7 +327,7 @@ class TestInfoBase(object):
                 "assert_regex_url", actual, pattern)
         if not pattern:
             pattern = ASSERT_REGEX_URL
-        self.assert_regex(actual, pattern, msg=msg)
+        return self.assert_regex(actual, pattern, msg=msg)
 
     def assert_path_exist(self, actual, is_dir=True, msg=None):
         """Allow to check if path exist, can check if is_dir also"""
@@ -333,6 +345,7 @@ class TestInfoBase(object):
         else:
             if _is_dir:
                 raise AssertionError(actual, "NEED_PATH_NOT_DIR", msg)
+        return True
 
     def assert_path_not_exist(self, actual, msg=None):
         """Allow to check if path not exist, can check if is_dir also"""
@@ -341,6 +354,7 @@ class TestInfoBase(object):
                 "assert_path_not_exist", actual, "")
         if os.path.exists(actual):
             raise AssertionError(actual, "NEED_PATH_NOT_FOUND", msg)
+        return True
 
     def assert_true(self, actual, msg=None):
         """Allow to compare and check if value it's equals to 'True'"""
@@ -349,6 +363,7 @@ class TestInfoBase(object):
                 "assert_true", actual, "")
         self.assert_is_instance(actual, bool)
         self.assert_equals(actual, True, msg=msg)
+        return True
 
     def assert_false(self, actual, msg=None):
         """Allow to compare and check if value it's equals to 'False'"""
@@ -357,20 +372,21 @@ class TestInfoBase(object):
                 "assert_false", actual, "")
         self.assert_is_instance(actual, bool)
         self.assert_equals(actual, False, msg=msg)
+        return True
 
     def assert_none(self, actual, msg=None):
         """Allow to compare and check if value it's equals to 'None'"""
         if not msg:
             msg = ASSERT_MSG_DEFAULT.format(
                 "assert_false", actual, "")
-        self.assert_equals(actual, None, msg=msg)
+        return self.assert_equals(actual, None, msg=msg)
 
     def assert_not_none(self, actual, msg=None):
         """Allow to compare and check if value it's not equals to 'None'"""
         if not msg:
             msg = ASSERT_MSG_DEFAULT.format(
                 "assert_false", actual, "")
-        self.assert_not_equals(actual, None, msg=msg)
+        return self.assert_not_equals(actual, None, msg=msg)
 
 
 class TestInfoBot(TestInfoBase):

@@ -3,6 +3,7 @@
 
 
 from qacode.core.exceptions.control_exception import ControlException
+from qacode.core.webs.controls.control_base import By
 from qacode.core.webs.controls.control_base import ControlBase
 from qacode.core.webs.html_tags import HtmlTag
 from qacode.core.webs.strict_rules import StrictRule
@@ -35,18 +36,8 @@ class ControlForm(ControlBase):
         """Load properties from settings dict.
             Some elements need to search False to be search at future
         """
-        self.settings = {
-            "selector": kwargs.get('selector'),
-            "name": kwargs.get('name'),
-            "locator": kwargs.get('locator'),
-            "on_instance_search": kwargs.get('on_instance_search'),
-            "on_instance_load": kwargs.get('on_instance_load'),
-            "auto_reload": kwargs.get('auto_reload'),
-            "on_instance_strict": kwargs.get('on_instance_strict'),
-            "strict_rules": kwargs.get('strict_rules')
-        }
         # needed for self._load_* functions
-        self.load_settings_keys(self.settings)
+        self.load_settings_keys(kwargs.copy())
         # needed for self._load_strict function
         self.strict_rules_typed = []
         self.strict_tags = []
@@ -61,33 +52,21 @@ class ControlForm(ControlBase):
         """Load default setting for ControlForm instance"""
         self.bot.log.debug(
             "control_form | load_settings_keys: loading keys...")
-        # Update instance settings
-        if update:
-            self.settings = settings
-        for key in settings.keys():
-            value = settings.get(key)
-            if not value:
-                # Optional params
-                if key == 'name':
-                    value = "UNNAMED"
-                elif key == 'locator':
-                    value = 'css selector'
-                elif key == 'on_instance_search':
-                    value = False
-                elif key == 'on_instance_load':
-                    value = False
-                elif key == 'auto_reload':
-                    value = True
-                elif key == 'on_instance_strict':
-                    value = False
-                elif key == 'strict_rules':
-                    value = []
-                else:
-                    raise ControlException(
-                        message=("Bad settings: "
-                                 "key={}, value={}").format(
-                                     key, value))
-            setattr(self, key, value)
+        super(ControlForm, self).load_settings_keys(
+            settings,
+            update=update,
+            default_keys=[
+                ("selector", None),  # required
+                ("name", "UNNAMED"),
+                ("locator", By.CSS_SELECTOR),
+                ("on_instance_search", False),
+                ("on_instance_load", False),
+                ("auto_reload", True),
+                ("instance", 'ControlBase'),
+                ("on_instance_strict", False),
+                ("strict_rules", []),
+            ]
+        )
         self.bot.log.debug("control_form | load_settings_keys: loaded keys!")
 
     def _load_strict(self, enabled=False):
