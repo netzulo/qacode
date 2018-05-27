@@ -4,6 +4,12 @@ branches:
     - master
     - devel
 environment:
+  global:
+    # SDK v7.0 MSVC Express 2008's SetEnv.cmd script will fail if the
+    # /E:ON and /V:ON options are not enabled in the batch script intepreter
+    # See: http://stackoverflow.com/a/13751649/163740
+    CMD_IN_ENV: "cmd /E:ON /V:ON /C .\\appveyor\\run_with_env.cmd"
+
   matrix:
     - JOB: "2.7 32-bit"
       TOXENV: "py27"
@@ -52,7 +58,7 @@ install:
 test_script:
  - "tox -e %TOXENV%,flake8,docs"
 
-after_script:
+after_test:
   - "python setup.py sdist"
 
 artifacts:
