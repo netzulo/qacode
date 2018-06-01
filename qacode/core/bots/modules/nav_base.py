@@ -517,3 +517,13 @@ class NavBase(object):
             str -- Value of CSS property searched
         """
         return element.value_of_css_property(prop_name)
+
+
+    def __repr__(self):
+        """Show basic properties for this object"""
+        return ("ControlBase: drivers instanced are... \n"
+                "  driver_wait={},\n  driver_actions={},\n"
+                "  driver_touch={}").format(
+            self.driver_wait,
+            self.driver_actions,
+            self.driver_touch)
