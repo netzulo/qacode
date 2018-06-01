@@ -32,6 +32,11 @@ class ControlBase(object):
     is_selected = None
     attr_id = None
     attr_class = None
+    # Reload configuration
+    RELOAD_CONFIG = {
+        "on_instance_search": True,
+        "on_instance_load": True,
+    }
 
     def __init__(self, bot, **kwargs):
         """Wrapper for Selenium class named 'WebElement' using
@@ -324,13 +329,14 @@ class ControlBase(object):
             "control | reload: reloading control...")
         # load settings again
         config = kwargs.copy()
+        config.update(self.RELOAD_CONFIG)
         # needed for self._load_* functions
         self.load_settings_keys(config, update=True)
         # instance logic
         self._load_search(
-            enabled=config.get('on_instance_search'))
+            enabled=self.settings.get('on_instance_search'))
         self._load_properties(
-            enabled=config.get('on_instance_load'))
+            enabled=self.settings.get('on_instance_load'))
         self.bot.log.debug(
             "control | reload: reloaded control!")
 
