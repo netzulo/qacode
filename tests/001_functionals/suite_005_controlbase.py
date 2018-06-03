@@ -253,41 +253,32 @@ class TestControlBase(TestInfoBotUnique):
         control = ControlBase(self.bot, **login_container_config)
         self.assert_equals(control.tag, 'div')
 
-    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    def test_method_typetext_withproperty(self):
-        """Testcase: test_method_typetext_withproperty"""
-        txt_username_config = self.settings_control(
-            'txt_username')
-        txt_username_config.update({
-            "on_instance_load": True
-        })
-        control = ControlBase(self.bot, **txt_username_config)
-        control.type_text('test')
-        self.assert_equals(control.text, 'test')
+
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    def test_method_typetext_withmethod(self):
-        """Testcase: test_method_typetext_withmethod"""
-        txt_username_config = self.settings_control(
-            'txt_username')
-        txt_username_config.update({
-            "on_instance_load": True
-        })
-        control = ControlBase(self.bot, **txt_username_config)
-        control.type_text('test')
-        self.assert_equals(control.get_attr_value('value'), 'test')
+    @pytest.mark.parametrize("control_name", ['txt_username'])
 
-    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    def test_method_typetext_cleartrue(self):
+    @pytest.mark.parametrize("clear", [True, False])
+    @pytest.mark.parametrize(
+        "control_config",
+        [
+            {"on_instance_load": True},
+            {
+                "on_instance_search": False,
+                "on_instance_load": False,
+                "auto_reload": True
+            }
+        ])
+    def test_method_typetext(self, control_name, control_config, clear):
         """Testcase: test_method_typetext_cleartrue"""
-        txt_username_config = self.settings_control(
-            'txt_username')
-        txt_username_config.update({
-            "on_instance_load": True
-        })
-        control = ControlBase(self.bot, **txt_username_config)
-        control.type_text('test', clear=True)
-        self.assert_equals(control.get_attr_value('value'), 'test')
+        text_to_type = 'test'
+        ctl_config = self.settings_control(control_name)
+        ctl_config.update(control_config)
+        import pdb; pdb.set_trace()
+        control = ControlBase(self.bot, **ctl_config)
+        control.type_text(text_to_type, clear=clear)
+        self.assert_equals(control.text, text_to_type)
+        self.assert_equals(control.get_attr_value('value'), text_to_type)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_method_getcssvalue(self):
