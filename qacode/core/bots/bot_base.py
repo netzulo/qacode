@@ -273,3 +273,17 @@ class BotBase(object):
         self.log.debug('Closing browser...')
         self.curr_driver.quit()
         self.log.info('Closed browser')
+
+    def __repr__(self):
+        """Show basic properties for this object"""
+        _settings = None
+        if self.settings.get("mode") == "remote":
+            _settings = self.settings.copy()
+            _settings.update({"drivers_names": ["Hidden at '__repr__' for remote drivers..."]})
+        return ("BotBase: IS_WIN={}, IS_64BITS={}\n"
+                "  navigation={} \n"
+                "  settings={}").format(
+            self.IS_WIN,
+            self.IS_64BITS,
+            repr(self.navigation),
+            self.settings)
