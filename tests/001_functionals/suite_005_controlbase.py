@@ -274,7 +274,6 @@ class TestControlBase(TestInfoBotUnique):
         text_to_type = 'test'
         ctl_config = self.settings_control(control_name)
         ctl_config.update(control_config)
-        import pdb; pdb.set_trace()
         control = ControlBase(self.bot, **ctl_config)
         control.type_text(text_to_type, clear=clear)
         self.assert_equals(control.text, text_to_type)
