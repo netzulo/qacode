@@ -21,6 +21,7 @@ class TestControlForm(TestInfoBotUnique):
 
     app = None
     page_dropdown_config = None
+    ctl_dropdown_config = None
 
     @classmethod
     def setup_class(cls, **kwargs):
@@ -39,6 +40,9 @@ class TestControlForm(TestInfoBotUnique):
             'page_dropdown_config', value=self.settings_page('page_dropdown'))
         self.add_property(
             'url', value=self.page_dropdown_config.get('url'))
+        self.add_property(
+            'ctl_dropdown_config', value=self.settings_control(
+                "dropdown", page_name="page_dropdown"))
         self.bot.navigation.get_url(self.url)
         curr_url = self.bot.curr_driver.current_url
         self.assert_equals_url(curr_url, self.url)
@@ -136,3 +140,56 @@ class TestControlForm(TestInfoBotUnique):
         self.assert_equals(control.on_instance_load, True)
         self.assert_equals(control.on_instance_strict, True)
         self.assert_is_instance(control.element, WebElement)
+
+    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
+    @pytest.mark.parametrize("text", ["Option 1", "Option 2"])
+    def test_method_dropdown_select_by_text(self, text):
+        control = ControlForm(self.bot, **self.ctl_dropdown_config)
+        control.dropdown_select(text)
+
+    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
+    @pytest.mark.parametrize("text", ["1", "2"])
+    def test_method_dropdown_select_by_value(self, text):
+        control = ControlForm(self.bot, **self.ctl_dropdown_config)
+        control.dropdown_select(text, by_value=True)
+
+    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
+    @pytest.mark.parametrize("index", [0, 1])
+    def test_method_dropdown_select_by_value(self, index):
+        control = ControlForm(self.bot, **self.ctl_dropdown_config)
+        control.dropdown_select(index, by_index=True)
+
+    @pytest.mark.skipIf(
+        True,
+        "Github issue: https://github.com/netzulo/qacode/issues/156")
+    @pytest.mark.parametrize("text", ["Option 1", "Option 2"])
+    def test_method_dropdown_deselect_by_text(self, text):
+        control = ControlForm(self.bot, **self.ctl_dropdown_config)
+        control.dropdown_select(text)
+        control.dropdown_deselect(text)
+
+    @pytest.mark.skipIf(
+        True,
+        "Github issue: https://github.com/netzulo/qacode/issues/156")
+    @pytest.mark.parametrize("text", ["1", "2"])
+    def test_method_dropdown_deselect_by_value(self, text):
+        control = ControlForm(self.bot, **self.ctl_dropdown_config)
+        control.dropdown_select(text, by_value=True)
+        control.dropdown_deselect(text, by_value=True)
+
+    @pytest.mark.skipIf(
+        True,
+        "Github issue: https://github.com/netzulo/qacode/issues/156")
+    @pytest.mark.parametrize("index", [0, 1])
+    def test_method_dropdown_deselect_by_value(self, index):
+        control = ControlForm(self.bot, **self.ctl_dropdown_config)
+        control.dropdown_select(index, by_index=True)
+        control.dropdown_deselect(index, by_index=True)
+
+    @pytest.mark.skipIf(
+        True,
+        "Github issue: https://github.com/netzulo/qacode/issues/156")
+    def test_method_dropdown_deselect_all(self):
+        control = ControlForm(self.bot, **self.ctl_dropdown_config)
+        control.dropdown_select("Option 1")
+        control.dropdown_deselect_all()

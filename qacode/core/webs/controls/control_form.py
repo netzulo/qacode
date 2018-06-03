@@ -309,3 +309,76 @@ class ControlForm(ControlBase):
             enabled=config.get('on_instance_strict'))
         self.bot.log.debug(
             "control_form | reload: reloaded control!")
+
+    def dropdown_select(self, text, by_value=False, by_index=False):
+        """The Select class only works with tags which have select tags.
+            Using the Index of Dropdown (int)
+            Using the Value of Dropdown (str)
+            Using the Text of Dropdown (str)
+
+        Arguments:
+            text {str|int} -- Probably the easiest way of doing it. You
+                have to match the text which is displayed in the drop down.
+
+        Keyword Arguments:
+            by_value {bool} -- We can use to select an option using the
+                value attribute. (default: {False})
+            by_index {bool} -- We can use to select an option using the
+                index attribute. (default: {False})
+        """
+        if self.dropdown is None:
+            raise ControlException(
+                message=("Element must be dropdown"
+                         " (tag={})").format(self.tag))
+        if by_value and by_index:
+            raise ControlException(
+                message=("Can't use this function with"
+                         " all flags with True values"))
+        if by_value:
+            self.dropdown.select_by_value(text)
+        elif by_index:
+            if not isinstance(text, int):
+                raise ControlException(message="index must be an int value")
+            self.dropdown.select_by_index(int(text))
+        else:
+            self.dropdown.select_by_visible_text(text)
+
+    def dropdown_deselect(self, text, by_value=False, by_index=False):
+        """The Select class only works with tags which have select tags.
+            Using the Index of Dropdown (int)
+            Using the Value of Dropdown (str)
+            Using the Text of Dropdown (str)
+
+        Arguments:
+            text {str|int} -- Probably the easiest way of doing it. You
+                have to match the text which is displayed in the drop down.
+
+        Keyword Arguments:
+            by_value {bool} -- We can use to select an option using the
+                value attribute. (default: {False})
+            by_index {bool} -- We can use to select an option using the
+                index attribute. (default: {False})
+        """
+        if self.dropdown is None:
+            raise ControlException(
+                message=("Element must be dropdown"
+                         " (tag={})").format(self.tag))
+        if by_value and by_index:
+            raise ControlException(
+                message=("Can't use this function with"
+                         " all flags with True values"))
+        if by_value:
+            self.dropdown.deselect_by_value(text)
+        elif by_index:
+            if not isinstance(text, int):
+                raise ControlException(message="index must be an int value")
+            self.dropdown.deselect_by_index(int(text))
+        else:
+            self.dropdown.deselect_by_visible_text(text)
+
+    def dropdown_deselect_all(self):
+        if self.dropdown is None:
+            raise ControlException(
+                message=("Element must be dropdown"
+                         " (tag={})").format(self.tag))
+        self.dropdown.deselect_all()
