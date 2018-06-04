@@ -518,7 +518,6 @@ class NavBase(object):
         """
         return element.value_of_css_property(prop_name)
 
-
     def __repr__(self):
         """Show basic properties for this object"""
         return ("ControlBase: drivers instanced are... \n"

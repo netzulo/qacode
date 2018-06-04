@@ -325,6 +325,10 @@ class ControlForm(ControlBase):
                 value attribute. (default: {False})
             by_index {bool} -- We can use to select an option using the
                 index attribute. (default: {False})
+
+        Raises:
+            ControlException -- if tag is not 'select'
+            ControlException -- if all flags are 'True'
         """
         if self.dropdown is None:
             raise ControlException(
@@ -358,6 +362,10 @@ class ControlForm(ControlBase):
                 value attribute. (default: {False})
             by_index {bool} -- We can use to select an option using the
                 index attribute. (default: {False})
+
+        Raises:
+            ControlException -- if tag is not 'select'
+            ControlException -- if all flags are 'True'
         """
         if self.dropdown is None:
             raise ControlException(
@@ -377,6 +385,12 @@ class ControlForm(ControlBase):
             self.dropdown.deselect_by_visible_text(text)
 
     def dropdown_deselect_all(self):
+        """The Select class only works with tags which have select
+            tags with multiple="multiple" attribute.
+
+        Raises:
+            ControlException -- if tag is not 'select'
+        """
         if self.dropdown is None:
             raise ControlException(
                 message=("Element must be dropdown"

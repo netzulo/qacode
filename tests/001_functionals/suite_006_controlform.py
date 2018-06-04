@@ -144,18 +144,21 @@ class TestControlForm(TestInfoBotUnique):
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize("text", ["Option 1", "Option 2"])
     def test_method_dropdown_select_by_text(self, text):
+        """Testcase: test_method_dropdown_select_by_text"""
         control = ControlForm(self.bot, **self.ctl_dropdown_config)
         control.dropdown_select(text)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize("text", ["1", "2"])
     def test_method_dropdown_select_by_value(self, text):
+        """Testcase: test_method_dropdown_select_by_value"""
         control = ControlForm(self.bot, **self.ctl_dropdown_config)
         control.dropdown_select(text, by_value=True)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize("index", [0, 1])
-    def test_method_dropdown_select_by_value(self, index):
+    def test_method_dropdown_select_by_index(self, index):
+        """Testcase: test_method_dropdown_select_by_index"""
         control = ControlForm(self.bot, **self.ctl_dropdown_config)
         control.dropdown_select(index, by_index=True)
 
@@ -164,6 +167,7 @@ class TestControlForm(TestInfoBotUnique):
         "Github issue: https://github.com/netzulo/qacode/issues/156")
     @pytest.mark.parametrize("text", ["Option 1", "Option 2"])
     def test_method_dropdown_deselect_by_text(self, text):
+        """Testcase: test_method_dropdown_deselect_by_text"""
         control = ControlForm(self.bot, **self.ctl_dropdown_config)
         control.dropdown_select(text)
         control.dropdown_deselect(text)
@@ -173,6 +177,7 @@ class TestControlForm(TestInfoBotUnique):
         "Github issue: https://github.com/netzulo/qacode/issues/156")
     @pytest.mark.parametrize("text", ["1", "2"])
     def test_method_dropdown_deselect_by_value(self, text):
+        """Testcase: test_method_dropdown_deselect_by_value"""
         control = ControlForm(self.bot, **self.ctl_dropdown_config)
         control.dropdown_select(text, by_value=True)
         control.dropdown_deselect(text, by_value=True)
@@ -181,7 +186,8 @@ class TestControlForm(TestInfoBotUnique):
         True,
         "Github issue: https://github.com/netzulo/qacode/issues/156")
     @pytest.mark.parametrize("index", [0, 1])
-    def test_method_dropdown_deselect_by_value(self, index):
+    def test_method_dropdown_deselect_by_index(self, index):
+        """Testcase: test_method_dropdown_deselect_by_index"""
         control = ControlForm(self.bot, **self.ctl_dropdown_config)
         control.dropdown_select(index, by_index=True)
         control.dropdown_deselect(index, by_index=True)
@@ -190,6 +196,7 @@ class TestControlForm(TestInfoBotUnique):
         True,
         "Github issue: https://github.com/netzulo/qacode/issues/156")
     def test_method_dropdown_deselect_all(self):
+        """Testcase: test_method_dropdown_deselect_all"""
         control = ControlForm(self.bot, **self.ctl_dropdown_config)
         control.dropdown_select("Option 1")
         control.dropdown_deselect_all()

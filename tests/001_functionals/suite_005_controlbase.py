@@ -253,11 +253,8 @@ class TestControlBase(TestInfoBotUnique):
         control = ControlBase(self.bot, **login_container_config)
         self.assert_equals(control.tag, 'div')
 
-
-
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize("control_name", ['txt_username'])
-
     @pytest.mark.parametrize("clear", [True, False])
     @pytest.mark.parametrize(
         "control_config",

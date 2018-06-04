@@ -278,8 +278,11 @@ class BotBase(object):
         """Show basic properties for this object"""
         _settings = None
         if self.settings.get("mode") == "remote":
+            hidden = {
+                "drivers_names": [
+                    "Hidden at '__repr__' for remote drivers..."]}
             _settings = self.settings.copy()
-            _settings.update({"drivers_names": ["Hidden at '__repr__' for remote drivers..."]})
+            _settings.update(hidden)
         return ("BotBase: IS_WIN={}, IS_64BITS={}\n"
                 "  navigation={} \n"
                 "  settings={}").format(
