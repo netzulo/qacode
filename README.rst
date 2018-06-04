@@ -27,11 +27,11 @@ QA Code
 Python tested versions
 ----------------------
 
-+-------------------+-------------------+-------------------+-------------------+-------------------+
-|  **3.6**          |  **3.4**          |  **3.3**          |  **3.2**          |  **2.7**          |
-+===================+===================+===================+===================+===================+
-|    *Supported*    |    *Supported*    |  *Not Supported*  |  *Not Supported*  |    *Supported*    |
-+-------------------+-------------------+-------------------+-------------------+-------------------+
++-------------------+-------------------+-------------------+-------------------+-------------------+-------------------+
+|  **3.6**          |  **3.5**          |  **3.4**          |  **3.3**          |  **3.2**          |  **2.7**          |
++===================+===================+===================+===================+===================+===================+
+|    *Supported*    |    *Supported*    |    *Supported*    |  *Not Supported*  |  *Not Supported*  |    *Supported*    |
++-------------------+-------------------+-------------------+-------------------+-------------------+-------------------+
 
 
 Code Metrics by sonarqube
@@ -141,6 +141,41 @@ Configuration File
         ]
       }
     }
+
+
+Getting Started
+^^^^^^^^^^^^^^^
+
+*Just starting example of usage before read* `Usage Guide`_.
+
+.. code:: python
+
+
+    from qacode.core.bots.bot_base import BotBase
+    from qacode.core.webs.controls.control_base import ControlBase
+    from qacode.core.utils import settings
+    
+    
+    SETTINGS = settings(
+        file_path="/home/user/config/dir/",
+        file_name="settings.json"
+    )
+    
+    
+    try:
+        bot = BotBase(**SETTINGS)
+        bot.navigation.get_url("http://the-internet.herokuapp.com/login")
+        ctl_config = { "selector": "input[name='username']"}
+        ctl = ControlBase(bot, **ctl_config)
+        # END
+        import pdb; pdb.set_trace() # TODO, remove DEBUG lane
+        print(ctl)
+    except Exception as err:
+        print("ERROR: {}".format(err))
+    finally:
+        bot.close()
+
+
 
 
 
