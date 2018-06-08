@@ -396,3 +396,6 @@ class ControlForm(ControlBase):
                 message=("Element must be dropdown"
                          " (tag={})").format(self.tag))
         self.dropdown.deselect_all()
+
+    def __repr__(self):
+        return super(ControlForm, self).__repr__()
