@@ -3,7 +3,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/python:3.6.1-browsers
+      - image: circleci/python:3.6.1
 
     working_directory: ~/repo
 
@@ -26,9 +26,9 @@ jobs:
           name: run tests
           command: |
             . venv/bin/activate
-            python setup.py test
+            tox -e py36,flake8,docs
 
       - store_artifacts:
-          path: tests/reports
-          destination: tests/reports
+          path: dist
+          destination: dist
           
