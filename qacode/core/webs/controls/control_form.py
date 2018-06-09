@@ -298,6 +298,7 @@ class ControlForm(ControlBase):
             "control_form | reload: reloading control...")
         # load settings again
         config = kwargs.copy()
+        config.update(self.RELOAD_CONFIG)
         # needed for self._load_* functions
         self.load_settings_keys(config, update=True)
         # instance logic
