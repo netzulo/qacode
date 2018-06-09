@@ -342,11 +342,12 @@ class ControlBase(object):
 
     def __repr__(self):
         """Show basic properties for this object"""
-        return ("ControlBase: name={}, "
+        return ("{}: name={}, "
                 "bot.browser={}, bot.mode={} \n"
                 "settings={} \n"
                 "tag={}, is_displayed={}, "
                 "is_enabled={}, is_selected={}").format(
+            self.__class__.__name__,
             self.name,
             self.bot.settings.get('browser'),
             self.bot.settings.get('mode'),
