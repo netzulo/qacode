@@ -208,6 +208,36 @@ class NavBase(object):
         return driver_wait.until(
             EC.presence_of_element_located((locator, selector)))
 
+    def find_elements_wait(self, selector,
+                           locator=By.CSS_SELECTOR, driver_wait=None):
+        """Search elements using WebDriverWait class
+            and ElementConditions presence_of_all_elements_located
+
+        Arguments:
+            selector {str} -- string selector used to locate
+                multiple elements
+
+        Keyword Arguments:
+            locator {By} -- locator strategy used to find
+                WebElement selector (default: {By.CSS_SELECTOR})
+            driver_wait {WebDriverWait} -- driver that supports
+                ExpectedConditions methods (default: {None})
+
+        Raises:
+            CoreException -- if NavBase instanced
+                without driver_wait
+
+        Returns:
+            WebElement -- element through selenium
+                WebDriverWait class
+        """
+        if driver_wait is None and self.driver_wait is None:
+            raise CoreException(message='Nav instanced without driver_wait')
+        if driver_wait is None:
+            driver_wait = self.driver_wait
+        return driver_wait.until(
+            EC.presence_of_all_elements_located((locator, selector)))
+
     def forward(self):
         """Go forward using browser functionality"""
         self.driver.forward()

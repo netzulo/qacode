@@ -53,6 +53,7 @@ class TestControlForm(TestInfoBotUnique):
     @pytest.mark.parametrize("on_instance_search", [True])
     @pytest.mark.parametrize("on_instance_load", [True])
     @pytest.mark.parametrize("auto_reload", [True])
+    @pytest.mark.parametrize("selector_multiple", [False])
     @pytest.mark.parametrize("on_instance_strict", [True, False])
     @pytest.mark.parametrize("strict_rules", [
         [
@@ -61,7 +62,7 @@ class TestControlForm(TestInfoBotUnique):
     ])
     def test_instance_form(self, selector, instance, on_instance_search,
                            on_instance_load, on_instance_strict, strict_rules,
-                           auto_reload):
+                           auto_reload, selector_multiple):
         """Testcase: test_001_instance_selector"""
         control_config = {
             "name": "txt_username_strict",
@@ -71,6 +72,7 @@ class TestControlForm(TestInfoBotUnique):
             "on_instance_search": on_instance_search,
             "on_instance_load": on_instance_load,
             "auto_reload": auto_reload,
+            "selector_multiple": selector_multiple,
             "on_instance_strict": on_instance_strict,
             "strict_rules": strict_rules
         }
@@ -94,6 +96,12 @@ class TestControlForm(TestInfoBotUnique):
             control.auto_reload,
             control_config.get('auto_reload'))
         self.assert_equals(
+            control.selector_multiple,
+            control_config.get('selector_multiple'))
+        self.assert_equals(
+            control.instance,
+            control_config.get('instance'))
+        self.assert_equals(
             control.on_instance_strict,
             control_config.get('on_instance_strict'))
         self.assert_equals(
@@ -110,7 +118,10 @@ class TestControlForm(TestInfoBotUnique):
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize("selector", ["#dropdown"])
     @pytest.mark.parametrize("instance", ["ControlForm"])
-    def test_method_reload_form(self, selector, instance):
+    @pytest.mark.parametrize("auto_reload", [True])
+    @pytest.mark.parametrize("selector_multiple", [False])
+    def test_method_reload_form(self, selector, instance,
+                                auto_reload, selector_multiple):
         """Testcase: test_method_setcssrule"""
         # must be supported
         control_config = {
@@ -118,6 +129,8 @@ class TestControlForm(TestInfoBotUnique):
             "locator": "css selector",
             "selector": selector,
             "instance": instance,
+            "auto_reload": auto_reload,
+            "selector_multiple": selector_multiple,
             "on_instance_search": False,
             "on_instance_load": False,
             "on_instance_strict": False,

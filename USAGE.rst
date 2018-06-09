@@ -60,10 +60,12 @@ ControlBase
 
 It's base control to load web element from ``WebDriver + browser session`` , *this class must be use to inherit new* `ControlAwesome` *classes*
 
-+ Param **name** : allows to set value to ``ControlBase.name`` property, also it's used by pages to set property page with ``control.name`` value
++ Param **selector** (**REQUIRED**): Valid selector for locator selected
++ Param **name** : Allows to set value to ``ControlBase.name`` property, also it's used by pages to set property page with ``control.name`` value
 + Param **locator** : This text it's parsed down selenium class ``selenium.webdriver.common.by.By`` (*default:* ``css selector`` == ``By.CSS_SELECTOR``)
-+ Param **selector** : valid selector for locator selected
-+ Param **instance** : allow to generate your own inherit classes from ``ControlBase`` and instance them  using qacode strategy (*default:* ``ControlBase``)
++ Param **instance** : Allow to generate your own inherit classes from ``ControlBase`` and instance them  using qacode strategy (*default:* ``ControlBase``)
++ Param **auto_reload** : Allow to reload element searching first when need to use some function of control instance and isn't loaded (*default:* ``True``)
++ Param **selector_multiple** : allow to search multiple elements with one selectors, first is loaded down ``control.element`` , and all elements will be added to ``control.elements`` list (*default:* ``False``)
 + Param **on_instance_search** : enable searching element at instance `ControlBase` (*default:* `False`)
 + Param **on_instance_load** : enable loading ``ControlBase`` properties when element it's loaded (*default:* ``False``) , will need enabled if want to access to base properties values obtained from selenium methods at ``BotBase.navigation``
 
@@ -80,29 +82,20 @@ Example of usage
     SETTINGS = settings()
     CONTROLS = [
         {
-            "name": "txt_username",
-            "locator": "css selector",
-            "selector": "#username",
-            "instance": "ControlBase",
-            "on_instance_search": true,
-            "on_instance_load": false
+          "name": "txt_username", "selector": "#username"
         },
         {
-          "name": "txt_password",
-          "locator": "css selector",
-          "selector": "#password",
-          "instance": "ControlBase",
-          "on_instance_search": true,
-          "on_instance_load": false
+          "name": "txt_password", "selector": "#password"
         },
         {
           "name": "btn_submit",
           "locator": "css selector",
           "selector": "button[type='submit']",
           "instance": "ControlBase",
-          "on_instance_search": true,
-          "on_instance_load": false
-        },
+          "on_instance_search": false,
+          "on_instance_load": false,
+          "auto_reload": True,
+        }
     ]
 
     # Open bot now
