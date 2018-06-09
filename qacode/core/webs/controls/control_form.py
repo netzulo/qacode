@@ -398,4 +398,5 @@ class ControlForm(ControlBase):
         self.dropdown.deselect_all()
 
     def __repr__(self):
+        """Show basic properties for this object"""
         return super(ControlForm, self).__repr__()
