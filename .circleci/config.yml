@@ -9,11 +9,6 @@ jobs:
 
     steps:
       - checkout
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "requirements.txt" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
 
       - run:
           name: install dependencies
@@ -21,6 +16,7 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             python setup.py install
+            pip install tox
 
       - run:
           name: run tests
