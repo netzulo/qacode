@@ -1,0 +1,30 @@
+# Python CircleCI 2.0 configuration file
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3.6.1
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - run:
+          name: install dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            python setup.py install
+            pip install tox
+
+      - run:
+          name: run tests
+          command: |
+            . venv/bin/activate
+            tox -e py36,flake8,docs
+
+      - store_artifacts:
+          path: dist
+          destination: dist
+          
