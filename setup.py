@@ -8,7 +8,7 @@ from setuptools import setup, find_packages
 from sys import version_info
 
 
-VERSION = "0.5.3"
+VERSION = "0.5.4"
 CURR_PATH = "{}{}".format(path.abspath(path.dirname(__file__)), '/')
 
 INSTALL_REQUIRES = [
