@@ -45,8 +45,8 @@ jobs:
           name: After Tests
           command: |
             . venv/bin/activate
-            ls -ltra
-            codeclimate-test-reporter --token $CC_TEST_REPORTER_ID --file tests/reports/
+            ls -ltra tests/reports/
+            codeclimate-test-reporter --token $CC_TEST_REPORTER_ID --file .coverage
             ./cc-test-reporter after-build --exit-code $?
 
       - store_artifacts:
