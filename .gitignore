@@ -103,11 +103,9 @@ ENV/
 
 # QACODE ignores
 qacode/configs/settings.json
-tests/reports/report_xunit.xml
-tests/reports/report_html.html
-tests/reports/report_coverage.xml
-tests/reports/report_coverage_html/*
-tests/reports/report_benchmark/benchmarks.*.svg
+tests/reports/*
+tests/reports/coverage/*
+tests/reports/benchmarks/benchmark.*.svg
 # Visual Studio
 .vs/
 # Visual code

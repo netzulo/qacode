@@ -126,7 +126,8 @@ setup(
     tests_require=[
         'pytest-html',
         'pytest-dependency',
-        'pytest-cov',
+        'coverage==4.3.4',
+        'pytest-cov==2.5.0',
         'pytest-benchmark',
         'pytest-benchmark[histogram]'
     ],
