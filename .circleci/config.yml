@@ -48,7 +48,6 @@ jobs:
             . venv/bin/activate
             ls -ltra tests/reports/
             codeclimate-test-reporter --token $CC_TEST_REPORTER_ID --file .coverage
-            ./cc-test-reporter after-build --exit-code $?
 
       - store_artifacts:
           path: dist
