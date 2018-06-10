@@ -2,8 +2,8 @@
 version: 2
 jobs:
   build:
-      environment:
-        CC_TEST_REPORTER_ID: 181a274c2c68483ff80af63a8a87e1f5fab71f37744eab702f25695501b5ca85
+    environment:
+      CC_TEST_REPORTER_ID: 181a274c2c68483ff80af63a8a87e1f5fab71f37744eab702f25695501b5ca85
     docker:
       - image: circleci/python:3.6.1
 
