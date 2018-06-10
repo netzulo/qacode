@@ -124,6 +124,7 @@ setup(
         'tox',
     ],
     tests_require=[
+        'coverage==4.2',
         'pytest-html',
         'pytest-dependency',
         'pytest-cov',
