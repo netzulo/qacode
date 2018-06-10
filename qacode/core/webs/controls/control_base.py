@@ -180,7 +180,7 @@ class ControlBase(object):
     def get_tag(self):
         """Returns tag_name from Webelement"""
         self.bot.log.debug("control | get_tag : obtaining tag...")
-        if not self.element:
+        if not self.element and self.auto_reload:
             self.reload(**self.settings)
         tag_name = self.bot.navigation.ele_tag(self.element)
         self.bot.log.debug(
@@ -198,7 +198,7 @@ class ControlBase(object):
         """
         self.bot.log.debug(
             "control | type_text : text={}".format(text))
-        if not self.element:
+        if not self.element and self.auto_reload:
             self.reload(**self.settings)
         if clear:
             self.clear()
@@ -208,7 +208,7 @@ class ControlBase(object):
     def clear(self):
         """Clear input element text value"""
         self.bot.log.debug("control | clear : clearing text...")
-        if not self.element:
+        if not self.element and self.auto_reload:
             self.reload(**self.settings)
         self.bot.navigation.ele_clear(self.element)
         self.bot.log.debug("control | clear : cleared text!")
@@ -216,7 +216,7 @@ class ControlBase(object):
     def click(self):
         """Click on element"""
         self.bot.log.debug("control | click : clicking element...")
-        if not self.element:
+        if not self.element and self.auto_reload:
             self.reload(**self.settings)
         self.bot.navigation.ele_click(element=self.element)
         self.bot.log.debug("control | click : clicked!")
@@ -236,7 +236,7 @@ class ControlBase(object):
             str -- Return element content text (innerText property)
         """
         self.bot.log.debug("control | get_text : obtaining text...")
-        if not self.element:
+        if not self.element and self.auto_reload:
             self.reload(**self.settings)
         try:
             return self.bot.navigation.ele_text(
@@ -259,7 +259,7 @@ class ControlBase(object):
             dict -- a dict list of {name, value}
         """
         self.bot.log.debug("control | get_attrs : obtaining attrs...")
-        if not self.element:
+        if not self.element and self.auto_reload:
             self.reload(**self.settings)
         attrs = list()
         for attr_name in attr_names:
@@ -283,7 +283,7 @@ class ControlBase(object):
         self.bot.log.debug(
             ("control | get_attr_value : "
              "obtaining value for attr_name='{}'...").format(attr_name))
-        if not self.element:
+        if not self.element and self.auto_reload:
             self.reload(**self.settings)
         try:
             value = self.bot.navigation.ele_attribute(
@@ -305,7 +305,7 @@ class ControlBase(object):
             str -- Value of CSS property searched
         """
         self.bot.log.debug("control | get_css_value : obtaining css_value...")
-        if not self.element:
+        if not self.element and self.auto_reload:
             self.reload(**self.settings)
         css_value = self.bot.navigation.ele_css(self.element, prop_name)
         self.bot.log.debug(
@@ -328,8 +328,8 @@ class ControlBase(object):
             ("control | set_css_value : setting new CSS rule, "
              "prop_name={}, prop_value={}").format(
                 prop_name, prop_value))
-        if not self.element:
-            self.reload(**self.settings)
+        if not self.element and self.auto_reload:
+            self.reload(**self.s)
         self.bot.navigation.set_css_rule(
             self.selector, prop_name, prop_value,
             css_important=css_important)
@@ -344,7 +344,10 @@ class ControlBase(object):
         self.bot.log.debug(
             "control | reload: reloading control...")
         # load settings again
-        config = kwargs.copy()
+        if kwargs:
+            config = kwargs.copy()
+        else:
+            config = self.settings.copy()
         config.update(self.RELOAD_CONFIG)
         # needed for self._load_* functions
         self.load_settings_keys(config, update=True)

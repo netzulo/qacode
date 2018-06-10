@@ -298,7 +298,10 @@ class ControlForm(ControlBase):
         self.bot.log.debug(
             "control_form | reload: reloading control...")
         # load settings again
-        config = kwargs.copy()
+        if kwargs:
+            config = kwargs.copy()
+        else:
+            config = self.settings.copy()
         config.update(self.RELOAD_CONFIG)
         # needed for self._load_* functions
         self.load_settings_keys(config, update=True)
@@ -332,6 +335,8 @@ class ControlForm(ControlBase):
             ControlException -- if tag is not 'select'
             ControlException -- if all flags are 'True'
         """
+        if not self.element and self.auto_reload:
+            self.reload(**self.RELOAD_CONFIG)
         if self.dropdown is None:
             raise ControlException(
                 message=("Element must be dropdown"
@@ -369,6 +374,8 @@ class ControlForm(ControlBase):
             ControlException -- if tag is not 'select'
             ControlException -- if all flags are 'True'
         """
+        if not self.element and self.auto_reload:
+            self.reload(**self.settings)
         if self.dropdown is None:
             raise ControlException(
                 message=("Element must be dropdown"
@@ -393,6 +400,8 @@ class ControlForm(ControlBase):
         Raises:
             ControlException -- if tag is not 'select'
         """
+        if not self.element and self.auto_reload:
+            self.reload(**self.settings)
         if self.dropdown is None:
             raise ControlException(
                 message=("Element must be dropdown"
