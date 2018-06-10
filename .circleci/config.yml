@@ -44,6 +44,7 @@ jobs:
       - run:
           name: After Tests
           command: |
+            . venv/bin/activate
             codeclimate-test-reporter --token $CC_TEST_REPORTER_ID --file ./tests/reports/report_coverage.xml
             ./cc-test-reporter after-build --exit-code $?
 
