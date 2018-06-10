@@ -9,6 +9,7 @@
 
 from qacode.core.exceptions.core_exception import CoreException
 from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions as EC
@@ -246,7 +247,7 @@ class NavBase(object):
         """Go reload page using browser functionality"""
         self.driver.refresh()
 
-    def get_log(self, log_name='browser'):
+    def get_log(self, log_name='browser', raises=False):
         """Get selenium log by name, this depends of
             driver mode and browser what it's using each time
 
@@ -260,16 +261,25 @@ class NavBase(object):
         Returns:
             list() -- list of messages typed on a log_name
         """
-        if log_name == 'browser':
-            return self.driver.get_log(log_name)
-        if log_name == 'driver':
-            return self.driver.get_log(log_name)
-        if log_name == 'client':
-            return self.driver.get_log(log_name)
-        if log_name == 'server':
-            return self.driver.get_log(log_name)
-        raise CoreException(
-            'selenium log_name just can be: [browser,driver,client,server]')
+        try:
+            if log_name == 'browser':
+                return self.driver.get_log(log_name)
+            if log_name == 'driver':
+                return self.driver.get_log(log_name)
+            if log_name == 'client':
+                return self.driver.get_log(log_name)
+            if log_name == 'server':
+                return self.driver.get_log(log_name)
+        except WebDriverException as err:
+            msg = "nav | get_log: log_name={}, err={}"
+            self.log.warning(msg.format(log_name, err.msg))
+            # Selenium said, not all drivers will be handled
+            # by them with all options values
+            if raises:
+                raise CoreException(
+                    ("selenium log_name just can be:"
+                     " [browser,driver,client,server]"))
+            return []
 
     def get_screenshot_as_base64(self):
         """Gets the screenshot of the current window as a base64 encoded string
