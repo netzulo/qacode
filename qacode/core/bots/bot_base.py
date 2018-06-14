@@ -49,6 +49,8 @@ class BotBase(object):
     curr_caps = None
     curr_driver = None
     curr_driver_path = None
+    # Browser options
+    curr_options = None
     # Wait for expected conditions
     curr_driver_wait = None
     # Performs actions on elements
@@ -103,10 +105,18 @@ class BotBase(object):
                 raise CoreException(
                     message=("Key for config isn't "
                              "valid for key='{}'").format(setting))
+        # Configure browser settings
+        browser_name = self.settings.get('browser')
+        headless_enabled = self.settings.get('options').get('headless')
+        self.curr_caps = self.get_capabilities(
+            browser_name=browser_name)
+        self.curr_options = self.get_options(
+            browser_name=browser_name,
+            headless_enabled=headless_enabled)
         if self.settings.get('mode') == 'local':
-            self.mode_local()
+            self.mode_local(browser_name=browser_name)
         elif self.settings.get('mode') == 'remote':
-            self.mode_remote()
+            self.mode_remote(browser_name=browser_name)
         else:
             raise CoreException(
                 message=("Bad mode selected, mode={}"
@@ -121,6 +131,42 @@ class BotBase(object):
             driver_actions=self.curr_driver_actions,
             driver_touch=self.curr_driver_touch,
         )
+
+    def get_capabilities(self, browser_name='chrome'):
+        browser_name = self.settings.get('browser')
+        capabilities = None
+        if browser_name == 'chrome':
+            capabilities = DesiredCapabilities.CHROME.copy()
+        elif browser_name == 'firefox':
+            capabilities = DesiredCapabilities.FIREFOX.copy()
+        elif browser_name == 'iexplorer':
+            capabilities = DesiredCapabilities.INTERNETEXPLORER.copy()
+        elif browser_name == 'edge':
+            capabilities = DesiredCapabilities.EDGE.copy()
+        elif browser_name == 'opera':
+            capabilities = DesiredCapabilities.OPERA.copy()
+        else:
+            raise CoreException(
+                message='Bad browser selected at load options')
+        return capabilities
+
+    def get_options(self, browser_name='chrome', headless_enabled=False):
+        options = None
+        if browser_name == 'firefox':
+            options = FirefoxOptions()
+        elif browser_name == 'chrome':
+            options = ChromeOptions()
+        elif browser_name == 'iexplorer':
+            raise NotImplementedError("Open an issue at github")
+        elif browser_name == 'edge':
+            raise NotImplementedError("Open an issue at github")
+        elif browser_name == 'opera':
+            options = OperaOptions()
+        else:
+            raise CoreException(message='Bad browser selected')
+        if headless_enabled:
+            options.add_argument("--headless")
+        return options
 
     def driver_name_filter(self, driver_name=None):
         """Filter names of driver to search selected on config list
@@ -157,66 +203,45 @@ class BotBase(object):
             message='Driver name not found {}'.format(
                 driver_name_format))
 
-    def mode_local(self):
+    def mode_local(self, browser_name='chrome'):
         """Open new brower on local mode
 
         Raises:
             CoreException -- driver_name on config JSON
                 file is not valid value
         """
-        browser_name = self.settings.get('browser')
         driver_name = self.driver_name_filter(driver_name=browser_name)
+        # TODO: Need it ? maybe a test for this ?
         self.curr_driver_path = os.path.abspath("{}/{}".format(
             self.settings.get('drivers_path'),
             driver_name))
-        # add to path before to open
+         
         sys.path.append(self.curr_driver_path)
         self.log.debug('Starting browser with mode : LOCAL ...')
         if browser_name == "chrome":
-            self.curr_caps = DesiredCapabilities.CHROME.copy()
-            options = None
-            if self.settings.get('options').get('headless'):
-                options = ChromeOptions()
-                options.add_argument("--headless")
             self.curr_driver = WebDriver.Chrome(
                 executable_path=self.curr_driver_path,
                 desired_capabilities=self.curr_caps,
-                chrome_options=options
+                chrome_options=self.curr_options
             )
         elif browser_name == "firefox":
-            self.curr_caps = DesiredCapabilities.FIREFOX.copy()
-            options = None
-            if self.settings.get('options').get('headless'):
-                options = FirefoxOptions()
-                options.add_argument("--headless")
             self.curr_driver = WebDriver.Firefox(
                 executable_path=self.curr_driver_path,
                 capabilities=self.curr_caps,
-                firefox_options=options
-            )
+                firefox_options=self.curr_options)
         elif browser_name == "iexplorer":
-            self.curr_caps = DesiredCapabilities.INTERNETEXPLORER.copy()
             self.curr_driver = WebDriver.Ie(
                 executable_path=self.curr_driver_path,
-                capabilities=self.curr_caps
-            )
+                capabilities=self.curr_caps)
         elif browser_name == "edge":
-            self.curr_caps = DesiredCapabilities.EDGE.copy()
-            options = None
             self.curr_driver = WebDriver.Edge(
                 executable_path=self.curr_driver_path,
-                capabilities=self.curr_caps
-            )
+                capabilities=self.curr_caps)
         elif browser_name == "opera":
-            self.curr_caps = DesiredCapabilities.OPERA.copy()
-            if self.settings.get('options').get('headless'):
-                options = OperaOptions()
-                options.add_argument("--headless")
             self.curr_driver = WebDriver.Opera(
                 executable_path=self.curr_driver_path,
                 desired_capabilities=self.curr_caps,
-                options=options
-            )
+                options=self.curr_options)
         else:
             raise CoreException(
                 message=("config file error, SECTION=bot, KEY=browser isn't "
@@ -235,36 +260,10 @@ class BotBase(object):
         url_hub = self.settings.get('url_hub')
         options = None
         self.log.debug('Starting browser with mode : REMOTE ...')
-        if browser_name == 'firefox':
-            self.curr_caps = DesiredCapabilities.FIREFOX.copy()
-            if self.settings.get('options').get('headless'):
-                options = FirefoxOptions()
-                options.add_argument("--headless")
-
-        elif browser_name == 'chrome':
-            self.curr_caps = DesiredCapabilities.CHROME.copy()
-            if self.settings.get('options').get('headless'):
-                options = ChromeOptions()
-                options.add_argument("--headless")
-
-        elif browser_name == 'iexplorer':
-            self.curr_caps = DesiredCapabilities.INTERNETEXPLORER.copy()
-
-        elif browser_name == 'edge':
-            self.curr_caps = DesiredCapabilities.EDGE.copy()
-
-        elif browser_name == 'opera':
-            self.curr_caps = DesiredCapabilities.OPERA.copy()
-            if self.settings.get('options').get('headless'):
-                options = OperaOptions()
-                options.add_argument("--headless")
-        else:
-            raise CoreException(message='Bad browser selected')
-
         self.curr_driver = RemoteWebDriver(
             command_executor=url_hub,
             desired_capabilities=self.curr_caps,
-            options=options
+            options=self.curr_options
         )
         self.log.info('Started browser with mode : REMOTE OK')
 
