@@ -113,6 +113,7 @@ class BotBase(object):
         self.curr_options = self.get_options(
             browser_name=browser_name,
             headless_enabled=headless_enabled)
+        # Open browser based on mode from settings.json
         if self.settings.get('mode') == 'local':
             self.mode_local(browser_name=browser_name)
         elif self.settings.get('mode') == 'remote':
@@ -121,6 +122,7 @@ class BotBase(object):
             raise CoreException(
                 message=("Bad mode selected, mode={}"
                          "").format(self.settings.get('mode')))
+        # Instance all needed for BotBase instance
         self.curr_driver_wait = WebDriverWait(self.curr_driver, 10)
         self.curr_driver_actions = ActionChains(self.curr_driver)
         self.curr_driver_touch = TouchActions(self.curr_driver)
@@ -152,19 +154,22 @@ class BotBase(object):
 
     def get_options(self, browser_name='chrome', headless_enabled=False):
         options = None
+        msg_not_conf = ("get_options | : doesn't have configurations"
+                        " for browser='{}'".format(browser_name))
+        headless_browsers = ('firefox', 'chrome', 'opera')
         if browser_name == 'firefox':
             options = FirefoxOptions()
         elif browser_name == 'chrome':
             options = ChromeOptions()
         elif browser_name == 'iexplorer':
-            raise NotImplementedError("Open an issue at github")
+            self.log.debug(msg_not_conf)
         elif browser_name == 'edge':
-            raise NotImplementedError("Open an issue at github")
+            self.log.debug(msg_not_conf)
         elif browser_name == 'opera':
             options = OperaOptions()
         else:
             raise CoreException(message='Bad browser selected')
-        if headless_enabled:
+        if headless_enabled and browser_name in headless_browsers:
             options.add_argument("--headless")
         return options
 
@@ -250,13 +255,12 @@ class BotBase(object):
             )
         self.log.info('Started browser with mode : REMOTE OK')
 
-    def mode_remote(self):
+    def mode_remote(self, browser_name='chrome'):
         """Open new brower on remote mode
 
         Raises:
             CoreException -- browser name is not in valid values list
         """
-        browser_name = self.settings.get('browser')
         url_hub = self.settings.get('url_hub')
         options = None
         self.log.debug('Starting browser with mode : REMOTE ...')
