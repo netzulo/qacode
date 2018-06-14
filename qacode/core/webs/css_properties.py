@@ -2,10 +2,10 @@
 """TODO: doc module"""
 
 
-from enum import Enum
+from qacode.core.enums.enum_base import EnumBase
 
 
-class CssProperty(Enum):
+class CssProperty(EnumBase):
     """TODO: doc class"""
 
     # background properties
@@ -183,13 +183,3 @@ class CssProperty(Enum):
     ALIGN = 'align'
     ALIGN_ITEMS = 'align-items'
     ALIGN_CONTENT = 'align-content'
-
-    @classmethod
-    def get_css_property(cls):
-        """Return enum values"""
-        return [item.value for item in CssProperty]
-
-    @classmethod
-    def has_css_property(cls, value):
-        """Returns True if enum have value"""
-        return any(value == item.value for item in cls)
