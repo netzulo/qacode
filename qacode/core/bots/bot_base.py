@@ -138,6 +138,19 @@ class BotBase(object):
             driver_touch=self.curr_driver_touch)
 
     def get_capabilities(self, browser_name='chrome'):
+        """Instance DesiredCapabilities class from selenium and return it
+
+        Keyword Arguments:
+            browser_name {str} -- name of a valid browser name for selenium
+                (default: {'chrome'})
+
+        Raises:
+            CoreException -- if name of browser isn't supported
+
+        Returns:
+            [DesiredCapabilities] -- DesiredCapabilities inherit
+                class instanced for one browser
+        """
         capabilities = None
         if browser_name == 'chrome':
             capabilities = DesiredCapabilities.CHROME.copy()
@@ -156,6 +169,21 @@ class BotBase(object):
         return capabilities
 
     def get_options(self, browser_name='chrome', headless_enabled=False):
+        """Instance Options class from selenium and return it
+
+        Keyword Arguments:
+            browser_name {str} -- name of a valid browser name for selenium
+                (default: {'chrome'})
+            headless_enabled {bool} -- allow to configure --headless param
+                (default: {False})
+
+        Raises:
+            CoreException -- if name of browser isn't supported
+
+        Returns:
+            [Options] -- Options inherit
+                class instanced for one browser
+        """
         options = None
         msg_not_conf = ("get_options | : doesn't have configurations"
                         " for browser='{}'".format(browser_name))
@@ -226,7 +254,6 @@ class BotBase(object):
         self.curr_driver_path = os.path.abspath("{}/{}".format(
             self.settings.get('drivers_path'),
             driver_name))
-        
         sys.path.append(self.curr_driver_path)
         self.log.debug('Starting browser with mode : LOCAL ...')
         if browser_name == "chrome":
@@ -266,7 +293,6 @@ class BotBase(object):
             CoreException -- browser name is not in valid values list
         """
         url_hub = self.settings.get('url_hub')
-        options = None
         self.log.debug('Starting browser with mode : REMOTE ...')
         self.curr_driver = RemoteWebDriver(
             command_executor=url_hub,
