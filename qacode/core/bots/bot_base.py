@@ -86,8 +86,7 @@ class BotBase(object):
         self.logger_manager = LoggerManager(
             log_path=self.settings.get('log_output_file'),
             log_name=self.settings.get('log_name'),
-            log_level=self.settings.get('log_level')
-        )
+            log_level=self.settings.get('log_level'))
         self.log = self.logger_manager.logger
         required_keys = [
             'mode',
@@ -102,12 +101,16 @@ class BotBase(object):
         ]
         for setting in self.settings.keys():
             if setting not in required_keys:
+                msg_setting = ("Key for config isn't valid for"
+                               " key='{}'").format(setting)
                 raise CoreException(
-                    message=("Key for config isn't "
-                             "valid for key='{}'").format(setting))
+                    message=msg_setting,
+                    log=self.log)
         # Configure browser settings
         browser_name = self.settings.get('browser')
-        headless_enabled = self.settings.get('options').get('headless')
+        headless_enabled = self.settings.get(
+            'options').get('headless')
+        # Instance selenium settings classes
         self.curr_caps = self.get_capabilities(
             browser_name=browser_name)
         self.curr_options = self.get_options(
@@ -121,7 +124,8 @@ class BotBase(object):
         else:
             raise CoreException(
                 message=("Bad mode selected, mode={}"
-                         "").format(self.settings.get('mode')))
+                         "").format(self.settings.get('mode')),
+                log=self.log)
         # Instance all needed for BotBase instance
         self.curr_driver_wait = WebDriverWait(self.curr_driver, 10)
         self.curr_driver_actions = ActionChains(self.curr_driver)
@@ -131,11 +135,9 @@ class BotBase(object):
             self.log,
             driver_wait=self.curr_driver_wait,
             driver_actions=self.curr_driver_actions,
-            driver_touch=self.curr_driver_touch,
-        )
+            driver_touch=self.curr_driver_touch)
 
     def get_capabilities(self, browser_name='chrome'):
-        browser_name = self.settings.get('browser')
         capabilities = None
         if browser_name == 'chrome':
             capabilities = DesiredCapabilities.CHROME.copy()
@@ -149,7 +151,8 @@ class BotBase(object):
             capabilities = DesiredCapabilities.OPERA.copy()
         else:
             raise CoreException(
-                message='Bad browser selected at load options')
+                message='Bad browser selected at load options',
+                log=self.log)
         return capabilities
 
     def get_options(self, browser_name='chrome', headless_enabled=False):
@@ -168,7 +171,9 @@ class BotBase(object):
         elif browser_name == 'opera':
             options = OperaOptions()
         else:
-            raise CoreException(message='Bad browser selected')
+            raise CoreException(
+                message='Bad browser selected',
+                log=self.log)
         if headless_enabled and browser_name in headless_browsers:
             options.add_argument("--headless")
         return options
@@ -206,7 +211,8 @@ class BotBase(object):
                 return driver_name_format
         raise CoreException(
             message='Driver name not found {}'.format(
-                driver_name_format))
+                driver_name_format),
+            log=self.log)
 
     def mode_local(self, browser_name='chrome'):
         """Open new brower on local mode
@@ -220,15 +226,14 @@ class BotBase(object):
         self.curr_driver_path = os.path.abspath("{}/{}".format(
             self.settings.get('drivers_path'),
             driver_name))
-         
+        
         sys.path.append(self.curr_driver_path)
         self.log.debug('Starting browser with mode : LOCAL ...')
         if browser_name == "chrome":
             self.curr_driver = WebDriver.Chrome(
                 executable_path=self.curr_driver_path,
                 desired_capabilities=self.curr_caps,
-                chrome_options=self.curr_options
-            )
+                chrome_options=self.curr_options)
         elif browser_name == "firefox":
             self.curr_driver = WebDriver.Firefox(
                 executable_path=self.curr_driver_path,
@@ -251,8 +256,7 @@ class BotBase(object):
             raise CoreException(
                 message=("config file error, SECTION=bot, KEY=browser isn't "
                          "valid value: {}".format(browser_name)),
-                log=self.log
-            )
+                log=self.log)
         self.log.info('Started browser with mode : REMOTE OK')
 
     def mode_remote(self, browser_name='chrome'):
