@@ -5,10 +5,10 @@
 import pytest
 from qacode.core.bots.modules.nav_base import NavBase
 from qacode.core.testing.test_info import TestInfoBotUnique
-from qacode.core.utils import settings
+from qautils.files import settings
 
 
-SETTINGS = settings()
+SETTINGS = settings(file_path="qacode/configs/")
 SKIP_REMOTES = SETTINGS['tests']['skip']['drivers_remote']
 SKIP_REMOTES_MSG = 'drivers_remote DISABLED by config file'
 
@@ -23,12 +23,14 @@ class TestNavBase(TestInfoBotUnique):
     def setup_class(cls, **kwargs):
         """TODO: doc method"""
         super(TestNavBase, cls).setup_class(
-            config=settings(),
+            config=settings(file_path="qacode/configs/"),
             skip_force=SKIP_REMOTES)
 
     def setup_method(self, test_method, close=True):
         """Configure self.attribute"""
-        super(TestNavBase, self).setup_method(test_method, config=settings())
+        super(TestNavBase, self).setup_method(
+            test_method,
+            config=settings(file_path="qacode/configs/"))
         self.add_property('app', self.settings_app('nav_tests'))
         self.add_property('page_home', self.settings_page('nav_tests_home'))
 

@@ -6,10 +6,10 @@ import logging
 import pytest
 from qacode.core.bots.bot_base import BotBase
 from qacode.core.testing.test_info import TestInfoBotUnique
-from qacode.core.utils import settings
+from qautils.files import settings
 
 
-SETTINGS = settings()
+SETTINGS = settings(file_path="qacode/configs/")
 SKIP_BOT_UNIQUE = SETTINGS['tests']['skip']['bot_unique']
 SKIP_BOT_UNIQUE_MSG = 'bot_unique DISABLED by config file'
 
@@ -21,7 +21,7 @@ class TestTestInfoBotUnique(TestInfoBotUnique):
     def setup_class(cls, **kwargs):
         """TODO: doc method"""
         super(TestTestInfoBotUnique, cls).setup_class(
-            config=settings(),
+            config=settings(file_path="qacode/configs/"),
             skip_force=SKIP_BOT_UNIQUE)
 
     @pytest.mark.parametrize('run_time', [1, 2])

@@ -6,8 +6,7 @@ from qacode.core import bots
 from qacode.core import exceptions
 from qacode.core import loggers
 from qacode.core import testing
-from qacode.core import utils
 from qacode.core import webs
 
 
-__all__ = ['bots', 'exceptions', 'loggers', 'testing', 'utils', 'webs']
+__all__ = ['bots', 'exceptions', 'loggers', 'testing', 'webs']

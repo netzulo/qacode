@@ -5,12 +5,12 @@
 import pytest
 from qacode.core.exceptions.control_exception import ControlException
 from qacode.core.testing.test_info import TestInfoBotUnique
-from qacode.core.utils import settings
 from qacode.core.webs.controls.control_base import ControlBase
+from qautils.files import settings
 from selenium.webdriver.remote.webelement import WebElement
 
 
-SETTINGS = settings()
+SETTINGS = settings(file_path="qacode/configs/")
 SKIP_CONTROLS = SETTINGS['tests']['skip']['web_controls']
 SKIP_CONTROLS_MSG = 'web_controls DISABLED by config file'
 
@@ -25,13 +25,13 @@ class TestControlBase(TestInfoBotUnique):
     def setup_class(cls, **kwargs):
         """TODO: doc method"""
         super(TestControlBase, cls).setup_class(
-            config=settings(),
+            config=settings(file_path="qacode/configs/"),
             skip_force=SKIP_CONTROLS)
 
     def setup_method(self, test_method):
         """Configure self.attribute"""
         super(TestControlBase, self).setup_method(
-            test_method, config=settings())
+            test_method, config=settings(file_path="qacode/configs/"))
         self.add_property(
             'app', value=self.settings_app('pages_tests'))
         self.add_property(
