@@ -30,6 +30,7 @@ matrix:
 
 before_install:
 - pip freeze
+- pip install qautils
 install:
 - pip install tox
 script:

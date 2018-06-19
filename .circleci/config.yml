@@ -23,7 +23,7 @@ jobs:
             pip install codeclimate-test-reporter
             # project dependencies
             pip install tox
-            pip install coverage==4.2
+            pip install qautils
 
       - run:
           name: Install project
