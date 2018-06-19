@@ -57,7 +57,7 @@ install:
   - "pip install qautils"
 
 test_script:
- - "tox -e %TOXENV%,flake8,docs"
+ - "tox -e %TOXENV%,flake8"
 
 after_test:
   - "python setup.py sdist"
