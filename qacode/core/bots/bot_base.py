@@ -62,6 +62,7 @@ class BotBase(object):
     log = None
     IS_64BITS = sys.maxsize > 2**32
     IS_WIN = os.name == 'nt'
+    BROWSERS_WITHOUT_OPTIONS = ('iexplorer', 'edge')
 
     def __init__(self, **kwargs):
         """Create new Bot browser based on options object what can be
@@ -152,17 +153,15 @@ class BotBase(object):
                 class instanced for one browser
         """
         capabilities = None
-        if browser_name == 'chrome':
-            capabilities = DesiredCapabilities.CHROME.copy()
-        elif browser_name == 'firefox':
-            capabilities = DesiredCapabilities.FIREFOX.copy()
-        elif browser_name == 'iexplorer':
-            capabilities = DesiredCapabilities.INTERNETEXPLORER.copy()
-        elif browser_name == 'edge':
-            capabilities = DesiredCapabilities.EDGE.copy()
-        elif browser_name == 'opera':
-            capabilities = DesiredCapabilities.OPERA.copy()
-        else:
+        try:
+            capabilities = {
+                "chrome": DesiredCapabilities.CHROME.copy(),
+                "firefox": DesiredCapabilities.FIREFOX.copy(),
+                "iexplorer": DesiredCapabilities.INTERNETEXPLORER.copy(),
+                "edge": DesiredCapabilities.EDGE.copy(),
+                "opera": DesiredCapabilities.OPERA.copy(),
+            }[browser_name]
+        except KeyError:
             raise CoreException(
                 message='Bad browser selected at load options',
                 log=self.log)
@@ -187,23 +186,21 @@ class BotBase(object):
         options = None
         msg_not_conf = ("get_options | : doesn't have configurations"
                         " for browser='{}'".format(browser_name))
-        headless_browsers = ('firefox', 'chrome', 'opera')
-        if browser_name == 'firefox':
-            options = FirefoxOptions()
-        elif browser_name == 'chrome':
-            options = ChromeOptions()
-        elif browser_name == 'iexplorer':
-            self.log.debug(msg_not_conf)
-        elif browser_name == 'edge':
-            self.log.debug(msg_not_conf)
-        elif browser_name == 'opera':
-            options = OperaOptions()
-        else:
-            raise CoreException(
-                message='Bad browser selected',
-                log=self.log)
-        if headless_enabled and browser_name in headless_browsers:
-            options.add_argument("--headless")
+        try:
+            options = {
+                "chrome": ChromeOptions(),
+                "firefox": FirefoxOptions(),
+                "opera": OperaOptions(),
+            }[browser_name]
+            if headless_enabled:
+                options.add_argument("--headless")
+        except KeyError:
+            if browser_name in self.BROWSERS_WITHOUT_OPTIONS:
+                self.log.debug(msg_not_conf)
+            else:
+                raise CoreException(
+                    message="Bad browser selected",
+                    log=self.log)
         return options
 
     def driver_name_filter(self, driver_name=None):
@@ -242,6 +239,59 @@ class BotBase(object):
                 driver_name_format),
             log=self.log)
 
+    def get_driver_chrome(self, driver_path=None, capabilities=None, options=None):
+        if driver_path is None:
+            driver_path = self.curr_driver_path
+        if capabilities is None:
+            capabilities = self.curr_caps
+        if options is None:
+            options = self.curr_options
+        return WebDriver.Chrome(
+            executable_path=driver_path,
+            desired_capabilities=capabilities,
+            chrome_options=options)
+
+    def get_driver_firefox(self, driver_path=None, capabilities=None, options=None):
+        if driver_path is None:
+            driver_path = self.curr_driver_path
+        if capabilities is None:
+            capabilities = self.curr_caps
+        if options is None:
+            options = self.curr_options
+        return WebDriver.Firefox(
+            executable_path=driver_path,
+            capabilities=capabilities,
+            firefox_options=options)
+    
+    def get_driver_iexplorer(self, driver_path=None, capabilities=None):
+        if driver_path is None:
+            driver_path = self.curr_driver_path
+        if capabilities is None:
+            capabilities = self.curr_caps
+        return WebDriver.Ie(
+            executable_path=driver_path,
+            capabilities=capabilities)
+    
+    def get_driver_edge(self, driver_path=None, capabilities=None):
+        if driver_path is None:
+            driver_path = self.curr_driver_path
+        if capabilities is None:
+            capabilities = self.curr_caps
+        return WebDriver.Edge(
+            executable_path=driver_path,
+            capabilities=capabilities)
+    
+    def get_driver_opera(self, driver_path=None, capabilities=None, options=None):
+        if driver_path is None:
+            driver_path = self.curr_driver_path
+        if capabilities is None:
+            capabilities = self.curr_caps
+        if options is None:
+            options = self.curr_options
+        return WebDriver.Opera(
+            executable_path=driver_path,
+            capabilities=capabilities)
+
     def mode_local(self, browser_name='chrome'):
         """Open new brower on local mode
 
@@ -256,30 +306,15 @@ class BotBase(object):
             driver_name))
         sys.path.append(self.curr_driver_path)
         self.log.debug('Starting browser with mode : LOCAL ...')
-        if browser_name == "chrome":
-            self.curr_driver = WebDriver.Chrome(
-                executable_path=self.curr_driver_path,
-                desired_capabilities=self.curr_caps,
-                chrome_options=self.curr_options)
-        elif browser_name == "firefox":
-            self.curr_driver = WebDriver.Firefox(
-                executable_path=self.curr_driver_path,
-                capabilities=self.curr_caps,
-                firefox_options=self.curr_options)
-        elif browser_name == "iexplorer":
-            self.curr_driver = WebDriver.Ie(
-                executable_path=self.curr_driver_path,
-                capabilities=self.curr_caps)
-        elif browser_name == "edge":
-            self.curr_driver = WebDriver.Edge(
-                executable_path=self.curr_driver_path,
-                capabilities=self.curr_caps)
-        elif browser_name == "opera":
-            self.curr_driver = WebDriver.Opera(
-                executable_path=self.curr_driver_path,
-                desired_capabilities=self.curr_caps,
-                options=self.curr_options)
-        else:
+        try:
+            curr_driver = {
+                "chrome": self.get_driver_chrome(),
+                "firefox": self.get_driver_firefox(),
+                "iexplorer": self.get_driver_iexplorer(),
+                "edge": self.get_driver_edge(),
+                "opera": self.get_driver_opera(),
+            }[browser_name]
+        except KeyError:
             raise CoreException(
                 message=("config file error, SECTION=bot, KEY=browser isn't "
                          "valid value: {}".format(browser_name)),
