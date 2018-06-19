@@ -2,10 +2,10 @@
 """TODO: doc module"""
 
 
-from enum import Enum
+from qacode.core.enums.enum_base import EnumBase
 
 
-class HtmlTag(Enum):
+class HtmlTag(EnumBase):
     """Requirements: #35, #70"""
 
     TAG_DOCTYPE = '!DOCTYPE'
@@ -128,13 +128,3 @@ class HtmlTag(Enum):
     TAG_EMBED = 'embed'
     TAG_OBJECT = 'object'
     TAG_PARAM = 'param'
-
-    @classmethod
-    def get_tags(cls):
-        """Return enum values"""
-        return [item.value for item in HtmlTag]
-
-    @classmethod
-    def has_tag(cls, value):
-        """Returns True if enum have value"""
-        return any(value == item.value for item in cls)

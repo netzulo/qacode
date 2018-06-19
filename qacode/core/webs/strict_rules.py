@@ -2,7 +2,7 @@
 """TODO: doc module"""
 
 
-from enum import Enum
+from qacode.core.enums.enum_base import EnumBase
 from qacode.core.exceptions.core_exception import CoreException
 from qacode.core.webs.css_properties import CssProperty
 from qacode.core.webs.html_attrs import HtmlAttr
@@ -44,13 +44,13 @@ class StrictRule(object):
         self.severity = severity
 
         if strict_type == StrictType.TAG:
-            if HtmlTag.has_tag(self.name):
+            if HtmlTag.has_property(self.name):
                 self.enum_type = HtmlTag(self.name)
         elif strict_type == StrictType.HTML_ATTR:
-            if HtmlAttr.has_attr(self.name):
+            if HtmlAttr.has_property(self.name):
                 self.enum_type = HtmlAttr(self.name)
         elif strict_type == StrictType.CSS_PROP:
-            if CssProperty.has_css_property(self.name):
+            if CssProperty.has_property(self.name):
                 self.enum_type = CssProperty(self.name)
         elif strict_type == StrictType.JS_EVENT:
             raise NotImplementedError("Open an issue on github if raise here")
@@ -65,7 +65,7 @@ class StrictRule(object):
                 message="bad param 'strict_type', invalid value")
 
 
-class StrictType(Enum):
+class StrictType(EnumBase):
     """Just message type enum for warning and errors on control form class
         or inherits
     """
@@ -78,30 +78,10 @@ class StrictType(Enum):
     USABILITY = 'usability'
     SEO = 'seo'
 
-    @classmethod
-    def get_strict_types(cls):
-        """Return enum values"""
-        return [item.value for item in StrictType]
 
-    @classmethod
-    def has_strict_type(cls, value):
-        """Returns True if enum have value"""
-        return any(value == item.value for item in cls)
-
-
-class StrictSeverity(Enum):
+class StrictSeverity(EnumBase):
     """Integer type enum to indicates severity at apply StrictRule"""
 
     LOW = "low"
     MEDIUM = "medium"
     HIGHT = "hight"
-
-    @classmethod
-    def get_attr(cls):
-        """Return enum values"""
-        return [item.value for item in StrictSeverity]
-
-    @classmethod
-    def has_attr(cls, value):
-        """Returns True if enum have value"""
-        return any(value == item.value for item in cls)
