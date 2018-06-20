@@ -4,10 +4,10 @@
 
 import pytest
 from qacode.core.testing.test_info import TestInfoBase
-from qacode.core.utils import settings
+from qautils.files import settings
 
 
-SETTINGS = settings()
+SETTINGS = settings(file_path="qacode/configs/")
 
 
 class TestTlBase(TestInfoBase):
@@ -16,7 +16,7 @@ class TestTlBase(TestInfoBase):
     def setup_method(self, test_method):
         """Configure self.attribute"""
         super(TestTlBase, self).setup_method(
-            test_method, config=settings())
+            test_method, config=settings(file_path="qacode/configs/"))
 
     @pytest.mark.skipIf(True, "Functionality it's not working yet")
     def test_001_instance(self):

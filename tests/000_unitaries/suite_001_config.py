@@ -4,10 +4,10 @@
 
 import pytest
 from qacode.core.testing.test_info import TestInfoBase
-from qacode.core.utils import settings
+from qautils.files import settings
 
 
-SETTINGS = settings()
+SETTINGS = settings(file_path="qacode/configs/")
 MSG_OBSOLETE = "Test obsolete, need new tests for key tests.functionals.pages"
 SKIP_CONFIG = SETTINGS['tests']['skip']['test_configs']
 SKIP_CONFIG_MSG = 'test_configs DISABLED by config file'
@@ -18,7 +18,9 @@ class TestConfig(TestInfoBase):
 
     def setup_method(self, test_method):
         """TODO: doc method"""
-        super(TestConfig, self).setup_method(test_method, config=settings())
+        super(TestConfig, self).setup_method(
+            test_method,
+            config=settings(file_path="qacode/configs/"))
 
     # Error Messages
     ERR_KEY_NOT_FOUND = "Required key '{}', can't be None"

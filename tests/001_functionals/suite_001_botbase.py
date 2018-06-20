@@ -6,10 +6,10 @@ import pytest
 from qacode.core.bots.bot_base import BotBase
 from qacode.core.loggers.logger_manager import LoggerManager
 from qacode.core.testing.test_info import TestInfoBase
-from qacode.core.utils import settings
+from qautils.files import settings
 
 
-SETTINGS = settings()
+SETTINGS = settings(file_path="qacode/configs/")
 SKIP_LOCALS = SETTINGS['tests']['skip']['drivers_local']
 SKIP_LOCALS_MSG = 'drivers_local DISABLED by config file'
 SKIP_REMOTES = SETTINGS['tests']['skip']['drivers_remote']
@@ -25,7 +25,7 @@ class TestBotBase(TestInfoBase):
     def setup_method(self, test_method):
         """TODO: doc method"""
         super(TestBotBase, self).setup_method(
-            test_method, config=settings())
+            test_method, config=settings(file_path="qacode/configs/"))
 
     def teardown_method(self, method):
         """TODO: doc method"""

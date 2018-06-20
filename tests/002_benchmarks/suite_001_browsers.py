@@ -6,10 +6,10 @@ import pytest
 from qacode.core.bots.bot_base import BotBase
 from qacode.core.loggers.logger_manager import LoggerManager
 from qacode.core.testing.test_info import TestInfoBase
-from qacode.core.utils import settings
+from qautils.files import settings
 
 
-SETTINGS = settings()
+SETTINGS = settings(file_path="qacode/configs/")
 SKIP = SETTINGS['tests']['skip']['benchmarks']
 SKIP_MSG = 'benchmarks DISABLED by config file'
 # TODO: must be setteable from config JSON
@@ -24,7 +24,9 @@ class TestBotBase(TestInfoBase):
     def setup_method(self, test_method):
         """TODO: doc method"""
         super(TestBotBase, self).setup_method(
-            test_method, config=settings(), skip_force=SKIP)
+            test_method,
+            config=settings(file_path="qacode/configs/"),
+            skip_force=SKIP)
 
     def bot_benchmark(self, browser_name, driver_mode, is_headless):
         """Allow to open and close any browser_name with

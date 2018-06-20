@@ -30,10 +30,11 @@ matrix:
 
 before_install:
 - pip freeze
+- pip install qautils
 install:
 - pip install tox
 script:
-- tox -e "{$TOXENV},flake8,docs"
+- tox -e "{$TOXENV},flake8"
 after_script:
 - if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then 
       sonar-scanner -X -Dsonar.login=${SONAR_GITHUB_TOKEN} -Dsonar.host.url=http://qalab.tk:82 ;

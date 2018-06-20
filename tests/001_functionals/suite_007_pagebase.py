@@ -4,13 +4,13 @@
 
 import pytest
 from qacode.core.testing.test_info import TestInfoBotUnique
-from qacode.core.utils import settings
 from qacode.core.webs.controls.control_base import ControlBase
 from qacode.core.webs.controls.control_form import ControlForm
 from qacode.core.webs.pages.page_base import PageBase
+from qautils.files import settings
 
 
-SETTINGS = settings()
+SETTINGS = settings(file_path="qacode/configs/")
 SKIP_PAGES = SETTINGS['tests']['skip']['web_pages']
 SKIP_PAGES_MSG = 'web_pages DISABLED by config file'
 
@@ -26,13 +26,13 @@ class TestPageBase(TestInfoBotUnique):
     def setup_class(cls, **kwargs):
         """TODO: doc method"""
         super(TestPageBase, cls).setup_class(
-            config=settings(),
+            config=settings(file_path="qacode/configs/"),
             skip_force=SKIP_PAGES)
 
     def setup_method(self, test_method, close=True):
         """Unload self.attribute"""
         super(TestPageBase, self).setup_method(
-            test_method, config=settings())
+            test_method, config=settings(file_path="qacode/configs/"))
         self.add_property('app', self.settings_app('pages_tests'))
         self.page_base_config = self.settings_page('page_base')
         self.page_login_config = self.settings_page('page_login')

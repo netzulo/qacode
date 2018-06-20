@@ -35,7 +35,7 @@ Python tested versions
 
 
 Code Metrics by sonarqube
-----------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. image:: http://qalab.tk:82/api/badges/gate?key=qacode
   :alt: Quality Gate
@@ -60,18 +60,19 @@ Code Metrics by sonarqube
   :target: http://qalab.tk:82/api/badges/gate?key=qacode
 
 
-INSTALLATION
-------------
 
-With **PIP**
-~~~~~~~~~~~~
+Prerequisites
+-------------
 
-``pip install qacode``
++ 1. Prerequisites : ``pip install qautils``
 
-With **SETUP.py** file
-~~~~~~~~~~~~~~~~~~~~~~
 
-``python setup.py install``
+How to install ?
+----------------
+
++ 1. Install from PIP : ``pip install qacode``
+
++ 1. Install from setup.py file : ``python setup.py install``
 
 
 Documentation
@@ -80,17 +81,17 @@ Documentation
 + How to use library, searching for `Usage Guide`_.
 
 
-Tests
------
+How to exec tests ?
+-------------------
 
-``python setup.py test``
++ 1. Tests from setup.py file : ``python setup.py test``
 
++ 1. Install from PIP file : ``pip install tox``
++ 2. Tests from tox : ``tox -l && tox -e TOX_ENV_NAME`` (*see tox.ini file to get environment names*)
 
-TOX environments
-~~~~~~~~~~~~~~~~
 
 +---------------------+--------------------------------+
-| Env name            | Env description                |
+| TOX Env name        | Env description                |
 +=====================+================================+
 | py27,py34,py35,py36 | Python supported versions      |
 +---------------------+--------------------------------+
@@ -153,7 +154,7 @@ Getting Started
 
     from qacode.core.bots.bot_base import BotBase
     from qacode.core.webs.controls.control_base import ControlBase
-    from qacode.core.utils import settings
+    from qautils.files import settings
     
     
     SETTINGS = settings(

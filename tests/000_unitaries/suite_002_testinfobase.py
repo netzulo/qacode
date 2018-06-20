@@ -5,7 +5,7 @@
 import logging
 import pytest
 from qacode.core.testing.test_info import TestInfoBase
-from qacode.core.utils import settings
+from qautils.files import settings
 
 
 class TestTestInfoBase(TestInfoBase):
@@ -14,7 +14,7 @@ class TestTestInfoBase(TestInfoBase):
     def setup_method(self, test_method):
         """TODO: doc method"""
         super(TestTestInfoBase, self).setup_method(
-            test_method, config=settings())
+            test_method, config=settings(file_path="qacode/configs/"))
 
     def test_001_inheritance(self):
         """Test: test_001_inheritance"""
