@@ -1,6 +1,7 @@
 QA Code
 =======
 
+
 .. image:: https://img.shields.io/github/issues/netzulo/qacode.svg
   :alt: Issues on Github
   :target: https://github.com/netzulo/qacode/issues
@@ -64,15 +65,15 @@ Code Metrics by sonarqube
 Prerequisites
 -------------
 
-+ 1. Prerequisites : ``pip install qautils``
++ Prerequisites : ``pip install qautils``
 
 
 How to install ?
 ----------------
 
-+ 1. Install from PIP : ``pip install qacode``
++ Install from PIP : ``pip install qacode``
 
-+ 1. Install from setup.py file : ``python setup.py install``
++ Install from setup.py file : ``python setup.py install``
 
 
 Documentation
@@ -84,10 +85,10 @@ Documentation
 How to exec tests ?
 -------------------
 
-+ 1. Tests from setup.py file : ``python setup.py test``
++ Tests from setup.py file : ``python setup.py test``
 
-+ 1. Install from PIP file : ``pip install tox``
-+ 2. Tests from tox : ``tox -l && tox -e TOX_ENV_NAME`` (*see tox.ini file to get environment names*)
++ Install from PIP file : ``pip install tox``
++ Tests from tox : ``tox -l && tox -e TOX_ENV_NAME`` ( *see tox.ini file to get environment names* )
 
 
 +---------------------+--------------------------------+
@@ -103,7 +104,7 @@ How to exec tests ?
 +---------------------+--------------------------------+
 
 Configuration File
-^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~
 
 
 ::
@@ -145,7 +146,7 @@ Configuration File
 
 
 Getting Started
-^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~
 
 *Just starting example of usage before read* `Usage Guide`_.
 
