@@ -48,9 +48,8 @@ class TestControlBase(TestInfoBotUnique):
     @pytest.mark.parametrize("on_instance_search", [False, True])
     @pytest.mark.parametrize("on_instance_load", [False, True])
     @pytest.mark.parametrize("auto_reload", [True])
-    @pytest.mark.parametrize("selector_multiple", [False])
     def test_instance_base(self, selector, instance, on_instance_search,
-                           on_instance_load, auto_reload, selector_multiple):
+                           on_instance_load, auto_reload):
         """Testcase: test_instance_base"""
         # must be supported at: test_instance_raises_base
         if not on_instance_search and on_instance_load:
@@ -64,7 +63,6 @@ class TestControlBase(TestInfoBotUnique):
             "on_instance_search": on_instance_search,
             "on_instance_load": on_instance_load,
             "auto_reload": auto_reload,
-            "selector_multiple": selector_multiple
         }
         control = ControlBase(self.bot, **control_config)
         self.assert_is_instance(control, ControlBase)
@@ -91,9 +89,6 @@ class TestControlBase(TestInfoBotUnique):
             control.auto_reload,
             control_config.get('auto_reload'))
         self.assert_equals(
-            control.selector_multiple,
-            control_config.get('selector_multiple'))
-        self.assert_equals(
             control.instance,
             control_config.get('instance'))
 
@@ -103,10 +98,8 @@ class TestControlBase(TestInfoBotUnique):
     @pytest.mark.parametrize("instance", ["ControlBase"])
     @pytest.mark.parametrize("selector", [None, "#username"])
     @pytest.mark.parametrize("auto_reload", [False])
-    @pytest.mark.parametrize("selector_multiple", [False])
     def test_instance_base_raises(self, selector, instance, on_instance_search,
-                                  on_instance_load, auto_reload,
-                                  selector_multiple):
+                                  on_instance_load, auto_reload):
         """Testcase: test_instance_raises_base"""
         # must be supported at: test_instance_base
         if on_instance_search and on_instance_load is None:
@@ -120,7 +113,6 @@ class TestControlBase(TestInfoBotUnique):
             "on_instance_search": on_instance_search,
             "on_instance_load": on_instance_load,
             "auto_reload": auto_reload,
-            "selector_multiple": selector_multiple
         }
         if (
                 on_instance_search is None and

@@ -62,7 +62,6 @@ class ControlForm(ControlBase):
                 ("on_instance_search", False),
                 ("on_instance_load", False),
                 ("auto_reload", True),
-                ("selector_multiple", False),
                 ("instance", 'ControlForm'),
                 ("on_instance_strict", False),
                 ("strict_rules", []),

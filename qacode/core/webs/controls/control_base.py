@@ -23,11 +23,9 @@ class ControlBase(object):
     on_instance_search = None
     on_instance_load = None
     auto_reload = None
-    selector_multiple = None
     instance = None
     # Element properties
     element = None
-    elements = None
     tag = None
     text = None
     is_displayed = None
@@ -76,7 +74,6 @@ class ControlBase(object):
                 ("on_instance_search", False),
                 ("on_instance_load", False),
                 ("auto_reload", True),
-                ("selector_multiple", False),
                 ("instance", 'ControlBase')
             ]
         default_settings = defaultdict(list, default_keys)
@@ -108,29 +105,26 @@ class ControlBase(object):
             return False
         self.bot.log.debug("control | _load_search: searching element...")
         try:
-            if self.selector_multiple:
-                self.bot.log.debug(("control | _load_search:"
-                                    " searching multiple elements..."))
-                self.elements = self.bot.navigation.find_elements(
-                    self.selector, locator=self.locator)
-                self.element = self.elements[selector_multiple_pos]
-            else:
-                self.element = self.bot.navigation.find_element(
-                    self.selector, locator=self.locator)
+            self.element = self.bot.navigation.find_element(
+                self.selector, locator=self.locator)
         except CoreException:
             self.bot.log.warning(
                 "control | _load_search: waiting for element...")
-            if self.selector_multiple:
-                self.elements = self.bot.navigation.find_elements_wait(
-                    self.selector, locator=self.locator)
-                self.element = self.elements[selector_multiple_pos]
-            else:
-                self.element = self.bot.navigation.find_element_wait(
-                    self.selector, locator=self.locator)
+            self.element = self.bot.navigation.find_element_wait(
+                self.selector, locator=self.locator)
         self.bot.log.debug("control | _load_search: element found!")
         return True
 
     def _load_properties(self, enabled=False):
+        """Load default properties for base element
+
+        Keyword Arguments:
+            enabled {bool} -- load at enabled (default: {False})
+
+        Raises:
+            ControlException -- if enabled and settings
+                haven't key on_instance_search
+        """
         if enabled and not self.settings.get('on_instance_search'):
             msg = ("Can't call to load_properties "
                    "wihout call first to load_search")
