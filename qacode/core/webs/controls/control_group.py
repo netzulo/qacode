@@ -7,7 +7,7 @@ from qacode.core.webs.controls.control_base import ControlBase
 from qacode.core.webs.controls.control_base import CoreException
 
 
-class ControlForm(ControlBase):
+class ControlGroup(ControlBase):
     """Requirements: #164"""
 
     # Settings properties
@@ -18,7 +18,7 @@ class ControlForm(ControlBase):
 
     def __init__(self, bot, **kwargs):
         """Instance of ControlGroup"""
-        super(ControlForm, self).__init__(bot, **kwargs)
+        super(ControlGroup, self).__init__(bot, **kwargs)
         self.load(**kwargs)
         # TODO: make sense
 
@@ -37,10 +37,10 @@ class ControlForm(ControlBase):
             self._load_properties(enabled=self.on_instance_load)
 
     def load_settings_keys(self, settings, update=False):
-        """Load default setting for ControlForm instance"""
+        """Load default setting for ControlGroup instance"""
         self.bot.log.debug(
             "control_group | load_settings_keys: loading keys...")
-        super(ControlForm, self).load_settings_keys(
+        super(ControlGroup, self).load_settings_keys(
             settings,
             update=update,
             default_keys=[

@@ -5,7 +5,7 @@
     "mode": "remote",
     "browser": "chrome",
     "options": { "headless": false },
-    "url_hub": "http://qalab.tk:11000/wd/hub",
+    "url_hub": "http://ntz-qa.TK:11000/wd/hub",
     "drivers_path": "../qadrivers",
     "drivers_names": [
       "chromedriver_32.exe",
@@ -28,7 +28,7 @@
   },
   "testlink": {
     "enabled": false,
-    "url_api": "http://qalab.tk:86/lib/api/xmlrpc/v1/xmlrpc.php",
+    "url_api": "http://ntz-qa.tk:86/lib/api/xmlrpc/v1/xmlrpc.php",
     "dev_key": "ae2f4839476bea169f7461d74b0ed0ac",
     "data":{
       "generate": false,
@@ -50,16 +50,41 @@
     },
     "apps": [
       {
-        "name": "nav_tests",
+        "name": "qadmin_app",
         "pages": [
           {
-            "name": "nav_tests_home",
-            "url": "http://the-internet.herokuapp.com/",
+            "name": "page_qacode_login",
+            "url": "http://ntz-qa.tk:83/qacode/login",
             "locator": "css selector",
             "go_url": false,
             "wait_url": 0,
             "maximize": false,
-            "controls": []
+            "controls": [
+              {
+                "name": "txt_username",
+                "locator": "css selector",
+                "selector": "input[placeholder='User name']",
+                "instance": "ControlBase",
+                "on_instance_search": true,
+                "on_instance_load": false
+              },
+              {
+                "name": "txt_password",
+                "locator": "css selector",
+                "selector": "input[placeholder='Password']",
+                "instance": "ControlBase",
+                "on_instance_search": true,
+                "on_instance_load": false
+              },
+              {
+                "name": "btn_submit",
+                "locator": "css selector",
+                "selector": "#btnLogin",
+                "instance": "ControlBase",
+                "on_instance_search": true,
+                "on_instance_load": false
+              }
+            ]
           }
         ]
       },
