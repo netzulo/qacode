@@ -5,7 +5,7 @@
     "mode": "remote",
     "browser": "chrome",
     "options": { "headless": false },
-    "url_hub": "http://ntz-qa.TK:11000/wd/hub",
+    "url_hub": "http://localhost:11000/wd/hub",
     "drivers_path": "../qadrivers",
     "drivers_names": [
       "chromedriver_32.exe",
@@ -41,19 +41,20 @@
     "skip":{
       "test_configs": true,
       "drivers_local": true,
-      "drivers_remote": false,
-      "bot_multiple": false,
-      "bot_unique": false,
-      "web_controls": false,
-      "web_pages": false,
+      "drivers_remote": true,
+      "bot_multiple": true,
+      "bot_unique": true,
+      "bot_navigations": false,
+      "web_controls": true,
+      "web_pages": true,
       "benchmarks": true
     },
     "apps": [
       {
-        "name": "qadmin_app",
+        "name": "qadmin",
         "pages": [
           {
-            "name": "page_qacode_login",
+            "name": "qacode_login",
             "url": "http://ntz-qa.tk:83/qacode/login",
             "locator": "css selector",
             "go_url": false,
