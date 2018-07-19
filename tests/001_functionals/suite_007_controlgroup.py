@@ -17,8 +17,16 @@ SKIP_CONTROLS_MSG = 'web_controls DISABLED by config file'
 class TestControlGroup(TestInfoBotUnique):
     """Test Suite for ControlBase class"""
 
+    # app from config
     app = None
-    page_login_config = None
+    # page from config
+    page = None
+    url = None
+    # elements from config
+    form_login = None
+    txt_username = None
+    txt_password = None
+    btn_submit = None
 
     @classmethod
     def setup_class(cls, **kwargs):
@@ -32,26 +40,37 @@ class TestControlGroup(TestInfoBotUnique):
         super(TestControlGroup, self).setup_method(
             test_method, config=settings(file_path="qacode/configs/"))
         self.add_property(
-            'app', value=self.settings_app('pages_tests'))
+            'app', value=self.settings_app('qadmin'))
         self.add_property(
-            'page_login_config', value=self.settings_page('page_login'))
+            'page', value=self.settings_page('qacode_login'))
         self.add_property(
-            'url', value=self.page_login_config.get('url'))
+            'url', value=self.page.get('url'))
+        self.add_property(
+            'txt_username',
+            value=self.settings_control('txt_username'))
+        self.add_property(
+            'txt_password',
+            value=self.settings_control('txt_password'))
+        self.add_property(
+            'btn_submit',
+            value=self.settings_control('btn_submit'))
+        self.add_property(
+            'form_login',
+            value=self.settings_control('form_login'))
         self.bot.navigation.get_url(self.url)
         curr_url = self.bot.curr_driver.current_url
         self.assert_equals_url(curr_url, self.url)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    @pytest.mark.parametrize("selector", [
-        "#username", "replace_for_multiple_selector"])
+    @pytest.mark.parametrize("selector", ["#txtUsername-field", "input"])
     @pytest.mark.parametrize("instance", ["ControlGroup"])
     @pytest.mark.parametrize("on_instance_search", [False, True])
     @pytest.mark.parametrize("on_instance_load", [False, True])
     @pytest.mark.parametrize("auto_reload", [True])
     @pytest.mark.parametrize("on_instance_group", [False, True])
-    def test_instance_base(self, selector, instance, on_instance_search,
-                           on_instance_load, auto_reload, on_instance_group):
-        """Testcase: test_instance_base"""
+    def test_instance_group(self, selector, instance, on_instance_search,
+                            on_instance_load, auto_reload, on_instance_group):
+        """Testcase: test_instance_group"""
         # must be supported at: test_instance_raises_base
         if not on_instance_search and on_instance_load:
             pytest.skip(
@@ -70,7 +89,7 @@ class TestControlGroup(TestInfoBotUnique):
         control = ControlGroup(self.bot, **control_config)
         self.assert_is_instance(control, ControlGroup)
         if on_instance_search:
-            for ele in control.group:
+            for ele in control.elements:
                 self.assert_is_instance(ele, WebElement)
         else:
             self.assert_none(control.element)
@@ -97,6 +116,6 @@ class TestControlGroup(TestInfoBotUnique):
             control.on_instance_group,
             control_config.get('on_instance_group'))
         if control_config.get('on_instance_group'):
-            self.assert_greater(len(control.group), 1)
+            self.assert_greater(len(control.elements), 1)
         else:
-            self.assert_equals(len(control.group), 0)
+            self.assert_equals(len(control.elements), 0)

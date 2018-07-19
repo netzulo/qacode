@@ -41,30 +41,37 @@
     "skip":{
       "test_configs": true,
       "drivers_local": true,
-      "drivers_remote": true,
-      "bot_multiple": true,
-      "bot_unique": true,
+      "drivers_remote": false,
+      "bot_multiple": false,
+      "bot_unique": false,
       "bot_navigations": false,
-      "web_controls": true,
-      "web_pages": true,
+      "web_controls": false,
+      "web_pages": false,
       "benchmarks": true
     },
     "apps": [
       {
         "name": "qadmin",
         "pages": [
-          {
-            "name": "qacode_login",
-            "url": "http://ntz-qa.tk:83/qacode/login",
+          { "name": "qacode_login",
+            "url": "http://localhost:4200/qacode/login",
             "locator": "css selector",
             "go_url": false,
             "wait_url": 0,
             "maximize": false,
             "controls": [
               {
+                "name": "form_login",
+                "locator": "css selector",
+                "selector": "#frmLogin",
+                "instance": "ControlBase",
+                "on_instance_search": true,
+                "on_instance_load": false
+              },
+              {
                 "name": "txt_username",
                 "locator": "css selector",
-                "selector": "input[placeholder='User name']",
+                "selector": "#txtUsername-field",
                 "instance": "ControlBase",
                 "on_instance_search": true,
                 "on_instance_load": false
@@ -72,7 +79,7 @@
               {
                 "name": "txt_password",
                 "locator": "css selector",
-                "selector": "input[placeholder='Password']",
+                "selector": "#txtPassword-field",
                 "instance": "ControlBase",
                 "on_instance_search": true,
                 "on_instance_load": false
@@ -86,68 +93,26 @@
                 "on_instance_load": false
               }
             ]
-          }
-        ]
-      },
-      {
-        "name": "pages_tests",
-        "pages": [
+          },
           {
-            "name": "page_base",
-            "url": "http://the-internet.herokuapp.com/",
+            "name": "qacode_inputs",
+            "url": "http://localhost:4200/qacode/forms/inputs",
             "locator": "css selector",
             "go_url": false,
             "wait_url": 0,
             "maximize": false,
-            "controls": []
-          },
-          {
-            "name": "page_login",
-            "url": "http://the-internet.herokuapp.com/login",
-            "locator": "css selector",
-            "go_url": true,
-            "wait_url": 0,
-            "maximize": false,
             "controls": [
               {
-                "name": "txt_username",
+                "name": "dd_base",
                 "locator": "css selector",
-                "selector": "#username",
-                "instance": "ControlBase",
+                "selector": "#txtTest002",
+                "instance": "ControlForm",
                 "on_instance_search": true,
-                "on_instance_load": false
-              },
-              {
-                "name": "txt_password",
-                "locator": "css selector",
-                "selector": "#password",
-                "instance": "ControlBase",
-                "on_instance_search": true,
-                "on_instance_load": false
-              },
-              {
-                "name": "btn_submit",
-                "locator": "css selector",
-                "selector": "button[type='submit']",
-                "instance": "ControlBase",
-                "on_instance_search": true,
-                "on_instance_load": false
-              },
-              {
-                "name": "login_container",
-                "locator": "css selector",
-                "selector": "#content",
-                "instance": "ControlBase",
-                "on_instance_search": true,
-                "on_instance_load": false
-              },
-              {
-                "name": "login_container_title",
-                "locator": "css selector",
-                "selector": "h2",
-                "instance": "ControlBase",
-                "on_instance_search": true,
-                "on_instance_load": false
+                "on_instance_load": true,
+                "on_instance_strict": true,
+                "strict_rules": [
+                  { "tag": "select", "type": "tag", "severity": "hight" }
+                ]
               }
             ]
           },

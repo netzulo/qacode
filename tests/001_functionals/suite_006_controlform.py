@@ -19,9 +19,21 @@ SKIP_CONTROLS_MSG = 'web_controls DISABLED by config file'
 class TestControlForm(TestInfoBotUnique):
     """Test Suite for ControlBase class"""
 
+    # app from config
     app = None
-    page_dropdown_config = None
-    ctl_dropdown_config = None
+    # page from config: app
+    page = None
+    url = None
+    # page from config: app
+    page_inputs = None
+    url_inputs = None
+    # elements from config: page
+    form_login = None
+    txt_username = None
+    txt_password = None
+    btn_submit = None
+    # elements from config: page_inputs
+    dd_base = None
 
     @classmethod
     def setup_class(cls, **kwargs):
@@ -35,20 +47,48 @@ class TestControlForm(TestInfoBotUnique):
         super(TestControlForm, self).setup_method(
             test_method, config=settings(file_path="qacode/configs/"))
         self.add_property(
-            'app', value=self.settings_app('pages_tests'))
+            'app', value=self.settings_app('qadmin'))
+        # page
         self.add_property(
-            'page_dropdown_config', value=self.settings_page('page_dropdown'))
+            'page', value=self.settings_page('qacode_login'))
         self.add_property(
-            'url', value=self.page_dropdown_config.get('url'))
+            'url', value=self.page.get('url'))
         self.add_property(
-            'ctl_dropdown_config', value=self.settings_control(
-                "dropdown", page_name="page_dropdown"))
+            'form_login',
+            value=self.settings_control('form_login'))
+        self.add_property(
+            'txt_username',
+            value=self.settings_control('txt_username'))
+        self.add_property(
+            'txt_password',
+            value=self.settings_control('txt_password'))
+        self.add_property(
+            'btn_submit',
+            value=self.settings_control('btn_submit'))
+        # page_inputs
+        self.add_property(
+            'page_inputs', value=self.settings_page('qacode_inputs'))
+        self.add_property(
+            'url_inputs', value=self.page_inputs.get('url'))
+        self.add_property(
+            'dd_base',
+            value=self.settings_control('dd_base'))
+        # start setup
         self.bot.navigation.get_url(self.url)
         curr_url = self.bot.curr_driver.current_url
         self.assert_equals_url(curr_url, self.url)
+        # login
+        self.txt_username.type_text("admin")
+        self.txt_password.type_text("admin")
+        self.btn_submit.click()
+        # end setup
+        self.bot.navigation.get_url(self.url_inputs)
+        curr_url = self.bot.curr_driver.current_url
+        self.assert_equals_url(curr_url, self.url_inputs)
+
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    @pytest.mark.parametrize("selector", ["#dropdown"])
+    @pytest.mark.parametrize("selector", ["#txtTest002"])
     @pytest.mark.parametrize("instance", ["ControlForm"])
     @pytest.mark.parametrize("on_instance_search", [True])
     @pytest.mark.parametrize("on_instance_load", [True])

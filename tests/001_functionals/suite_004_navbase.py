@@ -53,7 +53,6 @@ class TestNavBase(TestInfoBotUnique):
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_get_maximizewindow(self):
         """Testcase: test_getmaximizewindow"""
-        import pdb; pdb.set_trace()
         self.bot.navigation.get_maximize_window()
 
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)

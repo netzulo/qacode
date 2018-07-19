@@ -26,6 +26,8 @@ class ControlGroup(ControlBase):
         """Load properties from settings dict.
             Some elements need to search False to be search at future
         """
+        self.elements = []
+        self.group = []
         # needed for self._load_* functions
         self.load_settings_keys(kwargs.copy(), update=True)
         # instance logic
