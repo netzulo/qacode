@@ -30,6 +30,9 @@ matrix:
 
 before_install:
 - pip freeze
+# Fix for python3.5
+- pip uninstall --yes packaging
+# qacode setup required
 - pip install qautils
 install:
 - pip install tox
