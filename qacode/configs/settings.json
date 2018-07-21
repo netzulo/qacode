@@ -1,11 +1,11 @@
 { "bot": {
     "log_output_file": "logs/",
     "log_name": "qacode",
-    "log_level": "DEBUG",
+    "log_level": "INFO",
     "mode": "remote",
     "browser": "chrome",
     "options": { "headless": false },
-    "url_hub": "http://localhost:11000/wd/hub",
+    "url_hub": "http://ntz-qa.tk:11000/wd/hub",
     "drivers_path": "../qadrivers",
     "drivers_names": [
       "chromedriver_32.exe",
@@ -45,47 +45,46 @@
       "bot_multiple": false,
       "bot_unique": false,
       "bot_navigations": false,
-      "web_controls": false,
+      "web_controls": {
+        "control_base": false,
+        "control_form": false,
+        "control_group": false
+      },
       "web_pages": false,
       "benchmarks": true
     },
     "apps": [
-      {
-        "name": "qadmin",
+      { "name": "qadmin",
         "pages": [
           { "name": "qacode_login",
-            "url": "http://localhost:4200/qacode/login",
+            "url": "http://ntz-qa.tk:83/qacode/login",
             "locator": "css selector",
             "go_url": false,
             "wait_url": 0,
             "maximize": false,
             "controls": [
-              {
-                "name": "form_login",
+              { "name": "form_login",
                 "locator": "css selector",
                 "selector": "#frmLogin",
                 "instance": "ControlBase",
                 "on_instance_search": true,
                 "on_instance_load": false
               },
-              {
-                "name": "txt_username",
+              { "name": "txt_username",
                 "locator": "css selector",
                 "selector": "#txtUsername-field",
                 "instance": "ControlBase",
                 "on_instance_search": true,
                 "on_instance_load": false
               },
-              {
-                "name": "txt_password",
+              { "name": "txt_password",
                 "locator": "css selector",
                 "selector": "#txtPassword-field",
                 "instance": "ControlBase",
                 "on_instance_search": true,
                 "on_instance_load": false
               },
-              {
-                "name": "btn_submit",
+              { "name": "btn_submit",
                 "locator": "css selector",
                 "selector": "#btnLogin",
                 "instance": "ControlBase",
@@ -94,16 +93,14 @@
               }
             ]
           },
-          {
-            "name": "qacode_inputs",
-            "url": "http://localhost:4200/qacode/forms/inputs",
+          { "name": "qacode_inputs",
+            "url": "http://ntz-qa.tk:83/qacode/forms/inputs",
             "locator": "css selector",
             "go_url": false,
             "wait_url": 0,
             "maximize": false,
             "controls": [
-              {
-                "name": "dd_base",
+              { "name": "dd_base",
                 "locator": "css selector",
                 "selector": "#txtTest002",
                 "instance": "ControlForm",
@@ -113,21 +110,10 @@
                 "strict_rules": [
                   { "tag": "select", "type": "tag", "severity": "hight" }
                 ]
-              }
-            ]
-          },
-          {
-            "name": "page_dropdown",
-            "url": "http://the-internet.herokuapp.com/dropdown",
-            "locator": "css selector",
-            "go_url": true,
-            "wait_url": 0,
-            "maximize": false,
-            "controls": [
-              {
-                "name": "dropdown",
+              },
+              { "name": "dd_multiple",
                 "locator": "css selector",
-                "selector": "#dropdown",
+                "selector": "#txtTest003",
                 "instance": "ControlForm",
                 "on_instance_search": true,
                 "on_instance_load": true,
@@ -135,6 +121,31 @@
                 "strict_rules": [
                   { "tag": "select", "type": "tag", "severity": "hight" }
                 ]
+              }
+            ]
+          },
+          { "name": "qacode_logout",
+            "url": "http://ntz-qa.tk:83/qacode/logout",
+            "locator": "css selector",
+            "go_url": true,
+            "wait_url": 0,
+            "maximize": false,
+            "controls": [
+              { "name": "btn_logout",
+                "locator": "css selector",
+                "selector": "a[href='/qacode/logout']",
+                "instance": "ControlBase",
+                "on_instance_search": true,
+                "on_instance_load": true,
+                "on_instance_strict": true
+              },
+              { "name": "btn_login",
+                "locator": "css selector",
+                "selector": "a[href='/qacode/login']",
+                "instance": "ControlBase",
+                "on_instance_search": true,
+                "on_instance_load": true,
+                "on_instance_strict": true
               }
             ]
           }

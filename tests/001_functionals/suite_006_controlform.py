@@ -12,7 +12,7 @@ from selenium.webdriver.support.ui import Select
 
 
 SETTINGS = settings(file_path="qacode/configs/")
-SKIP_CONTROLS = SETTINGS['tests']['skip']['web_controls']
+SKIP_CONTROLS = SETTINGS['tests']['skip']['web_controls']['control_form']
 SKIP_CONTROLS_MSG = 'web_controls DISABLED by config file'
 
 
@@ -34,6 +34,7 @@ class TestControlForm(TestInfoBotUnique):
     btn_submit = None
     # elements from config: page_inputs
     dd_base = None
+    dd_multiple = None
 
     @classmethod
     def setup_class(cls, **kwargs):
@@ -41,50 +42,55 @@ class TestControlForm(TestInfoBotUnique):
         super(TestControlForm, cls).setup_class(
             config=settings(file_path="qacode/configs/"),
             skip_force=SKIP_CONTROLS)
+        cls.add_property(
+            'app', value=cls.settings_app('qadmin'))
+        # page
+        cls.add_property(
+            'page', value=cls.settings_page('qacode_login'))
+        cls.add_property(
+            'url', value=cls.page.get('url'))
+        cls.add_property(
+            'form_login',
+            value=cls.settings_control('form_login'))
+        cls.add_property(
+            'txt_username',
+            value=cls.settings_control('txt_username'))
+        cls.add_property(
+            'txt_password',
+            value=cls.settings_control('txt_password'))
+        cls.add_property(
+            'btn_submit',
+            value=cls.settings_control('btn_submit'))
+        # page_inputs
+        cls.add_property(
+            'page_inputs', value=cls.settings_page('qacode_inputs'))
+        cls.add_property(
+            'url_inputs', value=cls.page_inputs.get('url'))
+        cls.add_property(
+            'dd_base',
+            value=cls.settings_control('dd_base'))
+        cls.add_property(
+            'dd_multiple',
+            value=cls.settings_control('dd_multiple'))
+        # start setup
+        cls.bot.navigation.get_url(cls.url)
+        curr_url = cls.bot.curr_driver.current_url
+        cls.assert_equals_url(cls, curr_url, cls.url)
+        # login
+        txt_username = cls.bot.navigation.find_element(
+            cls.txt_username.get('selector'))
+        txt_password = cls.bot.navigation.find_element(
+            cls.txt_password.get('selector'))
+        btn_submit = cls.bot.navigation.find_element(
+            cls.btn_submit.get('selector'))
+        txt_username.send_keys('admin')
+        txt_password.send_keys('admin')
+        btn_submit.click()
 
     def setup_method(self, test_method):
         """Configure self.attribute"""
         super(TestControlForm, self).setup_method(
             test_method, config=settings(file_path="qacode/configs/"))
-        self.add_property(
-            'app', value=self.settings_app('qadmin'))
-        # page
-        self.add_property(
-            'page', value=self.settings_page('qacode_login'))
-        self.add_property(
-            'url', value=self.page.get('url'))
-        self.add_property(
-            'form_login',
-            value=self.settings_control('form_login'))
-        self.add_property(
-            'txt_username',
-            value=self.settings_control('txt_username'))
-        self.add_property(
-            'txt_password',
-            value=self.settings_control('txt_password'))
-        self.add_property(
-            'btn_submit',
-            value=self.settings_control('btn_submit'))
-        # page_inputs
-        self.add_property(
-            'page_inputs', value=self.settings_page('qacode_inputs'))
-        self.add_property(
-            'url_inputs', value=self.page_inputs.get('url'))
-        self.add_property(
-            'dd_base',
-            value=self.settings_control('dd_base'))
-        # start setup
-        self.bot.navigation.get_url(self.url)
-        curr_url = self.bot.curr_driver.current_url
-        self.assert_equals_url(curr_url, self.url)
-        # login
-        self.txt_username.type_text("admin")
-        self.txt_password.type_text("admin")
-        self.btn_submit.click()
-        # end setup
-        self.bot.navigation.get_url(self.url_inputs)
-        curr_url = self.bot.curr_driver.current_url
-        self.assert_equals_url(curr_url, self.url_inputs)
 
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
@@ -151,7 +157,7 @@ class TestControlForm(TestInfoBotUnique):
                 control.dropdown)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    @pytest.mark.parametrize("selector", ["#dropdown"])
+    @pytest.mark.parametrize("selector", ["#txtTest002"])
     @pytest.mark.parametrize("instance", ["ControlForm"])
     @pytest.mark.parametrize("auto_reload", [True])
     def test_method_reload_form(self, selector, instance, auto_reload):
@@ -187,61 +193,62 @@ class TestControlForm(TestInfoBotUnique):
         self.assert_is_instance(control.element, WebElement)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    @pytest.mark.parametrize("text", ["Option 1", "Option 2"])
+    @pytest.mark.parametrize("text", ["Link 1.1", "Link 1.2"])
     def test_method_dropdown_select_by_text(self, text):
         """Testcase: test_method_dropdown_select_by_text"""
-        control = ControlForm(self.bot, **self.ctl_dropdown_config)
+        control = ControlForm(self.bot, **self.dd_base)
         control.dropdown_select(text)
+        # TODO: an assert here
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize("text", ["1", "2"])
     def test_method_dropdown_select_by_value(self, text):
         """Testcase: test_method_dropdown_select_by_value"""
-        control = ControlForm(self.bot, **self.ctl_dropdown_config)
+        control = ControlForm(self.bot, **self.dd_base)
         control.dropdown_select(text, by_value=True)
+        # TODO: an assert here
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize("index", [0, 1])
     def test_method_dropdown_select_by_index(self, index):
         """Testcase: test_method_dropdown_select_by_index"""
-        control = ControlForm(self.bot, **self.ctl_dropdown_config)
+        control = ControlForm(self.bot, **self.dd_base)
         control.dropdown_select(index, by_index=True)
+        # TODO: an assert here
 
-    @pytest.mark.skipIf(
-        True,
-        "Github issue: https://github.com/netzulo/qacode/issues/156")
-    @pytest.mark.parametrize("text", ["Option 1", "Option 2"])
+    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
+    @pytest.mark.parametrize("text", ["Link 1.1", "Link 1.2"])
     def test_method_dropdown_deselect_by_text(self, text):
         """Testcase: test_method_dropdown_deselect_by_text"""
-        control = ControlForm(self.bot, **self.ctl_dropdown_config)
+        control = ControlForm(self.bot, **self.dd_multiple)
         control.dropdown_select(text)
         control.dropdown_deselect(text)
+        # TODO: an assert here
 
-    @pytest.mark.skipIf(
-        True,
-        "Github issue: https://github.com/netzulo/qacode/issues/156")
+    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize("text", ["1", "2"])
     def test_method_dropdown_deselect_by_value(self, text):
         """Testcase: test_method_dropdown_deselect_by_value"""
-        control = ControlForm(self.bot, **self.ctl_dropdown_config)
+        control = ControlForm(self.bot, **self.dd_multiple)
         control.dropdown_select(text, by_value=True)
         control.dropdown_deselect(text, by_value=True)
+        # TODO: an assert here
 
-    @pytest.mark.skipIf(
-        True,
-        "Github issue: https://github.com/netzulo/qacode/issues/156")
+    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize("index", [0, 1])
     def test_method_dropdown_deselect_by_index(self, index):
         """Testcase: test_method_dropdown_deselect_by_index"""
-        control = ControlForm(self.bot, **self.ctl_dropdown_config)
+        control = ControlForm(self.bot, **self.dd_multiple)
         control.dropdown_select(index, by_index=True)
         control.dropdown_deselect(index, by_index=True)
+        # TODO: an assert here
 
-    @pytest.mark.skipIf(
-        True,
-        "Github issue: https://github.com/netzulo/qacode/issues/156")
+    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_method_dropdown_deselect_all(self):
         """Testcase: test_method_dropdown_deselect_all"""
-        control = ControlForm(self.bot, **self.ctl_dropdown_config)
-        control.dropdown_select("Option 1")
+        texts = ["Link 1.1", "Link 1.2"]
+        control = ControlForm(self.bot, **self.dd_multiple)
+        for text in texts:
+            control.dropdown_select(text)
         control.dropdown_deselect_all()
+        # TODO: an assert here

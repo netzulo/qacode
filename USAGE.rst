@@ -65,7 +65,6 @@ It's base control to load web element from ``WebDriver + browser session`` , *th
 + Param **locator** : This text it's parsed down selenium class ``selenium.webdriver.common.by.By`` (*default:* ``css selector`` == ``By.CSS_SELECTOR``)
 + Param **instance** : Allow to generate your own inherit classes from ``ControlBase`` and instance them  using qacode strategy (*default:* ``ControlBase``)
 + Param **auto_reload** : Allow to reload element searching first when need to use some function of control instance and isn't loaded (*default:* ``True``)
-+ Param **selector_multiple** : allow to search multiple elements with one selectors, first is loaded down ``control.element`` , and all elements will be added to ``control.elements`` list (*default:* ``False``)
 + Param **on_instance_search** : enable searching element at instance `ControlBase` (*default:* `False`)
 + Param **on_instance_load** : enable loading ``ControlBase`` properties when element it's loaded (*default:* ``False``) , will need enabled if want to access to base properties values obtained from selenium methods at ``BotBase.navigation``
 
@@ -118,6 +117,12 @@ ControlForm
 + Param **on_instance_strict** : by default it's disabled, at enable raises when strict_rules type warning logs message with 'hight severity' or when type error log messages with 'medium or more severity'
 + Param **strict_rules** : Allow to add strict_rules configuration to laod StrictRule class for each rule ( example: ``strict_rule = StrictRule('my_named_rule', StrictType.TAG, StrictSeverity.HIGHT)`` )
 
+
+ControlGroup
+~~~~~~~~~~~~
+
++ Param **on_instance_group** : by default it's disabled, at enable raises when strict_rules type warning logs message with 'hight severity' or when type error log messages with 'medium or more severity'
++ Param **group** : allow to track all ControlBase elements using `elements` (*instances of WebElement*) and `group` (*instances of ControlBase*) properties 
 
 Pages
 -----

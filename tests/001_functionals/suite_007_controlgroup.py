@@ -10,7 +10,7 @@ from selenium.webdriver.remote.webelement import WebElement
 
 
 SETTINGS = settings(file_path="qacode/configs/")
-SKIP_CONTROLS = SETTINGS['tests']['skip']['web_controls']
+SKIP_CONTROLS = SETTINGS['tests']['skip']['web_controls']['control_group']
 SKIP_CONTROLS_MSG = 'web_controls DISABLED by config file'
 
 
