@@ -92,7 +92,6 @@ class TestControlForm(TestInfoBotUnique):
         super(TestControlForm, self).setup_method(
             test_method, config=settings(file_path="qacode/configs/"))
 
-
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize("selector", ["#txtTest002"])
     @pytest.mark.parametrize("instance", ["ControlForm"])
