@@ -64,6 +64,30 @@ class TestInfoBase(object):
         return cls.config.get('tests').get('apps')
 
     @classmethod
+    def settings_pages(cls):
+        """Obtain inherit dict from 'cls.config' dict named
+            'config.tests.apps[i].pages'
+        """
+        if cls.config is None:
+            raise CoreException(message="Call to cls.load() first")
+        pages = []
+        for app in cls.settings_apps():
+            pages.extend(app.get('pages'))
+        return pages
+
+    @classmethod
+    def settings_controls(cls):
+        """Obtain inherit dict from 'cls.config' dict named
+            'config.tests.apps[i].pages[j].controls'
+        """
+        if cls.config is None:
+            raise CoreException(message="Call to cls.load() first")
+        controls = []
+        for page in cls.settings_pages():
+            controls.extend(page.get('controls'))
+        return controls
+
+    @classmethod
     def settings_app(cls, app_name):
         """Obtain inherit dict from 'cls.config' dict named
             'config.tests.apps' filtering by 'app_name' param
@@ -105,12 +129,10 @@ class TestInfoBase(object):
                 if control.get('name') == control_name:
                     return control
         else:
-            apps = cls.settings_apps()
-            for app in apps:
-                for page in app.get('pages'):
-                    for control in page.get('controls'):
-                        if control.get('name') == control_name:
-                            return control
+            controls = cls.settings_controls()            
+            for control in controls:
+                if control.get('name') == control_name:
+                    return control
 
     def setup_method(self, test_method, **kwargs):
         """Configure self.attribute"""
