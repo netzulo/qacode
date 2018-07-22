@@ -149,7 +149,6 @@ class TestInfoBase(object):
         Returns:
             str -- Message to be use on Assert method
         """
-
         if msg is not None:
             return msg
         return ASSERT_MSG_DEFAULT.format(
