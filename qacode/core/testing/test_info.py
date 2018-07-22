@@ -134,6 +134,28 @@ class TestInfoBase(object):
                 if control.get('name') == control_name:
                     return control
 
+    @classmethod
+    def assert_message(cls, assert_name, actual, expected, msg=None):
+        """Generate assert message for method that calls for it
+
+        Arguments:
+            assert_name {str} -- Assert method name that call
+            actual {any} -- Actual value to compare
+            expected {any} -- Expected value to compare
+
+        Keyword Arguments:
+            msg {[type]} -- [description] (default: {None})
+
+        Returns:
+            str -- Message to be use on Assert method
+        """
+        if msg is not None:
+            return msg
+        return ASSERT_MSG_DEFAULT.format(
+            assert_name,
+            actual,
+            expected)
+
     def setup_method(self, test_method, **kwargs):
         """Configure self.attribute"""
         self.load(kwargs.get('config'))
@@ -184,22 +206,19 @@ class TestInfoBase(object):
         """Allow to compare 2 values and check if 1st it's equals to
             2nd value
         """
-        if not msg:
-            msg = ASSERT_MSG_DEFAULT.format(
-                "assert_equals", actual, expected)
+        _msg = self.assert_message("assert_equals", actual, expected, msg=msg)
         if actual != expected:
-            raise AssertionError(actual, expected, msg)
+            raise AssertionError(actual, expected, _msg)
         return True
 
     def assert_not_equals(self, actual, expected, msg=None):
         """Allow to compare 2 value to check if 1st isn't equals to
             2nd value
         """
-        if not msg:
-            msg = ASSERT_MSG_DEFAULT.format(
-                "assert_not_equals", actual, expected)
+        _msg = self.assert_message(
+            "assert_not_equals", actual, expected, msg=msg)
         if actual == expected:
-            raise AssertionError(actual, expected, msg)
+            raise AssertionError(actual, expected, _msg)
         return True
 
     def assert_equals_url(self, actual, expected, msg=None, wait=0):
@@ -216,53 +235,48 @@ class TestInfoBase(object):
         Raises:
             AssertionError -- [description]
         """
-        if not msg:
-            msg = ASSERT_MSG_DEFAULT.format(
-                "assert_equals_url", actual, expected)
+        _msg = self.assert_message(
+            "assert_equals_url", actual, expected, msg=msg)
         self.sleep(wait)
         if actual != expected:
-            raise AssertionError(actual, expected, msg)
+            raise AssertionError(actual, expected, _msg)
         return True
 
     def assert_not_equals_url(self, actual, expected, msg=None, wait=0):
         """Allow to compare 2 urls to check if 1st isn't equals to 2nd url"""
-        if not msg:
-            msg = ASSERT_MSG_DEFAULT.format(
-                "assert_not_equals_url", actual, expected)
+        _msg = self.assert_message(
+            "assert_not_equals_url", actual, expected, msg=msg)
         self.sleep(wait)
         if actual == expected:
-            raise AssertionError(actual, expected, msg)
+            raise AssertionError(actual, expected, _msg)
         return True
 
     def assert_contains_url(self, actual, contains, msg=None, wait=0):
         """Allow to compare 2 urls and check if 1st contains 2nd url"""
-        if not msg:
-            msg = ASSERT_MSG_DEFAULT.format(
-                "assert_contains_url", actual, contains)
+        _msg = self.assert_message(
+            "assert_contains_url", actual, contains, msg=msg)
         self.sleep(wait)
         if actual not in contains:
-            raise AssertionError(actual, contains, msg)
+            raise AssertionError(actual, contains, _msg)
         return True
 
     def assert_not_contains_url(self, actual, contains, msg=None, wait=0):
         """Allow to compare 2 urls and check if 1st not contains 2nd url"""
-        if not msg:
-            msg = ASSERT_MSG_DEFAULT.format(
-                "assert_not_contains_url", actual, contains)
+        _msg = self.assert_message(
+            "assert_not_contains_url", actual, contains, msg=msg)
         self.sleep(wait)
         if actual in contains:
-            raise AssertionError(actual, contains, msg)
+            raise AssertionError(actual, contains, _msg)
         return True
 
     def assert_is_instance(self, instance, class_type, msg=None):
         """Allow to encapsulate method assertIsInstance(obj, cls, msg='')"""
-        if not msg:
-            msg = ASSERT_MSG_DEFAULT.format(
-                "assert_is_instance", instance, class_type)
+        _msg = self.assert_message(
+            "assert_is_instance", instance, class_type, msg=msg)
         if not isinstance(class_type, type):
             class_type = type(class_type)
         if not isinstance(instance, class_type):
-            raise AssertionError(instance, class_type, msg)
+            raise AssertionError(instance, class_type, _msg)
         return True
 
     def assert_raises(self, expected_exception, function, *args, **kwargs):
@@ -276,138 +290,116 @@ class TestInfoBase(object):
             }
         )
         """
-        msg = kwargs.get('msg')
-        if not msg:
-            msg = ASSERT_MSG_DEFAULT.format(
-                "assert_raises",
-                "TODO:not implemented value",
-                expected_exception)
+        _msg = self.assert_message(
+            "assert_raises",
+            "TODO:not implemented value",
+            expected_exception, msg=kwargs.get('msg'))
+        # https://docs.pytest.org/en/latest/reference.html#pytest-raises
+        kwargs.update({"message": _msg})
         return pytest.raises(expected_exception, function, *args, **kwargs)
 
     def assert_greater(self, actual, greater, msg=None):
         """Allow to encapsulate method assertGreater(a, b, msg=msg)"""
-        if not msg:
-            msg = ASSERT_MSG_DEFAULT.format(
-                "assert_greater", actual, greater)
+        _msg = self.assert_message(
+            "assert_greater", actual, greater, msg=msg)
         if actual < greater:
-            raise AssertionError(actual, greater, msg)
+            raise AssertionError(actual, greater, _msg)
         return True
 
     def assert_lower(self, actual, lower, msg=None):
         """Allow to encapsulate method assertLower(a, b, msg=msg)"""
-        if not msg:
-            msg = ASSERT_MSG_DEFAULT.format(
-                "assert_greater", actual, lower)
+        _msg = self.assert_message(
+            "assert_lower", actual, lower, msg=msg)
         if actual > lower:
-            raise AssertionError(actual, lower, msg)
+            raise AssertionError(actual, lower, _msg)
         return True
 
     def assert_in(self, actual, valid_values, msg=None):
         """Allow to compare if value it's in to 2nd list of values"""
-        if not msg:
-            msg = ASSERT_MSG_DEFAULT.format(
-                "assert_in", actual, valid_values)
+        _msg = self.assert_message(
+            "assert_in", actual, valid_values, msg=msg)
         if actual not in valid_values:
-            raise AssertionError(actual, valid_values, msg)
+            raise AssertionError(actual, valid_values, _msg)
         return True
 
     def assert_not_in(self, actual, invalid_values, msg=None):
         """Allow to compare if value it's not in to 2nd list of values"""
-        if not msg:
-            msg = ASSERT_MSG_DEFAULT.format(
-                "assert_in", actual, invalid_values)
+        _msg = self.assert_message(
+            "assert_not_in", actual, invalid_values, msg=msg)
         if actual in invalid_values:
-            raise AssertionError(actual, invalid_values, msg)
+            raise AssertionError(actual, invalid_values, _msg)
         return True
 
     def assert_regex(self, actual, pattern, msg=None):
         """Allow to compare if value match pattern"""
-        if not msg:
-            msg = ASSERT_MSG_DEFAULT.format(
-                "assert_regex", actual, pattern)
+        _msg = self.assert_message(
+            "assert_regex", actual, pattern, msg=msg)
         is_match = re.match(pattern, actual)
         if not is_match:
-            raise AssertionError(actual, pattern, msg)
+            raise AssertionError(actual, pattern, _msg)
         return True
 
     def assert_not_regex(self, actual, pattern, msg=None):
         """Allow to compare if value not match pattern"""
-        if not msg:
-            msg = ASSERT_MSG_DEFAULT.format(
-                "assert_not_regex", actual, pattern)
+        _msg = self.assert_message(
+            "assert_not_regex", actual, pattern, msg=msg)
         is_match = re.match(pattern, actual)
         if is_match:
-            raise AssertionError(actual, pattern, msg)
+            raise AssertionError(actual, pattern, _msg)
         return True
 
     def assert_regex_url(self, actual, pattern=None, msg=None):
         """Allow to compare if value match url pattern, can use
             custom pattern
         """
-        if not msg:
-            msg = ASSERT_MSG_DEFAULT.format(
-                "assert_regex_url", actual, pattern)
         if not pattern:
             pattern = ASSERT_REGEX_URL
         return self.assert_regex(actual, pattern, msg=msg)
 
     def assert_path_exist(self, actual, is_dir=True, msg=None):
         """Allow to check if path exist, can check if is_dir also"""
-        if not msg:
-            msg = ASSERT_MSG_DEFAULT.format(
-                "assert_path_exist",
-                actual,
-                "is_dir={}".format(is_dir))
+        _msg = self.assert_message(
+            "assert_path_exist",
+            actual,
+            "is_dir={}".format(is_dir),
+            msg=msg)
         if not os.path.exists(actual):
-            raise AssertionError(actual, "NEED_PATH_FOUND", msg)
+            raise AssertionError(actual, "PATH_NOT_EXIST", _msg)
         _is_dir = os.path.isdir(actual)
         if is_dir:
             if not _is_dir:
-                raise AssertionError(actual, "NEED_PATH_IS_DIR", msg)
+                raise AssertionError(actual, "PATH_NOT_DIR", _msg)
         else:
             if _is_dir:
-                raise AssertionError(actual, "NEED_PATH_NOT_DIR", msg)
+                raise AssertionError(actual, "PATH_IS_DIR_AND_MUST_NOT", _msg)
         return True
 
     def assert_path_not_exist(self, actual, msg=None):
         """Allow to check if path not exist, can check if is_dir also"""
-        if not msg:
-            msg = ASSERT_MSG_DEFAULT.format(
-                "assert_path_not_exist", actual, "")
+        _msg = self.assert_message(
+            "assert_path_not_exist", actual, "", msg=msg)
         if os.path.exists(actual):
-            raise AssertionError(actual, "NEED_PATH_NOT_FOUND", msg)
+            raise AssertionError(actual, "PATH_EXIST_AND_MUST_NOT", _msg)
         return True
 
     def assert_true(self, actual, msg=None):
         """Allow to compare and check if value it's equals to 'True'"""
-        if not msg:
-            msg = ASSERT_MSG_DEFAULT.format(
-                "assert_true", actual, "")
         self.assert_is_instance(actual, bool)
         self.assert_equals(actual, True, msg=msg)
         return True
 
     def assert_false(self, actual, msg=None):
         """Allow to compare and check if value it's equals to 'False'"""
-        if not msg:
-            msg = ASSERT_MSG_DEFAULT.format(
-                "assert_false", actual, "")
         self.assert_is_instance(actual, bool)
         self.assert_equals(actual, False, msg=msg)
         return True
 
     def assert_none(self, actual, msg=None):
         """Allow to compare and check if value it's equals to 'None'"""
-        if not msg:
-            msg = ASSERT_MSG_DEFAULT.format(
-                "assert_false", actual, "")
         return self.assert_equals(actual, None, msg=msg)
 
     def assert_not_none(self, actual, msg=None):
         """Allow to compare and check if value it's not equals to 'None'"""
-        if not msg:
-            msg = ASSERT_MSG_DEFAULT.format(
-                "assert_false", actual, "")
         return self.assert_not_equals(actual, None, msg=msg)
 
 
