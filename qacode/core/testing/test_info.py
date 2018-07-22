@@ -135,7 +135,21 @@ class TestInfoBase(object):
                     return control
 
     @classmethod
-    def assert_message(assert_name, actual, expected, msg=None):
+    def assert_message(cls, assert_name, actual, expected, msg=None):
+        """Generate assert message for method that calls for it
+
+        Arguments:
+            assert_name {str} -- Assert method name that call
+            actual {any} -- Actual value to compare
+            expected {any} -- Expected value to compare
+
+        Keyword Arguments:
+            msg {[type]} -- [description] (default: {None})
+
+        Returns:
+            str -- Message to be use on Assert method
+        """
+
         if msg is not None:
             return msg
         return ASSERT_MSG_DEFAULT.format(
