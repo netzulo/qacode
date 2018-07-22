@@ -129,7 +129,7 @@ class TestInfoBase(object):
                 if control.get('name') == control_name:
                     return control
         else:
-            controls = cls.settings_controls()            
+            controls = cls.settings_controls()
             for control in controls:
                 if control.get('name') == control_name:
                     return control
