@@ -58,8 +58,6 @@ class TestControlGroup(TestInfoBotUnique):
             'form_login',
             value=self.settings_control('form_login'))
         self.bot.navigation.get_url(self.url)
-        curr_url = self.bot.curr_driver.current_url
-        self.assert_equals_url(curr_url, self.url)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize("selector", ["#txtUsername-field", "input"])

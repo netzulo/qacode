@@ -74,8 +74,6 @@ class TestControlForm(TestInfoBotUnique):
             value=cls.settings_control('dd_multiple'))
         # start setup
         cls.bot.navigation.get_url(cls.url)
-        curr_url = cls.bot.curr_driver.current_url
-        cls.assert_equals_url(cls, curr_url, cls.url)
         # login
         txt_username = cls.bot.navigation.find_element(
             cls.txt_username.get('selector'))
