@@ -44,7 +44,7 @@ class TestConfig(TestInfoBase):
         """TODO: doc method"""
         if SKIP_CONFIG:
             pytest.skip(msg=SKIP_CONFIG_MSG)
-        key_value = settings()['bot'][key_name]
+        key_value = self.config['bot'][key_name]
         if key_name == 'mode':
             valid_values = ["local", "remote"]
             self.assert_in(key_value, valid_values)
@@ -75,7 +75,7 @@ class TestConfig(TestInfoBase):
         """TODO: doc method"""
         if SKIP_CONFIG:
             pytest.skip(msg=SKIP_CONFIG_MSG)
-        key_value = settings()['tests'][key_name]
+        key_value = self.config['tests'][key_name]
         if key_name == 'skip':
             self.assert_is_instance(key_value, dict)
             self.assert_is_instance(
@@ -89,7 +89,13 @@ class TestConfig(TestInfoBase):
             self.assert_is_instance(
                 key_value.get('bot_unique'), bool)
             self.assert_is_instance(
-                key_value.get('web_controls'), bool)
+                key_value.get('web_controls'), dict)
+            self.assert_is_instance(
+                key_value.get('web_controls').get('control_base'), bool)
+            self.assert_is_instance(
+                key_value.get('web_controls').get('control_form'), bool)
+            self.assert_is_instance(
+                key_value.get('web_controls').get('control_group'), bool)
             self.assert_is_instance(
                 key_value.get('web_pages'), bool)
             self.assert_is_instance(
@@ -109,3 +115,6 @@ class TestConfig(TestInfoBase):
                     self.assert_is_instance(page_config.get('maximize'), bool)
                     self.assert_is_instance(page_config.get('controls'), list)
                     # TODO: handle control list
+                    ctl_configs = page_config.get('controls')
+                    for control in ctl_configs:
+                        self.assert_is_instance(control.get('selector'), str)

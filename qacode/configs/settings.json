@@ -1,11 +1,11 @@
 { "bot": {
     "log_output_file": "logs/",
     "log_name": "qacode",
-    "log_level": "DEBUG",
+    "log_level": "INFO",
     "mode": "remote",
     "browser": "chrome",
     "options": { "headless": false },
-    "url_hub": "http://qalab.tk:11000/wd/hub",
+    "url_hub": "http://ntz-qa.tk:11000/wd/hub",
     "drivers_path": "../qadrivers",
     "drivers_names": [
       "chromedriver_32.exe",
@@ -28,7 +28,7 @@
   },
   "testlink": {
     "enabled": false,
-    "url_api": "http://qalab.tk:86/lib/api/xmlrpc/v1/xmlrpc.php",
+    "url_api": "http://ntz-qa.tk:86/lib/api/xmlrpc/v1/xmlrpc.php",
     "dev_key": "ae2f4839476bea169f7461d74b0ed0ac",
     "data":{
       "generate": false,
@@ -44,99 +44,65 @@
       "drivers_remote": false,
       "bot_multiple": false,
       "bot_unique": false,
-      "web_controls": false,
+      "bot_navigations": false,
+      "web_controls": {
+        "control_base": false,
+        "control_form": false,
+        "control_group": false
+      },
       "web_pages": false,
       "benchmarks": true
     },
     "apps": [
-      {
-        "name": "nav_tests",
+      { "name": "qadmin",
         "pages": [
-          {
-            "name": "nav_tests_home",
-            "url": "http://the-internet.herokuapp.com/",
+          { "name": "qacode_login",
+            "url": "http://ntz-qa.tk:83/qacode/login",
             "locator": "css selector",
             "go_url": false,
-            "wait_url": 0,
-            "maximize": false,
-            "controls": []
-          }
-        ]
-      },
-      {
-        "name": "pages_tests",
-        "pages": [
-          {
-            "name": "page_base",
-            "url": "http://the-internet.herokuapp.com/",
-            "locator": "css selector",
-            "go_url": false,
-            "wait_url": 0,
-            "maximize": false,
-            "controls": []
-          },
-          {
-            "name": "page_login",
-            "url": "http://the-internet.herokuapp.com/login",
-            "locator": "css selector",
-            "go_url": true,
             "wait_url": 0,
             "maximize": false,
             "controls": [
-              {
-                "name": "txt_username",
+              { "name": "form_login",
                 "locator": "css selector",
-                "selector": "#username",
+                "selector": "#frmLogin",
                 "instance": "ControlBase",
                 "on_instance_search": true,
                 "on_instance_load": false
               },
-              {
-                "name": "txt_password",
+              { "name": "txt_username",
                 "locator": "css selector",
-                "selector": "#password",
+                "selector": "#txtUsername-field",
                 "instance": "ControlBase",
                 "on_instance_search": true,
                 "on_instance_load": false
               },
-              {
-                "name": "btn_submit",
+              { "name": "txt_password",
                 "locator": "css selector",
-                "selector": "button[type='submit']",
+                "selector": "#txtPassword-field",
                 "instance": "ControlBase",
                 "on_instance_search": true,
                 "on_instance_load": false
               },
-              {
-                "name": "login_container",
+              { "name": "btn_submit",
                 "locator": "css selector",
-                "selector": "#content",
-                "instance": "ControlBase",
-                "on_instance_search": true,
-                "on_instance_load": false
-              },
-              {
-                "name": "login_container_title",
-                "locator": "css selector",
-                "selector": "h2",
+                "selector": "#btnLogin",
                 "instance": "ControlBase",
                 "on_instance_search": true,
                 "on_instance_load": false
               }
             ]
           },
-          {
-            "name": "page_dropdown",
-            "url": "http://the-internet.herokuapp.com/dropdown",
+          { "name": "qacode_inputs",
+            "url": "http://ntz-qa.tk:83/qacode/forms/inputs",
             "locator": "css selector",
-            "go_url": true,
+            "go_url": false,
             "wait_url": 0,
             "maximize": false,
             "controls": [
-              {
-                "name": "dropdown",
+              { "name": "dd_base",
                 "locator": "css selector",
-                "selector": "#dropdown",
+                "selector": "#txtTest002",
                 "instance": "ControlForm",
                 "on_instance_search": true,
                 "on_instance_load": true,
@@ -144,6 +110,42 @@
                 "strict_rules": [
                   { "tag": "select", "type": "tag", "severity": "hight" }
                 ]
+              },
+              { "name": "dd_multiple",
+                "locator": "css selector",
+                "selector": "#txtTest003",
+                "instance": "ControlForm",
+                "on_instance_search": true,
+                "on_instance_load": true,
+                "on_instance_strict": true,
+                "strict_rules": [
+                  { "tag": "select", "type": "tag", "severity": "hight" }
+                ]
+              }
+            ]
+          },
+          { "name": "qacode_logout",
+            "url": "http://ntz-qa.tk:83/qacode/logout",
+            "locator": "css selector",
+            "go_url": true,
+            "wait_url": 0,
+            "maximize": false,
+            "controls": [
+              { "name": "btn_logout",
+                "locator": "css selector",
+                "selector": "a[href='/qacode/logout']",
+                "instance": "ControlBase",
+                "on_instance_search": true,
+                "on_instance_load": true,
+                "on_instance_strict": true
+              },
+              { "name": "btn_login",
+                "locator": "css selector",
+                "selector": "a[href='/qacode/login']",
+                "instance": "ControlBase",
+                "on_instance_search": true,
+                "on_instance_load": true,
+                "on_instance_strict": true
               }
             ]
           }

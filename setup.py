@@ -15,7 +15,7 @@ VERSION = "0.5.4"
 CURR_PATH = "{}{}".format(path.abspath(path.dirname(__file__)), '/')
 INSTALL_REQUIRES = [
     'appdirs',
-    'packaging==16.8',
+    'packaging>=16.8',
     'pyparsing',
     'six==1.10.0',
     'selenium==3.12.0',

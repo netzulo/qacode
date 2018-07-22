@@ -12,16 +12,29 @@ from selenium.webdriver.support.ui import Select
 
 
 SETTINGS = settings(file_path="qacode/configs/")
-SKIP_CONTROLS = SETTINGS['tests']['skip']['web_controls']
+SKIP_CONTROLS = SETTINGS['tests']['skip']['web_controls']['control_form']
 SKIP_CONTROLS_MSG = 'web_controls DISABLED by config file'
 
 
 class TestControlForm(TestInfoBotUnique):
     """Test Suite for ControlBase class"""
 
+    # app from config
     app = None
-    page_dropdown_config = None
-    ctl_dropdown_config = None
+    # page from config: app
+    page = None
+    url = None
+    # page from config: app
+    page_inputs = None
+    url_inputs = None
+    # elements from config: page
+    form_login = None
+    txt_username = None
+    txt_password = None
+    btn_submit = None
+    # elements from config: page_inputs
+    dd_base = None
+    dd_multiple = None
 
     @classmethod
     def setup_class(cls, **kwargs):
@@ -29,31 +42,60 @@ class TestControlForm(TestInfoBotUnique):
         super(TestControlForm, cls).setup_class(
             config=settings(file_path="qacode/configs/"),
             skip_force=SKIP_CONTROLS)
+        cls.add_property(
+            'app', value=cls.settings_app('qadmin'))
+        # page
+        cls.add_property(
+            'page', value=cls.settings_page('qacode_login'))
+        cls.add_property(
+            'url', value=cls.page.get('url'))
+        cls.add_property(
+            'form_login',
+            value=cls.settings_control('form_login'))
+        cls.add_property(
+            'txt_username',
+            value=cls.settings_control('txt_username'))
+        cls.add_property(
+            'txt_password',
+            value=cls.settings_control('txt_password'))
+        cls.add_property(
+            'btn_submit',
+            value=cls.settings_control('btn_submit'))
+        # page_inputs
+        cls.add_property(
+            'page_inputs', value=cls.settings_page('qacode_inputs'))
+        cls.add_property(
+            'url_inputs', value=cls.page_inputs.get('url'))
+        cls.add_property(
+            'dd_base',
+            value=cls.settings_control('dd_base'))
+        cls.add_property(
+            'dd_multiple',
+            value=cls.settings_control('dd_multiple'))
+        # start setup
+        cls.bot.navigation.get_url(cls.url)
+        # login
+        txt_username = cls.bot.navigation.find_element(
+            cls.txt_username.get('selector'))
+        txt_password = cls.bot.navigation.find_element(
+            cls.txt_password.get('selector'))
+        btn_submit = cls.bot.navigation.find_element(
+            cls.btn_submit.get('selector'))
+        txt_username.send_keys('admin')
+        txt_password.send_keys('admin')
+        btn_submit.click()
 
     def setup_method(self, test_method):
         """Configure self.attribute"""
         super(TestControlForm, self).setup_method(
             test_method, config=settings(file_path="qacode/configs/"))
-        self.add_property(
-            'app', value=self.settings_app('pages_tests'))
-        self.add_property(
-            'page_dropdown_config', value=self.settings_page('page_dropdown'))
-        self.add_property(
-            'url', value=self.page_dropdown_config.get('url'))
-        self.add_property(
-            'ctl_dropdown_config', value=self.settings_control(
-                "dropdown", page_name="page_dropdown"))
-        self.bot.navigation.get_url(self.url)
-        curr_url = self.bot.curr_driver.current_url
-        self.assert_equals_url(curr_url, self.url)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    @pytest.mark.parametrize("selector", ["#dropdown"])
+    @pytest.mark.parametrize("selector", ["#txtTest002"])
     @pytest.mark.parametrize("instance", ["ControlForm"])
     @pytest.mark.parametrize("on_instance_search", [True])
     @pytest.mark.parametrize("on_instance_load", [True])
     @pytest.mark.parametrize("auto_reload", [True])
-    @pytest.mark.parametrize("selector_multiple", [False])
     @pytest.mark.parametrize("on_instance_strict", [True, False])
     @pytest.mark.parametrize("strict_rules", [
         [
@@ -62,7 +104,7 @@ class TestControlForm(TestInfoBotUnique):
     ])
     def test_instance_form(self, selector, instance, on_instance_search,
                            on_instance_load, on_instance_strict, strict_rules,
-                           auto_reload, selector_multiple):
+                           auto_reload):
         """Testcase: test_001_instance_selector"""
         control_config = {
             "name": "txt_username_strict",
@@ -72,7 +114,6 @@ class TestControlForm(TestInfoBotUnique):
             "on_instance_search": on_instance_search,
             "on_instance_load": on_instance_load,
             "auto_reload": auto_reload,
-            "selector_multiple": selector_multiple,
             "on_instance_strict": on_instance_strict,
             "strict_rules": strict_rules
         }
@@ -96,9 +137,6 @@ class TestControlForm(TestInfoBotUnique):
             control.auto_reload,
             control_config.get('auto_reload'))
         self.assert_equals(
-            control.selector_multiple,
-            control_config.get('selector_multiple'))
-        self.assert_equals(
             control.instance,
             control_config.get('instance'))
         self.assert_equals(
@@ -116,12 +154,10 @@ class TestControlForm(TestInfoBotUnique):
                 control.dropdown)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    @pytest.mark.parametrize("selector", ["#dropdown"])
+    @pytest.mark.parametrize("selector", ["#txtTest002"])
     @pytest.mark.parametrize("instance", ["ControlForm"])
     @pytest.mark.parametrize("auto_reload", [True])
-    @pytest.mark.parametrize("selector_multiple", [False])
-    def test_method_reload_form(self, selector, instance,
-                                auto_reload, selector_multiple):
+    def test_method_reload_form(self, selector, instance, auto_reload):
         """Testcase: test_method_setcssrule"""
         # must be supported
         control_config = {
@@ -130,7 +166,6 @@ class TestControlForm(TestInfoBotUnique):
             "selector": selector,
             "instance": instance,
             "auto_reload": auto_reload,
-            "selector_multiple": selector_multiple,
             "on_instance_search": False,
             "on_instance_load": False,
             "on_instance_strict": False,
@@ -155,61 +190,62 @@ class TestControlForm(TestInfoBotUnique):
         self.assert_is_instance(control.element, WebElement)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    @pytest.mark.parametrize("text", ["Option 1", "Option 2"])
+    @pytest.mark.parametrize("text", ["Link 1.1", "Link 1.2"])
     def test_method_dropdown_select_by_text(self, text):
         """Testcase: test_method_dropdown_select_by_text"""
-        control = ControlForm(self.bot, **self.ctl_dropdown_config)
+        control = ControlForm(self.bot, **self.dd_base)
         control.dropdown_select(text)
+        # TODO: an assert here
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize("text", ["1", "2"])
     def test_method_dropdown_select_by_value(self, text):
         """Testcase: test_method_dropdown_select_by_value"""
-        control = ControlForm(self.bot, **self.ctl_dropdown_config)
+        control = ControlForm(self.bot, **self.dd_base)
         control.dropdown_select(text, by_value=True)
+        # TODO: an assert here
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize("index", [0, 1])
     def test_method_dropdown_select_by_index(self, index):
         """Testcase: test_method_dropdown_select_by_index"""
-        control = ControlForm(self.bot, **self.ctl_dropdown_config)
+        control = ControlForm(self.bot, **self.dd_base)
         control.dropdown_select(index, by_index=True)
+        # TODO: an assert here
 
-    @pytest.mark.skipIf(
-        True,
-        "Github issue: https://github.com/netzulo/qacode/issues/156")
-    @pytest.mark.parametrize("text", ["Option 1", "Option 2"])
+    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
+    @pytest.mark.parametrize("text", ["Link 1.1", "Link 1.2"])
     def test_method_dropdown_deselect_by_text(self, text):
         """Testcase: test_method_dropdown_deselect_by_text"""
-        control = ControlForm(self.bot, **self.ctl_dropdown_config)
+        control = ControlForm(self.bot, **self.dd_multiple)
         control.dropdown_select(text)
         control.dropdown_deselect(text)
+        # TODO: an assert here
 
-    @pytest.mark.skipIf(
-        True,
-        "Github issue: https://github.com/netzulo/qacode/issues/156")
+    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize("text", ["1", "2"])
     def test_method_dropdown_deselect_by_value(self, text):
         """Testcase: test_method_dropdown_deselect_by_value"""
-        control = ControlForm(self.bot, **self.ctl_dropdown_config)
+        control = ControlForm(self.bot, **self.dd_multiple)
         control.dropdown_select(text, by_value=True)
         control.dropdown_deselect(text, by_value=True)
+        # TODO: an assert here
 
-    @pytest.mark.skipIf(
-        True,
-        "Github issue: https://github.com/netzulo/qacode/issues/156")
+    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize("index", [0, 1])
     def test_method_dropdown_deselect_by_index(self, index):
         """Testcase: test_method_dropdown_deselect_by_index"""
-        control = ControlForm(self.bot, **self.ctl_dropdown_config)
+        control = ControlForm(self.bot, **self.dd_multiple)
         control.dropdown_select(index, by_index=True)
         control.dropdown_deselect(index, by_index=True)
+        # TODO: an assert here
 
-    @pytest.mark.skipIf(
-        True,
-        "Github issue: https://github.com/netzulo/qacode/issues/156")
+    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_method_dropdown_deselect_all(self):
         """Testcase: test_method_dropdown_deselect_all"""
-        control = ControlForm(self.bot, **self.ctl_dropdown_config)
-        control.dropdown_select("Option 1")
+        texts = ["Link 1.1", "Link 1.2"]
+        control = ControlForm(self.bot, **self.dd_multiple)
+        for text in texts:
+            control.dropdown_select(text)
         control.dropdown_deselect_all()
+        # TODO: an assert here
