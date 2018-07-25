@@ -23,7 +23,7 @@ INSTALL_REQUIRES = [
     'nose-testconfig==0.10',
     'pytest',
     'qautils==0.0.2',
-    'qatestlink==0.0.8',
+    'qatestlink==0.1.0',
 ]
 SETUP_REQUIRES = [
     'pytest-runner',
