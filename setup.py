@@ -11,7 +11,7 @@ except ImportError:
     raise Exception("Please, install 'qautils' package: pip install qautils")
 
 
-VERSION = "0.5.4"
+VERSION = "0.5.5"
 CURR_PATH = "{}{}".format(path.abspath(path.dirname(__file__)), '/')
 INSTALL_REQUIRES = [
     'appdirs',
