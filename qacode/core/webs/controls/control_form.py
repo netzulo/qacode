@@ -46,7 +46,8 @@ class ControlForm(ControlBase):
                              "loaded strict_attrs")
     CF_STRICTCSS_LOADING = "control_form | load_strict_css_props: loading..."
     CF_STRICTCSS_LOADED = "control_form | load_strict_css_props: loaded"
-    CF_STRICTCSS_NOT_LOADED = "control_form | load_strict_css_props: not loaded strict_attrs"
+    CF_STRICTCSS_NOT_LOADED = ("control_form | load_strict_css_props:"
+                               " not loaded strict_attrs")
     CF_STRICTCSS_ERROR = ("control_form | load_strict_css_props: not loaded "
                           "strict_css_props with enabled strict_mode")
     CF_PARSERULES_LOADING = "control_form | parse_rules: parsing..."
@@ -55,7 +56,8 @@ class ControlForm(ControlBase):
     CF_RELOAD_LOADED = "control_form | reload: reloaded control"
     CF_DROPDOWNSELECT_LOADING = "control_form | dropdown_select: selecting..."
     CF_DROPDOWNSELECT_LOADED = "control_form | dropdown_select: selected"
-    CF_DROPDOWNDESELECT_LOADING = "control_form | dropdown_select: deselecting..."
+    CF_DROPDOWNDESELECT_LOADING = ("control_form | dropdown_select:"
+                                   " deselecting...")
     CF_DROPDOWNDESELECT_LOADED = "control_form | dropdown_select: deselected"
     CF_DROPDOWNDESELECTALL_LOADING = ("control_form | dropdown_select:"
                                       " deselecting all...")
