@@ -10,6 +10,15 @@ from qacode.core.webs.controls.control_base import CoreException
 class ControlGroup(ControlBase):
     """Requirements: #164"""
 
+    # Log messages
+    CG_SETTINGS_LOADING = "control_group | load_settings_keys: loading keys..."
+    CG_SETTINGS_LOADED = "control_group | load_settings_keys: loaded keys!"
+    CG_GROUP_DISABLED = ("control | _load_group: "
+                         "!Disabled searching group of elements!")
+    CG_GROUP_LOADING = ("control | _load_group: "
+                        "searching group of elements...")
+    CG_GROUP_WAITING = "control | _load_group: waiting for elements..."
+    CG_GROUP_LOADED = "control | _load_group: elements found!"
     # Settings properties
     on_instance_group = None
     group = None
@@ -40,8 +49,7 @@ class ControlGroup(ControlBase):
 
     def load_settings_keys(self, settings, update=False):
         """Load default setting for ControlGroup instance"""
-        self.bot.log.debug(
-            "control_group | load_settings_keys: loading keys...")
+        self.bot.log.debug(self.CG_SETTINGS_LOADING)
         super(ControlGroup, self).load_settings_keys(
             settings,
             update=update,
@@ -57,8 +65,7 @@ class ControlGroup(ControlBase):
                 ("group", []),
             ]
         )
-        self.bot.log.debug(
-            "control_group | load_settings_keys: loaded keys!")
+        self.bot.log.debug(self.CG_SETTINGS_LOADED)
 
     def _load_group(self, enabled=False, ):
         """Load default properties for each element at group dict
@@ -67,20 +74,15 @@ class ControlGroup(ControlBase):
             enabled {bool} -- load at enabled (default: {False})
         """
         if not enabled or enabled is None:
-            self.bot.log.warning(
-                ("control | _load_group: "
-                 "!Disabled searching group of elements!"))
+            self.bot.log.debug(self.CG_GROUP_DISABLED)
             return False
-        self.bot.log.debug(
-            ("control | _load_group: "
-             "searching group of elements..."))
+        self.bot.log.debug(self.CG_GROUP_LOADING)
         try:
             self.elements = self.bot.navigation.find_elements(
                 self.selector, locator=self.locator)
         except CoreException:
-            self.bot.log.warning(
-                "control | _load_group: waiting for elements...")
+            self.bot.log.warning(self.CG_GROUP_WAITING)
             self.elements = self.bot.navigation.find_elements_wait(
                 self.selector, locator=self.locator)
-        self.bot.log.debug("control | _load_group: elements found!")
+        self.bot.log.debug(self.CG_GROUP_LOADED)
         return True
