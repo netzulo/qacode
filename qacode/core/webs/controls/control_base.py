@@ -13,6 +13,42 @@ from selenium.webdriver.common.by import By
 class ControlBase(object):
     """Requirements: #35, #70"""
 
+    # Log messages
+    CB_SETTINGS_LOADING = "control | load_settings_keys: loading keys..."
+    CB_SETTINGS_LOADED = "control | load_settings_keys: loaded keys"
+    CB_SEARCH_DISABLED = "control | _load_search: Disabled element search"
+    CB_SEARCH_LOADING = "control | _load_search: searching element..."
+    CB_SEARCH_WAITING = "control | _load_search: waiting for element..."
+    CB_SEARCH_FOUND = "control | _load_search: element found!"
+    CB_PROP_DISABLED = ("control | _load_properties: "
+                        "disabled loading for properties")
+    CB_PROP_LOADING = "control | _load_properties: loading properties..."
+    CB_PROP_LOADED = "control | _load_properties: loaded properties"
+    CB_FINDCHILD_LOADING = "control | find_child: searching for selector='{}'"
+    CB_FINDCHILD_LOADED = "control | find_child: child element found"
+    CB_GETTAG_LOADING = "control | get_tag: searching for tag"
+    CB_GETTAG_LOADED = "control | get_tag: found same tag='{}'"
+    CB_TYPETEXT_LOADING = "control | type_text: typing text={}"
+    CB_CLEAR_LOADING = "control | clear: clearing text..."
+    CB_CLEAR_LOADED = "control | clear: cleared text"
+    CB_CLICK_LOADING = "control | click: clicking element..."
+    CB_CLICK_LOADED = "control | click: clicked!"
+    CB_GETTEXT_LOADING = "control | get_text: obtaining text..."
+    CB_GETTEXT_FAILED = "control | get_text: failed at obtain text"
+    CB_GETTEXT_LOADED = "control | get_text: text obtained, text='{}'"
+    CB_GETATTRS_LOADING = "control | get_attrs: obtaining attrs..."
+    CB_GETATTRVALUE_LOADING = ("control | get_attr_value: obtaining value "
+                               "for attr_name='{}'")
+    CB_GETATTRVALUE_LOADED = ("control | get_attr_value: obtained"
+                              "attr_name='{}', value='{}'")
+    CB_GETATTRVALUE_FAILED = "control | get_attr_value: fail at obtain value"
+    CB_SETCSSRULE_LOADING = ("control | set_css_value: setting new CSS rule,"
+                             " prop_name={}, prop_value={}")
+    CB_SETCSSRULE_FAILED = "control | set_css_value: failed at set CSS rule"
+    CB_GETCSSRULE_LOADING = "control | get_css_value: obtaining css_value..."
+    CB_GETCSSRULE_LOADED = "control | get_css_value: css_value='{}'"
+    CB_RELOAD_LOADING = "control | reload: reloading control..."
+    CB_RELOAD_LOADED = "control | reload: reloaded control"
     # Instance properties
     bot = None
     settings = None
@@ -64,7 +100,7 @@ class ControlBase(object):
 
     def load_settings_keys(self, settings, update=False, default_keys=None):
         """Load default setting for ControlBase instance"""
-        self.bot.log.debug("control | load_settings_keys: loading keys...")
+        self.bot.log.debug(self.CB_SETTINGS_LOADING)
         # generate default dict
         if default_keys is None:
             default_keys = [
@@ -96,23 +132,22 @@ class ControlBase(object):
             setattr(self, key, updated_settings.get(key))
         if update:
             self.settings = updated_settings
-        self.bot.log.debug("control | load_settings_keys: loaded keys!")
+        self.bot.log.debug(self.CB_SETTINGS_LOADED)
 
     def _load_search(self, enabled=False, selector_multiple_pos=0):
         if not enabled or enabled is None:
-            self.bot.log.warning(
-                "control | _load_search: !Disabled searching element!")
+            self.bot.log.debug(self.CB_SEARCH_DISABLED)
             return False
-        self.bot.log.debug("control | _load_search: searching element...")
+        self.bot.log.debug(self.CB_SEARCH_LOADING)
         try:
             self.element = self.bot.navigation.find_element(
                 self.selector, locator=self.locator)
         except CoreException:
-            self.bot.log.warning(
-                "control | _load_search: waiting for element...")
+            self.bot.log.warning(self.CB_SEARCH_WAITING)
             self.element = self.bot.navigation.find_element_wait(
                 self.selector, locator=self.locator)
-        self.bot.log.debug("control | _load_search: element found!")
+        if self.element:
+            self.bot.log.debug(self.CB_SEARCH_FOUND)
         return True
 
     def _load_properties(self, enabled=False):
@@ -131,12 +166,9 @@ class ControlBase(object):
             self.bot.log.error(msg)
             raise ControlException(message=msg)
         if not enabled or enabled is None:
-            self.bot.log.warning(
-                ("control | _load_properties: "
-                 "!Disabled loading ControlBase properties!"))
+            self.bot.log.debug(self.CB_PROP_DISABLED)
             return False
-        self.bot.log.debug(
-            "control | _load_properties: loading ControlBase properties...")
+        self.bot.log.debug(self.CB_PROP_LOADING)
         self.tag = self.get_tag()
         self.text = self.get_text()
         self.is_displayed = self.bot.navigation.ele_is_displayed(self.element)
@@ -144,8 +176,7 @@ class ControlBase(object):
         self.is_selected = self.bot.navigation.ele_is_selected(self.element)
         self.attr_id = self.get_attr_value('id')
         self.attr_class = self.get_attr_value('class').split()
-        self.bot.log.debug(
-            "control | _load_properties: loaded ControlBase properties!")
+        self.bot.log.debug(self.CB_PROP_LOADED)
         return True
 
     def find_child(self, selector, locator=By.CSS_SELECTOR):
@@ -163,22 +194,21 @@ class ControlBase(object):
         Returns:
             ControlBase -- instanced base element using qacode library object
         """
-        self.bot.log.debug(
-            "control | find_child: selector={}".format(selector))
-        settings = {
-            "locator": locator,
-            "selector": selector
-        }
-        return ControlBase(self.bot, **settings)
+        self.bot.log.debug(self.CB_FINDCHILD_LOADING.format(selector))
+        settings = {"locator": locator, "selector": selector}
+        ctl = ControlBase(self.bot, **settings)
+        if ctl:
+            self.bot.log.debug(self.CB_FINDCHILD_LOADED)
+        return ctl
 
     def get_tag(self):
         """Returns tag_name from Webelement"""
-        self.bot.log.debug("control | get_tag : obtaining tag...")
+        self.bot.log.debug(self.CB_GETTAG_LOADING)
         if not self.element and self.auto_reload:
             self.reload(**self.settings)
         tag_name = self.bot.navigation.ele_tag(self.element)
-        self.bot.log.debug(
-            "control | get_tag : tag={}".format(tag_name))
+        if tag_name:
+            self.bot.log.debug(self.CB_GETTAG_LOADED.format(tag_name))
         return tag_name
 
     def type_text(self, text, clear=False):
@@ -190,8 +220,7 @@ class ControlBase(object):
         Keyword Arguments:
             clear {bool} -- clear text element at enable key (default: {False})
         """
-        self.bot.log.debug(
-            "control | type_text : text={}".format(text))
+        self.bot.log.debug(self.CB_TYPETEXT_LOADING.format(text))
         if not self.element and self.auto_reload:
             self.reload(**self.settings)
         if clear:
@@ -201,19 +230,19 @@ class ControlBase(object):
 
     def clear(self):
         """Clear input element text value"""
-        self.bot.log.debug("control | clear : clearing text...")
+        self.bot.log.debug(self.CB_CLEAR_LOADING)
         if not self.element and self.auto_reload:
             self.reload(**self.settings)
         self.bot.navigation.ele_clear(self.element)
-        self.bot.log.debug("control | clear : cleared text!")
+        self.bot.log.debug(self.CB_CLEAR_LOADED)
 
     def click(self):
         """Click on element"""
-        self.bot.log.debug("control | click : clicking element...")
+        self.bot.log.debug(self.CB_CLICK_LOADING)
         if not self.element and self.auto_reload:
             self.reload(**self.settings)
         self.bot.navigation.ele_click(element=self.element)
-        self.bot.log.debug("control | click : clicked!")
+        self.bot.log.debug(self.CB_CLICK_LOADED)
 
     def get_text(self, on_screen=True):
         """Get element content text.
@@ -229,17 +258,20 @@ class ControlBase(object):
         Returns:
             str -- Return element content text (innerText property)
         """
-        self.bot.log.debug("control | get_text : obtaining text...")
+        self.bot.log.debug(self.CB_GETTEXT_LOADING)
         if not self.element and self.auto_reload:
             self.reload(**self.settings)
+        text = None
         try:
-            return self.bot.navigation.ele_text(
+            text = self.bot.navigation.ele_text(
                 self.element, on_screen=on_screen)
         except CoreException as err:
-            if isinstance(err, CoreException):
-                raise ControlException(err, message=err.message)
-            else:
-                raise Exception(err, message=err.message)
+            self.bot.log.error(self.CB_GETTEXT_FAILED)
+            raise ControlException(err, message=err.message)
+        if text:
+            self.text = text
+            self.bot.log.debug(self.CB_GETTEXT_LOADED.format(text))
+        return text
 
     def get_attrs(self, attr_names):
         """Find a list of attributes on WebElement
@@ -252,7 +284,7 @@ class ControlBase(object):
         Returns:
             dict -- a dict list of {name, value}
         """
-        self.bot.log.debug("control | get_attrs : obtaining attrs...")
+        self.bot.log.debug(self.CB_GETATTRS_LOADING)
         if not self.element and self.auto_reload:
             self.reload(**self.settings)
         attrs = list()
@@ -274,19 +306,17 @@ class ControlBase(object):
         Returns:
             str -- value of html attr_name
         """
-        self.bot.log.debug(
-            ("control | get_attr_value : "
-             "obtaining value for attr_name='{}'...").format(attr_name))
+        self.bot.log.debug(self.CB_GETATTRVALUE_LOADING.format(attr_name))
         if not self.element and self.auto_reload:
             self.reload(**self.settings)
         try:
             value = self.bot.navigation.ele_attribute(
                 self.element, attr_name)
             self.bot.log.debug(
-                ("control | get_attr_value : obtained "
-                 "attr_name={}, value={}").format(attr_name, value))
+                self.CB_GETATTRVALUE_LOADED.format(attr_name, value))
             return value
         except CoreException as err:
+            self.bot.log.error(self.CB_GETATTRVALUE_FAILED)
             raise ControlException(err, message=err.message)
 
     def get_css_value(self, prop_name):
@@ -298,12 +328,11 @@ class ControlBase(object):
         Returns:
             str -- Value of CSS property searched
         """
-        self.bot.log.debug("control | get_css_value : obtaining css_value...")
+        self.bot.log.debug(self.CB_GETCSSRULE_LOADING)
         if not self.element and self.auto_reload:
             self.reload(**self.settings)
         css_value = self.bot.navigation.ele_css(self.element, prop_name)
-        self.bot.log.debug(
-            "control | get_css_value : css_value={}".format(css_value))
+        self.bot.log.debug(self.CB_GETCSSRULE_LOADED.format(css_value))
         return css_value
 
     def set_css_value(self, prop_name, prop_value, css_important=True):
@@ -319,15 +348,14 @@ class ControlBase(object):
                 overrite others values applied (default: {True})
         """
         self.bot.log.debug(
-            ("control | set_css_value : setting new CSS rule, "
-             "prop_name={}, prop_value={}").format(
-                prop_name, prop_value))
+            self.CB_SETCSSRULE_LOADING.format(prop_name, prop_value))
         if not self.element and self.auto_reload:
             self.reload(**self.s)
         self.bot.navigation.set_css_rule(
             self.selector, prop_name, prop_value,
             css_important=css_important)
         if self.selector is None:
+            self.bot.log.error(self.CB_SETCSSRULE_FAILED)
             raise ControlException(message="Couldn't reload element")
         self.reload(**self.settings)
 
@@ -335,8 +363,7 @@ class ControlBase(object):
         """Reload 'self.settings' property:dict and call to instance
             logic with new configuration
         """
-        self.bot.log.debug(
-            "control | reload: reloading control...")
+        self.bot.log.debug(self.CB_RELOAD_LOADING)
         # load settings again
         if kwargs:
             config = kwargs.copy()
@@ -350,8 +377,7 @@ class ControlBase(object):
             enabled=self.settings.get('on_instance_search'))
         self._load_properties(
             enabled=self.settings.get('on_instance_load'))
-        self.bot.log.debug(
-            "control | reload: reloaded control!")
+        self.bot.log.debug(self.CB_RELOAD_LOADED)
 
     def __repr__(self):
         """Show basic properties for this object"""

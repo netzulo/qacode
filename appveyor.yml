@@ -52,9 +52,7 @@ install:
   # about it being out of date.
   - "python -m pip install wheel"
   - "python -m pip install --pre -U tox"
-  - "pip install qautils"
-  - "python setup.py clean"
-  - "python setup.py build"
+  - "python setup.py clean build install sdist"
 
 test_script:
  - "tox -e %TOXENV%,flake8"
