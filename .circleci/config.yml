@@ -24,13 +24,12 @@ jobs:
             # project dependencies
             pip install tox
             pip install coverage==4.2
-            pip install qautils
 
       - run:
           name: Install project
           command: |
             . venv/bin/activate
-            python setup.py install
+            python setup.py clean build install sdist
 
       - run:
           name: Before Tests
