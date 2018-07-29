@@ -40,9 +40,9 @@ class TestInfoBase(object):
                 log_level=config_bot.get('log_level')
             )
             cls.add_property('log', lgm.logger)
-        tl_key = config.get('testlink')
-        if cls.tlm is None and tl_key is not None:
-            cls.tlm = TLManager(settings=tl_key)
+            tl_key = cls.config.get('testlink')
+            if cls.tlm is None and tl_key is not None:
+                cls.tlm = TLManager(settings=tl_key)
         cls.is_loaded = True
 
     @classmethod

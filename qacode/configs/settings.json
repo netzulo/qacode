@@ -62,30 +62,22 @@
             "maximize": false,
             "controls": [
               { "name": "form_login",
-                "locator": "css selector",
                 "selector": "#frmLogin",
-                "instance": "ControlBase",
                 "on_instance_search": true,
                 "on_instance_load": false
               },
               { "name": "txt_username",
-                "locator": "css selector",
                 "selector": "#txtUsername-field",
-                "instance": "ControlBase",
                 "on_instance_search": true,
                 "on_instance_load": false
               },
               { "name": "txt_password",
-                "locator": "css selector",
                 "selector": "#txtPassword-field",
-                "instance": "ControlBase",
                 "on_instance_search": true,
                 "on_instance_load": false
               },
               { "name": "btn_submit",
-                "locator": "css selector",
                 "selector": "#btnLogin",
-                "instance": "ControlBase",
                 "on_instance_search": true,
                 "on_instance_load": false
               }
@@ -99,7 +91,6 @@
             "maximize": false,
             "controls": [
               { "name": "dd_base",
-                "locator": "css selector",
                 "selector": "#txtTest002",
                 "instance": "ControlForm",
                 "on_instance_search": true,
@@ -110,7 +101,6 @@
                 ]
               },
               { "name": "dd_multiple",
-                "locator": "css selector",
                 "selector": "#txtTest003",
                 "instance": "ControlForm",
                 "on_instance_search": true,
@@ -130,17 +120,13 @@
             "maximize": false,
             "controls": [
               { "name": "btn_logout",
-                "locator": "css selector",
                 "selector": "a[href='/qacode/logout']",
-                "instance": "ControlBase",
                 "on_instance_search": true,
                 "on_instance_load": true,
                 "on_instance_strict": true
               },
               { "name": "btn_login",
-                "locator": "css selector",
                 "selector": "a[href='/qacode/login']",
-                "instance": "ControlBase",
                 "on_instance_search": true,
                 "on_instance_load": true,
                 "on_instance_strict": true
