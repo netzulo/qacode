@@ -9,6 +9,7 @@ import pytest
 from qacode.core.bots.bot_base import BotBase
 from qacode.core.exceptions.core_exception import CoreException
 from qacode.core.loggers.logger_manager import LoggerManager
+from qatestlink.core.testlink_manager import TLManager
 
 
 ASSERT_MSG_DEFAULT = "Fails at '{}': actual={}, expected={}"
@@ -21,6 +22,7 @@ class TestInfoBase(object):
     is_loaded = False
     log = None
     config = None
+    tlm = None  # Testlink Manager class
 
     @classmethod
     def load(cls, config):
@@ -38,6 +40,9 @@ class TestInfoBase(object):
                 log_level=config_bot.get('log_level')
             )
             cls.add_property('log', lgm.logger)
+        tl_key = config.get('testlink')
+        if cls.tlm is None and tl_key is not None:
+            cls.tlm = TLManager(settings=tl_key)
         cls.is_loaded = True
 
     @classmethod

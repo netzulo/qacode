@@ -6,6 +6,7 @@ import logging
 import pytest
 from qacode.core.testing.test_info import TestInfoBase
 from qautils.files import settings
+from qatestlink.core.testlink_manager import TLManager
 
 
 class TestTestInfoBase(TestInfoBase):
@@ -22,6 +23,8 @@ class TestTestInfoBase(TestInfoBase):
         self.assert_is_instance(self, TestInfoBase)
         self.assert_is_instance(self.log, logging.Logger)
         self.assert_is_instance(self.config, dict)
+        if self.config.get('testlink'):
+            self.assert_is_instance(self.tlm, TLManager)
 
     @pytest.mark.parametrize("log_level", [
         "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"
