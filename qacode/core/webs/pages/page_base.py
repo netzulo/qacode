@@ -93,16 +93,16 @@ class PageBase(object):
             # load default value
             if instance is None:
                 instance = 'ControlBase'
-            if instance == 'ControlBase' or type(instance) == ControlBase:
+            try:
+                control = {
+                    'ControlBase': ControlBase,
+                    'ControlForm': ControlForm,
+                    'ControlGroup': ControlGroup,
+                }[instance](self.bot, **cfg_control)
+            except KeyError as err:
+                self.log.debug(("Bad instance name selected for "
+                                "cfg_control={}").format(cfg_control))
                 control = ControlBase(self.bot, **cfg_control)
-            elif instance == 'ControlForm' or type(instance) == ControlForm:
-                control = ControlForm(self.bot, **cfg_control)
-            elif instance == 'ControlGroup' or type(instance) == ControlGroup:
-                control = ControlForm(self.bot, **cfg_control)
-            else:
-                raise PageException(
-                    message=("Bad instance name selected for "
-                             "cfg_control={}").format(cfg_control))
             cfg_control.update({'instance': control})
             self._set_control(cfg_control)
 
