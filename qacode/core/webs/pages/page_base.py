@@ -7,6 +7,7 @@ from qacode.core.exceptions.core_exception import CoreException
 from qacode.core.exceptions.page_exception import PageException
 from qacode.core.webs.controls.control_base import ControlBase
 from qacode.core.webs.controls.control_form import ControlForm
+from qacode.core.webs.controls.control_group import ControlGroup
 
 from selenium.webdriver.common.by import By
 
@@ -89,9 +90,14 @@ class PageBase(object):
                  "as property name='{}'").format(cfg_control.get('name')))
             control = None
             instance = cfg_control.get('instance')
+            # load default value
+            if instance is None:
+                instance = 'ControlBase'
             if instance == 'ControlBase' or type(instance) == ControlBase:
                 control = ControlBase(self.bot, **cfg_control)
             elif instance == 'ControlForm' or type(instance) == ControlForm:
+                control = ControlForm(self.bot, **cfg_control)
+            elif instance == 'ControlGroup' or type(instance) == ControlGroup:
                 control = ControlForm(self.bot, **cfg_control)
             else:
                 raise PageException(

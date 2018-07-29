@@ -5,8 +5,8 @@
 import logging
 import pytest
 from qacode.core.testing.test_info import TestInfoBase
-from qautils.files import settings
 from qatestlink.core.testlink_manager import TLManager
+from qautils.files import settings
 
 
 class TestTestInfoBase(TestInfoBase):

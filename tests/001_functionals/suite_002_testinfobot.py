@@ -6,6 +6,7 @@ import logging
 import pytest
 from qacode.core.bots.bot_base import BotBase
 from qacode.core.testing.test_info import TestInfoBot
+from qatestlink.core.testlink_manager import TLManager
 from qautils.files import settings
 
 
@@ -31,3 +32,5 @@ class TestTestInfoBot(TestInfoBot):
         self.assert_is_instance(self, TestInfoBot)
         self.assert_is_instance(self.log, logging.Logger)
         self.assert_is_instance(self.bot, BotBase)
+        self.assert_is_instance(self.config, dict)
+        self.assert_is_instance(self.tlm, TLManager)
