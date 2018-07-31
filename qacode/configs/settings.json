@@ -38,8 +38,13 @@
   "tests": {
     "skip":{
       "test_configs": true,
-      "drivers_local": true,
-      "drivers_remote": false,
+      "browsers": {
+        "chrome": {"local":true, "remote":false},
+        "firefox": {"local":true, "remote":true},
+        "iexplorer": {"local":true, "remote":false},
+        "edge": {"local":true, "remote":true},
+        "opera": {"local":true, "remote":false}
+      },
       "bot_multiple": false,
       "bot_unique": false,
       "bot_navigations": false,

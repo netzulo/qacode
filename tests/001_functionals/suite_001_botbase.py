@@ -10,10 +10,8 @@ from qautils.files import settings
 
 
 SETTINGS = settings(file_path="qacode/configs/")
-SKIP_LOCALS = SETTINGS['tests']['skip']['drivers_local']
-SKIP_LOCALS_MSG = 'drivers_local DISABLED by config file'
-SKIP_REMOTES = SETTINGS['tests']['skip']['drivers_remote']
-SKIP_REMOTES_MSG = 'drivers_remote DISABLED by config file'
+SKIP = SETTINGS['tests']['skip']['browsers']
+SKIP_MSG = 'browsers.{} DISABLED by config file'
 # TODO: must be setteable from config JSON
 WAIT_TO_CLOSE = int(3)
 LOGGER_MANAGER = LoggerManager(log_level=SETTINGS['bot']['log_level'])
@@ -46,10 +44,8 @@ class TestBotBase(TestInfoBase):
     @pytest.mark.parametrize("driver_mode", ["local", "remote"])
     def test_bot_modes_and_names(self, driver_mode, browser_name):
         """Testcase: test_001_bot_local_chrome"""
-        if SKIP_LOCALS and driver_mode == 'local':
-            pytest.skip(SKIP_LOCALS_MSG)
-        if SKIP_REMOTES and driver_mode == 'remote':
-            pytest.skip(SKIP_REMOTES_MSG)
+        if SKIP[browser_name][driver_mode]:
+            pytest.skip(SKIP_MSG.format(browser_name))
         settings = SETTINGS.copy()
         settings.get('bot').update({
             'browser': str(browser_name),
@@ -81,10 +77,8 @@ class TestBotBase(TestInfoBase):
     @pytest.mark.parametrize("driver_mode", ["local", "remote"])
     def test_bot_modes_headless(self, driver_mode, browser_name):
         """Testcase: test_bot_modes_headless"""
-        if SKIP_LOCALS and driver_mode == 'local':
-            pytest.skip(SKIP_LOCALS_MSG)
-        if SKIP_REMOTES and driver_mode == 'remote':
-            pytest.skip(SKIP_REMOTES_MSG)
+        if SKIP[browser_name][driver_mode]:
+            pytest.skip(SKIP_MSG.format(browser_name))
         settings = SETTINGS.copy()
         settings.get('bot').update({
             'browser': str(browser_name),
