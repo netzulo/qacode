@@ -99,7 +99,7 @@ class PageBase(object):
                     'ControlForm': ControlForm,
                     'ControlGroup': ControlGroup,
                 }[instance](self.bot, **cfg_control)
-            except KeyError as err:
+            except KeyError:
                 self.log.debug(("Bad instance name selected for "
                                 "cfg_control={}").format(cfg_control))
                 control = ControlBase(self.bot, **cfg_control)
