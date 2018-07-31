@@ -24,7 +24,7 @@ copyright = '2018, Netzulo'
 author = 'Netzulo'
 
 # The short X.Y version
-version = '5.6'
+version = '5.7'
 # The full version, including alpha/beta/rc tags
 release = 'v0.{}'.format(version)
 

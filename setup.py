@@ -2,6 +2,7 @@
 """Package qacode module can be installed and configured from here"""
 
 
+import json
 from os import path
 from setuptools import setup, find_packages
 from sys import version_info
@@ -26,6 +27,7 @@ def path_format(file_path=None, file_name=None, is_abspath=False,
         return path.abspath(path.join(file_path, file_name))
     else:
         return path.join(file_path, file_name)
+
 
 def read_file(is_json=False, file_path=None, encoding='utf-8',
               is_encoding=True, ignore_raises=False):
@@ -57,6 +59,7 @@ def read_file(is_json=False, file_path=None, encoding='utf-8',
             raise Exception(err)
     return text
 
+
 def read(file_path='./', file_name=None, is_encoding=True, ignore_raises=False):
     """Read file"""
     if file_name is None:
@@ -70,7 +73,7 @@ def read(file_path='./', file_name=None, is_encoding=True, ignore_raises=False):
             ignore_raises=ignore_raises))
 
 
-VERSION = "0.5.6"
+VERSION = "0.5.7"
 CURR_PATH = "{}{}".format(path.abspath(path.dirname(__file__)), '/')
 INSTALL_REQUIRES = [
     'appdirs',
