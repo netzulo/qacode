@@ -1,0 +1,18 @@
+include .circleci
+include .circleci\config.yml
+include *.in
+include *.md
+include *.pyproj
+include *.rst
+include *.yml
+include LICENSE
+include pytest.ini
+include tox.ini
+recursive-include logs *.gitkeep
+recursive-include qacode *.json
+recursive-include tests *.py
+recursive-include source-docs *.rst
+recursive-include source-docs *.py
+recursive-include source-docs *.yml
+recursive-include source-docs *.bat
+recursive-include source-docs Makefile
