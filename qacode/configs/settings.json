@@ -66,26 +66,10 @@
             "wait_url": 0,
             "maximize": false,
             "controls": [
-              { "name": "form_login",
-                "selector": "#frmLogin",
-                "on_instance_search": true,
-                "on_instance_load": false
-              },
-              { "name": "txt_username",
-                "selector": "#txtUsername-field",
-                "on_instance_search": true,
-                "on_instance_load": false
-              },
-              { "name": "txt_password",
-                "selector": "#txtPassword-field",
-                "on_instance_search": true,
-                "on_instance_load": false
-              },
-              { "name": "btn_submit",
-                "selector": "#btnLogin",
-                "on_instance_search": true,
-                "on_instance_load": false
-              }
+              { "name": "form_login", "selector": "#frmLogin", "on_instance_search": true, "on_instance_load": false },
+              { "name": "txt_username", "selector": "#txtUsername-field", "on_instance_search": true, "on_instance_load": false },
+              { "name": "txt_password", "selector": "#txtPassword-field", "on_instance_search": true, "on_instance_load": false },
+              { "name": "btn_submit", "selector": "#btnLogin", "on_instance_search": true, "on_instance_load": false }
             ]
           },
           { "name": "qacode_inputs",
@@ -95,22 +79,12 @@
             "wait_url": 0,
             "maximize": false,
             "controls": [
-              { "name": "dd_base",
-                "selector": "#txtTest002",
-                "instance": "ControlForm",
-                "on_instance_search": true,
-                "on_instance_load": true,
-                "on_instance_strict": true,
+              { "name": "dd_base", "selector": "#txtTest002", "instance": "ControlForm", "on_instance_search": true, "on_instance_load": true, "on_instance_strict": true,
                 "strict_rules": [
                   { "tag": "select", "type": "tag", "severity": "hight" }
                 ]
               },
-              { "name": "dd_multiple",
-                "selector": "#txtTest003",
-                "instance": "ControlForm",
-                "on_instance_search": true,
-                "on_instance_load": true,
-                "on_instance_strict": true,
+              { "name": "dd_multiple", "selector": "#txtTest003", "instance": "ControlForm", "on_instance_search": true, "on_instance_load": true, "on_instance_strict": true,
                 "strict_rules": [
                   { "tag": "select", "type": "tag", "severity": "hight" }
                 ]
@@ -124,18 +98,8 @@
             "wait_url": 0,
             "maximize": false,
             "controls": [
-              { "name": "btn_logout",
-                "selector": "a[href='/qacode/logout']",
-                "on_instance_search": true,
-                "on_instance_load": true,
-                "on_instance_strict": true
-              },
-              { "name": "btn_login",
-                "selector": "a[href='/qacode/login']",
-                "on_instance_search": true,
-                "on_instance_load": true,
-                "on_instance_strict": true
-              }
+              { "name": "btn_logout", "selector": "a[href='/qacode/logout']" },
+              { "name": "btn_login", "selector": "a[href='/qacode/login']" }
             ]
           }
         ]

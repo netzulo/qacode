@@ -6,7 +6,9 @@ from collections import defaultdict
 from qacode.core.bots.bot_base import BotBase
 from qacode.core.exceptions.control_exception import ControlException
 from qacode.core.exceptions.core_exception import CoreException
-
+from selenium.common.exceptions import (
+    ElementNotVisibleException, NoSuchElementException
+)
 from selenium.webdriver.common.by import By
 
 
@@ -32,6 +34,7 @@ class ControlBase(object):
     CB_CLEAR_LOADING = "control | clear: clearing text..."
     CB_CLEAR_LOADED = "control | clear: cleared text"
     CB_CLICK_LOADING = "control | click: clicking element..."
+    CB_CLICK_RETRY = "control | click: retry clicking element..."
     CB_CLICK_LOADED = "control | click: clicked!"
     CB_GETTEXT_LOADING = "control | get_text: obtaining text..."
     CB_GETTEXT_FAILED = "control | get_text: failed at obtain text"
@@ -236,12 +239,20 @@ class ControlBase(object):
         self.bot.navigation.ele_clear(self.element)
         self.bot.log.debug(self.CB_CLEAR_LOADED)
 
-    def click(self):
+    def click(self, retry=True):
         """Click on element"""
         self.bot.log.debug(self.CB_CLICK_LOADING)
         if not self.element and self.auto_reload:
             self.reload(**self.settings)
-        self.bot.navigation.ele_click(element=self.element)
+        try:
+            self.bot.navigation.ele_click(element=self.element)
+        except (ElementNotVisibleException, NoSuchElementException) as err:
+            if not retry:
+                self.bot.log.warning(self.CB_CLICK_RETRY)
+                self.reload(**self.settings)
+                self.bot.navigation.ele_click(element=self.element)
+            else:
+                raise err
         self.bot.log.debug(self.CB_CLICK_LOADED)
 
     def get_text(self, on_screen=True):

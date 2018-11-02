@@ -132,10 +132,9 @@ class TestControlBase(TestInfoBotUnique):
             "on_instance_load": on_instance_load,
             "auto_reload": auto_reload,
         }
-        if (
-                on_instance_search is None and
-                on_instance_load is None and
-                selector is not None):
+        if on_instance_search is None and \
+           on_instance_load is None and \
+           selector is not None:
             control = ControlBase(self.bot, **control_config)
             # main config
             self.assert_equals(
