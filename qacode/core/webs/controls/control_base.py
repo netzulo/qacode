@@ -247,7 +247,7 @@ class ControlBase(object):
         try:
             self.bot.navigation.ele_click(element=self.element)
         except (ElementNotVisibleException, NoSuchElementException) as err:
-            if not retry:
+            if retry:
                 self.bot.log.warning(self.CB_CLICK_RETRY)
                 self.reload(**self.settings)
                 self.bot.navigation.ele_click(element=self.element)
