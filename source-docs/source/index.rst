@@ -1,5 +1,5 @@
 .. qacode documentation master file, created by
-   sphinx-quickstart on Wed Aug  1 22:30:51 2018.
+   sphinx-quickstart on Thu Jan 24 16:49:14 2019.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
@@ -10,13 +10,12 @@ Welcome to qacode's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   _static/bots
-   _static/controls
-   _static/loggers
-   _static/pages
-   _static/testing
-   _static/testlink
-
+   bots
+   controls
+   loggers
+   pages
+   testing
+   testlink
 
 Indices and tables
 ==================

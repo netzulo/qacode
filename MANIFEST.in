@@ -1,5 +1,3 @@
-include .circleci
-include .circleci\config.yml
 include *.in
 include *.md
 include *.pyproj
@@ -16,3 +14,5 @@ recursive-include source-docs *.py
 recursive-include source-docs *.yml
 recursive-include source-docs *.bat
 recursive-include source-docs Makefile
+recursive-include .github *.md
+recursive-include .circleci *.yml
