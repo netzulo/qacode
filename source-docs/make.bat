@@ -9,7 +9,6 @@ if "%SPHINXBUILD%" == "" (
 )
 set SOURCEDIR=source
 set BUILDDIR=../docs
-set SPHINXPROJ=qacode
 
 if "%1" == "" goto help
 
