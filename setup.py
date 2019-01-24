@@ -83,7 +83,7 @@ INSTALL_REQUIRES = [
     'selenium==3.12.0',
     'nose==1.3.7',
     'nose-testconfig==0.10',
-    'pytest',
+    'pytest==3.9.3',
     'qautils==0.0.2',
     'qatestlink==0.1.0',
 ]
