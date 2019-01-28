@@ -14,9 +14,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - README.rst and USAGE.rst to v.5.4 changes
 - Now controls can 'click' include when an element it's not visible or attached to DOM (this behaviour can be disabled)
+- README.rst, included documentation urls
 
 ### Fixed
 - tox envs to v0.5.4 changes (stop using qautils at setup.py)
+- failing install because pytest haven't fixed version at setup.py #212
+- tox environment to generate documentation #211
+- click it's reloading an element when param retry=False #208
 
 ### Removed
 - Old documentation files

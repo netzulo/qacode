@@ -46,7 +46,7 @@ How to install ?
 Documentation
 -------------
 
-+ How to use library, searching for `Usage Guide`_.
++ How to use library, searching for `Usage Guide`_ or auto updated `QAcode's Documentation`_. https://netzulo.github.io/
 
 
 How to exec tests ?
@@ -115,7 +115,7 @@ Configuration File
 Getting Started
 ~~~~~~~~~~~~~~~
 
-*Just starting example of usage before read* `Usage Guide`_.
+*Just starting example of usage before read* `Usage Guide`_ (*or refer to `QAcode's Documentation`_*).
 
 .. code:: python
 
@@ -149,3 +149,4 @@ Getting Started
 
 
 .. _Usage Guide: USAGE.rst
+.. _`QAcode's Documentation`: https://netzulo.github.io/
