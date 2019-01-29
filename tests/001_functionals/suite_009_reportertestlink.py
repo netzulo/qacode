@@ -10,12 +10,12 @@ from qautils.files import settings
 SETTINGS = settings(file_path="qacode/configs/")
 
 
-class TestTlBase(TestInfoBase):
-    """Test Suite for class TlBase"""
+class TestReporterTestlink(TestInfoBase):
+    """Test Suite for class ReporterTestlink"""
 
     def setup_method(self, test_method):
         """Configure self.attribute"""
-        super(TestTlBase, self).setup_method(
+        super(TestReporterTestlink, self).setup_method(
             test_method, config=settings(file_path="qacode/configs/"))
 
     @pytest.mark.skipIf(True, "Functionality it's not working yet")

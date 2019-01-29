@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - README.rst and USAGE.rst to v.5.4 changes
 - Now controls can 'click' include when an element it's not visible or attached to DOM (this behaviour can be disabled)
 - README.rst, included documentation urls
+- Renamed class TlBase to ReporterTestlink #200
 
 ### Fixed
 - tox envs to v0.5.4 changes (stop using qautils at setup.py)

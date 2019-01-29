@@ -6,7 +6,7 @@ from qacode.core.exceptions.core_exception import CoreException
 # TODO: import qatestlink
 
 
-class TlBase(object):
+class ReporterTestlink(object):
     """Testlink API manager class"""
 
     # Testlink connection

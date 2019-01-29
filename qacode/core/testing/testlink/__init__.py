@@ -2,7 +2,7 @@
 """package qacode.core.testing.testlink"""
 
 
-from qacode.core.testing.testlink import testlink_base
+from qacode.core.testing.testlink import reporter_testlink
 
 
-__all__ = ['testlink_base']
+__all__ = ['reporter_testlink']
