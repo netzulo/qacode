@@ -50,8 +50,8 @@ class ControlBase(object):
     CB_SETCSSRULE_FAILED = "control | set_css_value: failed at set CSS rule"
     CB_GETCSSRULE_LOADING = "control | get_css_value: obtaining css_value..."
     CB_GETCSSRULE_LOADED = "control | get_css_value: css_value='{}'"
-    CB_RELOAD_LOADING = "control | reload: reloading control..."
-    CB_RELOAD_LOADED = "control | reload: reloaded control"
+    CB_RELOAD_LOADING = "{} | reload: reloading control..."
+    CB_RELOAD_LOADED = "{} | reload: reloaded control"
     # Instance properties
     bot = None
     settings = None
@@ -374,7 +374,8 @@ class ControlBase(object):
         """Reload 'self.settings' property:dict and call to instance
             logic with new configuration
         """
-        self.bot.log.debug(self.CB_RELOAD_LOADING)
+        class_name = self.__class__.__name__
+        self.bot.log.debug(self.CB_RELOAD_LOADING.format(class_name))
         # load settings again
         if kwargs:
             config = kwargs.copy()
@@ -388,7 +389,8 @@ class ControlBase(object):
             enabled=self.settings.get('on_instance_search'))
         self._load_properties(
             enabled=self.settings.get('on_instance_load'))
-        self.bot.log.debug(self.CB_RELOAD_LOADED)
+        if class_name == 'ControlBase':
+            self.bot.log.debug(self.CB_RELOAD_LOADED.format(class_name))
 
     def __repr__(self):
         """Show basic properties for this object"""

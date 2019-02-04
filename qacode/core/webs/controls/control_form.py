@@ -52,7 +52,6 @@ class ControlForm(ControlBase):
                           "strict_css_props with enabled strict_mode")
     CF_PARSERULES_LOADING = "control_form | parse_rules: parsing..."
     CF_PARSERULES_LOADED = "control_form | parse_rules: parsed"
-    CF_RELOAD_LOADING = "control_form | reload: reloading control..."
     CF_RELOAD_LOADED = "control_form | reload: reloaded control"
     CF_DROPDOWNSELECT_LOADING = "control_form | dropdown_select: selecting..."
     CF_DROPDOWNSELECT_LOADED = "control_form | dropdown_select: selected"
@@ -313,22 +312,9 @@ class ControlForm(ControlBase):
         """Reload 'self.settings' property:dict and call to instance
             logic with new configuration
         """
-        self.bot.log.debug(self.CF_RELOAD_LOADING)
-        # load settings again
-        if kwargs:
-            config = kwargs.copy()
-        else:
-            config = self.settings.copy()
-        config.update(self.RELOAD_CONFIG)
-        # needed for self._load_* functions
-        self.load_settings_keys(config, update=True)
-        # instance logic
-        self._load_search(
-            enabled=config.get('on_instance_search'))
-        self._load_properties(
-            enabled=config.get('on_instance_load'))
+        super(ControlForm, self).reload(**kwargs)
         self._load_strict(
-            enabled=config.get('on_instance_strict'))
+            enabled=self.settings.get('on_instance_strict'))
         self.bot.log.debug(self.CF_RELOAD_LOADED)
 
     def dropdown_select(self, text, by_value=False, by_index=False):
