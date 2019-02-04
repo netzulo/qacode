@@ -117,3 +117,46 @@ class TestControlGroup(TestInfoBotUnique):
             self.assert_greater(len(control.elements), 1)
         else:
             self.assert_equals(len(control.elements), 0)
+
+    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
+    @pytest.mark.parametrize("selector", ["input:not([type=checkbox])"])
+    @pytest.mark.parametrize("instance", ["ControlGroup"])
+    @pytest.mark.parametrize("auto_reload", [True])
+    @pytest.mark.parametrize("on_instance_group", [False, True])
+    def test_method_reload_group(self, selector, instance, auto_reload,
+                                 on_instance_group):
+        """Testcase: test_method_reload_group"""
+        # must be supported
+        control_config = {
+            "name": "txt_username_base",
+            "locator": "css selector",
+            "selector": selector,
+            "instance": instance,
+            "on_instance_search": False,
+            "on_instance_load": False,
+            "auto_reload": auto_reload,
+            "on_instance_group": on_instance_group,
+        }
+        control = ControlGroup(self.bot, **control_config)
+        self.assert_equals(control.on_instance_search, False)
+        self.assert_equals(control.on_instance_load, False)
+        self.assert_equals(control.on_instance_group, on_instance_group)
+        if on_instance_group:
+            self.assert_greater(len(control.elements), 1)
+        else:
+            self.assert_greater(len(control.elements), 0)
+        self.assert_lower(len(control.elements), 3)
+        # Real test behaviour
+        update_config = {
+            "on_instance_search": True,
+            "on_instance_load": True,
+            "on_instance_strict": True,
+            "on_instance_group": on_instance_group
+        }
+        control_config.update(update_config)
+        control.reload(**control_config)
+        self.assert_equals(control.on_instance_search, True)
+        self.assert_equals(control.on_instance_load, True)
+        self.assert_equals(control.on_instance_group, on_instance_group)
+        for element in control.elements:
+            self.assert_is_instance(element, WebElement)

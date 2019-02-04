@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - failing install because pytest haven't fixed version at setup.py #212
 - tox environment to generate documentation #211
 - click it's reloading an element when param retry=False #208
+- class ControlGroup doesn't have reload call and no test #204
 
 ### Removed
 - Old documentation files

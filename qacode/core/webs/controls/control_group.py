@@ -19,6 +19,7 @@ class ControlGroup(ControlBase):
                         "searching group of elements...")
     CG_GROUP_WAITING = "control | _load_group: waiting for elements..."
     CG_GROUP_LOADED = "control | _load_group: elements found!"
+    CG_RELOAD_LOADED = "control_group | reload: reloaded controls"
     # Settings properties
     on_instance_group = None
     group = None
@@ -86,3 +87,17 @@ class ControlGroup(ControlBase):
                 self.selector, locator=self.locator)
         self.bot.log.debug(self.CG_GROUP_LOADED)
         return True
+
+    def reload(self, **kwargs):
+        """Reload 'self.settings' property:dict and call to instance
+            logic with new configuration
+        """
+        super(ControlGroup, self).reload(**kwargs)
+        # instance logic
+        if not self.on_instance_group:
+            self._load_search(enabled=self.on_instance_search)
+            self._load_properties(enabled=self.on_instance_load)
+        else:
+            self._load_group(enabled=self.on_instance_group)
+            self._load_properties(enabled=self.on_instance_load)
+        self.bot.log.debug(self.CG_RELOAD_LOADED)
