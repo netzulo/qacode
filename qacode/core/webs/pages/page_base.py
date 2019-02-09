@@ -152,7 +152,7 @@ class PageBase(object):
             instance = config_control.get("instance")
             control = None
             try:
-                if isinstance(instance, (ControlBase, ControlForm)):
+                if isinstance(instance, (ControlBase, ControlForm, ControlGroup)):
                     controls.append(control)
                 else:
                     raise PageException(
