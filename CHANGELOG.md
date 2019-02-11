@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - click it's reloading an element when param retry=False #208
 - class ControlGroup doesn't have reload call and no test #204
 - page.get_elements was not parsing ControlGroup classes at calls #205
+- py.test arguments calls working at root path while development #220
 
 ### Removed
 - Old documentation files
