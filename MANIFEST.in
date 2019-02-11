@@ -6,6 +6,7 @@ include *.yml
 include LICENSE
 include pytest.ini
 include tox.ini
+include conftest.py
 recursive-include logs *.gitkeep
 recursive-include qacode *.json
 recursive-include tests *.py
