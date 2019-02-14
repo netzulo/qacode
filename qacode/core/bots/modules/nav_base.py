@@ -10,7 +10,8 @@
 from qacode.core.exceptions.core_exception import CoreException
 from selenium.common.exceptions import (
     NoSuchElementException,
-    WebDriverException
+    WebDriverException,
+    StaleElementReferenceException
 )
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
@@ -208,8 +209,12 @@ class NavBase(object):
             raise CoreException(message='Nav instanced without driver_wait')
         if driver_wait is None:
             driver_wait = self.driver_wait
-        return driver_wait.until(
-            EC.presence_of_element_located((locator, selector)))
+        try:
+            return driver_wait.until(
+                EC.presence_of_element_located((locator, selector)))
+        except (NoSuchElementException, StaleElementReferenceException):
+            return driver_wait.until(
+                EC.visibility_of_element_located((locator, selector)))
 
     def find_elements_wait(self, selector,
                            locator=By.CSS_SELECTOR, driver_wait=None):
@@ -238,8 +243,12 @@ class NavBase(object):
             raise CoreException(message='Nav instanced without driver_wait')
         if driver_wait is None:
             driver_wait = self.driver_wait
-        return driver_wait.until(
-            EC.presence_of_all_elements_located((locator, selector)))
+        try:
+            return driver_wait.until(
+                EC.presence_of_all_elements_located((locator, selector)))
+        except (NoSuchElementException, StaleElementReferenceException):
+            return driver_wait.until(
+                EC.visibility_of_all_elements_located((locator, selector)))
 
     def forward(self):
         """Go forward using browser functionality"""
