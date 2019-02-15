@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Improve Control Search #222
 - Updated lib 'selenium' from 3.12.0 to 3.14.0 #228
+- Now enum_base is being tested and documented #181
 
 ### Fixed
 - CI appveyor builds failing since tag v0.5.7 #226

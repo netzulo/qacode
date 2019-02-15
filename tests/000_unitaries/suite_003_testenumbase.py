@@ -2,15 +2,17 @@
 """Test Suite module for enums package"""
 
 
-import logging
-import pytest
-from qacode.core.testing.test_info import TestInfoBase
 from qacode.core.enums.enum_base import EnumBase
+from qacode.core.testing.test_info import TestInfoBase
 from qautils.files import settings
 
+
 class TestEnum(EnumBase):
-            ONE = 1
-            TWO = 2
+    """Example class for this test package"""
+
+    ONE = 1
+    TWO = 2
+
 
 class TestTestInfoBase(TestInfoBase):
     """Testcases for class TestInfoBase"""
