@@ -80,7 +80,7 @@ INSTALL_REQUIRES = [
     'packaging>=16.8',
     'pyparsing',
     'six==1.10.0',
-    'selenium==3.12.0',
+    'selenium==3.14.0',
     'nose==1.3.7',
     'nose-testconfig==0.10',
     'pytest==3.9.3',
