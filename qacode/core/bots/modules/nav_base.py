@@ -10,8 +10,8 @@
 from qacode.core.exceptions.core_exception import CoreException
 from selenium.common.exceptions import (
     NoSuchElementException,
-    WebDriverException,
-    StaleElementReferenceException
+    StaleElementReferenceException,
+    WebDriverException
 )
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
