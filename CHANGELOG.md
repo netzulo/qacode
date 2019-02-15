@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased] - xxxx-xx-xx
 
 ### Added
+- Autodoc for package 'qacode.core.exceptions' #223
 
 ### Changed
 - Improve Control Search #222

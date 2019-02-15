@@ -12,6 +12,7 @@ Welcome to qacode's documentation!
 
    bots
    controls
+   exceptions
    loggers
    pages
    testing
