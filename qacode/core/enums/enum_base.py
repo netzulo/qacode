@@ -13,9 +13,14 @@ class EnumBase(Enum):
     @classmethod
     def get_properties(cls):
         """Return enum values"""
-        return [item.value for item in type(cls)]
+        return list(cls.__members__.keys())
 
     @classmethod
     def has_property(cls, value):
         """Returns True if enum have value"""
-        return any(value == item.value for item in cls)
+        try:
+            cls(value)
+        except ValueError:
+            return False
+        else:
+            return True
