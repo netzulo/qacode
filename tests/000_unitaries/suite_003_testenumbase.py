@@ -38,14 +38,14 @@ class TestTestInfoBase(TestInfoBase):
         self.assert_true(e, value)
 
     def test_003_enums_hasntproperty(self):
-        """Test: test_002_enums_hasproperty"""
+        """Test: test_003_enums_hasntproperty"""
         value = 3
         e = self.test_enum.has_property(value)
         self.assert_not_none(e)
         self.assert_false(e, value)
 
-    def test_003_enums_getproperties(self):
-        """Test: test_003_enums_getproperties"""
+    def test_004_enums_getproperties(self):
+        """Test: test_004_enums_getproperties"""
         e = self.test_enum
         self.assert_equals(len(e.get_properties()), 2)
         for prop in e.get_properties():
