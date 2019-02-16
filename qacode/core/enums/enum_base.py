@@ -18,4 +18,9 @@ class EnumBase(Enum):
     @classmethod
     def has_property(cls, value):
         """Returns True if enum have value"""
-        return cls(value)
+        try:
+            cls(value)
+        except ValueError:
+            return False
+        else:
+            return True
