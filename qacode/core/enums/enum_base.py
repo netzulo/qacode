@@ -13,7 +13,7 @@ class EnumBase(Enum):
     @classmethod
     def get_properties(cls):
         """Return enum values"""
-        return list(cls.__members__keys())
+        return list(cls.__members__.keys())
 
     @classmethod
     def has_property(cls, value):

@@ -35,12 +35,18 @@ class TestTestInfoBase(TestInfoBase):
         value = 1
         e = self.test_enum.has_property(value)
         self.assert_not_none(e)
-        self.assert_in(str(e.name), self.test_values)
-        self.assert_equals(e.value, value)
+        self.assert_true(e, value)
+
+    def test_003_enums_hasntproperty(self):
+        """Test: test_002_enums_hasproperty"""
+        value = 3
+        e = self.test_enum.has_property(value)
+        self.assert_not_none(e)
+        self.assert_false(e, value)
 
     def test_003_enums_getproperties(self):
         """Test: test_003_enums_getproperties"""
-        e = self.test_enum.has_property(1)
+        e = self.test_enum
         self.assert_equals(len(e.get_properties()), 2)
         for prop in e.get_properties():
             self.assert_in(prop, self.test_values)
