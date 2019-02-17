@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 - CI appveyor builds failing since tag v0.5.7 #226
+- Failing setup.py install on python2.7 before next release #233
 
 ### Removed
 
