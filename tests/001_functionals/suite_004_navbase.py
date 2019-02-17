@@ -179,4 +179,4 @@ class TestNavBase(TestInfoBotUnique):
         """Testcase: test_gettitle_ok"""
         title = self.bot.navigation.get_title()
         self.assert_not_none(title)
-        self.assert_is_instance(title, str)
+        self.assert_is_instance(type(title), str)
