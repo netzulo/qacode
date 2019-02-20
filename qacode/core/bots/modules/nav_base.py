@@ -82,6 +82,8 @@ class NavBase(object):
                 'domain': None})
         """
         valid_keys = ["name", "value"]
+        if cookie_dict is None:
+            raise CoreException("Can't add None cookie")
         for key in valid_keys:
             if cookie_dict.get(key) is None:
                 msg = "Can't add new cookie without '{}'"
@@ -495,7 +497,7 @@ class NavBase(object):
         """
         if not isinstance(element, WebElement):
             raise CoreException(
-                "Param 'locator' it's not instance of WebElement class")
+                "Param 'element' it's not instance of WebElement")
         if text is not None:
             element.send_keys(text)
         else:

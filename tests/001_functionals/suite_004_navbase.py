@@ -53,6 +53,31 @@ class TestNavBase(TestInfoBotUnique):
             self.page.get('url'), wait_for_load=1)
 
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
+    def test_getcurrenturl_ok(self):
+        """Testcase: test_getcurrenturl_ok"""
+        self.assert_equals(
+            self.bot.navigation.get_current_url(),
+            self.page.get('url'))
+    
+    @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
+    def test_isurl_true(self):
+        """Testcase: test_isurl_true"""
+        self.assert_true(
+            self.bot.navigation.is_url(
+                self.bot.navigation.get_current_url()))
+
+    @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
+    def test_isurl_false(self):
+        """Testcase: test_isurl_false"""
+        self.assert_false(self.bot.navigation.is_url(""))
+
+    @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
+    def test_isurl_raiseswhenurlreturnfalse(self):
+        """Testcase: test_isurl_false"""
+        with pytest.raises(CoreException):
+            self.bot.navigation.is_url("", ignore_raises=False)
+
+    @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_reload_ok(self):
         """Testcase: test_reload_ok"""
         self.bot.navigation.reload()
@@ -98,31 +123,42 @@ class TestNavBase(TestInfoBotUnique):
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_findelement_ok(self):
         """Testcase: test_findelement_ok"""
-        selector = "body"
-        element = self.bot.navigation.find_element(selector)
-        self.assert_is_instance(element, WebElement)
+        self.assert_is_instance(
+            self.bot.navigation.find_element("body"),
+            WebElement)
 
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_findelement_notfound(self):
         """Testcase: test_findelement_notfound"""
-        selector = "article"
         with pytest.raises(CoreException):
-            self.bot.navigation.find_element(selector)
+            self.bot.navigation.find_element("article")
 
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_findelement_notlocator(self):
         """Testcase: test_findelement_notlocator"""
-        selector = "body"
         with pytest.raises(CoreException):
             self.bot.navigation.find_element(
-                selector, locator=None)
+                "body", locator=None)
+
+    @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
+    def test_findelementwait_ok(self):
+        """Testcase: test_findelementwait_ok"""
+        self.assert_is_instance(
+            self.bot.navigation.find_element_wait("body"),
+            WebElement)
+    
+    @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
+    def test_findelementswait_ok(self):
+        """Testcase: test_findelementwait_ok"""
+        elements = self.bot.navigation.find_elements_wait("body>*")
+        self.assert_is_instance(elements, list)
+        for element in elements:
+            self.assert_is_instance(element, WebElement)
 
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_findelements_ok(self):
         """Testcase: test_findelement_ok"""
-        selector = "body>*"
-        elements = self.bot.navigation.find_elements(selector)
-        self.assert_not_none(elements)
+        elements = self.bot.navigation.find_elements("body>*")
         self.assert_is_instance(elements, list)
         for element in elements:
             self.assert_is_instance(element, WebElement)
@@ -130,38 +166,53 @@ class TestNavBase(TestInfoBotUnique):
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_findelements_notfound(self):
         """Testcase: test_findelements_notfound"""
-        selector = "article"
         with pytest.raises(CoreException):
-            self.bot.navigation.find_elements(selector)
+            self.bot.navigation.find_elements("article")
 
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_findelements_notlocator(self):
         """Testcase: test_findelements_notlocator"""
-        selector = "body"
         with pytest.raises(CoreException):
             self.bot.navigation.find_elements(
-                selector, locator=None)
+                "body", locator=None)
 
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_getwindowhandle_ok(self):
         """Testcase: test_getwindowhandle_ok"""
-        window = self.bot.navigation.get_window_handle()
-        self.assert_not_none(window)
-        self.assert_is_instance(window, str)
+        self.assert_is_instance(
+            self.bot.navigation.get_window_handle(),
+            str)
 
     @pytest.mark.skipIf(
-        True, "Depends of remote webdriver and local to get working")
+        True, "Depends of remote+local webdrivers to get working")
     def test_addcookie_ok(self):
         """Testcase: test_addcookie_ok"""
         cookie = {"name": "test_cookie", "value": "test_value"}
         self.bot.navigation.add_cookie(cookie)
+    
+    @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
+    def test_addcookie_notparams(self):
+        """Testcase: test_addcookie_ok"""
+        with pytest.raises(CoreException):
+            self.bot.navigation.add_cookie(None)
+
+    @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
+    def test_addcookie_badcookiekeys(self):
+        """Testcase: test_addcookie_ok"""
+        with pytest.raises(CoreException):
+            self.bot.navigation.add_cookie({})
 
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_getcookies_ok(self):
         """Testcase: test_getcookies_ok"""
-        cookies = self.bot.navigation.get_cookies()
-        self.assert_not_none(cookies)
-        self.assert_is_instance(cookies, list)
+        self.assert_is_instance(
+            self.bot.navigation.get_cookies(),
+            list)
+
+    @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
+    def test_deletecookiebykey_ok(self):
+        """Testcase: test_deleteallcookies_ok"""
+        self.bot.navigation.delete_cookie_by_key("")
 
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_deleteallcookies_ok(self):
@@ -177,6 +228,64 @@ class TestNavBase(TestInfoBotUnique):
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_gettitle_ok(self):
         """Testcase: test_gettitle_ok"""
-        title = self.bot.navigation.get_title()
-        self.assert_not_none(title)
-        self.assert_is_instance(type(title), str)
+        self.assert_is_instance(
+            self.bot.navigation.get_title(),
+            str)
+
+    @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
+    def test_getscreenshotasbase64_ok(self):
+        """Testcase: test_getscreenshotasbase64_ok"""
+        self.assert_is_instance(
+            self.bot.navigation.get_screenshot_as_base64(),
+            str)
+
+    @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
+    def test_jssettimeout_ok(self):
+        """Testcase: test_jssettimeout_ok"""
+        self.bot.navigation.js_set_timeout(1)
+
+    @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
+    def test_eleclick_okbyselector(self):
+        """Testcase: test_eleclick_ok"""
+        self.bot.navigation.ele_click(selector="body")
+    
+    @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
+    def test_eleclick_okbyelement(self):
+        """Testcase: test_eleclick_ok"""
+        self.bot.navigation.ele_click(
+            element=self.bot.navigation.find_element("body"))
+
+    @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
+    def test_eleclick_notparams(self):
+        """Testcase: test_eleclick_notparams"""
+        with pytest.raises(CoreException):
+            self.bot.navigation.ele_click()
+    
+    @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
+    def test_elewrite_ok(self):
+        """Testcase: test_elewrite_ok"""
+        self.bot.navigation.ele_write(
+            self.bot.navigation.find_element("body"),
+            text="test")
+
+    @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
+    def test_elewrite_okwithouttext(self):
+        """Testcase: test_elewrite_ok"""
+        self.bot.navigation.ele_write(
+            self.bot.navigation.find_element("body"),
+            text=None)
+
+    @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
+    def test_elewrite_notparams(self):
+        """Testcase: test_elewrite_notparams"""
+        with pytest.raises(CoreException):
+            self.bot.navigation.ele_write(None)
+    
+
+    @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
+    def test_setwebelement_ok(self):
+        """Testcase: test_setwebelement_ok"""
+        self.bot.navigation.set_web_element("test-element")
+    
+    
+            
