@@ -180,7 +180,7 @@ class TestNavBase(TestInfoBotUnique):
     def test_getwindowhandle_ok(self):
         """Testcase: test_getwindowhandle_ok"""
         self.assert_is_instance(
-            self.bot.navigation.get_window_handle(),
+            type(self.bot.navigation.get_window_handle()),
             str)
 
     @pytest.mark.skipIf(
@@ -229,14 +229,14 @@ class TestNavBase(TestInfoBotUnique):
     def test_gettitle_ok(self):
         """Testcase: test_gettitle_ok"""
         self.assert_is_instance(
-            self.bot.navigation.get_title(),
+            type(self.bot.navigation.get_title()),
             str)
 
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_getscreenshotasbase64_ok(self):
         """Testcase: test_getscreenshotasbase64_ok"""
         self.assert_is_instance(
-            self.bot.navigation.get_screenshot_as_base64(),
+            type(self.bot.navigation.get_screenshot_as_base64()),
             str)
 
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
