@@ -58,7 +58,7 @@ class TestNavBase(TestInfoBotUnique):
         self.assert_equals(
             self.bot.navigation.get_current_url(),
             self.page.get('url'))
-    
+
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_isurl_true(self):
         """Testcase: test_isurl_true"""
@@ -146,7 +146,7 @@ class TestNavBase(TestInfoBotUnique):
         self.assert_is_instance(
             self.bot.navigation.find_element_wait("body"),
             WebElement)
-    
+
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_findelementswait_ok(self):
         """Testcase: test_findelementwait_ok"""
@@ -189,7 +189,7 @@ class TestNavBase(TestInfoBotUnique):
         """Testcase: test_addcookie_ok"""
         cookie = {"name": "test_cookie", "value": "test_value"}
         self.bot.navigation.add_cookie(cookie)
-    
+
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_addcookie_notparams(self):
         """Testcase: test_addcookie_ok"""
@@ -248,7 +248,7 @@ class TestNavBase(TestInfoBotUnique):
     def test_eleclick_okbyselector(self):
         """Testcase: test_eleclick_ok"""
         self.bot.navigation.ele_click(selector="body")
-    
+
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_eleclick_okbyelement(self):
         """Testcase: test_eleclick_ok"""
@@ -260,7 +260,7 @@ class TestNavBase(TestInfoBotUnique):
         """Testcase: test_eleclick_notparams"""
         with pytest.raises(CoreException):
             self.bot.navigation.ele_click()
-    
+
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_elewrite_ok(self):
         """Testcase: test_elewrite_ok"""
@@ -280,12 +280,8 @@ class TestNavBase(TestInfoBotUnique):
         """Testcase: test_elewrite_notparams"""
         with pytest.raises(CoreException):
             self.bot.navigation.ele_write(None)
-    
 
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_setwebelement_ok(self):
         """Testcase: test_setwebelement_ok"""
         self.bot.navigation.set_web_element("test-element")
-    
-    
-            
