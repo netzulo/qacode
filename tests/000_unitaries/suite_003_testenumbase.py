@@ -40,7 +40,6 @@ class TestTestInfoBase(TestInfoBase):
 
     def test_004_enums_getproperties(self):
         """Test: test_004_enums_getproperties"""
-        props = self.test_enum.get_properties()
-        self.assert_equals(len(props), 2)
-        for prop in props:
-            self.assert_in(prop, self.test_values)
+        self.assert_equals(
+            self.test_enum.get_properties(),
+            self.test_values)
