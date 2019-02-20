@@ -179,9 +179,8 @@ class TestNavBase(TestInfoBotUnique):
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_getwindowhandle_ok(self):
         """Testcase: test_getwindowhandle_ok"""
-        self.assert_is_instance(
-            type(self.bot.navigation.get_window_handle()),
-            str)
+        self.assert_not_none(
+            self.bot.navigation.get_window_handle())
 
     @pytest.mark.skipIf(
         True, "Depends of remote+local webdrivers to get working")
@@ -228,16 +227,14 @@ class TestNavBase(TestInfoBotUnique):
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_gettitle_ok(self):
         """Testcase: test_gettitle_ok"""
-        self.assert_is_instance(
-            type(self.bot.navigation.get_title()),
-            str)
+        self.assert_not_none(
+            self.bot.navigation.get_title())
 
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_getscreenshotasbase64_ok(self):
         """Testcase: test_getscreenshotasbase64_ok"""
-        self.assert_is_instance(
-            type(self.bot.navigation.get_screenshot_as_base64()),
-            str)
+        self.assert_not_none(
+            self.bot.navigation.get_screenshot_as_base64())
 
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_jssettimeout_ok(self):
