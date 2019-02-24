@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=no-self-use
-# pylint: disable=too-many-public-methods
 """Created on 04 march 2017
 
 @author: ntz
@@ -64,6 +62,42 @@ class NavBase(object):
     def get_window_handle(self):
         """Get window object to handle with selenium on scripts"""
         return self.driver.current_window_handle
+
+    def add_cookie(self, cookie_dict):
+        """Adds a cookie to your current session.
+
+        Args:
+            cookie_dict: A dictionary object, with required
+                keys - "name" and "value"
+                optional keys - "path", "domain", "secure", "expiry"
+        Usage:
+            driver.add_cookie({
+                "name" : "foo",
+                "value" : "bar"})
+            driver.add_cookie({
+                'name' : 'foo',
+                'value' : 'bar',
+                'path' : '/',
+                'secure':True,
+                'domain': None})
+        """
+        valid_keys = ["name", "value"]
+        if cookie_dict is None:
+            raise CoreException("Can't add None cookie")
+        for key in valid_keys:
+            if cookie_dict.get(key) is None:
+                msg = "Can't add new cookie without '{}'"
+                raise CoreException(message=msg.format(key))
+        try:
+            return self.driver.add_cookie(cookie_dict)
+        except WebDriverException as err:
+            raise CoreException(message=err)
+
+    def get_cookies(self):
+        """Returns a set of dictionaries, corresponding to cookies
+            visible in the current session.
+        """
+        return self.driver.get_cookies()
 
     def delete_cookie_by_key(self, key_name):
         """Deletes a single cookie with the given name"""
@@ -178,7 +212,10 @@ class NavBase(object):
         if locator is None:
             raise CoreException(message=msg)
         try:
-            return self.driver.find_elements(locator, selector)
+            elements = self.driver.find_elements(locator, selector)
+            if len(elements) == 0:
+                raise CoreException(message="0 elements found")
+            return elements
         except NoSuchElementException as err:
             raise CoreException(err, message=msg_err)
 
@@ -460,7 +497,7 @@ class NavBase(object):
         """
         if not isinstance(element, WebElement):
             raise CoreException(
-                "Param 'locator' it's not instance of WebElement class")
+                "Param 'element' it's not instance of WebElement")
         if text is not None:
             element.send_keys(text)
         else:
