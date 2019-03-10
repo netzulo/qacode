@@ -10,6 +10,7 @@ from selenium.common.exceptions import (
     ElementNotVisibleException, NoSuchElementException
 )
 from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webelement import WebElement
 
 
 class ControlBase(object):
@@ -22,6 +23,7 @@ class ControlBase(object):
     CB_SEARCH_LOADING = "control | _load_search: searching element..."
     CB_SEARCH_WAITING = "control | _load_search: waiting for element..."
     CB_SEARCH_FOUND = "control | _load_search: element found!"
+    CB_SEARCH_FOUND_CHILD = "control | _load_search: element child found!"
     CB_PROP_DISABLED = ("control | _load_properties: "
                         "disabled loading for properties")
     CB_PROP_LOADING = "control | _load_properties: loading properties..."
@@ -98,7 +100,9 @@ class ControlBase(object):
         # needed for self._load_* functions
         self.load_settings_keys(kwargs.copy(), update=True)
         # instance logic
-        self._load_search(enabled=self.on_instance_search)
+        self._load_search(
+            enabled=self.on_instance_search,
+            element=self.settings.get("element"))
         self._load_properties(enabled=self.on_instance_load)
 
     def load_settings_keys(self, settings, update=False, default_keys=None):
@@ -113,7 +117,8 @@ class ControlBase(object):
                 ("on_instance_search", False),
                 ("on_instance_load", False),
                 ("auto_reload", True),
-                ("instance", 'ControlBase')
+                ("instance", 'ControlBase'),
+                ("element", None)
             ]
         default_settings = defaultdict(list, default_keys)
         updated_settings = {}
@@ -137,14 +142,21 @@ class ControlBase(object):
             self.settings = updated_settings
         self.bot.log.debug(self.CB_SETTINGS_LOADED)
 
-    def _load_search(self, enabled=False, selector_multiple_pos=0):
+    def _load_search(self, enabled=False, element=None):
         if not enabled or enabled is None:
             self.bot.log.debug(self.CB_SEARCH_DISABLED)
             return False
         self.bot.log.debug(self.CB_SEARCH_LOADING)
         try:
-            self.element = self.bot.navigation.find_element(
-                self.selector, locator=self.locator)
+            if element is not None:
+                if isinstance(element, WebElement):
+                    msg = "Child is not instance of WebElement"
+                    raise ControlException(message=msg)
+                self.bot.log.debug(self.CB_SEARCH_FOUND_CHILD)
+                self.element = element
+            else:
+                self.element = self.bot.navigation.find_element(
+                    self.selector, locator=self.locator)
         except CoreException:
             self.bot.log.warning(self.CB_SEARCH_WAITING)
             self.element = self.bot.navigation.find_element_wait(
@@ -199,10 +211,41 @@ class ControlBase(object):
         """
         self.bot.log.debug(self.CB_FINDCHILD_LOADING.format(selector))
         settings = {"locator": locator, "selector": selector}
+        ele = self.bot.navigation.find_element_child(
+            self.element, selector, locator=locator)
+        settings.update({"element": ele})
         ctl = ControlBase(self.bot, **settings)
         if ctl:
             self.bot.log.debug(self.CB_FINDCHILD_LOADED)
         return ctl
+
+    def find_children(self, selector, locator=By.CSS_SELECTOR):
+        """Find children elements using bot with default By.CSS_SELECTOR
+            strategy for internal element trought selenium WebElement
+
+        Arguments:
+            selector {str} -- string search for locator type
+
+        Keyword Arguments:
+            locator {[selenium.webdriver.common.by.By]} -- string type to
+                use on this selenium search request
+                (default: {By.CSS_SELECTOR})
+
+        Returns:
+            list(ControlBase) -- instanced list of base element using
+                qacode library object
+        """
+        self.bot.log.debug(self.CB_FINDCHILD_LOADING.format(selector))
+        settings = {"locator": locator, "selector": selector}
+        elements = self.bot.navigation.find_element_children(
+            self.element, selector, locator=locator)
+        ctls = list()
+        for ele in elements:
+            settings.update({"element": ele})
+            ctls.append(ControlBase(self.bot, **settings))
+        if bool(ctls):
+            self.bot.log.debug(self.CB_FINDCHILD_LOADED)
+        return ctls
 
     def get_tag(self):
         """Returns tag_name from Webelement"""
@@ -386,9 +429,9 @@ class ControlBase(object):
         self.load_settings_keys(config, update=True)
         # instance logic
         self._load_search(
-            enabled=self.settings.get('on_instance_search'))
-        self._load_properties(
-            enabled=self.settings.get('on_instance_load'))
+            enabled=self.on_instance_search,
+            element=self.settings.get("element"))
+        self._load_properties(enabled=self.on_instance_load)
         if class_name == 'ControlBase':
             self.bot.log.debug(self.CB_RELOAD_LOADED.format(class_name))
 

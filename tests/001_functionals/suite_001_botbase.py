@@ -4,6 +4,7 @@
 
 import pytest
 from qacode.core.bots.bot_base import BotBase
+from qacode.core.exceptions.core_exception import CoreException
 from qacode.core.loggers.logger_manager import LoggerManager
 from qacode.core.testing.test_info import TestInfoBase
 from qautils.files import settings
@@ -99,3 +100,24 @@ class TestBotBase(TestInfoBase):
             settings.get('bot').get('browser'))
         self.assert_equals(self.bot.settings.get('mode'), driver_mode)
         self.assert_equals(self.bot.curr_caps['browserName'], browser_name)
+
+    def test_botbase_invalidsettingskey(self):
+        """Testcase: test_botbase_invalidsettingskey"""
+        settings = SETTINGS.copy()
+        settings.get('bot').update({"must_raises": "test"})
+        with pytest.raises(CoreException):
+            BotBase(**settings)
+
+    def test_botbase_invalidmode(self):
+        """Testcase: test_botbase_invalidmode"""
+        settings = SETTINGS.copy()
+        settings.get('bot').update({"mode": "must_raises"})
+        with pytest.raises(CoreException):
+            self.bot = BotBase(**settings)
+
+    def test_botbase_invalidbrowser(self):
+        """Testcase: test_botbase_invalidbrowser"""
+        settings = SETTINGS.copy()
+        settings.get('bot').update({"browser": "must_raises"})
+        with pytest.raises(CoreException):
+            self.bot = BotBase(**settings)
