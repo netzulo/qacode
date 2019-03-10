@@ -5,7 +5,7 @@
     "mode": "remote",
     "browser": "chrome",
     "options": { "headless": false },
-    "url_hub": "http://ntz-qa.tk:83/wd/hub",
+    "url_hub": "http://ntz-qa.tk:11000/wd/hub",
     "drivers_path": "../qadrivers",
     "drivers_names": [
       "chromedriver_32.exe",
