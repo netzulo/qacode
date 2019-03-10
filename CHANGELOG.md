@@ -8,6 +8,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased] - xxxx-xx-xx
 
 ### Added
+
+### Changed
+
+### Fixed
+
+### Removed
+
+
+## [v0.5.9] - 2019-03-11
+
+### Added
 - Autodoc for package 'qacode.core.exceptions' #223
 - Add find_child/s method + TCs #235
 
@@ -15,12 +26,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Improve Control Search #222
 - Updated lib 'selenium' from 3.12.0 to 3.14.0 #228
 - Now enum_base is being tested and documented #181
+- Documentation now generated with bootstrap theme
 
 ### Fixed
 - CI appveyor builds failing since tag v0.5.7 #226
 - Failing setup.py install on python2.7 before next release #233
-
-### Removed
 
 
 ## [v0.5.8] - 2019-02-11
