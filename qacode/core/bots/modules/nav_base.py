@@ -49,6 +49,14 @@ class NavBase(object):
         self.driver_actions = driver_actions
         self.driver_touch = driver_touch
 
+    def get_driver_wait(self, driver_wait=None):
+        """TODO: doc method"""
+        if driver_wait is None and self.driver_wait is None:
+            raise CoreException(message='Nav instanced without driver_wait')
+        if driver_wait is None:
+            driver_wait = self.driver_wait
+        return driver_wait
+
     def get_url(self, url, wait_for_load=0):
         """Do get_url including implicit wait for page load"""
         if wait_for_load > 0:
@@ -242,10 +250,7 @@ class NavBase(object):
             WebElement -- element through selenium
                 WebDriverWait class
         """
-        if driver_wait is None and self.driver_wait is None:
-            raise CoreException(message='Nav instanced without driver_wait')
-        if driver_wait is None:
-            driver_wait = self.driver_wait
+        driver_wait = self.get_driver_wait(driver_wait=driver_wait)
         try:
             return driver_wait.until(
                 EC.presence_of_element_located((locator, selector)))
@@ -276,16 +281,55 @@ class NavBase(object):
             WebElement -- element through selenium
                 WebDriverWait class
         """
-        if driver_wait is None and self.driver_wait is None:
-            raise CoreException(message='Nav instanced without driver_wait')
-        if driver_wait is None:
-            driver_wait = self.driver_wait
+        driver_wait = self.get_driver_wait(driver_wait=driver_wait)
         try:
             return driver_wait.until(
                 EC.presence_of_all_elements_located((locator, selector)))
         except (NoSuchElementException, StaleElementReferenceException):
             return driver_wait.until(
                 EC.visibility_of_all_elements_located((locator, selector)))
+
+    def find_element_child(self, element, child_selector,
+                           locator=By.CSS_SELECTOR):
+        """TODO: doc method"""
+        if element is None or not isinstance(element, WebElement):
+            raise CoreException(
+                message="Can't find child if not WebElement found")
+        try:
+            return element.find_element(locator, child_selector)
+        except (NoSuchElementException, StaleElementReferenceException) as err:
+            # at Java lang exist 1 expected condition
+            # named : visibilityOfNestedElementsLocatedBy
+            # doc : https://selenium-python.readthedocs.io/waits.html
+            # maybe must exist at python too
+            # then, create and use new method named: find_element_child_wait()
+            # raise NotImplementedError("TODO:open an issue at github please")
+            raise CoreException(err)
+
+    def find_element_children(self, element, child_selector,
+                              locator=By.CSS_SELECTOR):
+        """TODO: doc method"""
+        if element is None or not isinstance(element, WebElement):
+            raise CoreException(
+                message="Can't find children if not WebElement found")
+        try:
+            return element.find_elements(locator, child_selector)
+        except (NoSuchElementException, StaleElementReferenceException) as err:
+            # at Java lang exist 1 expected condition
+            # named : visibilityOfNestedElementsLocatedBy
+            # doc : https://selenium-python.readthedocs.io/waits.html
+            # maybe must exist at python too
+            # then, create and use new method named: find_element_child_wait()
+            # raise NotImplementedError("TODO:open an issue at github please")
+            raise CoreException(err)
+
+    def find_elements_child(self):
+        """TODO: doc method"""
+        raise NotImplementedError("TODO: open an issue at github please")
+
+    def find_elements_children(self):
+        """TODO: doc method"""
+        raise NotImplementedError("TODO: open an issue at github please")
 
     def forward(self):
         """Go forward using browser functionality"""

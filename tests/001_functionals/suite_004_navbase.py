@@ -35,6 +35,28 @@ class TestNavBase(TestInfoBotUnique):
             config=settings(file_path="qacode/configs/"))
         self.add_property('app', self.settings_app('qadmin'))
         self.add_property('page', self.settings_page('qacode_login'))
+        self.add_property('page_lists', self.settings_page('qacode_lists'))
+        self.add_property(
+            'txt_username',
+            value=self.settings_control('txt_username'))
+        self.add_property(
+            'txt_password',
+            value=self.settings_control('txt_password'))
+        self.add_property(
+            'btn_submit',
+            value=self.settings_control('btn_submit'))
+        self.add_property(
+            'lst_ordered',
+            value=self.settings_control('lst_ordered'))
+        self.add_property(
+            'lst_ordered_child',
+            value=self.settings_control('lst_ordered_child'))
+        self.add_property(
+            'dd_menu_data',
+            value=self.settings_control('dd_menu_data'))
+        self.add_property(
+            'dd_menu_data_lists',
+            value=self.settings_control('dd_menu_data_lists'))
 
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_navbase_instance(self):
@@ -282,3 +304,66 @@ class TestNavBase(TestInfoBotUnique):
     def test_setwebelement_ok(self):
         """Testcase: test_setwebelement_ok"""
         self.bot.navigation.set_web_element("test-element")
+
+    @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
+    def test_findelementchild_ok(self):
+        """Testcase: test_findelementchild_ok"""
+        # setup_method
+        self.bot.navigation.get_url(self.page.get('url'), wait_for_load=10)
+        txt_username = self.bot.navigation.find_element(
+            self.txt_username.get("selector"))
+        txt_password = self.bot.navigation.find_element(
+            self.txt_password.get("selector"))
+        btn_submit = self.bot.navigation.find_element(
+            self.btn_submit.get("selector"))
+        self.bot.navigation.ele_write(txt_username, "admin")
+        self.bot.navigation.ele_write(txt_password, "admin")
+        self.bot.navigation.ele_click(btn_submit)
+        self.bot.navigation.ele_click(
+            self.bot.navigation.find_element_wait(
+                self.dd_menu_data.get("selector")))
+        self.bot.navigation.ele_click(
+            self.bot.navigation.find_element_wait(
+                self.dd_menu_data_lists.get("selector")))
+        # end setup_method
+        ele_parent = self.bot.navigation.find_element_wait(
+            self.lst_ordered.get("selector"))
+        self.assert_is_instance(ele_parent, WebElement)
+        ele_child = self.bot.navigation.find_element_child(
+            ele_parent, self.lst_ordered_child.get("selector"))
+        self.assert_is_instance(ele_child, WebElement)
+        self.assert_equals(
+            "Item list01", self.bot.navigation.ele_text(ele_child))
+
+    @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
+    def test_findelementchildren_ok(self):
+        """Testcase: test_findelementchildren_ok"""
+        # setup_method
+        self.bot.navigation.get_url(self.page.get('url'), wait_for_load=10)
+        txt_username = self.bot.navigation.find_element(
+            self.txt_username.get("selector"))
+        txt_password = self.bot.navigation.find_element(
+            self.txt_password.get("selector"))
+        btn_submit = self.bot.navigation.find_element(
+            self.btn_submit.get("selector"))
+        self.bot.navigation.ele_write(txt_username, "admin")
+        self.bot.navigation.ele_write(txt_password, "admin")
+        self.bot.navigation.ele_click(btn_submit)
+        self.bot.navigation.ele_click(
+            self.bot.navigation.find_element_wait(
+                self.dd_menu_data.get("selector")))
+        self.bot.navigation.ele_click(
+            self.bot.navigation.find_element_wait(
+                self.dd_menu_data_lists.get("selector")))
+        # end setup_method
+        ele_parent = self.bot.navigation.find_element_wait(
+            self.lst_ordered.get("selector"))
+        self.assert_is_instance(ele_parent, WebElement)
+        ele_children = self.bot.navigation.find_element_children(
+            ele_parent, self.lst_ordered_child.get("selector"))
+        self.assert_is_instance(ele_children, list)
+        self.assert_greater(len(ele_children), 1)
+        self.assert_lower(len(ele_children), 5)
+        self.assert_equals(
+            "Item list01",
+            self.bot.navigation.ele_text(ele_children[0]))

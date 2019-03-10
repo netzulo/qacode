@@ -91,7 +91,9 @@ class ControlForm(ControlBase):
         self.strict_attrs = []
         self.strict_css_props = []
         # instance logic
-        self._load_search(enabled=self.on_instance_search)
+        self._load_search(
+            enabled=self.on_instance_search,
+            element=self.settings.get("element"))
         self._load_properties(enabled=self.on_instance_load)
         self._load_strict(enabled=self.on_instance_strict)
 
@@ -313,8 +315,7 @@ class ControlForm(ControlBase):
             logic with new configuration
         """
         super(ControlForm, self).reload(**kwargs)
-        self._load_strict(
-            enabled=self.settings.get('on_instance_strict'))
+        self._load_strict(enabled=self.on_instance_strict)
         self.bot.log.debug(self.CF_RELOAD_LOADED)
 
     def dropdown_select(self, text, by_value=False, by_index=False):

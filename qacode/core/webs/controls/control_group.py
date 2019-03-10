@@ -42,7 +42,9 @@ class ControlGroup(ControlBase):
         self.load_settings_keys(kwargs.copy(), update=True)
         # instance logic
         if not self.on_instance_group:
-            self._load_search(enabled=self.on_instance_search)
+            self._load_search(
+                enabled=self.on_instance_search,
+                element=self.settings.get("element"))
             self._load_properties(enabled=self.on_instance_load)
         else:
             self._load_group(enabled=self.on_instance_group)
@@ -95,7 +97,9 @@ class ControlGroup(ControlBase):
         super(ControlGroup, self).reload(**kwargs)
         # instance logic
         if not self.on_instance_group:
-            self._load_search(enabled=self.on_instance_search)
+            self._load_search(
+                enabled=self.on_instance_search,
+                element=self.settings.get("element"))
             self._load_properties(enabled=self.on_instance_load)
         else:
             self._load_group(enabled=self.on_instance_group)

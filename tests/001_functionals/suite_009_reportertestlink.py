@@ -3,7 +3,9 @@
 
 
 import pytest
+from qacode.core.loggers.logger_manager import LoggerManager
 from qacode.core.testing.test_info import TestInfoBase
+from qacode.core.testing.testlink.reporter_testlink import ReporterTestlink
 from qautils.files import settings
 
 
@@ -18,7 +20,12 @@ class TestReporterTestlink(TestInfoBase):
         super(TestReporterTestlink, self).setup_method(
             test_method, config=settings(file_path="qacode/configs/"))
 
-    @pytest.mark.skipIf(True, "Functionality it's not working yet")
-    def test_001_instance(self):
-        """Test: test_001_instance"""
-        pytest.skip(msg="Functionality it's not working yet")
+    def test_reportertestlink_ok(self):
+        """Test: test_reportertestlink_ok"""
+        settings = SETTINGS.get("bot")
+        lgm = LoggerManager(
+            log_path=settings.get('log_output_file'),
+            log_name=settings.get('log_name'),
+            log_level=settings.get('log_level'))
+        with pytest.raises(NotImplementedError):
+            ReporterTestlink(logger_manager=lgm)

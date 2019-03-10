@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 - Autodoc for package 'qacode.core.exceptions' #223
+- Add find_child/s method + TCs #235
 
 ### Changed
 - Improve Control Search #222
