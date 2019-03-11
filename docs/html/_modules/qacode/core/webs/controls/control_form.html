@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>qacode.core.webs.controls.control_form &#8212; qacode v0.5.9 documentation</title>
+    <link rel="stylesheet" href="../../../../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../../_static/language_data.js"></script>
+    <script type="text/javascript" src="../../../../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../../../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../../../../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../../../_static/bootstrap-sphinx.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../../../../index.html">
+          qacode</a>
+        <span class="navbar-text navbar-version pull-left"><b>5.9</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../../../../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../bots.html">package: qacode.core.bots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../controls.html">package: qacode.core.webs.controls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../enums.html">package: qacode.core.enums</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../exceptions.html">package: qacode.core.exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../loggers.html">package: qacode.core.loggers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../pages.html">package: qacode.core.webs.pages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../testing.html">package: qacode.core.testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../testlink.html">package: qacode.core.testing.testlink</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"></ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../../../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <h1>Source code for qacode.core.webs.controls.control_form</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;Package module qacode.core.webs.control_form&quot;&quot;&quot;</span>
+
+
+<span class="kn">from</span> <span class="nn">qacode.core.exceptions.control_exception</span> <span class="k">import</span> <span class="n">ControlException</span>
+<span class="kn">from</span> <span class="nn">qacode.core.webs.controls.control_base</span> <span class="k">import</span> <span class="n">By</span>
+<span class="kn">from</span> <span class="nn">qacode.core.webs.controls.control_base</span> <span class="k">import</span> <span class="n">ControlBase</span>
+<span class="kn">from</span> <span class="nn">qacode.core.webs.html_tags</span> <span class="k">import</span> <span class="n">HtmlTag</span>
+<span class="kn">from</span> <span class="nn">qacode.core.webs.strict_rules</span> <span class="k">import</span> <span class="n">StrictRule</span>
+<span class="kn">from</span> <span class="nn">qacode.core.webs.strict_rules</span> <span class="k">import</span> <span class="n">StrictSeverity</span>
+<span class="kn">from</span> <span class="nn">qacode.core.webs.strict_rules</span> <span class="k">import</span> <span class="n">StrictType</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.support.ui</span> <span class="k">import</span> <span class="n">Select</span>
+
+
+<div class="viewcode-block" id="ControlForm"><a class="viewcode-back" href="../../../../../controls.html#qacode.core.webs.controls.control_form.ControlForm">[docs]</a><span class="k">class</span> <span class="nc">ControlForm</span><span class="p">(</span><span class="n">ControlBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Requirements: #63&quot;&quot;&quot;</span>
+
+    <span class="c1"># Log messages</span>
+    <span class="n">CF_STRICT_LOADING</span> <span class="o">=</span> <span class="s2">&quot;control_form | _load_strict: loading strict_rules...&quot;</span>
+    <span class="n">CF_STRICT_DISABLED</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;control_form | _load_strict: &quot;</span>
+                          <span class="s2">&quot;disabled loading StrictRules&quot;</span><span class="p">)</span>
+    <span class="n">CF_STRICT_LOADED</span> <span class="o">=</span> <span class="s2">&quot;control_form | _load_strict: loaded strict_rules&quot;</span>
+    <span class="n">CF_ADDRULES_BASE_ADDING</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;control_form | add_rules: &quot;</span>
+                               <span class="s2">&quot;adding base list of strict_rules...&quot;</span><span class="p">)</span>
+    <span class="n">CF_ADDRULES_BASE_ADDED</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;control_form | add_rules: &quot;</span>
+                              <span class="s2">&quot;added base list of strict_rules&quot;</span><span class="p">)</span>
+    <span class="n">CF_ADDRULES_TYPED_ADDING</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;control_form | add_rules: &quot;</span>
+                                <span class="s2">&quot;adding typed list of strict_rules...&quot;</span><span class="p">)</span>
+    <span class="n">CF_ADDRULES_TYPED_ADDED</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;control_form | add_rules: &quot;</span>
+                               <span class="s2">&quot;added typed list of strict_rules&quot;</span><span class="p">)</span>
+    <span class="n">CF_NOT_IMPLEMENTED_TYPES</span> <span class="o">=</span> <span class="s2">&quot;Open an issue on github if raise here&quot;</span>
+    <span class="n">CF_STRICTTAGS_LOADING</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;control_form | load_strict_tags: &quot;</span>
+                             <span class="s2">&quot;loading strict_tags...&quot;</span><span class="p">)</span>
+    <span class="n">CF_STRICTTAGS_NOTAGS</span> <span class="o">=</span> <span class="s2">&quot;control_form | load_strict_tags: 0 strict_tags&quot;</span>
+    <span class="n">CF_STRICTTAGS_LOADED</span> <span class="o">=</span> <span class="s2">&quot;control_form | load_strict_tags: loaded&quot;</span>
+    <span class="n">CF_STRICTTAGS_ENABLED_ERROR</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;control_form | load_strict_tags: not &quot;</span>
+                                   <span class="s2">&quot;loaded with enabled strict_mode&quot;</span><span class="p">)</span>
+    <span class="n">CF_STRICTTAGS_NOT_LOADED</span> <span class="o">=</span> <span class="s2">&quot;control_form | load_strict_tags: not loaded&quot;</span>
+    <span class="n">CF_STRICTATTRS_LOADING</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;control_form | load_strict_attrs: &quot;</span>
+                              <span class="s2">&quot;loading strict_attrs...&quot;</span><span class="p">)</span>
+    <span class="n">CF_STRICTATTRS_NOT_LOADED</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;control_form | load_strict_attrs: not loaded&quot;</span>
+                                 <span class="s2">&quot; strict_attrs&quot;</span><span class="p">)</span>
+    <span class="n">CF_STRICTATTRS_ERROR</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;control_form | load_strict_attrs: not loaded &quot;</span>
+                            <span class="s2">&quot;strict_attrs with enabled strict_mode&quot;</span><span class="p">)</span>
+    <span class="n">CF_STRICTATTRS_LOADED</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;control_form | load_strict_attrs: &quot;</span>
+                             <span class="s2">&quot;loaded strict_attrs&quot;</span><span class="p">)</span>
+    <span class="n">CF_STRICTCSS_LOADING</span> <span class="o">=</span> <span class="s2">&quot;control_form | load_strict_css_props: loading...&quot;</span>
+    <span class="n">CF_STRICTCSS_LOADED</span> <span class="o">=</span> <span class="s2">&quot;control_form | load_strict_css_props: loaded&quot;</span>
+    <span class="n">CF_STRICTCSS_NOT_LOADED</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;control_form | load_strict_css_props:&quot;</span>
+                               <span class="s2">&quot; not loaded strict_attrs&quot;</span><span class="p">)</span>
+    <span class="n">CF_STRICTCSS_ERROR</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;control_form | load_strict_css_props: not loaded &quot;</span>
+                          <span class="s2">&quot;strict_css_props with enabled strict_mode&quot;</span><span class="p">)</span>
+    <span class="n">CF_PARSERULES_LOADING</span> <span class="o">=</span> <span class="s2">&quot;control_form | parse_rules: parsing...&quot;</span>
+    <span class="n">CF_PARSERULES_LOADED</span> <span class="o">=</span> <span class="s2">&quot;control_form | parse_rules: parsed&quot;</span>
+    <span class="n">CF_RELOAD_LOADED</span> <span class="o">=</span> <span class="s2">&quot;control_form | reload: reloaded control&quot;</span>
+    <span class="n">CF_DROPDOWNSELECT_LOADING</span> <span class="o">=</span> <span class="s2">&quot;control_form | dropdown_select: selecting...&quot;</span>
+    <span class="n">CF_DROPDOWNSELECT_LOADED</span> <span class="o">=</span> <span class="s2">&quot;control_form | dropdown_select: selected&quot;</span>
+    <span class="n">CF_DROPDOWNDESELECT_LOADING</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;control_form | dropdown_select:&quot;</span>
+                                   <span class="s2">&quot; deselecting...&quot;</span><span class="p">)</span>
+    <span class="n">CF_DROPDOWNDESELECT_LOADED</span> <span class="o">=</span> <span class="s2">&quot;control_form | dropdown_select: deselected&quot;</span>
+    <span class="n">CF_DROPDOWNDESELECTALL_LOADING</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;control_form | dropdown_select:&quot;</span>
+                                      <span class="s2">&quot; deselecting all...&quot;</span><span class="p">)</span>
+    <span class="n">CF_DROPDOWNDESELECTALL_LOADED</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;control_form | dropdown_select:&quot;</span>
+                                     <span class="s2">&quot; deselected all&quot;</span><span class="p">)</span>
+    <span class="c1"># Settings properties</span>
+    <span class="n">on_instance_strict</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">strict_rules</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">strict_rules_typed</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="c1"># Strict properties</span>
+    <span class="n">strict_tags</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">strict_attrs</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">strict_css_props</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="c1"># Tags: select</span>
+    <span class="n">dropdown</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># TODO: follow instructions on #63</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bot</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Instance of ControlForm&quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ControlForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bot</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_load</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Load properties from settings dict.</span>
+<span class="sd">            Some elements need to search False to be search at future</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># needed for self._load_* functions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">load_settings_keys</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+        <span class="c1"># needed for self._load_strict function</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">strict_rules_typed</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">strict_tags</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">strict_attrs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">strict_css_props</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># instance logic</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_load_search</span><span class="p">(</span>
+            <span class="n">enabled</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">on_instance_search</span><span class="p">,</span>
+            <span class="n">element</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;element&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_load_properties</span><span class="p">(</span><span class="n">enabled</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">on_instance_load</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_load_strict</span><span class="p">(</span><span class="n">enabled</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">on_instance_strict</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ControlForm.load_settings_keys"><a class="viewcode-back" href="../../../../../controls.html#qacode.core.webs.controls.control_form.ControlForm.load_settings_keys">[docs]</a>    <span class="k">def</span> <span class="nf">load_settings_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings</span><span class="p">,</span> <span class="n">update</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Load default setting for ControlForm instance&quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ControlForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">load_settings_keys</span><span class="p">(</span>
+            <span class="n">settings</span><span class="p">,</span>
+            <span class="n">update</span><span class="o">=</span><span class="n">update</span><span class="p">,</span>
+            <span class="n">default_keys</span><span class="o">=</span><span class="p">[</span>
+                <span class="p">(</span><span class="s2">&quot;selector&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>  <span class="c1"># required</span>
+                <span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;UNNAMED&quot;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;locator&quot;</span><span class="p">,</span> <span class="n">By</span><span class="o">.</span><span class="n">CSS_SELECTOR</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;on_instance_search&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;on_instance_load&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;auto_reload&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;instance&quot;</span><span class="p">,</span> <span class="s1">&#39;ControlForm&#39;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;on_instance_strict&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;strict_rules&quot;</span><span class="p">,</span> <span class="p">[]),</span>
+            <span class="p">]</span>
+        <span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_load_strict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enabled</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Load default setting for ControlForm instance&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CF_STRICT_LOADING</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">enabled</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CF_STRICT_DISABLED</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="c1"># Parse to enums</span>
+        <span class="n">typed_rules</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_rules</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">strict_rules</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_rules</span><span class="p">(</span><span class="n">typed_rules</span><span class="p">,</span> <span class="n">typed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1"># Logic for strict_rules here</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_strict_tags</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_strict_tags</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_strict_attrs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_strict_attrs</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_strict_css_props</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_strict_css_props</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CF_STRICT_LOADED</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ControlForm.add_rules"><a class="viewcode-back" href="../../../../../controls.html#qacode.core.webs.controls.control_form.ControlForm.add_rules">[docs]</a>    <span class="k">def</span> <span class="nf">add_rules</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strict_rules</span><span class="p">,</span> <span class="n">typed</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Validate strict rules for each type</span>
+
+<span class="sd">        Arguments:</span>
+<span class="sd">            strict_rules {StrictRule} -- strict_rule</span>
+<span class="sd">            on_instance_strict {bool} -- if enabled, load values for</span>
+<span class="sd">                future checks</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">typed</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CF_ADDRULES_BASE_LOADING</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">strict_rules</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">strict_rules</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CF_ADDRULES_BASE_ADDED</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CF_ADDRULES_TYPED_ADDING</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">strict_rules_typed</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strict_rules</span><span class="p">)</span>
+            <span class="c1"># not implemented list</span>
+            <span class="n">not_implemented_types</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">StrictType</span><span class="o">.</span><span class="n">JS_EVENT</span><span class="p">,</span>
+                <span class="n">StrictType</span><span class="o">.</span><span class="n">BEHAVIOUR</span><span class="p">,</span>
+                <span class="n">StrictType</span><span class="o">.</span><span class="n">USABILITY</span><span class="p">,</span>
+                <span class="n">StrictType</span><span class="o">.</span><span class="n">SEO</span>
+            <span class="p">]</span>
+            <span class="c1"># validate rules and add object to respective lists</span>
+            <span class="k">for</span> <span class="n">strict_rule</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">strict_rules_typed</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">strict_rule</span><span class="o">.</span><span class="n">strict_type</span> <span class="o">==</span> <span class="n">StrictType</span><span class="o">.</span><span class="n">TAG</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">strict_tags</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">strict_rule</span><span class="o">.</span><span class="n">enum_type</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">strict_rule</span><span class="o">.</span><span class="n">strict_type</span> <span class="o">==</span> <span class="n">StrictType</span><span class="o">.</span><span class="n">HTML_ATTR</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">strict_attrs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">strict_rule</span><span class="o">.</span><span class="n">enum_type</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">strict_rule</span><span class="o">.</span><span class="n">strict_type</span> <span class="o">==</span> <span class="n">StrictType</span><span class="o">.</span><span class="n">CSS_PROP</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">strict_css_props</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">strict_rule</span><span class="o">.</span><span class="n">enum_type</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">strict_rule</span><span class="o">.</span><span class="n">strict_type</span> <span class="ow">in</span> <span class="n">not_implemented_types</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CF_NOT_IMPLEMENTED_TYPES</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">ControlException</span><span class="p">(</span>
+                        <span class="n">message</span><span class="o">=</span><span class="s2">&quot;bad param &#39;strict_type&#39;, invalid value&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CF_ADDRULES_TYPED_ADDED</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ControlForm.load_strict_tags"><a class="viewcode-back" href="../../../../../controls.html#qacode.core.webs.controls.control_form.ControlForm.load_strict_tags">[docs]</a>    <span class="k">def</span> <span class="nf">load_strict_tags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strict_tags</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Validate if element.tag is in list of strict_tags and</span>
+<span class="sd">            instance ControlForm specific properties</span>
+
+<span class="sd">            tag=select, instance down &#39;dropdown&#39; property</span>
+
+<span class="sd">        Keyword Arguments:</span>
+<span class="sd">            strict_tags {list} -- list of StrictRule.tag values</span>
+<span class="sd">                (default: {None})</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool -- if success execution of this method return True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CF_STRICTTAGS_LOADING</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">strict_tags</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">strict_tags</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">strict_tags</span>
+        <span class="c1"># empty list doesn&#39;t to be checked</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">strict_tags</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CF_STRICTTAGS_NOTAGS</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">for</span> <span class="n">strict_tag</span> <span class="ow">in</span> <span class="n">strict_tags</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="n">strict_tag</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+                <span class="c1"># specific elements logic</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s1">&#39;select&#39;</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">dropdown</span> <span class="o">=</span> <span class="n">Select</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">element</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CF_STRICTTAGS_LOADED</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_instance_strict</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CF_STRICTTAGS_ENABLED_ERROR</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ControlException</span><span class="p">(</span>
+                <span class="n">message</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Validation raises at strict_tags for this element:&quot;</span>
+                         <span class="s2">&quot;control=</span><span class="si">{}</span><span class="s2">, strict_tags=[</span><span class="si">{}</span><span class="s2">]&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                             <span class="bp">self</span><span class="p">,</span> <span class="n">strict_tags</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CF_STRICTTAGS_NOT_LOADED</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="ControlForm.load_strict_attrs"><a class="viewcode-back" href="../../../../../controls.html#qacode.core.webs.controls.control_form.ControlForm.load_strict_attrs">[docs]</a>    <span class="k">def</span> <span class="nf">load_strict_attrs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strict_attrs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Validate if element.attrs is in list of strict_attrs</span>
+
+<span class="sd">        Keyword Arguments:</span>
+<span class="sd">            strict_attrs {[type]} -- [description] (default: {None})</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool -- if success execution of this method return True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CF_STRICTATTRS_LOADING</span><span class="p">)</span>
+        <span class="n">attrs_search</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">attrs_found</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">strict_attrs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">strict_attrs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">strict_attrs</span>
+        <span class="c1"># empty list doesn&#39;t to be checked</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">strict_attrs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">for</span> <span class="n">strict_attr</span> <span class="ow">in</span> <span class="n">strict_attrs</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">attr_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_attr_value</span><span class="p">(</span><span class="n">strict_attr</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">ControlException</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_instance_strict</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CF_STRICTATTRS_NOT_LOADED</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CF_STRICTATTRS_ERROR</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">ControlException</span><span class="p">(</span>
+                    <span class="n">message</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Validation raises for strict_attrs &quot;</span>
+                             <span class="s2">&quot;for this element:&quot;</span>
+                             <span class="s2">&quot;control=</span><span class="si">{}</span><span class="s2">, strict_attrs=[</span><span class="si">{}</span><span class="s2">]&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                                 <span class="bp">self</span><span class="p">,</span> <span class="n">strict_attrs</span><span class="p">))</span>
+            <span class="n">attrs_search</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">attr_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">attr_name</span><span class="p">:</span>
+                <span class="n">attrs_found</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">attr_name</span><span class="p">)</span>
+        <span class="n">is_attrs</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">attrs_search</span><span class="p">)</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">attrs_found</span><span class="p">))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_attrs</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_instance_strict</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CF_STRICTATTRS_ERROR</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ControlException</span><span class="p">(</span>
+                <span class="n">message</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Validation raises for strict_attrs &quot;</span>
+                         <span class="s2">&quot;for this element:&quot;</span>
+                         <span class="s2">&quot;control=</span><span class="si">{}</span><span class="s2">, strict_attrs=[</span><span class="si">{}</span><span class="s2">]&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                             <span class="bp">self</span><span class="p">,</span> <span class="n">strict_attrs</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CF_STRICTATTRS_LOADED</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">is_attrs</span></div>
+
+<div class="viewcode-block" id="ControlForm.load_strict_css_props"><a class="viewcode-back" href="../../../../../controls.html#qacode.core.webs.controls.control_form.ControlForm.load_strict_css_props">[docs]</a>    <span class="k">def</span> <span class="nf">load_strict_css_props</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strict_css_props</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Validate if element.attrs is in list of strict_attrs</span>
+
+<span class="sd">        Keyword Arguments:</span>
+<span class="sd">            strict_css_props {[type]} -- [description] (default: {None})</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool -- if success execution of this method return True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CF_STRICTCSS_LOADING</span><span class="p">)</span>
+        <span class="n">css_search</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">css_found</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">strict_css_props</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">strict_css_props</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">strict_css_props</span>
+        <span class="c1"># empty list doesn&#39;t to be checked</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">strict_css_props</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">for</span> <span class="n">strict_css_prop</span> <span class="ow">in</span> <span class="n">strict_css_props</span><span class="p">:</span>
+            <span class="n">css_prop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_css_value</span><span class="p">(</span><span class="n">strict_css_prop</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+            <span class="n">css_search</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">css_prop</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">css_prop</span><span class="p">:</span>
+                <span class="n">css_found</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">css_prop</span><span class="p">)</span>
+        <span class="n">is_css</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">css_search</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">css_found</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_css</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_instance_strict</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CF_STRICTCSS_ERROR</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ControlException</span><span class="p">(</span>
+                <span class="n">message</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Validation raises for strict_css_props &quot;</span>
+                         <span class="s2">&quot;for this element:&quot;</span>
+                         <span class="s2">&quot;control=</span><span class="si">{}</span><span class="s2">, strict_css_props=[</span><span class="si">{}</span><span class="s2">]&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                             <span class="bp">self</span><span class="p">,</span> <span class="n">strict_css_props</span><span class="p">))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_css</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CF_STRICTCSS_NOT_LOADED</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CF_STRICTCSS_LOADED</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">is_css</span></div>
+
+<div class="viewcode-block" id="ControlForm.parse_rules"><a class="viewcode-back" href="../../../../../controls.html#qacode.core.webs.controls.control_form.ControlForm.parse_rules">[docs]</a>    <span class="k">def</span> <span class="nf">parse_rules</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strict_rules</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Parse array of configurations dicts of strict_rules to</span>
+<span class="sd">            instances list of StrictRule</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CF_PARSERULES_LOADING</span><span class="p">)</span>
+        <span class="n">typed_rules</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">strict_rules</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">strict_rules</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;strict_rules&#39;</span><span class="p">)</span>
+        <span class="c1"># parsing rules &gt; to enums &gt; to instance</span>
+        <span class="k">for</span> <span class="n">strict_rule_config</span> <span class="ow">in</span> <span class="n">strict_rules</span><span class="p">:</span>
+            <span class="n">strict_config</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;tag&quot;</span><span class="p">:</span> <span class="n">strict_rule_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;tag&#39;</span><span class="p">),</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">strict_rule_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">),</span>
+                <span class="s2">&quot;severity&quot;</span><span class="p">:</span> <span class="n">strict_rule_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;severity&#39;</span><span class="p">)</span>
+            <span class="p">}</span>
+            <span class="k">if</span> <span class="n">strict_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;severity&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">strict_config</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;severity&quot;</span><span class="p">:</span> <span class="s2">&quot;low&quot;</span><span class="p">})</span>
+            <span class="n">strict_tag</span> <span class="o">=</span> <span class="n">HtmlTag</span><span class="p">(</span><span class="n">strict_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;tag&#39;</span><span class="p">))</span>
+            <span class="n">strict_type</span> <span class="o">=</span> <span class="n">StrictType</span><span class="p">(</span><span class="n">strict_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">))</span>
+            <span class="n">strict_severity</span> <span class="o">=</span> <span class="n">StrictSeverity</span><span class="p">(</span><span class="n">strict_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;severity&#39;</span><span class="p">))</span>
+            <span class="n">rule</span> <span class="o">=</span> <span class="n">StrictRule</span><span class="p">(</span><span class="n">strict_tag</span><span class="p">,</span> <span class="n">strict_type</span><span class="p">,</span> <span class="n">strict_severity</span><span class="p">)</span>
+            <span class="n">typed_rules</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rule</span><span class="p">)</span>
+        <span class="c1"># parsed rules at this point</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CF_PARSERULES_LOADED</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">typed_rules</span></div>
+
+<div class="viewcode-block" id="ControlForm.reload"><a class="viewcode-back" href="../../../../../controls.html#qacode.core.webs.controls.control_form.ControlForm.reload">[docs]</a>    <span class="k">def</span> <span class="nf">reload</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Reload &#39;self.settings&#39; property:dict and call to instance</span>
+<span class="sd">            logic with new configuration</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ControlForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_load_strict</span><span class="p">(</span><span class="n">enabled</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">on_instance_strict</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CF_RELOAD_LOADED</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ControlForm.dropdown_select"><a class="viewcode-back" href="../../../../../controls.html#qacode.core.webs.controls.control_form.ControlForm.dropdown_select">[docs]</a>    <span class="k">def</span> <span class="nf">dropdown_select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">by_value</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">by_index</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The Select class only works with tags which have select tags.</span>
+<span class="sd">            Using the Index of Dropdown (int)</span>
+<span class="sd">            Using the Value of Dropdown (str)</span>
+<span class="sd">            Using the Text of Dropdown (str)</span>
+
+<span class="sd">        Arguments:</span>
+<span class="sd">            text {str|int} -- Probably the easiest way of doing it. You</span>
+<span class="sd">                have to match the text which is displayed in the drop down.</span>
+
+<span class="sd">        Keyword Arguments:</span>
+<span class="sd">            by_value {bool} -- We can use to select an option using the</span>
+<span class="sd">                value attribute. (default: {False})</span>
+<span class="sd">            by_index {bool} -- We can use to select an option using the</span>
+<span class="sd">                index attribute. (default: {False})</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ControlException -- if tag is not &#39;select&#39;</span>
+<span class="sd">            ControlException -- if all flags are &#39;True&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CF_DROPDOWNSELECT_LOADING</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">element</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_reload</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">RELOAD_CONFIG</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dropdown</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ControlException</span><span class="p">(</span>
+                <span class="n">message</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Element must be dropdown&quot;</span>
+                         <span class="s2">&quot; (tag=</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">by_value</span> <span class="ow">and</span> <span class="n">by_index</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ControlException</span><span class="p">(</span>
+                <span class="n">message</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Can&#39;t use this function with&quot;</span>
+                         <span class="s2">&quot; all flags with True values&quot;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">by_value</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dropdown</span><span class="o">.</span><span class="n">select_by_value</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">by_index</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="n">ControlException</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="s2">&quot;index must be an int value&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dropdown</span><span class="o">.</span><span class="n">select_by_index</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dropdown</span><span class="o">.</span><span class="n">select_by_visible_text</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CF_DROPDOWNSELECT_LOADED</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ControlForm.dropdown_deselect"><a class="viewcode-back" href="../../../../../controls.html#qacode.core.webs.controls.control_form.ControlForm.dropdown_deselect">[docs]</a>    <span class="k">def</span> <span class="nf">dropdown_deselect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">by_value</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">by_index</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The Select class only works with tags which have select tags.</span>
+<span class="sd">            Using the Index of Dropdown (int)</span>
+<span class="sd">            Using the Value of Dropdown (str)</span>
+<span class="sd">            Using the Text of Dropdown (str)</span>
+
+<span class="sd">        Arguments:</span>
+<span class="sd">            text {str|int} -- Probably the easiest way of doing it. You</span>
+<span class="sd">                have to match the text which is displayed in the drop down.</span>
+
+<span class="sd">        Keyword Arguments:</span>
+<span class="sd">            by_value {bool} -- We can use to select an option using the</span>
+<span class="sd">                value attribute. (default: {False})</span>
+<span class="sd">            by_index {bool} -- We can use to select an option using the</span>
+<span class="sd">                index attribute. (default: {False})</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ControlException -- if tag is not &#39;select&#39;</span>
+<span class="sd">            ControlException -- if all flags are &#39;True&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CF_DROPDOWNDESELECT_LOADING</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">element</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_reload</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dropdown</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ControlException</span><span class="p">(</span>
+                <span class="n">message</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Element must be dropdown&quot;</span>
+                         <span class="s2">&quot; (tag=</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">by_value</span> <span class="ow">and</span> <span class="n">by_index</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ControlException</span><span class="p">(</span>
+                <span class="n">message</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Can&#39;t use this function with&quot;</span>
+                         <span class="s2">&quot; all flags with True values&quot;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">by_value</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dropdown</span><span class="o">.</span><span class="n">deselect_by_value</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">by_index</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="n">ControlException</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="s2">&quot;index must be an int value&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dropdown</span><span class="o">.</span><span class="n">deselect_by_index</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dropdown</span><span class="o">.</span><span class="n">deselect_by_visible_text</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CF_DROPDOWNDESELECT_LOADED</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ControlForm.dropdown_deselect_all"><a class="viewcode-back" href="../../../../../controls.html#qacode.core.webs.controls.control_form.ControlForm.dropdown_deselect_all">[docs]</a>    <span class="k">def</span> <span class="nf">dropdown_deselect_all</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The Select class only works with tags which have select</span>
+<span class="sd">            tags with multiple=&quot;multiple&quot; attribute.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ControlException -- if tag is not &#39;select&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CF_DROPDOWNDESELECTALL_LOADING</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">element</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_reload</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dropdown</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ControlException</span><span class="p">(</span>
+                <span class="n">message</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Element must be dropdown&quot;</span>
+                         <span class="s2">&quot; (tag=</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dropdown</span><span class="o">.</span><span class="n">deselect_all</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bot</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CF_DROPDOWNDESELECTALL_LOADED</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Show basic properties for this object&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">ControlForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span></div>
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2019, Netzulo.com.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

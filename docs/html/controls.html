@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>package: qacode.core.webs.controls &#8212; qacode v0.5.9 documentation</title>
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="package: qacode.core.enums" href="enums.html" />
+    <link rel="prev" title="package: qacode.core.bots" href="bots.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">
+          qacode</a>
+        <span class="navbar-text navbar-version pull-left"><b>5.9</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="bots.html">package: qacode.core.bots</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">package: qacode.core.webs.controls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="enums.html">package: qacode.core.enums</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">package: qacode.core.exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="loggers.html">package: qacode.core.loggers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages.html">package: qacode.core.webs.pages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">package: qacode.core.testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testlink.html">package: qacode.core.testing.testlink</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">package: qacode.core.webs.controls</a><ul>
+<li><a class="reference internal" href="#class-controlbase">Class: ControlBase</a></li>
+<li><a class="reference internal" href="#class-controlform">Class: ControlForm</a></li>
+<li><a class="reference internal" href="#class-controlgroup">Class: ControlGroup</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="bots.html" title="Previous Chapter: package: qacode.core.bots"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; package: qaco...</span>
+    </a>
+  </li>
+  <li>
+    <a href="enums.html" title="Next Chapter: package: qacode.core.enums"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">package: qaco... &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="_sources/controls.rst.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <div class="section" id="package-qacode-core-webs-controls">
+<h1>package: qacode.core.webs.controls<a class="headerlink" href="#package-qacode-core-webs-controls" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="class-controlbase">
+<h2>Class: ControlBase<a class="headerlink" href="#class-controlbase" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><span class="target" id="module-qacode.core.webs.controls.control_base"></span><p>Package module qacode.core.webs.control_base</p>
+<dl class="class">
+<dt id="qacode.core.webs.controls.control_base.ControlBase">
+<em class="property">class </em><code class="descclassname">qacode.core.webs.controls.control_base.</code><code class="descname">ControlBase</code><span class="sig-paren">(</span><em>bot</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_base.html#ControlBase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Requirements: #35, #70</p>
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.CB_CLEAR_LOADED">
+<code class="descname">CB_CLEAR_LOADED</code><em class="property"> = 'control | clear: cleared text'</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.CB_CLEAR_LOADED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.CB_CLEAR_LOADING">
+<code class="descname">CB_CLEAR_LOADING</code><em class="property"> = 'control | clear: clearing text...'</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.CB_CLEAR_LOADING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.CB_CLICK_LOADED">
+<code class="descname">CB_CLICK_LOADED</code><em class="property"> = 'control | click: clicked!'</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.CB_CLICK_LOADED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.CB_CLICK_LOADING">
+<code class="descname">CB_CLICK_LOADING</code><em class="property"> = 'control | click: clicking element...'</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.CB_CLICK_LOADING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.CB_CLICK_RETRY">
+<code class="descname">CB_CLICK_RETRY</code><em class="property"> = 'control | click: retry clicking element...'</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.CB_CLICK_RETRY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.CB_FINDCHILD_LOADED">
+<code class="descname">CB_FINDCHILD_LOADED</code><em class="property"> = 'control | find_child: child element found'</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.CB_FINDCHILD_LOADED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.CB_FINDCHILD_LOADING">
+<code class="descname">CB_FINDCHILD_LOADING</code><em class="property"> = &quot;control | find_child: searching for selector='{}'&quot;</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.CB_FINDCHILD_LOADING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.CB_GETATTRS_LOADING">
+<code class="descname">CB_GETATTRS_LOADING</code><em class="property"> = 'control | get_attrs: obtaining attrs...'</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.CB_GETATTRS_LOADING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.CB_GETATTRVALUE_FAILED">
+<code class="descname">CB_GETATTRVALUE_FAILED</code><em class="property"> = 'control | get_attr_value: fail at obtain value'</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.CB_GETATTRVALUE_FAILED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.CB_GETATTRVALUE_LOADED">
+<code class="descname">CB_GETATTRVALUE_LOADED</code><em class="property"> = &quot;control | get_attr_value: obtainedattr_name='{}', value='{}'&quot;</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.CB_GETATTRVALUE_LOADED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.CB_GETATTRVALUE_LOADING">
+<code class="descname">CB_GETATTRVALUE_LOADING</code><em class="property"> = &quot;control | get_attr_value: obtaining value for attr_name='{}'&quot;</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.CB_GETATTRVALUE_LOADING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.CB_GETCSSRULE_LOADED">
+<code class="descname">CB_GETCSSRULE_LOADED</code><em class="property"> = &quot;control | get_css_value: css_value='{}'&quot;</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.CB_GETCSSRULE_LOADED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.CB_GETCSSRULE_LOADING">
+<code class="descname">CB_GETCSSRULE_LOADING</code><em class="property"> = 'control | get_css_value: obtaining css_value...'</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.CB_GETCSSRULE_LOADING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.CB_GETTAG_LOADED">
+<code class="descname">CB_GETTAG_LOADED</code><em class="property"> = &quot;control | get_tag: found same tag='{}'&quot;</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.CB_GETTAG_LOADED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.CB_GETTAG_LOADING">
+<code class="descname">CB_GETTAG_LOADING</code><em class="property"> = 'control | get_tag: searching for tag'</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.CB_GETTAG_LOADING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.CB_GETTEXT_FAILED">
+<code class="descname">CB_GETTEXT_FAILED</code><em class="property"> = 'control | get_text: failed at obtain text'</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.CB_GETTEXT_FAILED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.CB_GETTEXT_LOADED">
+<code class="descname">CB_GETTEXT_LOADED</code><em class="property"> = &quot;control | get_text: text obtained, text='{}'&quot;</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.CB_GETTEXT_LOADED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.CB_GETTEXT_LOADING">
+<code class="descname">CB_GETTEXT_LOADING</code><em class="property"> = 'control | get_text: obtaining text...'</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.CB_GETTEXT_LOADING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.CB_PROP_DISABLED">
+<code class="descname">CB_PROP_DISABLED</code><em class="property"> = 'control | _load_properties: disabled loading for properties'</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.CB_PROP_DISABLED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.CB_PROP_LOADED">
+<code class="descname">CB_PROP_LOADED</code><em class="property"> = 'control | _load_properties: loaded properties'</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.CB_PROP_LOADED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.CB_PROP_LOADING">
+<code class="descname">CB_PROP_LOADING</code><em class="property"> = 'control | _load_properties: loading properties...'</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.CB_PROP_LOADING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.CB_RELOAD_LOADED">
+<code class="descname">CB_RELOAD_LOADED</code><em class="property"> = '{} | reload: reloaded control'</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.CB_RELOAD_LOADED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.CB_RELOAD_LOADING">
+<code class="descname">CB_RELOAD_LOADING</code><em class="property"> = '{} | reload: reloading control...'</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.CB_RELOAD_LOADING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.CB_SEARCH_DISABLED">
+<code class="descname">CB_SEARCH_DISABLED</code><em class="property"> = 'control | _load_search: Disabled element search'</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.CB_SEARCH_DISABLED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.CB_SEARCH_FOUND">
+<code class="descname">CB_SEARCH_FOUND</code><em class="property"> = 'control | _load_search: element found!'</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.CB_SEARCH_FOUND" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.CB_SEARCH_FOUND_CHILD">
+<code class="descname">CB_SEARCH_FOUND_CHILD</code><em class="property"> = 'control | _load_search: element child found!'</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.CB_SEARCH_FOUND_CHILD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.CB_SEARCH_LOADING">
+<code class="descname">CB_SEARCH_LOADING</code><em class="property"> = 'control | _load_search: searching element...'</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.CB_SEARCH_LOADING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.CB_SEARCH_WAITING">
+<code class="descname">CB_SEARCH_WAITING</code><em class="property"> = 'control | _load_search: waiting for element...'</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.CB_SEARCH_WAITING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.CB_SETCSSRULE_FAILED">
+<code class="descname">CB_SETCSSRULE_FAILED</code><em class="property"> = 'control | set_css_value: failed at set CSS rule'</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.CB_SETCSSRULE_FAILED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.CB_SETCSSRULE_LOADING">
+<code class="descname">CB_SETCSSRULE_LOADING</code><em class="property"> = 'control | set_css_value: setting new CSS rule, prop_name={}, prop_value={}'</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.CB_SETCSSRULE_LOADING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.CB_SETTINGS_LOADED">
+<code class="descname">CB_SETTINGS_LOADED</code><em class="property"> = 'control | load_settings_keys: loaded keys'</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.CB_SETTINGS_LOADED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.CB_SETTINGS_LOADING">
+<code class="descname">CB_SETTINGS_LOADING</code><em class="property"> = 'control | load_settings_keys: loading keys...'</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.CB_SETTINGS_LOADING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.CB_TYPETEXT_LOADING">
+<code class="descname">CB_TYPETEXT_LOADING</code><em class="property"> = 'control | type_text: typing text={}'</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.CB_TYPETEXT_LOADING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.RELOAD_CONFIG">
+<code class="descname">RELOAD_CONFIG</code><em class="property"> = {'on_instance_load': True, 'on_instance_search': True}</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.RELOAD_CONFIG" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.attr_class">
+<code class="descname">attr_class</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.attr_class" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.attr_id">
+<code class="descname">attr_id</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.attr_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.auto_reload">
+<code class="descname">auto_reload</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.auto_reload" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.bot">
+<code class="descname">bot</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.bot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_base.html#ControlBase.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear input element text value</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.click">
+<code class="descname">click</code><span class="sig-paren">(</span><em>retry=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_base.html#ControlBase.click"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.click" title="Permalink to this definition">¶</a></dt>
+<dd><p>Click on element</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.element">
+<code class="descname">element</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.element" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.find_child">
+<code class="descname">find_child</code><span class="sig-paren">(</span><em>selector</em>, <em>locator='css selector'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_base.html#ControlBase.find_child"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.find_child" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Find child element using bot with default By.CSS_SELECTOR strategy</dt>
+<dd>for internal element trought selenium WebElement</dd>
+<dt>Arguments:</dt>
+<dd>selector {str} – string search for locator type</dd>
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>locator {[selenium.webdriver.common.by.By]} – string type to</dt>
+<dd>use on this selenium search request
+(default: {By.CSS_SELECTOR})</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>ControlBase – instanced base element using qacode library object</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.find_children">
+<code class="descname">find_children</code><span class="sig-paren">(</span><em>selector</em>, <em>locator='css selector'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_base.html#ControlBase.find_children"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.find_children" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Find children elements using bot with default By.CSS_SELECTOR</dt>
+<dd>strategy for internal element trought selenium WebElement</dd>
+<dt>Arguments:</dt>
+<dd>selector {str} – string search for locator type</dd>
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>locator {[selenium.webdriver.common.by.By]} – string type to</dt>
+<dd>use on this selenium search request
+(default: {By.CSS_SELECTOR})</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd><dl class="first last docutils">
+<dt>list(ControlBase) – instanced list of base element using</dt>
+<dd>qacode library object</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.get_attr_value">
+<code class="descname">get_attr_value</code><span class="sig-paren">(</span><em>attr_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_base.html#ControlBase.get_attr_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.get_attr_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search and attribute name over self.element and get value,
+if attr_value is obtained, then compare and raise if not</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>attr_name {str} – find an attribute on WebElement</dt>
+<dd>with this name</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>str – value of html attr_name</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.get_attrs">
+<code class="descname">get_attrs</code><span class="sig-paren">(</span><em>attr_names</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_base.html#ControlBase.get_attrs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.get_attrs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find a list of attributes on WebElement
+and returns a dict list of {name, value}</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>attr_names {list of str} – list of attr_name to search</dt>
+<dd>for each one name and value on self.element</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>dict – a dict list of {name, value}</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.get_css_value">
+<code class="descname">get_css_value</code><span class="sig-paren">(</span><em>prop_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_base.html#ControlBase.get_css_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.get_css_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allows to obtain CSS value based on CSS property name</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd>prop_name {str} – CSS property name</dd>
+<dt>Returns:</dt>
+<dd>str – Value of CSS property searched</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.get_tag">
+<code class="descname">get_tag</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_base.html#ControlBase.get_tag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.get_tag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns tag_name from Webelement</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.get_text">
+<code class="descname">get_text</code><span class="sig-paren">(</span><em>on_screen=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_base.html#ControlBase.get_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.get_text" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Get element content text.</dt>
+<dd>If the isDisplayed() method can sometimes trip over when
+the element is not really hidden but outside the viewport
+get_text() returns an empty string for such an element.</dd>
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>on_screen {bool} – allow to obtain text if element</dt>
+<dd>it not displayed to this element before
+read text (default: {True})</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>str – Return element content text (innerText property)</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.instance">
+<code class="descname">instance</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.instance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.is_displayed">
+<code class="descname">is_displayed</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.is_displayed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.is_enabled">
+<code class="descname">is_enabled</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.is_enabled" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.is_selected">
+<code class="descname">is_selected</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.is_selected" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.load">
+<code class="descname">load</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_base.html#ControlBase.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load properties from settings dict.
+Some elements need to search False to be search at future</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.load_settings_keys">
+<code class="descname">load_settings_keys</code><span class="sig-paren">(</span><em>settings</em>, <em>update=False</em>, <em>default_keys=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_base.html#ControlBase.load_settings_keys"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.load_settings_keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load default setting for ControlBase instance</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.locator">
+<code class="descname">locator</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.locator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.name">
+<code class="descname">name</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.on_instance_load">
+<code class="descname">on_instance_load</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.on_instance_load" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.on_instance_search">
+<code class="descname">on_instance_search</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.on_instance_search" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.reload">
+<code class="descname">reload</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_base.html#ControlBase.reload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.reload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reload ‘self.settings’ property:dict and call to instance
+logic with new configuration</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.selector">
+<code class="descname">selector</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.selector" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.set_css_value">
+<code class="descname">set_css_value</code><span class="sig-paren">(</span><em>prop_name</em>, <em>prop_value</em>, <em>css_important=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_base.html#ControlBase.set_css_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.set_css_value" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Set new value for given CSS property name</dt>
+<dd>on ControlBase selector</dd>
+<dt>Arguments:</dt>
+<dd>prop_name {str} – CSS property name
+prop_value {str} – CSS property value</dd>
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>css_important {bool} – Allow to include ‘!important’ to rule for</dt>
+<dd>overrite others values applied (default: {True})</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.settings">
+<code class="descname">settings</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.settings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.tag">
+<code class="descname">tag</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.tag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.text">
+<code class="descname">text</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.text" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_base.ControlBase.type_text">
+<code class="descname">type_text</code><span class="sig-paren">(</span><em>text</em>, <em>clear=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_base.html#ControlBase.type_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#qacode.core.webs.controls.control_base.ControlBase.type_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Type text on input element</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd>text {str} – string to be typed on web element</dd>
+<dt>Keyword Arguments:</dt>
+<dd>clear {bool} – clear text element at enable key (default: {False})</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt>
+<em class="property">class </em><code class="descclassname">qacode.core.webs.controls.control_base.</code><code class="descname">ControlBase</code><span class="sig-paren">(</span><em>bot</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_base.html#ControlBase"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Requirements: #35, #70</p>
+<dl class="method">
+<dt>
+<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_base.html#ControlBase.clear"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Clear input element text value</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">click</code><span class="sig-paren">(</span><em>retry=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_base.html#ControlBase.click"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Click on element</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">find_child</code><span class="sig-paren">(</span><em>selector</em>, <em>locator='css selector'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_base.html#ControlBase.find_child"><span class="viewcode-link">[source]</span></a></dt>
+<dd><dl class="docutils">
+<dt>Find child element using bot with default By.CSS_SELECTOR strategy</dt>
+<dd>for internal element trought selenium WebElement</dd>
+<dt>Arguments:</dt>
+<dd>selector {str} – string search for locator type</dd>
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>locator {[selenium.webdriver.common.by.By]} – string type to</dt>
+<dd>use on this selenium search request
+(default: {By.CSS_SELECTOR})</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>ControlBase – instanced base element using qacode library object</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">find_children</code><span class="sig-paren">(</span><em>selector</em>, <em>locator='css selector'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_base.html#ControlBase.find_children"><span class="viewcode-link">[source]</span></a></dt>
+<dd><dl class="docutils">
+<dt>Find children elements using bot with default By.CSS_SELECTOR</dt>
+<dd>strategy for internal element trought selenium WebElement</dd>
+<dt>Arguments:</dt>
+<dd>selector {str} – string search for locator type</dd>
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>locator {[selenium.webdriver.common.by.By]} – string type to</dt>
+<dd>use on this selenium search request
+(default: {By.CSS_SELECTOR})</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd><dl class="first last docutils">
+<dt>list(ControlBase) – instanced list of base element using</dt>
+<dd>qacode library object</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">get_attr_value</code><span class="sig-paren">(</span><em>attr_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_base.html#ControlBase.get_attr_value"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Search and attribute name over self.element and get value,
+if attr_value is obtained, then compare and raise if not</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>attr_name {str} – find an attribute on WebElement</dt>
+<dd>with this name</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>str – value of html attr_name</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">get_attrs</code><span class="sig-paren">(</span><em>attr_names</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_base.html#ControlBase.get_attrs"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Find a list of attributes on WebElement
+and returns a dict list of {name, value}</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>attr_names {list of str} – list of attr_name to search</dt>
+<dd>for each one name and value on self.element</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>dict – a dict list of {name, value}</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">get_css_value</code><span class="sig-paren">(</span><em>prop_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_base.html#ControlBase.get_css_value"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Allows to obtain CSS value based on CSS property name</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd>prop_name {str} – CSS property name</dd>
+<dt>Returns:</dt>
+<dd>str – Value of CSS property searched</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">get_tag</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_base.html#ControlBase.get_tag"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Returns tag_name from Webelement</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">get_text</code><span class="sig-paren">(</span><em>on_screen=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_base.html#ControlBase.get_text"><span class="viewcode-link">[source]</span></a></dt>
+<dd><dl class="docutils">
+<dt>Get element content text.</dt>
+<dd>If the isDisplayed() method can sometimes trip over when
+the element is not really hidden but outside the viewport
+get_text() returns an empty string for such an element.</dd>
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>on_screen {bool} – allow to obtain text if element</dt>
+<dd>it not displayed to this element before
+read text (default: {True})</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>str – Return element content text (innerText property)</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">load</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_base.html#ControlBase.load"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Load properties from settings dict.
+Some elements need to search False to be search at future</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">load_settings_keys</code><span class="sig-paren">(</span><em>settings</em>, <em>update=False</em>, <em>default_keys=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_base.html#ControlBase.load_settings_keys"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Load default setting for ControlBase instance</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">reload</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_base.html#ControlBase.reload"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Reload ‘self.settings’ property:dict and call to instance
+logic with new configuration</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">set_css_value</code><span class="sig-paren">(</span><em>prop_name</em>, <em>prop_value</em>, <em>css_important=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_base.html#ControlBase.set_css_value"><span class="viewcode-link">[source]</span></a></dt>
+<dd><dl class="docutils">
+<dt>Set new value for given CSS property name</dt>
+<dd>on ControlBase selector</dd>
+<dt>Arguments:</dt>
+<dd>prop_name {str} – CSS property name
+prop_value {str} – CSS property value</dd>
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>css_important {bool} – Allow to include ‘!important’ to rule for</dt>
+<dd>overrite others values applied (default: {True})</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">type_text</code><span class="sig-paren">(</span><em>text</em>, <em>clear=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_base.html#ControlBase.type_text"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Type text on input element</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd>text {str} – string to be typed on web element</dd>
+<dt>Keyword Arguments:</dt>
+<dd>clear {bool} – clear text element at enable key (default: {False})</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div></blockquote>
+</div>
+<div class="section" id="class-controlform">
+<h2>Class: ControlForm<a class="headerlink" href="#class-controlform" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><span class="target" id="module-qacode.core.webs.controls.control_form"></span><p>Package module qacode.core.webs.control_form</p>
+<dl class="class">
+<dt id="qacode.core.webs.controls.control_form.ControlForm">
+<em class="property">class </em><code class="descclassname">qacode.core.webs.controls.control_form.</code><code class="descname">ControlForm</code><span class="sig-paren">(</span><em>bot</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_form.html#ControlForm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#qacode.core.webs.controls.control_base.ControlBase" title="qacode.core.webs.controls.control_base.ControlBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">qacode.core.webs.controls.control_base.ControlBase</span></code></a></p>
+<p>Requirements: #63</p>
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.CF_ADDRULES_BASE_ADDED">
+<code class="descname">CF_ADDRULES_BASE_ADDED</code><em class="property"> = 'control_form | add_rules: added base list of strict_rules'</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.CF_ADDRULES_BASE_ADDED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.CF_ADDRULES_BASE_ADDING">
+<code class="descname">CF_ADDRULES_BASE_ADDING</code><em class="property"> = 'control_form | add_rules: adding base list of strict_rules...'</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.CF_ADDRULES_BASE_ADDING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.CF_ADDRULES_TYPED_ADDED">
+<code class="descname">CF_ADDRULES_TYPED_ADDED</code><em class="property"> = 'control_form | add_rules: added typed list of strict_rules'</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.CF_ADDRULES_TYPED_ADDED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.CF_ADDRULES_TYPED_ADDING">
+<code class="descname">CF_ADDRULES_TYPED_ADDING</code><em class="property"> = 'control_form | add_rules: adding typed list of strict_rules...'</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.CF_ADDRULES_TYPED_ADDING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.CF_DROPDOWNDESELECTALL_LOADED">
+<code class="descname">CF_DROPDOWNDESELECTALL_LOADED</code><em class="property"> = 'control_form | dropdown_select: deselected all'</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.CF_DROPDOWNDESELECTALL_LOADED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.CF_DROPDOWNDESELECTALL_LOADING">
+<code class="descname">CF_DROPDOWNDESELECTALL_LOADING</code><em class="property"> = 'control_form | dropdown_select: deselecting all...'</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.CF_DROPDOWNDESELECTALL_LOADING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.CF_DROPDOWNDESELECT_LOADED">
+<code class="descname">CF_DROPDOWNDESELECT_LOADED</code><em class="property"> = 'control_form | dropdown_select: deselected'</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.CF_DROPDOWNDESELECT_LOADED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.CF_DROPDOWNDESELECT_LOADING">
+<code class="descname">CF_DROPDOWNDESELECT_LOADING</code><em class="property"> = 'control_form | dropdown_select: deselecting...'</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.CF_DROPDOWNDESELECT_LOADING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.CF_DROPDOWNSELECT_LOADED">
+<code class="descname">CF_DROPDOWNSELECT_LOADED</code><em class="property"> = 'control_form | dropdown_select: selected'</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.CF_DROPDOWNSELECT_LOADED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.CF_DROPDOWNSELECT_LOADING">
+<code class="descname">CF_DROPDOWNSELECT_LOADING</code><em class="property"> = 'control_form | dropdown_select: selecting...'</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.CF_DROPDOWNSELECT_LOADING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.CF_NOT_IMPLEMENTED_TYPES">
+<code class="descname">CF_NOT_IMPLEMENTED_TYPES</code><em class="property"> = 'Open an issue on github if raise here'</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.CF_NOT_IMPLEMENTED_TYPES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.CF_PARSERULES_LOADED">
+<code class="descname">CF_PARSERULES_LOADED</code><em class="property"> = 'control_form | parse_rules: parsed'</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.CF_PARSERULES_LOADED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.CF_PARSERULES_LOADING">
+<code class="descname">CF_PARSERULES_LOADING</code><em class="property"> = 'control_form | parse_rules: parsing...'</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.CF_PARSERULES_LOADING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.CF_RELOAD_LOADED">
+<code class="descname">CF_RELOAD_LOADED</code><em class="property"> = 'control_form | reload: reloaded control'</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.CF_RELOAD_LOADED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.CF_STRICTATTRS_ERROR">
+<code class="descname">CF_STRICTATTRS_ERROR</code><em class="property"> = 'control_form | load_strict_attrs: not loaded strict_attrs with enabled strict_mode'</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.CF_STRICTATTRS_ERROR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.CF_STRICTATTRS_LOADED">
+<code class="descname">CF_STRICTATTRS_LOADED</code><em class="property"> = 'control_form | load_strict_attrs: loaded strict_attrs'</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.CF_STRICTATTRS_LOADED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.CF_STRICTATTRS_LOADING">
+<code class="descname">CF_STRICTATTRS_LOADING</code><em class="property"> = 'control_form | load_strict_attrs: loading strict_attrs...'</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.CF_STRICTATTRS_LOADING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.CF_STRICTATTRS_NOT_LOADED">
+<code class="descname">CF_STRICTATTRS_NOT_LOADED</code><em class="property"> = 'control_form | load_strict_attrs: not loaded strict_attrs'</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.CF_STRICTATTRS_NOT_LOADED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.CF_STRICTCSS_ERROR">
+<code class="descname">CF_STRICTCSS_ERROR</code><em class="property"> = 'control_form | load_strict_css_props: not loaded strict_css_props with enabled strict_mode'</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.CF_STRICTCSS_ERROR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.CF_STRICTCSS_LOADED">
+<code class="descname">CF_STRICTCSS_LOADED</code><em class="property"> = 'control_form | load_strict_css_props: loaded'</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.CF_STRICTCSS_LOADED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.CF_STRICTCSS_LOADING">
+<code class="descname">CF_STRICTCSS_LOADING</code><em class="property"> = 'control_form | load_strict_css_props: loading...'</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.CF_STRICTCSS_LOADING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.CF_STRICTCSS_NOT_LOADED">
+<code class="descname">CF_STRICTCSS_NOT_LOADED</code><em class="property"> = 'control_form | load_strict_css_props: not loaded strict_attrs'</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.CF_STRICTCSS_NOT_LOADED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.CF_STRICTTAGS_ENABLED_ERROR">
+<code class="descname">CF_STRICTTAGS_ENABLED_ERROR</code><em class="property"> = 'control_form | load_strict_tags: not loaded with enabled strict_mode'</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.CF_STRICTTAGS_ENABLED_ERROR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.CF_STRICTTAGS_LOADED">
+<code class="descname">CF_STRICTTAGS_LOADED</code><em class="property"> = 'control_form | load_strict_tags: loaded'</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.CF_STRICTTAGS_LOADED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.CF_STRICTTAGS_LOADING">
+<code class="descname">CF_STRICTTAGS_LOADING</code><em class="property"> = 'control_form | load_strict_tags: loading strict_tags...'</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.CF_STRICTTAGS_LOADING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.CF_STRICTTAGS_NOTAGS">
+<code class="descname">CF_STRICTTAGS_NOTAGS</code><em class="property"> = 'control_form | load_strict_tags: 0 strict_tags'</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.CF_STRICTTAGS_NOTAGS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.CF_STRICTTAGS_NOT_LOADED">
+<code class="descname">CF_STRICTTAGS_NOT_LOADED</code><em class="property"> = 'control_form | load_strict_tags: not loaded'</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.CF_STRICTTAGS_NOT_LOADED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.CF_STRICT_DISABLED">
+<code class="descname">CF_STRICT_DISABLED</code><em class="property"> = 'control_form | _load_strict: disabled loading StrictRules'</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.CF_STRICT_DISABLED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.CF_STRICT_LOADED">
+<code class="descname">CF_STRICT_LOADED</code><em class="property"> = 'control_form | _load_strict: loaded strict_rules'</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.CF_STRICT_LOADED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.CF_STRICT_LOADING">
+<code class="descname">CF_STRICT_LOADING</code><em class="property"> = 'control_form | _load_strict: loading strict_rules...'</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.CF_STRICT_LOADING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.add_rules">
+<code class="descname">add_rules</code><span class="sig-paren">(</span><em>strict_rules</em>, <em>typed=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_form.html#ControlForm.add_rules"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.add_rules" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validate strict rules for each type</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><p class="first">strict_rules {StrictRule} – strict_rule
+on_instance_strict {bool} – if enabled, load values for</p>
+<blockquote class="last">
+<div>future checks</div></blockquote>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.dropdown">
+<code class="descname">dropdown</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.dropdown" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.dropdown_deselect">
+<code class="descname">dropdown_deselect</code><span class="sig-paren">(</span><em>text</em>, <em>by_value=False</em>, <em>by_index=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_form.html#ControlForm.dropdown_deselect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.dropdown_deselect" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>The Select class only works with tags which have select tags.</dt>
+<dd>Using the Index of Dropdown (int)
+Using the Value of Dropdown (str)
+Using the Text of Dropdown (str)</dd>
+<dt>Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>text {str|int} – Probably the easiest way of doing it. You</dt>
+<dd>have to match the text which is displayed in the drop down.</dd>
+</dl>
+</dd>
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>by_value {bool} – We can use to select an option using the</dt>
+<dd>value attribute. (default: {False})</dd>
+<dt>by_index {bool} – We can use to select an option using the</dt>
+<dd>index attribute. (default: {False})</dd>
+</dl>
+</dd>
+<dt>Raises:</dt>
+<dd>ControlException – if tag is not ‘select’
+ControlException – if all flags are ‘True’</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.dropdown_deselect_all">
+<code class="descname">dropdown_deselect_all</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_form.html#ControlForm.dropdown_deselect_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.dropdown_deselect_all" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>The Select class only works with tags which have select</dt>
+<dd>tags with multiple=”multiple” attribute.</dd>
+<dt>Raises:</dt>
+<dd>ControlException – if tag is not ‘select’</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.dropdown_select">
+<code class="descname">dropdown_select</code><span class="sig-paren">(</span><em>text</em>, <em>by_value=False</em>, <em>by_index=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_form.html#ControlForm.dropdown_select"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.dropdown_select" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>The Select class only works with tags which have select tags.</dt>
+<dd>Using the Index of Dropdown (int)
+Using the Value of Dropdown (str)
+Using the Text of Dropdown (str)</dd>
+<dt>Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>text {str|int} – Probably the easiest way of doing it. You</dt>
+<dd>have to match the text which is displayed in the drop down.</dd>
+</dl>
+</dd>
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>by_value {bool} – We can use to select an option using the</dt>
+<dd>value attribute. (default: {False})</dd>
+<dt>by_index {bool} – We can use to select an option using the</dt>
+<dd>index attribute. (default: {False})</dd>
+</dl>
+</dd>
+<dt>Raises:</dt>
+<dd>ControlException – if tag is not ‘select’
+ControlException – if all flags are ‘True’</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.load_settings_keys">
+<code class="descname">load_settings_keys</code><span class="sig-paren">(</span><em>settings</em>, <em>update=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_form.html#ControlForm.load_settings_keys"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.load_settings_keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load default setting for ControlForm instance</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.load_strict_attrs">
+<code class="descname">load_strict_attrs</code><span class="sig-paren">(</span><em>strict_attrs=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_form.html#ControlForm.load_strict_attrs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.load_strict_attrs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validate if element.attrs is in list of strict_attrs</p>
+<dl class="docutils">
+<dt>Keyword Arguments:</dt>
+<dd>strict_attrs {[type]} – [description] (default: {None})</dd>
+<dt>Returns:</dt>
+<dd>bool – if success execution of this method return True</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.load_strict_css_props">
+<code class="descname">load_strict_css_props</code><span class="sig-paren">(</span><em>strict_css_props=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_form.html#ControlForm.load_strict_css_props"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.load_strict_css_props" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validate if element.attrs is in list of strict_attrs</p>
+<dl class="docutils">
+<dt>Keyword Arguments:</dt>
+<dd>strict_css_props {[type]} – [description] (default: {None})</dd>
+<dt>Returns:</dt>
+<dd>bool – if success execution of this method return True</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.load_strict_tags">
+<code class="descname">load_strict_tags</code><span class="sig-paren">(</span><em>strict_tags=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_form.html#ControlForm.load_strict_tags"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.load_strict_tags" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Validate if element.tag is in list of strict_tags and</dt>
+<dd><p class="first">instance ControlForm specific properties</p>
+<p class="last">tag=select, instance down ‘dropdown’ property</p>
+</dd>
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>strict_tags {list} – list of StrictRule.tag values</dt>
+<dd>(default: {None})</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>bool – if success execution of this method return True</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.on_instance_strict">
+<code class="descname">on_instance_strict</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.on_instance_strict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.parse_rules">
+<code class="descname">parse_rules</code><span class="sig-paren">(</span><em>strict_rules=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_form.html#ControlForm.parse_rules"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.parse_rules" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse array of configurations dicts of strict_rules to
+instances list of StrictRule</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.reload">
+<code class="descname">reload</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_form.html#ControlForm.reload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.reload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reload ‘self.settings’ property:dict and call to instance
+logic with new configuration</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.strict_attrs">
+<code class="descname">strict_attrs</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.strict_attrs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.strict_css_props">
+<code class="descname">strict_css_props</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.strict_css_props" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.strict_rules">
+<code class="descname">strict_rules</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.strict_rules" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.strict_rules_typed">
+<code class="descname">strict_rules_typed</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.strict_rules_typed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_form.ControlForm.strict_tags">
+<code class="descname">strict_tags</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_form.ControlForm.strict_tags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt>
+<em class="property">class </em><code class="descclassname">qacode.core.webs.controls.control_form.</code><code class="descname">ControlForm</code><span class="sig-paren">(</span><em>bot</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_form.html#ControlForm"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Requirements: #63</p>
+<dl class="method">
+<dt>
+<code class="descname">add_rules</code><span class="sig-paren">(</span><em>strict_rules</em>, <em>typed=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_form.html#ControlForm.add_rules"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Validate strict rules for each type</p>
+<dl class="docutils">
+<dt>Arguments:</dt>
+<dd><p class="first">strict_rules {StrictRule} – strict_rule
+on_instance_strict {bool} – if enabled, load values for</p>
+<blockquote class="last">
+<div>future checks</div></blockquote>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">dropdown_deselect</code><span class="sig-paren">(</span><em>text</em>, <em>by_value=False</em>, <em>by_index=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_form.html#ControlForm.dropdown_deselect"><span class="viewcode-link">[source]</span></a></dt>
+<dd><dl class="docutils">
+<dt>The Select class only works with tags which have select tags.</dt>
+<dd>Using the Index of Dropdown (int)
+Using the Value of Dropdown (str)
+Using the Text of Dropdown (str)</dd>
+<dt>Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>text {str|int} – Probably the easiest way of doing it. You</dt>
+<dd>have to match the text which is displayed in the drop down.</dd>
+</dl>
+</dd>
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>by_value {bool} – We can use to select an option using the</dt>
+<dd>value attribute. (default: {False})</dd>
+<dt>by_index {bool} – We can use to select an option using the</dt>
+<dd>index attribute. (default: {False})</dd>
+</dl>
+</dd>
+<dt>Raises:</dt>
+<dd>ControlException – if tag is not ‘select’
+ControlException – if all flags are ‘True’</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">dropdown_deselect_all</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_form.html#ControlForm.dropdown_deselect_all"><span class="viewcode-link">[source]</span></a></dt>
+<dd><dl class="docutils">
+<dt>The Select class only works with tags which have select</dt>
+<dd>tags with multiple=”multiple” attribute.</dd>
+<dt>Raises:</dt>
+<dd>ControlException – if tag is not ‘select’</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">dropdown_select</code><span class="sig-paren">(</span><em>text</em>, <em>by_value=False</em>, <em>by_index=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_form.html#ControlForm.dropdown_select"><span class="viewcode-link">[source]</span></a></dt>
+<dd><dl class="docutils">
+<dt>The Select class only works with tags which have select tags.</dt>
+<dd>Using the Index of Dropdown (int)
+Using the Value of Dropdown (str)
+Using the Text of Dropdown (str)</dd>
+<dt>Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>text {str|int} – Probably the easiest way of doing it. You</dt>
+<dd>have to match the text which is displayed in the drop down.</dd>
+</dl>
+</dd>
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>by_value {bool} – We can use to select an option using the</dt>
+<dd>value attribute. (default: {False})</dd>
+<dt>by_index {bool} – We can use to select an option using the</dt>
+<dd>index attribute. (default: {False})</dd>
+</dl>
+</dd>
+<dt>Raises:</dt>
+<dd>ControlException – if tag is not ‘select’
+ControlException – if all flags are ‘True’</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">load_settings_keys</code><span class="sig-paren">(</span><em>settings</em>, <em>update=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_form.html#ControlForm.load_settings_keys"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Load default setting for ControlForm instance</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">load_strict_attrs</code><span class="sig-paren">(</span><em>strict_attrs=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_form.html#ControlForm.load_strict_attrs"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Validate if element.attrs is in list of strict_attrs</p>
+<dl class="docutils">
+<dt>Keyword Arguments:</dt>
+<dd>strict_attrs {[type]} – [description] (default: {None})</dd>
+<dt>Returns:</dt>
+<dd>bool – if success execution of this method return True</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">load_strict_css_props</code><span class="sig-paren">(</span><em>strict_css_props=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_form.html#ControlForm.load_strict_css_props"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Validate if element.attrs is in list of strict_attrs</p>
+<dl class="docutils">
+<dt>Keyword Arguments:</dt>
+<dd>strict_css_props {[type]} – [description] (default: {None})</dd>
+<dt>Returns:</dt>
+<dd>bool – if success execution of this method return True</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">load_strict_tags</code><span class="sig-paren">(</span><em>strict_tags=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_form.html#ControlForm.load_strict_tags"><span class="viewcode-link">[source]</span></a></dt>
+<dd><dl class="docutils">
+<dt>Validate if element.tag is in list of strict_tags and</dt>
+<dd><p class="first">instance ControlForm specific properties</p>
+<p class="last">tag=select, instance down ‘dropdown’ property</p>
+</dd>
+<dt>Keyword Arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>strict_tags {list} – list of StrictRule.tag values</dt>
+<dd>(default: {None})</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>bool – if success execution of this method return True</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">parse_rules</code><span class="sig-paren">(</span><em>strict_rules=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_form.html#ControlForm.parse_rules"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Parse array of configurations dicts of strict_rules to
+instances list of StrictRule</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">reload</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_form.html#ControlForm.reload"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Reload ‘self.settings’ property:dict and call to instance
+logic with new configuration</p>
+</dd></dl>
+
+</dd></dl>
+
+</div></blockquote>
+</div>
+<div class="section" id="class-controlgroup">
+<h2>Class: ControlGroup<a class="headerlink" href="#class-controlgroup" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><span class="target" id="module-qacode.core.webs.controls.control_group"></span><p>Package module qacode.core.webs.control_group</p>
+<dl class="class">
+<dt id="qacode.core.webs.controls.control_group.ControlGroup">
+<em class="property">class </em><code class="descclassname">qacode.core.webs.controls.control_group.</code><code class="descname">ControlGroup</code><span class="sig-paren">(</span><em>bot</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_group.html#ControlGroup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#qacode.core.webs.controls.control_group.ControlGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#qacode.core.webs.controls.control_base.ControlBase" title="qacode.core.webs.controls.control_base.ControlBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">qacode.core.webs.controls.control_base.ControlBase</span></code></a></p>
+<p>Requirements: #164</p>
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_group.ControlGroup.CG_GROUP_DISABLED">
+<code class="descname">CG_GROUP_DISABLED</code><em class="property"> = 'control | _load_group: !Disabled searching group of elements!'</em><a class="headerlink" href="#qacode.core.webs.controls.control_group.ControlGroup.CG_GROUP_DISABLED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_group.ControlGroup.CG_GROUP_LOADED">
+<code class="descname">CG_GROUP_LOADED</code><em class="property"> = 'control | _load_group: elements found!'</em><a class="headerlink" href="#qacode.core.webs.controls.control_group.ControlGroup.CG_GROUP_LOADED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_group.ControlGroup.CG_GROUP_LOADING">
+<code class="descname">CG_GROUP_LOADING</code><em class="property"> = 'control | _load_group: searching group of elements...'</em><a class="headerlink" href="#qacode.core.webs.controls.control_group.ControlGroup.CG_GROUP_LOADING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_group.ControlGroup.CG_GROUP_WAITING">
+<code class="descname">CG_GROUP_WAITING</code><em class="property"> = 'control | _load_group: waiting for elements...'</em><a class="headerlink" href="#qacode.core.webs.controls.control_group.ControlGroup.CG_GROUP_WAITING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_group.ControlGroup.CG_RELOAD_LOADED">
+<code class="descname">CG_RELOAD_LOADED</code><em class="property"> = 'control_group | reload: reloaded controls'</em><a class="headerlink" href="#qacode.core.webs.controls.control_group.ControlGroup.CG_RELOAD_LOADED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_group.ControlGroup.CG_SETTINGS_LOADED">
+<code class="descname">CG_SETTINGS_LOADED</code><em class="property"> = 'control_group | load_settings_keys: loaded keys!'</em><a class="headerlink" href="#qacode.core.webs.controls.control_group.ControlGroup.CG_SETTINGS_LOADED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_group.ControlGroup.CG_SETTINGS_LOADING">
+<code class="descname">CG_SETTINGS_LOADING</code><em class="property"> = 'control_group | load_settings_keys: loading keys...'</em><a class="headerlink" href="#qacode.core.webs.controls.control_group.ControlGroup.CG_SETTINGS_LOADING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_group.ControlGroup.elements">
+<code class="descname">elements</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_group.ControlGroup.elements" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_group.ControlGroup.group">
+<code class="descname">group</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_group.ControlGroup.group" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_group.ControlGroup.load">
+<code class="descname">load</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_group.html#ControlGroup.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#qacode.core.webs.controls.control_group.ControlGroup.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load properties from settings dict.
+Some elements need to search False to be search at future</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_group.ControlGroup.load_settings_keys">
+<code class="descname">load_settings_keys</code><span class="sig-paren">(</span><em>settings</em>, <em>update=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_group.html#ControlGroup.load_settings_keys"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#qacode.core.webs.controls.control_group.ControlGroup.load_settings_keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load default setting for ControlGroup instance</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="qacode.core.webs.controls.control_group.ControlGroup.on_instance_group">
+<code class="descname">on_instance_group</code><em class="property"> = None</em><a class="headerlink" href="#qacode.core.webs.controls.control_group.ControlGroup.on_instance_group" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="qacode.core.webs.controls.control_group.ControlGroup.reload">
+<code class="descname">reload</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_group.html#ControlGroup.reload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#qacode.core.webs.controls.control_group.ControlGroup.reload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reload ‘self.settings’ property:dict and call to instance
+logic with new configuration</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt>
+<em class="property">class </em><code class="descclassname">qacode.core.webs.controls.control_group.</code><code class="descname">ControlGroup</code><span class="sig-paren">(</span><em>bot</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_group.html#ControlGroup"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Requirements: #164</p>
+<dl class="method">
+<dt>
+<code class="descname">load</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_group.html#ControlGroup.load"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Load properties from settings dict.
+Some elements need to search False to be search at future</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">load_settings_keys</code><span class="sig-paren">(</span><em>settings</em>, <em>update=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_group.html#ControlGroup.load_settings_keys"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Load default setting for ControlGroup instance</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">reload</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/qacode/core/webs/controls/control_group.html#ControlGroup.reload"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Reload ‘self.settings’ property:dict and call to instance
+logic with new configuration</p>
+</dd></dl>
+
+</dd></dl>
+
+</div></blockquote>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2019, Netzulo.com.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
