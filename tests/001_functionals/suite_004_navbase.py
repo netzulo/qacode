@@ -35,7 +35,6 @@ class TestNavBase(TestInfoBotUnique):
             config=settings(file_path="qacode/configs/"))
         self.add_property('app', self.settings_app('qadmin'))
         self.add_property('page', self.settings_page('qacode_login'))
-        self.add_property('page_lists', self.settings_page('qacode_lists'))
         self.add_property(
             'txt_username',
             value=self.settings_control('txt_username'))

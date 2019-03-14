@@ -58,6 +58,18 @@ class TestControlBase(TestInfoBotUnique):
         self.add_property(
             'form_login',
             value=self.settings_control('form_login'))
+        self.add_property(
+            'lst_ordered',
+            value=self.settings_control('lst_ordered'))
+        self.add_property(
+            'lst_ordered_child',
+            value=self.settings_control('lst_ordered_child'))
+        self.add_property(
+            'dd_menu_data',
+            value=self.settings_control('dd_menu_data'))
+        self.add_property(
+            'dd_menu_data_lists',
+            value=self.settings_control('dd_menu_data_lists'))
         self.bot.navigation.get_url(self.url)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
@@ -166,17 +178,6 @@ class TestControlBase(TestInfoBotUnique):
             ControlException,
             ControlBase,
             self.bot)
-
-    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    def test_method_findchild(self):
-        """Testcase: test_method_findchild"""
-        cfg_parent = self.form_login.copy()
-        child_selector = self.settings_control(
-            'txt_username').get('selector')
-        control = ControlBase(self.bot, **cfg_parent)
-        self.assert_is_instance(
-            control.find_child(child_selector),
-            ControlBase)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_property_gettext(self):
@@ -329,3 +330,59 @@ class TestControlBase(TestInfoBotUnique):
         self.assert_equals(control.on_instance_search, True)
         self.assert_equals(control.on_instance_load, True)
         self.assert_is_instance(control.element, WebElement)
+
+    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
+    def test_method_findchild(self):
+        """Testcase: test_method_findchild"""
+        # setup_method
+        self.bot.navigation.get_url(self.page.get('url'), wait_for_load=10)
+        txt_username = self.bot.navigation.find_element(
+            self.txt_username.get("selector"))
+        txt_password = self.bot.navigation.find_element(
+            self.txt_password.get("selector"))
+        btn_submit = self.bot.navigation.find_element(
+            self.btn_submit.get("selector"))
+        self.bot.navigation.ele_write(txt_username, "admin")
+        self.bot.navigation.ele_write(txt_password, "admin")
+        self.bot.navigation.ele_click(btn_submit)
+        self.bot.navigation.ele_click(
+            self.bot.navigation.find_element_wait(
+                self.dd_menu_data.get("selector")))
+        self.bot.navigation.ele_click(
+            self.bot.navigation.find_element_wait(
+                self.dd_menu_data_lists.get("selector")))
+        # end setup_method
+        control = ControlBase(self.bot, **self.lst_ordered)
+        selector_child = self.lst_ordered_child.get("selector")
+        ctl_child = control.find_child(selector_child)
+        self.assert_is_instance(ctl_child, ControlBase)
+        self.assert_is_instance(ctl_child.element, WebElement)
+
+    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
+    def test_method_findchildren(self):
+        """Testcase: test_method_findchildren"""
+        # setup_method
+        self.bot.navigation.get_url(self.page.get('url'), wait_for_load=10)
+        txt_username = self.bot.navigation.find_element(
+            self.txt_username.get("selector"))
+        txt_password = self.bot.navigation.find_element(
+            self.txt_password.get("selector"))
+        btn_submit = self.bot.navigation.find_element(
+            self.btn_submit.get("selector"))
+        self.bot.navigation.ele_write(txt_username, "admin")
+        self.bot.navigation.ele_write(txt_password, "admin")
+        self.bot.navigation.ele_click(btn_submit)
+        self.bot.navigation.ele_click(
+            self.bot.navigation.find_element_wait(
+                self.dd_menu_data.get("selector")))
+        self.bot.navigation.ele_click(
+            self.bot.navigation.find_element_wait(
+                self.dd_menu_data_lists.get("selector")))
+        # end setup_method
+        control = ControlBase(self.bot, **self.lst_ordered)
+        selector_child = self.lst_ordered_child.get("selector")
+        children = control.find_children(selector_child)
+        self.assert_lower(len(children), 5)
+        for ctl_child in children:
+            self.assert_is_instance(ctl_child, ControlBase)
+            self.assert_is_instance(ctl_child.element, WebElement)

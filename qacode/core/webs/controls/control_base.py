@@ -149,7 +149,7 @@ class ControlBase(object):
         self.bot.log.debug(self.CB_SEARCH_LOADING)
         try:
             if element is not None:
-                if isinstance(element, WebElement):
+                if not isinstance(element, WebElement):
                     msg = "Child is not instance of WebElement"
                     raise ControlException(message=msg)
                 self.bot.log.debug(self.CB_SEARCH_FOUND_CHILD)
@@ -210,6 +210,8 @@ class ControlBase(object):
             ControlBase -- instanced base element using qacode library object
         """
         self.bot.log.debug(self.CB_FINDCHILD_LOADING.format(selector))
+        if not self.element and self.auto_reload:
+            self.reload(**self.settings)
         settings = {"locator": locator, "selector": selector}
         ele = self.bot.navigation.find_element_child(
             self.element, selector, locator=locator)
@@ -236,6 +238,8 @@ class ControlBase(object):
                 qacode library object
         """
         self.bot.log.debug(self.CB_FINDCHILD_LOADING.format(selector))
+        if not self.element and self.auto_reload:
+            self.reload(**self.settings)
         settings = {"locator": locator, "selector": selector}
         elements = self.bot.navigation.find_element_children(
             self.element, selector, locator=locator)
@@ -430,7 +434,7 @@ class ControlBase(object):
         # instance logic
         self._load_search(
             enabled=self.on_instance_search,
-            element=self.settings.get("element"))
+            element=self.element)
         self._load_properties(enabled=self.on_instance_load)
         if class_name == 'ControlBase':
             self.bot.log.debug(self.CB_RELOAD_LOADED.format(class_name))
