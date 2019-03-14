@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 
 ### Fixed
+- find_child/find_children tests + some reload bugs #235
 
 ### Removed
 
