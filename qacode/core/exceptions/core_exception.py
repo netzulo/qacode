@@ -29,6 +29,5 @@ class CoreException(Exception):
             self.log.error(self.msg)
             return
         if isinstance(err, WebDriverException):
-            err_msg = err.args[0]
-            self.args = (err_msg, "")
+            self.args = err.args
         self.log.error(self.args)
