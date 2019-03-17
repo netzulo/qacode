@@ -3,6 +3,7 @@
 
 
 import pytest
+from qacode.core.exceptions.control_exception import ControlException
 from qacode.core.testing.test_info import TestInfoBotUnique
 from qacode.core.webs.controls.control_base import ControlBase
 from qacode.core.webs.controls.control_form import ControlForm
@@ -195,7 +196,32 @@ class TestControlForm(TestInfoBotUnique):
         """Testcase: test_method_dropdown_select_by_text"""
         control = ControlForm(self.bot, **self.dd_base)
         control.dropdown_select(text)
-        # TODO: an assert here
+
+    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
+    @pytest.mark.parametrize("text", ["Link 1.1"])
+    def test_method_dropdown_select_reload(self, text):
+        """Testcase: test_method_dropdown_select_reload"""
+        control = ControlForm(self.bot, **self.dd_base)
+        control.element = None
+        control.dropdown_select(text)
+
+    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
+    @pytest.mark.parametrize("text", ["Link 1.1"])
+    def test_method_dropdown_select_notdropdown(self, text):
+        """Testcase: test_method_dropdown_select_notdropdown"""
+        control = ControlForm(self.bot, **self.dd_base)
+        control.dropdown = None
+        with pytest.raises(ControlException):
+            control.dropdown_select(text)
+
+    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
+    @pytest.mark.parametrize("text", ["Link 1.1"])
+    def test_method_dropdown_select_badparams(self, text):
+        """Testcase: test_method_dropdown_select_badparams"""
+        control = ControlForm(self.bot, **self.dd_base)
+        control.element = None
+        with pytest.raises(ControlException):
+            control.dropdown_select(text, by_value=True, by_index=True)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize("text", ["1", "2"])
@@ -203,7 +229,6 @@ class TestControlForm(TestInfoBotUnique):
         """Testcase: test_method_dropdown_select_by_value"""
         control = ControlForm(self.bot, **self.dd_base)
         control.dropdown_select(text, by_value=True)
-        # TODO: an assert here
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize("index", [0, 1])
@@ -211,7 +236,14 @@ class TestControlForm(TestInfoBotUnique):
         """Testcase: test_method_dropdown_select_by_index"""
         control = ControlForm(self.bot, **self.dd_base)
         control.dropdown_select(index, by_index=True)
-        # TODO: an assert here
+
+    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
+    @pytest.mark.parametrize("index", [{}, [], None])
+    def test_method_dropdown_select_by_index_raises(self, index):
+        """Testcase: test_method_dropdown_select_by_index_raises"""
+        control = ControlForm(self.bot, **self.dd_base)
+        with pytest.raises(ControlException):
+            control.dropdown_select(index, by_index=True)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize("text", ["Link 1.1", "Link 1.2"])
@@ -220,7 +252,34 @@ class TestControlForm(TestInfoBotUnique):
         control = ControlForm(self.bot, **self.dd_multiple)
         control.dropdown_select(text)
         control.dropdown_deselect(text)
-        # TODO: an assert here
+
+    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
+    @pytest.mark.parametrize("text", ["Link 1.1"])
+    def test_method_dropdown_deselect_reload(self, text):
+        """Testcase: test_method_dropdown_deselect_reload"""
+        control = ControlForm(self.bot, **self.dd_multiple)
+        control.dropdown_select(text)
+        control.element = None
+        control.dropdown_deselect(text)
+
+    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
+    @pytest.mark.parametrize("text", ["Link 1.1"])
+    def test_method_dropdown_deselect_notdropdown(self, text):
+        """Testcase: test_method_dropdown_deselect_notdropdown"""
+        control = ControlForm(self.bot, **self.dd_multiple)
+        control.dropdown_select(text)
+        control.dropdown = None
+        with pytest.raises(ControlException):
+            control.dropdown_deselect(text)
+
+    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
+    @pytest.mark.parametrize("text", ["Link 1.1"])
+    def test_method_dropdown_deselect_badparams(self, text):
+        """Testcase: test_method_dropdown_deselect_badparams"""
+        control = ControlForm(self.bot, **self.dd_multiple)
+        control.dropdown_select(text)
+        with pytest.raises(ControlException):
+            control.dropdown_deselect(text, by_value=True, by_index=True)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize("text", ["1", "2"])
@@ -229,7 +288,6 @@ class TestControlForm(TestInfoBotUnique):
         control = ControlForm(self.bot, **self.dd_multiple)
         control.dropdown_select(text, by_value=True)
         control.dropdown_deselect(text, by_value=True)
-        # TODO: an assert here
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize("index", [0, 1])
@@ -238,7 +296,15 @@ class TestControlForm(TestInfoBotUnique):
         control = ControlForm(self.bot, **self.dd_multiple)
         control.dropdown_select(index, by_index=True)
         control.dropdown_deselect(index, by_index=True)
-        # TODO: an assert here
+
+    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
+    @pytest.mark.parametrize("text", [{}, []])
+    def test_method_dropdown_deselect_by_index_raises(self, text):
+        """Testcase: test_method_dropdown_deselect_by_text"""
+        control = ControlForm(self.bot, **self.dd_multiple)
+        control.dropdown_select(0, by_index=True)
+        with pytest.raises(ControlException):
+            control.dropdown_deselect(text, by_index=True)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_method_dropdown_deselect_all(self):
@@ -248,4 +314,24 @@ class TestControlForm(TestInfoBotUnique):
         for text in texts:
             control.dropdown_select(text)
         control.dropdown_deselect_all()
-        # TODO: an assert here
+
+    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
+    def test_method_dropdown_deselect_all_reload(self):
+        """Testcase: test_method_dropdown_deselect_all_reload"""
+        texts = ["Link 1.1", "Link 1.2"]
+        control = ControlForm(self.bot, **self.dd_multiple)
+        for text in texts:
+            control.dropdown_select(text)
+        control.element = None
+        control.dropdown_deselect_all()
+
+    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
+    def test_method_dropdown_deselect_all_notdropdown(self):
+        """Testcase: test_method_dropdown_deselect_all_notdropdown"""
+        texts = ["Link 1.1", "Link 1.2"]
+        control = ControlForm(self.bot, **self.dd_multiple)
+        for text in texts:
+            control.dropdown_select(text)
+        control.dropdown = None
+        with pytest.raises(ControlException):
+            control.dropdown_deselect_all()

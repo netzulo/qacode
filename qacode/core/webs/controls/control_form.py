@@ -340,20 +340,18 @@ class ControlForm(ControlBase):
         """
         self.bot.log.debug(self.CF_DROPDOWNSELECT_LOADING)
         if not self.element and self.auto_reload:
-            self.reload(**self.RELOAD_CONFIG)
+            self.reload(**self.settings)
         if self.dropdown is None:
             raise ControlException(
-                message=("Element must be dropdown"
-                         " (tag={})").format(self.tag))
+                msg="Element must be dropdown, tag={})".format(self.tag))
         if by_value and by_index:
             raise ControlException(
-                message=("Can't use this function with"
-                         " all flags with True values"))
+                msg="Can't use this function with all flags with True values")
         if by_value:
             self.dropdown.select_by_value(text)
         elif by_index:
             if not isinstance(text, int):
-                raise ControlException(message="index must be an int value")
+                raise ControlException(msg="index must be an int value")
             self.dropdown.select_by_index(int(text))
         else:
             self.dropdown.select_by_visible_text(text)
@@ -384,17 +382,15 @@ class ControlForm(ControlBase):
             self.reload(**self.settings)
         if self.dropdown is None:
             raise ControlException(
-                message=("Element must be dropdown"
-                         " (tag={})").format(self.tag))
+                msg="Element must be dropdown, tag={}".format(self.tag))
         if by_value and by_index:
             raise ControlException(
-                message=("Can't use this function with"
-                         " all flags with True values"))
+                msg="Can't use this function with all flags with True values")
         if by_value:
             self.dropdown.deselect_by_value(text)
         elif by_index:
             if not isinstance(text, int):
-                raise ControlException(message="index must be an int value")
+                raise ControlException(msg="index must be an int value")
             self.dropdown.deselect_by_index(int(text))
         else:
             self.dropdown.deselect_by_visible_text(text)
@@ -411,9 +407,8 @@ class ControlForm(ControlBase):
         if not self.element and self.auto_reload:
             self.reload(**self.settings)
         if self.dropdown is None:
-            raise ControlException(
-                message=("Element must be dropdown"
-                         " (tag={})").format(self.tag))
+            msg = "Element must be dropdown"" (tag={})".format(self.tag)
+            raise ControlException(msg=msg)
         self.dropdown.deselect_all()
         self.bot.log.debug(self.CF_DROPDOWNDESELECTALL_LOADED)
 

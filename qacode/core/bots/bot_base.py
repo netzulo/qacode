@@ -102,11 +102,9 @@ class BotBase(object):
         ]
         for setting in self.settings.keys():
             if setting not in required_keys:
-                msg_setting = ("Key for config isn't valid for"
-                               " key='{}'").format(setting)
-                raise CoreException(
-                    message=msg_setting,
-                    log=self.log)
+                msg = ("Key for config isn't valid for"
+                       " key='{}'").format(setting)
+                raise CoreException(msg=msg, log=self.log)
         # Configure browser settings
         browser_name = self.settings.get('browser')
         headless_enabled = self.settings.get(
@@ -123,10 +121,9 @@ class BotBase(object):
         elif self.settings.get('mode') == 'remote':
             self.mode_remote(browser_name=browser_name)
         else:
-            raise CoreException(
-                message=("Bad mode selected, mode={}"
-                         "").format(self.settings.get('mode')),
-                log=self.log)
+            msg = "Bad mode selected, mode={}".format(
+                self.settings.get('mode'))
+            raise CoreException(msg=msg, log=self.log)
         # Instance all needed for BotBase instance
         self.curr_driver_wait = WebDriverWait(self.curr_driver, 10)
         self.curr_driver_actions = ActionChains(self.curr_driver)
@@ -162,9 +159,8 @@ class BotBase(object):
                 "opera": DesiredCapabilities.OPERA.copy(),
             }[browser_name]
         except KeyError:
-            raise CoreException(
-                message='Bad browser selected at load options',
-                log=self.log)
+            msg = 'Bad browser selected at load options'
+            raise CoreException(msg=msg, log=self.log)
         return capabilities
 
     def get_options(self, browser_name='chrome', headless_enabled=False):
@@ -198,9 +194,7 @@ class BotBase(object):
             if browser_name in self.BROWSERS_WITHOUT_OPTIONS:
                 self.log.debug(msg_not_conf)
             else:
-                raise CoreException(
-                    message="Bad browser selected",
-                    log=self.log)
+                raise CoreException(msg="Bad browser selected", log=self.log)
         return options
 
     def driver_name_filter(self, driver_name=None):
@@ -220,7 +214,7 @@ class BotBase(object):
         """
         driver_name_format = '{}{}{}'
         if driver_name is None:
-            raise CoreException(message='driver_name received it\'s None')
+            raise CoreException(msg='driver_name received it\'s None')
         driver_name_format = driver_name_format.format(
             driver_name, '{}', '{}')
         if self.IS_WIN:
@@ -234,10 +228,8 @@ class BotBase(object):
         for name in self.settings.get('drivers_names'):
             if name.endswith(driver_name_format):
                 return driver_name_format
-        raise CoreException(
-            message='Driver name not found {}'.format(
-                driver_name_format),
-            log=self.log)
+        msg = 'Driver name not found {}'.format(driver_name_format)
+        raise CoreException(msg=msg, log=self.log)
 
     def get_driver_chrome(self, driver_path=None, capabilities=None,
                           options=None):
@@ -378,8 +370,8 @@ class BotBase(object):
             }[browser_name]
         except KeyError:
             raise CoreException(
-                message=("config file error, SECTION=bot, KEY=browser isn't "
-                         "valid value: {}".format(browser_name)),
+                msg=("config file error, SECTION=bot, KEY=browser isn't "
+                     "valid value: {}".format(browser_name)),
                 log=self.log)
         self.log.info('Started browser with mode : REMOTE OK')
 
