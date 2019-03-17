@@ -88,7 +88,7 @@ class ControlBase(object):
             bot {BotBase} -- BotBase instance
         """
         if not bot or not isinstance(bot, BotBase):
-            raise ControlException(message="Bad param 'bot'")
+            raise ControlException(msg="Bad param 'bot'")
         self.bot = bot
         # load settings before try to instance
         self.load(**kwargs)
@@ -130,7 +130,7 @@ class ControlBase(object):
             if value is None and key == 'selector':
                 msg = "Bad settings: key={}, value={}".format(
                     key, value)
-                raise ControlException(message=msg)
+                raise ControlException(msg=msg)
             # optional keys, update with default value
             if value is None:
                 value = default_settings.get(key)
@@ -151,7 +151,7 @@ class ControlBase(object):
             if element is not None:
                 if not isinstance(element, WebElement):
                     msg = "Child is not instance of WebElement"
-                    raise ControlException(message=msg)
+                    raise ControlException(msg=msg)
                 self.bot.log.debug(self.CB_SEARCH_FOUND_CHILD)
                 self.element = element
             else:
@@ -179,7 +179,7 @@ class ControlBase(object):
             msg = ("Can't call to load_properties "
                    "wihout call first to load_search")
             self.bot.log.error(msg)
-            raise ControlException(message=msg)
+            raise ControlException(msg=msg)
         if not enabled or enabled is None:
             self.bot.log.debug(self.CB_PROP_DISABLED)
             return False

@@ -52,7 +52,7 @@ class NavBase(object):
     def get_driver_wait(self, driver_wait=None):
         """TODO: doc method"""
         if driver_wait is None and self.driver_wait is None:
-            raise CoreException(message='Nav instanced without driver_wait')
+            raise CoreException(msg='Nav instanced without driver_wait')
         if driver_wait is None:
             driver_wait = self.driver_wait
         return driver_wait
@@ -91,15 +91,15 @@ class NavBase(object):
         """
         valid_keys = ["name", "value"]
         if cookie_dict is None:
-            raise CoreException("Can't add None cookie")
+            raise CoreException(msg="Can't add None cookie")
         for key in valid_keys:
             if cookie_dict.get(key) is None:
                 msg = "Can't add new cookie without '{}'"
-                raise CoreException(message=msg.format(key))
+                raise CoreException(msg=msg.format(key))
         try:
             return self.driver.add_cookie(cookie_dict)
         except WebDriverException as err:
-            raise CoreException(message=err)
+            raise CoreException(err=err)
 
     def get_cookies(self):
         """Returns a set of dictionaries, corresponding to cookies
@@ -183,14 +183,12 @@ class NavBase(object):
         """
         msg = "Locator not selected at find_element, selector={}".format(
             selector)
-        msg_err = "Error at find_element: selector={}".format(
-            selector)
         if locator is None:
-            raise CoreException(message=msg)
+            raise CoreException(msg=msg)
         try:
             return self.driver.find_element(locator, selector)
         except NoSuchElementException as err:
-            raise CoreException(err, message=msg_err)
+            raise CoreException(err=err)
 
     def find_elements(self, selector, locator=By.CSS_SELECTOR):
         """Just divided execution ways for search web elements
@@ -215,17 +213,15 @@ class NavBase(object):
         """
         msg = "Locator not selected at find_element, selector={}".format(
             selector)
-        msg_err = "Error at find_elements: selector={}".format(
-            selector)
         if locator is None:
-            raise CoreException(message=msg)
+            raise CoreException(msg=msg)
         try:
             elements = self.driver.find_elements(locator, selector)
             if len(elements) == 0:
-                raise CoreException(message="0 elements found")
+                raise CoreException(msg="0 elements found")
             return elements
         except NoSuchElementException as err:
-            raise CoreException(err, message=msg_err)
+            raise CoreException(err=err)
 
     def find_element_wait(self, selector,
                           locator=By.CSS_SELECTOR, driver_wait=None):
@@ -293,8 +289,7 @@ class NavBase(object):
                            locator=By.CSS_SELECTOR):
         """TODO: doc method"""
         if element is None or not isinstance(element, WebElement):
-            raise CoreException(
-                message="Can't find child if not WebElement found")
+            raise CoreException(msg="Cant find child if not element found")
         try:
             return element.find_element(locator, child_selector)
         except (NoSuchElementException, StaleElementReferenceException) as err:
@@ -304,14 +299,13 @@ class NavBase(object):
             # maybe must exist at python too
             # then, create and use new method named: find_element_child_wait()
             # raise NotImplementedError("TODO:open an issue at github please")
-            raise CoreException(err)
+            raise CoreException(err=err)
 
     def find_element_children(self, element, child_selector,
                               locator=By.CSS_SELECTOR):
         """TODO: doc method"""
         if element is None or not isinstance(element, WebElement):
-            raise CoreException(
-                message="Can't find children if not WebElement found")
+            raise CoreException(msg="Cant find children if not element found")
         try:
             return element.find_elements(locator, child_selector)
         except (NoSuchElementException, StaleElementReferenceException) as err:
@@ -321,7 +315,7 @@ class NavBase(object):
             # maybe must exist at python too
             # then, create and use new method named: find_element_child_wait()
             # raise NotImplementedError("TODO:open an issue at github please")
-            raise CoreException(err)
+            raise CoreException(err=err)
 
     def find_elements_child(self):
         """TODO: doc method"""
@@ -369,8 +363,8 @@ class NavBase(object):
             # by them with all options values
             if raises:
                 raise CoreException(
-                    ("selenium log_name just can be:"
-                     " [browser,driver,client,server]"))
+                    msg=("selenium log_name just can be:"
+                         " [browser,driver,client,server]"))
             return []
 
     def get_screenshot_as_base64(self):
@@ -454,11 +448,11 @@ class NavBase(object):
         Returns:
             str -- string representation of current driver url
         """
-        err_msg = "Failed at obtain selenium driver property 'current_url'"
+        msg = "Failed at obtain selenium driver property 'current_url'"
         try:
             return self.driver.current_url
-        except Exception as err:
-            raise CoreException(err, message=err_msg)
+        except WebDriverException:
+            raise CoreException(msg=msg)
 
     def is_url(self, url, ignore_raises=True):
         """Check if url it's the same what selenium current and visible url
@@ -480,7 +474,7 @@ class NavBase(object):
         """
         if self.get_current_url() != url:
             if not ignore_raises:
-                raise CoreException("'Current url' is not 'param url'")
+                raise CoreException(msg="'Current url' is not 'param url'")
             return False
         return True
 
@@ -519,10 +513,9 @@ class NavBase(object):
 
         if curr_ele is None and curr_selector is None:
             raise CoreException(
-                "Can't click over None element and None selector arguments: "
-                "curr_ele={}, curr_selector={}"
-                .format(curr_ele, curr_selector)
-            )
+                msg=("Can't click over None element and None selector"
+                     "arguments: curr_ele={}, curr_selector={}"
+                     .format(curr_ele, curr_selector)))
         elif curr_ele is None:
             curr_ele = self.find_element(curr_selector, locator=locator)
             can_click = True
@@ -541,7 +534,7 @@ class NavBase(object):
         """
         if not isinstance(element, WebElement):
             raise CoreException(
-                "Param 'element' it's not instance of WebElement")
+                msg="Param 'element' it's not instance of WebElement")
         if text is not None:
             element.send_keys(text)
         else:
@@ -609,8 +602,8 @@ class NavBase(object):
             self.log.warning("text obtained from innerText")
             if self.ele_is_displayed(element):
                 raise CoreException(
-                    message="on_screen param must be"
-                    "use when element it's not displayed")
+                    msg=("on_screen param must use when"
+                         "element it's not displayed"))
         return text
 
     def ele_input_value(self, element):
@@ -626,8 +619,7 @@ class NavBase(object):
         """
         value = element.get_attribute(attr_name)
         if value is None or value == attr_name:
-            raise CoreException(
-                message="Attr '{}' not found".format(attr_name))
+            raise CoreException(msg="Attr '{}' not found".format(attr_name))
         return value
 
     def ele_tag(self, element):

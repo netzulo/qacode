@@ -81,9 +81,7 @@ class TestConfig(TestInfoBase):
             self.assert_is_instance(
                 key_value.get('test_configs'), bool)
             self.assert_is_instance(
-                key_value.get('drivers_local'), bool)
-            self.assert_is_instance(
-                key_value.get('drivers_remote'), bool)
+                key_value.get('browsers'), dict)
             self.assert_is_instance(
                 key_value.get('bot_multiple'), bool)
             self.assert_is_instance(
