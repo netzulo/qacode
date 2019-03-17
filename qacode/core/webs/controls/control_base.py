@@ -408,7 +408,7 @@ class ControlBase(object):
         self.bot.log.debug(
             self.CB_SETCSSRULE_LOADING.format(prop_name, prop_value))
         if not self.element and self.auto_reload:
-            self.reload(**self.s)
+            self.reload(**self.settings)
         self.bot.navigation.set_css_rule(
             self.selector, prop_name, prop_value,
             css_important=css_important)

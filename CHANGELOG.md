@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 - find_child/find_children tests + some reload bugs #235
+- Syntax error naming variable at controls.set_css_value #243
 
 ### Removed
 
