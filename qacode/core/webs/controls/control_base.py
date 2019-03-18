@@ -143,6 +143,7 @@ class ControlBase(object):
         self.bot.log.debug(self.CB_SETTINGS_LOADED)
 
     def _load_search(self, enabled=False, element=None):
+        """Load element searching at selenium WebDriver"""
         if not enabled or enabled is None:
             self.bot.log.debug(self.CB_SEARCH_DISABLED)
             return False
