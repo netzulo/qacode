@@ -143,6 +143,7 @@ class ControlBase(object):
         self.bot.log.debug(self.CB_SETTINGS_LOADED)
 
     def _load_search(self, enabled=False, element=None):
+        """Load element searching at selenium WebDriver"""
         if not enabled or enabled is None:
             self.bot.log.debug(self.CB_SEARCH_DISABLED)
             return False
@@ -438,6 +439,31 @@ class ControlBase(object):
         self._load_properties(enabled=self.on_instance_load)
         if class_name == 'ControlBase':
             self.bot.log.debug(self.CB_RELOAD_LOADED.format(class_name))
+
+    def wait_invisible(self, timeout=0):
+        """Wait for invisible element, returns control"""
+        self.element = self.bot.navigation.ele_wait_invisible(
+            self.selector, locator=self.locator, timeout=timeout)
+        return self
+
+    def wait_visible(self, timeout=0):
+        """Wait for visible element, returns control"""
+        if not self.element and self.auto_reload:
+            self.reload(**self.settings)
+        self.element = self.bot.navigation.ele_wait_visible(
+            self.element, timeout=timeout)
+        return self
+
+    def wait_text(self, text, timeout=0):
+        """Wait if the given text is present in the specified control"""
+        self.element = self.bot.navigation.ele_wait_text(
+            self.selector, text, locator=self.locator, timeout=timeout)
+        return self
+
+    def wait_blink(self, timeout=0):
+        """Wait until control pops and dissapears"""
+        return self.wait_visible(
+            timeout=timeout).wait_invisible(timeout=timeout)
 
     def __repr__(self):
         """Show basic properties for this object"""

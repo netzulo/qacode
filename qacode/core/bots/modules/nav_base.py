@@ -14,6 +14,7 @@ from selenium.common.exceptions import (
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
 
 class NavBase(object):
@@ -641,6 +642,43 @@ class NavBase(object):
             str -- Value of CSS property searched
         """
         return element.value_of_css_property(prop_name)
+
+    def ele_wait_invisible(self, selector, locator=By.CSS_SELECTOR, timeout=0):
+        """Wait for invisible element (display:none), returns element"""
+        if selector is None:
+            raise CoreException(
+                "Can't wait invisible element if None selector given")
+        locator_tuple = (locator, selector)
+        driver_wait = WebDriverWait(self.driver, timeout)
+        try:
+            element = driver_wait.until(
+                EC.invisibility_of_element_located(locator_tuple))
+        except Exception:
+            raise CoreException("Fails at wait for invisible element")
+        return element
+
+    def ele_wait_visible(self, element, timeout=0):
+        """Wait for visible condition element, returns self"""
+        if element is None:
+            raise CoreException("Can't wait visible if element is None")
+        driver_wait = WebDriverWait(self.driver, timeout)
+        try:
+            element = driver_wait.until(EC.visibility_of(element))
+        except Exception:
+            raise CoreException("Fails at wait for visible element")
+        return element
+
+    def ele_wait_text(self, selector, text,
+                      locator=By.CSS_SELECTOR, timeout=0):
+        """Wait if the given text is present in the specified element"""
+        locator_tuple = (locator, selector)
+        driver_wait = WebDriverWait(self.driver, timeout)
+        try:
+            element = driver_wait.until(
+                EC.text_to_be_present_in_element(locator_tuple, text))
+        except Exception:
+            raise CoreException("Fails at wait for element text")
+        return element
 
     def __repr__(self):
         """Show basic properties for this object"""

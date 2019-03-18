@@ -68,6 +68,29 @@ It's base control to load web element from ``WebDriver + browser session`` , *th
 + Param **on_instance_search** : enable searching element at instance `ControlBase` (*default:* `False`)
 + Param **on_instance_load** : enable loading ``ControlBase`` properties when element it's loaded (*default:* ``False``) , will need enabled if want to access to base properties values obtained from selenium methods at ``BotBase.navigation``
 
+- Methods for **ControlBase**
+
+  + method **load** : Load properties from settings dict. Some elements need to search False to be search at future
+  + method **load_settings_keys** : Load default setting for ControlBase instance
+  + method **_load_properties** : Load default properties for base element
+  + method **_load_search** : Load element searching at selenium WebDriver
+  + method **clear** : Clear input element text value
+  + method **click** : Click on element
+  + method **find_child** : Find child element using bot with default By.CSS_SELECTOR strategy for internal element trought selenium WebElement
+  + method **find_children** : Find children elements using bot with default By.CSS_SELECTOR strategy for internal element trought selenium WebElement
+  + method **get_attr_value** : Search and attribute name over self.element and get value, if attr_value is obtained, then compare and raise if not
+  + method **get_attrs** : Find a list of attributes on WebElement and returns a dict list of {name, value}
+  + method **get_css_value** : Allows to obtain CSS value based on CSS property name
+  + method **set_css_value** : Set new value for given CSS property name on ControlBase selector
+  + method **get_tag** : Returns tag_name from Webelement
+  + method **get_text** : Get element content text
+  + method **reload** : Reload 'self.settings' property:dict and call to instance logic with new configuration
+  + method **type_text** : Type text on input element
+  + method **wait_invisible** : Wait for invisible element, returns control
+  + method **wait_visible** : Wait for visible element, returns control
+  + method **wait_blink** : Wait until control pops and dissapears
+  + method **wait_text** : Wait if the given text is present in the specified control
+
 Example of usage
 ^^^^^^^^^^^^^^^^
 
@@ -117,6 +140,17 @@ ControlForm
 + Param **on_instance_strict** : by default it's disabled, at enable raises when strict_rules type warning logs message with 'hight severity' or when type error log messages with 'medium or more severity'
 + Param **strict_rules** : Allow to add strict_rules configuration to laod StrictRule class for each rule ( example: ``strict_rule = StrictRule('my_named_rule', StrictType.TAG, StrictSeverity.HIGHT)`` )
 
+- Methods for **ControlForm**
+
+  + method **add_rules** : Validate strict rules for each type
+  + method **load_strict_tags** : Validate if element.tag is in list of strict_tags and instance ControlForm specific properties
+  + method **load_strict_attrs** : Validate if element.attrs is in list of strict_attrs
+  + method **load_strict_css_props** : Validate if element.attrs is in list of strict_attrs
+  + method **parse_rules** : Parse array of configurations dicts of strict_rules to instances list of StrictRule
+  + method **reload** : Reload 'self.settings' property:dict and call to instance logic with new configuration
+  + method **dropdown_select** : The Select class only works with tags which have select tags
+  + method **dropdown_deselect** : The Select class only works with tags which have select tags
+  + method **dropdown_deselect_all** : The Select class only works with tags which have select tags with multiple="multiple" attribute.
 
 ControlGroup
 ~~~~~~~~~~~~

@@ -366,3 +366,18 @@ class TestNavBase(TestInfoBotUnique):
         self.assert_equals(
             "Item list01",
             self.bot.navigation.ele_text(ele_children[0]))
+
+    @pytest.mark.skipIf(True, SKIP_NAVS_MSG)
+    def test_elewaitinvisible_ok(self):
+        """Testcase: test_elewaitinvisible_ok"""
+        raise NotImplementedError("ToDo: Open an issue at github")
+
+    @pytest.mark.skipIf(True, SKIP_NAVS_MSG)
+    def test_elewaitvisible_ok(self):
+        """Testcase: test_elewaitvisible_ok"""
+        raise NotImplementedError("ToDo: Open an issue at github")
+
+    @pytest.mark.skipIf(True, SKIP_NAVS_MSG)
+    def test_elewaittext_ok(self):
+        """Testcase: test_elewaittext_ok"""
+        raise NotImplementedError("ToDo: Open an issue at github")
