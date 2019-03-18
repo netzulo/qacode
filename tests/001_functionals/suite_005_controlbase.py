@@ -387,22 +387,22 @@ class TestControlBase(TestInfoBotUnique):
             self.assert_is_instance(ctl_child, ControlBase)
             self.assert_is_instance(ctl_child.element, WebElement)
 
-    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
+    @pytest.mark.skipIf(True, SKIP_CONTROLS_MSG)
     def test_method_waitvisible(self):
         """Testcase: test_method_waitvisible"""
         raise NotImplementedError("ToDo: Open an issue at github")
 
-    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
+    @pytest.mark.skipIf(True, SKIP_CONTROLS_MSG)
     def test_method_waitinvisible(self):
         """Testcase: test_method_waitinvisible"""
         raise NotImplementedError("ToDo: Open an issue at github")
 
-    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
+    @pytest.mark.skipIf(True, SKIP_CONTROLS_MSG)
     def test_method_waittext(self):
         """Testcase: test_method_waittext"""
         raise NotImplementedError("ToDo: Open an issue at github")
 
-    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
+    @pytest.mark.skipIf(True, SKIP_CONTROLS_MSG)
     def test_method_waitblink(self):
         """Testcase: test_method_waitblink"""
         raise NotImplementedError("ToDo: Open an issue at github")
