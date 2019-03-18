@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased] - xxxx-xx-xx
 
 ### Added
+- Now controls can wait some webdriver conditions #242
 
 ### Changed
 - Improve raises logging output #207
