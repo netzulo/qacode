@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 
 ### Changed
+- separate benchmark test from all functional tests at tox -e coverage #251
 
 ### Fixed
 
