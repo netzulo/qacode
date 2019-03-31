@@ -36,26 +36,60 @@ class TestNavBase(TestInfoBotUnique):
         self.add_property('app', self.settings_app('qadmin'))
         self.add_property('page', self.settings_page('qacode_login'))
         self.add_property(
-            'txt_username',
-            value=self.settings_control('txt_username'))
+            'txt_username', self.settings_control('txt_username'))
         self.add_property(
-            'txt_password',
-            value=self.settings_control('txt_password'))
+            'txt_password', self.settings_control('txt_password'))
+        self.add_property('btn_submit', self.settings_control('btn_submit'))
+        self.add_property('lst_ordered', self.settings_control('lst_ordered'))
         self.add_property(
-            'btn_submit',
-            value=self.settings_control('btn_submit'))
+            'lst_ordered_child', self.settings_control('lst_ordered_child'))
         self.add_property(
-            'lst_ordered',
-            value=self.settings_control('lst_ordered'))
+            'dd_menu_data', self.settings_control('dd_menu_data'))
         self.add_property(
-            'lst_ordered_child',
-            value=self.settings_control('lst_ordered_child'))
+            'dd_menu_data_lists', self.settings_control('dd_menu_data_lists'))
         self.add_property(
-            'dd_menu_data',
-            value=self.settings_control('dd_menu_data'))
+            'btn_click_invisible',
+            self.settings_control('btn_click_invisible'))
         self.add_property(
-            'dd_menu_data_lists',
-            value=self.settings_control('dd_menu_data_lists'))
+            'btn_click_visible', self.settings_control('btn_click_visible'))
+        self.add_property(
+            'title_buttons', self.settings_control('title_buttons'))
+
+    def setup_login_to_inputs(self):
+        """Do login before to exec some testcases"""
+        # setup_login
+        self.bot.navigation.get_url(self.page.get('url'), wait_for_load=10)
+        txt_username = self.bot.navigation.find_element(
+            self.txt_username.get("selector"))
+        txt_password = self.bot.navigation.find_element(
+            self.txt_password.get("selector"))
+        btn_submit = self.bot.navigation.find_element(
+            self.btn_submit.get("selector"))
+        self.bot.navigation.ele_write(txt_username, "admin")
+        self.bot.navigation.ele_write(txt_password, "admin")
+        self.bot.navigation.ele_click(btn_submit)
+        # end setup_login
+
+    def setup_login_to_data(self):
+        """Do login before to exec some testcases"""
+        # setup_login
+        self.bot.navigation.get_url(self.page.get('url'), wait_for_load=10)
+        txt_username = self.bot.navigation.find_element(
+            self.txt_username.get("selector"))
+        txt_password = self.bot.navigation.find_element(
+            self.txt_password.get("selector"))
+        btn_submit = self.bot.navigation.find_element(
+            self.btn_submit.get("selector"))
+        self.bot.navigation.ele_write(txt_username, "admin")
+        self.bot.navigation.ele_write(txt_password, "admin")
+        self.bot.navigation.ele_click(btn_submit)
+        self.bot.navigation.ele_click(
+            self.bot.navigation.find_element_wait(
+                self.dd_menu_data.get("selector")))
+        self.bot.navigation.ele_click(
+            self.bot.navigation.find_element_wait(
+                self.dd_menu_data_lists.get("selector")))
+        # end setup_login
 
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_navbase_instance(self):
@@ -307,24 +341,7 @@ class TestNavBase(TestInfoBotUnique):
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_findelementchild_ok(self):
         """Testcase: test_findelementchild_ok"""
-        # setup_method
-        self.bot.navigation.get_url(self.page.get('url'), wait_for_load=10)
-        txt_username = self.bot.navigation.find_element(
-            self.txt_username.get("selector"))
-        txt_password = self.bot.navigation.find_element(
-            self.txt_password.get("selector"))
-        btn_submit = self.bot.navigation.find_element(
-            self.btn_submit.get("selector"))
-        self.bot.navigation.ele_write(txt_username, "admin")
-        self.bot.navigation.ele_write(txt_password, "admin")
-        self.bot.navigation.ele_click(btn_submit)
-        self.bot.navigation.ele_click(
-            self.bot.navigation.find_element_wait(
-                self.dd_menu_data.get("selector")))
-        self.bot.navigation.ele_click(
-            self.bot.navigation.find_element_wait(
-                self.dd_menu_data_lists.get("selector")))
-        # end setup_method
+        self.setup_login_to_data()
         ele_parent = self.bot.navigation.find_element_wait(
             self.lst_ordered.get("selector"))
         self.assert_is_instance(ele_parent, WebElement)
@@ -337,24 +354,7 @@ class TestNavBase(TestInfoBotUnique):
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_findelementchildren_ok(self):
         """Testcase: test_findelementchildren_ok"""
-        # setup_method
-        self.bot.navigation.get_url(self.page.get('url'), wait_for_load=10)
-        txt_username = self.bot.navigation.find_element(
-            self.txt_username.get("selector"))
-        txt_password = self.bot.navigation.find_element(
-            self.txt_password.get("selector"))
-        btn_submit = self.bot.navigation.find_element(
-            self.btn_submit.get("selector"))
-        self.bot.navigation.ele_write(txt_username, "admin")
-        self.bot.navigation.ele_write(txt_password, "admin")
-        self.bot.navigation.ele_click(btn_submit)
-        self.bot.navigation.ele_click(
-            self.bot.navigation.find_element_wait(
-                self.dd_menu_data.get("selector")))
-        self.bot.navigation.ele_click(
-            self.bot.navigation.find_element_wait(
-                self.dd_menu_data_lists.get("selector")))
-        # end setup_method
+        self.setup_login_to_data()
         ele_parent = self.bot.navigation.find_element_wait(
             self.lst_ordered.get("selector"))
         self.assert_is_instance(ele_parent, WebElement)
@@ -367,17 +367,53 @@ class TestNavBase(TestInfoBotUnique):
             "Item list01",
             self.bot.navigation.ele_text(ele_children[0]))
 
-    @pytest.mark.skipIf(True, SKIP_NAVS_MSG)
+    @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_elewaitinvisible_ok(self):
         """Testcase: test_elewaitinvisible_ok"""
-        raise NotImplementedError("ToDo: Open an issue at github")
+        self.setup_login_to_inputs()
+        selector = self.btn_click_invisible.get("selector")
+        ele = self.bot.navigation.find_element_wait(selector)
+        ele.click()
+        # end setup
+        ele = self.bot.navigation.ele_wait_invisible(selector, timeout=7)
+        self.assert_is_instance(ele, WebElement)
 
-    @pytest.mark.skipIf(True, SKIP_NAVS_MSG)
+    @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_elewaitvisible_ok(self):
         """Testcase: test_elewaitvisible_ok"""
-        raise NotImplementedError("ToDo: Open an issue at github")
+        self.setup_login_to_inputs()
+        find_ele = self.bot.navigation.find_element_wait
+        ele = find_ele(self.btn_click_invisible.get("selector"))
+        ele.click()
+        ele_invisible = find_ele(self.btn_click_visible.get("selector"))
+        # end setup
+        ele_visible = self.bot.navigation.ele_wait_visible(
+            ele_invisible, timeout=7)
+        self.assert_is_instance(ele_visible, WebElement)
 
-    @pytest.mark.skipIf(True, SKIP_NAVS_MSG)
+    @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_elewaittext_ok(self):
-        """Testcase: test_elewaittext_ok"""
-        raise NotImplementedError("ToDo: Open an issue at github")
+        """Testcase: test_elewaitvalue_ok"""
+        self.setup_login_to_inputs()
+        selector = self.btn_click_invisible.get("selector")
+        selector_title = self.title_buttons.get("selector")
+        ele_text = self.bot.navigation.find_element_wait(selector)
+        ele_text.click()
+        # end setup
+        is_changed = self.bot.navigation.ele_wait_text(
+            selector_title, "Buttonss", timeout=12)
+        self.assert_true(is_changed)
+        self.assert_is_instance(ele_text.text, "Buttonss")
+
+    @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
+    def test_elewaitvalue_ok(self):
+        """Testcase: test_elewaitvalue_ok"""
+        self.setup_login_to_inputs()
+        selector = self.btn_click_invisible.get("selector")
+        ele_text = self.bot.navigation.find_element_wait(selector)
+        ele_text.click()
+        # end setup
+        is_changed = self.bot.navigation.ele_wait_value(
+            selector, "bad_text", timeout=12)
+        self.assert_true(is_changed)
+        self.assert_is_instance(ele_text.get_attribute("value"), "bad_text")

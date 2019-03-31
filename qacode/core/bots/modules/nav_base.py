@@ -674,11 +674,21 @@ class NavBase(object):
         locator_tuple = (locator, selector)
         driver_wait = WebDriverWait(self.driver, timeout)
         try:
-            element = driver_wait.until(
+            return driver_wait.until(
                 EC.text_to_be_present_in_element(locator_tuple, text))
         except Exception:
             raise CoreException("Fails at wait for element text")
-        return element
+
+    def ele_wait_value(self, selector, value,
+                       locator=By.CSS_SELECTOR, timeout=0):
+        """Wait if the given value is present in the specified element"""
+        locator_tuple = (locator, selector)
+        driver_wait = WebDriverWait(self.driver, timeout)
+        try:
+            return driver_wait.until(
+                EC.text_to_be_present_in_element_value(locator_tuple, value))
+        except Exception:
+            raise CoreException("Fails at wait for element value")
 
     def __repr__(self):
         """Show basic properties for this object"""

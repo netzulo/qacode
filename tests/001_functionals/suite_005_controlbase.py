@@ -57,6 +57,49 @@ class TestControlBase(TestInfoBotUnique):
         self.add_property(
             'dd_menu_data_lists', self.settings_control('dd_menu_data_lists'))
         self.bot.navigation.get_url(self.url, wait_for_load=10)
+        self.add_property(
+            'btn_click_invisible',
+            self.settings_control('btn_click_invisible'))
+        self.add_property(
+            'btn_click_visible', self.settings_control('btn_click_visible'))
+        self.add_property(
+            'title_buttons', self.settings_control('title_buttons'))
+
+    def setup_login_to_inputs(self):
+        """Do login before to exec some testcases"""
+        # setup_login
+        self.bot.navigation.get_url(self.page.get('url'), wait_for_load=10)
+        txt_username = self.bot.navigation.find_element(
+            self.txt_username.get("selector"))
+        txt_password = self.bot.navigation.find_element(
+            self.txt_password.get("selector"))
+        btn_submit = self.bot.navigation.find_element(
+            self.btn_submit.get("selector"))
+        self.bot.navigation.ele_write(txt_username, "admin")
+        self.bot.navigation.ele_write(txt_password, "admin")
+        self.bot.navigation.ele_click(btn_submit)
+        # end setup_login
+
+    def setup_login_to_data(self):
+        """Do login before to exec some testcases"""
+        # setup_login
+        self.bot.navigation.get_url(self.page.get('url'), wait_for_load=10)
+        txt_username = self.bot.navigation.find_element(
+            self.txt_username.get("selector"))
+        txt_password = self.bot.navigation.find_element(
+            self.txt_password.get("selector"))
+        btn_submit = self.bot.navigation.find_element(
+            self.btn_submit.get("selector"))
+        self.bot.navigation.ele_write(txt_username, "admin")
+        self.bot.navigation.ele_write(txt_password, "admin")
+        self.bot.navigation.ele_click(btn_submit)
+        self.bot.navigation.ele_click(
+            self.bot.navigation.find_element_wait(
+                self.dd_menu_data.get("selector")))
+        self.bot.navigation.ele_click(
+            self.bot.navigation.find_element_wait(
+                self.dd_menu_data_lists.get("selector")))
+        # end setup_login
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize("on_instance_search", [True, False])
@@ -281,24 +324,7 @@ class TestControlBase(TestInfoBotUnique):
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_method_findchild(self):
         """Testcase: test_method_findchild"""
-        # setup_method
-        self.bot.navigation.get_url(self.page.get('url'), wait_for_load=10)
-        txt_username = self.bot.navigation.find_element(
-            self.txt_username.get("selector"))
-        txt_password = self.bot.navigation.find_element(
-            self.txt_password.get("selector"))
-        btn_submit = self.bot.navigation.find_element(
-            self.btn_submit.get("selector"))
-        self.bot.navigation.ele_write(txt_username, "admin")
-        self.bot.navigation.ele_write(txt_password, "admin")
-        self.bot.navigation.ele_click(btn_submit)
-        self.bot.navigation.ele_click(
-            self.bot.navigation.find_element_wait(
-                self.dd_menu_data.get("selector")))
-        self.bot.navigation.ele_click(
-            self.bot.navigation.find_element_wait(
-                self.dd_menu_data_lists.get("selector")))
-        # end setup_method
+        self.setup_login_to_data()
         control = ControlBase(self.bot, **self.lst_ordered)
         selector_child = self.lst_ordered_child.get("selector")
         ctl_child = control.find_child(selector_child)
@@ -308,24 +334,7 @@ class TestControlBase(TestInfoBotUnique):
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_method_findchildren(self):
         """Testcase: test_method_findchildren"""
-        # setup_method
-        self.bot.navigation.get_url(self.page.get('url'), wait_for_load=10)
-        txt_username = self.bot.navigation.find_element(
-            self.txt_username.get("selector"))
-        txt_password = self.bot.navigation.find_element(
-            self.txt_password.get("selector"))
-        btn_submit = self.bot.navigation.find_element(
-            self.btn_submit.get("selector"))
-        self.bot.navigation.ele_write(txt_username, "admin")
-        self.bot.navigation.ele_write(txt_password, "admin")
-        self.bot.navigation.ele_click(btn_submit)
-        self.bot.navigation.ele_click(
-            self.bot.navigation.find_element_wait(
-                self.dd_menu_data.get("selector")))
-        self.bot.navigation.ele_click(
-            self.bot.navigation.find_element_wait(
-                self.dd_menu_data_lists.get("selector")))
-        # end setup_method
+        self.setup_login_to_data()
         control = ControlBase(self.bot, **self.lst_ordered)
         selector_child = self.lst_ordered_child.get("selector")
         children = control.find_children(selector_child)
@@ -334,22 +343,54 @@ class TestControlBase(TestInfoBotUnique):
             self.assert_is_instance(ctl_child, ControlBase)
             self.assert_is_instance(ctl_child.element, WebElement)
 
-    @pytest.mark.skipIf(True, SKIP_CONTROLS_MSG)
-    def test_method_waitvisible(self):
-        """Testcase: test_method_waitvisible"""
-        raise NotImplementedError("ToDo: Open an issue at github")
-
-    @pytest.mark.skipIf(True, SKIP_CONTROLS_MSG)
+    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_method_waitinvisible(self):
         """Testcase: test_method_waitinvisible"""
-        raise NotImplementedError("ToDo: Open an issue at github")
+        self.setup_login_to_inputs()
+        # end setup
+        ctl = ControlBase(self.bot, **self.btn_click_invisible)
+        ctl.click()
+        ctl_invisible = ctl.wait_invisible(timeout=7)
+        self.assert_is_instance(ctl_invisible, ControlBase)
+        self.assert_is_instance(ctl_invisible.element, WebElement)
 
-    @pytest.mark.skipIf(True, SKIP_CONTROLS_MSG)
-    def test_method_waittext(self):
-        """Testcase: test_method_waittext"""
-        raise NotImplementedError("ToDo: Open an issue at github")
+    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
+    def test_method_waitvisible(self):
+        """Testcase: test_method_waitvisible"""
+        self.setup_login_to_inputs()
+        ControlBase(self.bot, **self.btn_click_invisible).click()
+        # end setup
+        ctl = ControlBase(self.bot, **self.btn_click_visible)
+        ctl_visible = ctl.wait_visible(timeout=7)
+        self.assert_is_instance(ctl_visible, ControlBase)
+        self.assert_is_instance(ctl_visible.element, WebElement)
 
-    @pytest.mark.skipIf(True, SKIP_CONTROLS_MSG)
+    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_method_waitblink(self):
         """Testcase: test_method_waitblink"""
-        raise NotImplementedError("ToDo: Open an issue at github")
+        self.setup_login_to_inputs()
+        ctl = ControlBase(self.bot, **self.btn_click_invisible)
+        ctl.click()
+        # end setup
+        ctl_blink = ctl.wait_blink(timeout=7)
+        self.assert_is_instance(ctl_blink, ControlBase)
+        self.assert_is_instance(ctl_blink.element, WebElement)
+
+    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
+    @pytest.mark.parametrize(
+        "ctl_cfg", [
+            ("title_buttons", "Buttonss"),
+            ("btn_click_invisible", "bad_text")
+        ]
+    )
+    def test_method_waittext(self, ctl_cfg):
+        """Testcase: test_method_waittext"""
+        self.setup_login_to_inputs()
+        ctl_setup = ControlBase(self.bot, **self.btn_click_invisible)
+        ctl_setup.click()
+        ctl_setup.wait_visible(timeout=7)
+        # end setup
+        ctl = ControlBase(self.bot, **getattr(self, ctl_cfg[0]))
+        ctl.reload()
+        self.assert_true(ctl.wait_text(ctl_cfg[1], timeout=7))
+        self.assert_equals(ctl.text, ctl_cfg[1])
