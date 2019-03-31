@@ -47,14 +47,14 @@ class PageBase(object):
             PageException -- if required param 'url' is None or empty str
         """
         if not bot:
-            raise PageException(message="param bot is None")
+            raise PageException(msg="param bot is None")
         self.bot = bot
         if not isinstance(kwargs, dict):
-            raise PageException(message='Optional params must be a dict')
+            raise PageException(msg='Optional params must be a dict')
         self.settings = kwargs
         if not self.settings.get('url'):
             raise PageException(
-                message='Param url can\'t be None, just empty string')
+                msg='Param url can\'t be None, just empty string')
         if not self.settings.get('locator'):
             self.settings.update({'locator': By.CSS_SELECTOR})
         if not self.settings.get('go_url'):
@@ -116,7 +116,7 @@ class PageBase(object):
             PageException -- if param cfg_control is None
         """
         if not cfg_control:
-            raise PageException(message='cfg_control can not be None')
+            raise PageException(msg='cfg_control can not be None')
         setattr(
             self,
             cfg_control.get('name'),
@@ -157,7 +157,7 @@ class PageBase(object):
                     controls.append(control)
                 else:
                     raise PageException(
-                        message="Bad instance name for control")
+                        msg="Bad instance name for control")
             except (ControlException, Exception) as err:
                 if not isinstance(err, ControlException):
                     raise Exception(err)

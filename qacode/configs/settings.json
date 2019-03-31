@@ -92,12 +92,12 @@
             "wait_url": 0,
             "maximize": false,
             "controls": [
-              { "name": "dd_base", "selector": "#txtTest002", "instance": "ControlForm", "on_instance_search": true, "on_instance_load": true, "on_instance_strict": true,
+              { "name": "dd_base", "selector": "#txtTest002", "instance": "ControlForm",
                 "strict_rules": [
                   { "tag": "select", "type": "tag", "severity": "hight" }
                 ]
               },
-              { "name": "dd_multiple", "selector": "#txtTest003", "instance": "ControlForm", "on_instance_search": true, "on_instance_load": true, "on_instance_strict": true,
+              { "name": "dd_multiple", "selector": "#txtTest003", "instance": "ControlForm",
                 "strict_rules": [
                   { "tag": "select", "type": "tag", "severity": "hight" }
                 ]

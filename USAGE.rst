@@ -142,11 +142,11 @@ ControlForm
 
 - Methods for **ControlForm**
 
-  + method **add_rules** : Validate strict rules for each type
-  + method **load_strict_tags** : Validate if element.tag is in list of strict_tags and instance ControlForm specific properties
-  + method **load_strict_attrs** : Validate if element.attrs is in list of strict_attrs
-  + method **load_strict_css_props** : Validate if element.attrs is in list of strict_attrs
-  + method **parse_rules** : Parse array of configurations dicts of strict_rules to instances list of StrictRule
+  + method **__load__** : Load properties from settings dict. Some elements need to search False to be search at future
+  + method **load_settings_keys** : Load default setting for ControlForm instance
+  + method **__load__rules__** : Parse array of configurations dicts of strict_rules to instances list of StrictRule
+  + method **__load_strict_tag__** : alidate if element.tag is in list of strict_tags and instance ControlForm specific properties
+  + method **__check_reload__form__** : Allow to check before methods calls to ensure if it's neccessary reload element properties
   + method **reload** : Reload 'self.settings' property:dict and call to instance logic with new configuration
   + method **dropdown_select** : The Select class only works with tags which have select tags
   + method **dropdown_deselect** : The Select class only works with tags which have select tags

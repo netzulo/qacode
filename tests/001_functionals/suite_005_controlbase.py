@@ -40,144 +40,88 @@ class TestControlBase(TestInfoBotUnique):
         """Configure self.attribute"""
         super(TestControlBase, self).setup_method(
             test_method, config=settings(file_path="qacode/configs/"))
+        self.add_property('app', self.settings_app('qadmin'))
+        self.add_property('page', self.settings_page('qacode_login'))
+        self.add_property('url', self.page.get('url'))
         self.add_property(
-            'app', value=self.settings_app('qadmin'))
+            'txt_username', self.settings_control('txt_username'))
         self.add_property(
-            'page', value=self.settings_page('qacode_login'))
+            'txt_password', self.settings_control('txt_password'))
+        self.add_property('btn_submit', self.settings_control('btn_submit'))
+        self.add_property('form_login', self.settings_control('form_login'))
+        self.add_property('lst_ordered', self.settings_control('lst_ordered'))
         self.add_property(
-            'url', value=self.page.get('url'))
+            'lst_ordered_child', self.settings_control('lst_ordered_child'))
         self.add_property(
-            'txt_username',
-            value=self.settings_control('txt_username'))
+            'dd_menu_data', self.settings_control('dd_menu_data'))
         self.add_property(
-            'txt_password',
-            value=self.settings_control('txt_password'))
-        self.add_property(
-            'btn_submit',
-            value=self.settings_control('btn_submit'))
-        self.add_property(
-            'form_login',
-            value=self.settings_control('form_login'))
-        self.add_property(
-            'lst_ordered',
-            value=self.settings_control('lst_ordered'))
-        self.add_property(
-            'lst_ordered_child',
-            value=self.settings_control('lst_ordered_child'))
-        self.add_property(
-            'dd_menu_data',
-            value=self.settings_control('dd_menu_data'))
-        self.add_property(
-            'dd_menu_data_lists',
-            value=self.settings_control('dd_menu_data_lists'))
-        self.bot.navigation.get_url(self.url)
+            'dd_menu_data_lists', self.settings_control('dd_menu_data_lists'))
+        self.bot.navigation.get_url(self.url, wait_for_load=10)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    @pytest.mark.parametrize("selector", ["#txtUsername-field"])
-    @pytest.mark.parametrize("instance", ["ControlBase"])
-    @pytest.mark.parametrize("on_instance_search", [False, True])
-    @pytest.mark.parametrize("on_instance_load", [False, True])
-    @pytest.mark.parametrize("auto_reload", [True])
-    def test_instance_base(self, selector, instance, on_instance_search,
-                           on_instance_load, auto_reload):
-        """Testcase: test_instance_base"""
-        # must be supported at: test_instance_raises_base
-        if not on_instance_search and on_instance_load:
-            pytest.skip("Test must be supported at: test_instance_raises_base")
-        # must be supported
-        control_config = {
-            "name": "txt_username_base",
-            "locator": "css selector",
-            "selector": selector,
-            "instance": instance,
-            "on_instance_search": on_instance_search,
-            "on_instance_load": on_instance_load,
-            "auto_reload": auto_reload,
-        }
-        control = ControlBase(self.bot, **control_config)
-        self.assert_is_instance(control, ControlBase)
-        if on_instance_search and on_instance_load:
-            self.assert_equals(control.tag, 'input')
-        if on_instance_search:
-            self.assert_is_instance(control.element, WebElement)
-        else:
-            self.assert_none(control.element)
-        # main config
-        self.assert_equals(
-            control.selector, control_config.get('selector'))
-        self.assert_equals(
-            control.name, control_config.get('name'))
-        self.assert_equals(
-            control.locator, control_config.get('locator'))
-        self.assert_equals(
-            control.on_instance_search,
-            control_config.get('on_instance_search'))
-        self.assert_equals(
-            control.on_instance_load,
-            control_config.get('on_instance_load'))
-        self.assert_equals(
-            control.auto_reload,
-            control_config.get('auto_reload'))
-        self.assert_equals(
-            control.instance,
-            control_config.get('instance'))
-
-    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    @pytest.mark.parametrize("on_instance_load", [None])
-    @pytest.mark.parametrize("on_instance_search", [None, True])
-    @pytest.mark.parametrize("instance", ["ControlBase"])
-    @pytest.mark.parametrize("selector", [None, "#txtUsername-field"])
-    @pytest.mark.parametrize("auto_reload", [False])
-    def test_instance_base_raises(self, selector, instance, on_instance_search,
+    @pytest.mark.parametrize("on_instance_search", [True, False])
+    @pytest.mark.parametrize("on_instance_load", [True, False])
+    @pytest.mark.parametrize("auto_reload", [True, False])
+    def test_controlbase_instance(self, on_instance_search,
                                   on_instance_load, auto_reload):
-        """Testcase: test_instance_raises_base"""
-        # must be supported at: test_instance_base
-        if on_instance_search and on_instance_load is None:
-            pytest.skip("Test must be supported at: test_instance_base")
-        # must be supported
-        control_config = {
+        """Testcase: test_instance_base"""
+        tag_name = "input"
+        cfg = {
             "name": "txt_username_base",
             "locator": "css selector",
-            "selector": selector,
-            "instance": instance,
+            "selector": "#txtUsername-field",
+            "instance": "ControlBase",
             "on_instance_search": on_instance_search,
             "on_instance_load": on_instance_load,
             "auto_reload": auto_reload,
         }
-        if on_instance_search is None and \
-           on_instance_load is None and \
-           selector is not None:
-            control = ControlBase(self.bot, **control_config)
-            # main config
-            self.assert_equals(
-                control.selector, control_config.get('selector'))
-            self.assert_equals(control.name, control_config.get('name'))
-            self.assert_equals(
-                control.locator, control_config.get('locator'))
-            self.assert_equals(control.on_instance_search, False)
-            self.assert_equals(control.on_instance_load, False)
-            self.assert_none(control.element)
+        # negative testcases
+        if not on_instance_search and on_instance_load:
+            with pytest.raises(ControlException):
+                ControlBase(self.bot, **cfg)
             return True
-        pytest.raises(
-            ControlException,
-            ControlBase, self.bot,
-            **control_config)
+        # functional testcases
+        ctl = ControlBase(self.bot, **cfg)
+        self.assert_is_instance(ctl, ControlBase)
+        # main config
+        self.assert_equals(ctl.selector, cfg.get('selector'))
+        self.assert_equals(ctl.name, cfg.get('name'))
+        self.assert_equals(ctl.locator, cfg.get('locator'))
+        self.assert_equals(
+            ctl.on_instance_search, cfg.get('on_instance_search'))
+        self.assert_equals(ctl.on_instance_load, cfg.get('on_instance_load'))
+        self.assert_equals(ctl.auto_reload, cfg.get('auto_reload'))
+        self.assert_equals(ctl.instance, cfg.get('instance'))
+        if on_instance_search and on_instance_load:
+            self.assert_equals(ctl.tag, tag_name)
+        if on_instance_search:
+            self.assert_is_instance(ctl.element, WebElement)
+        else:
+            self.assert_none(ctl.element)
+
+    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
+    def test_controlbase_instance_raises(self):
+        """Testcase: test_instance_raises_base"""
+        cfg = {
+            "name": "controlbase_raises",
+            "selector": None,
+            "instance": None,
+            "on_instance_search": None,
+            "on_instance_load": None,
+            "auto_reload": None,
+        }
+        with pytest.raises(ControlException):
+            ControlBase(self.bot, **cfg)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_instance_raises_nonebot(self):
         """Testcase: test_instance_raises_nonebot"""
-        self.assert_raises(
-            ControlException,
-            ControlBase,
-            None)
+        self.assert_raises(ControlException, ControlBase, None)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_instance_raises_nonesettings(self):
         """Testcase: test_instance_raises_nonesettings"""
-        self.assert_raises(
-            ControlException,
-            ControlBase,
-            self.bot)
+        self.assert_raises(ControlException, ControlBase, self.bot)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_property_gettext(self):
@@ -247,22 +191,25 @@ class TestControlBase(TestInfoBotUnique):
         self.assert_equals(control.tag, 'form')
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    @pytest.mark.parametrize("control_name", ['txt_username'])
+    @pytest.mark.parametrize("retry", [False, True])
+    def test_method_click(self, retry):
+        """Testcase: test_method_click"""
+        ctl_config = self.txt_username.copy()
+        control = ControlBase(self.bot, **ctl_config)
+        control.click(retry=retry)
+
+    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize("clear", [True, False])
     @pytest.mark.parametrize(
         "control_config",
         [
             {"on_instance_load": True},
-            {
-                "on_instance_search": False,
-                "on_instance_load": False,
-                "auto_reload": True
-            }
+            {"auto_reload": True}
         ])
-    def test_method_typetext(self, control_name, control_config, clear):
+    def test_method_typetext(self, control_config, clear):
         """Testcase: test_method_typetext_cleartrue"""
         text_to_type = 'test'
-        ctl_config = getattr(self, control_name).copy()
+        ctl_config = self.txt_username.copy()
         ctl_config.update(control_config)
         control = ControlBase(self.bot, **ctl_config)
         control.type_text(text_to_type, clear=clear)

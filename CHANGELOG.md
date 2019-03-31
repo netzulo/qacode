@@ -8,11 +8,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased] - xxxx-xx-xx
 
 ### Added
+- New module at 'qacode.core.loggers' named 'logger_messages' #untracked
 
 ### Changed
-- separate benchmark test from all functional tests at tox -e coverage #251
+- Separate benchmark test from all functional tests at tox -e coverage #251
+- Moved log messages to new class to centralize them #untracked
+- Refactor for control suites after changes from #247 , #untracked
+- Updated USAGE.rst documentation #untracked
 
 ### Fixed
+- Can't use dropdown methods if ControlForm strict_tags is disabled #247
+- Some PageExceptions was failing at instantiation #untracked
 
 ### Removed
 
