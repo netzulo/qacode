@@ -341,7 +341,7 @@ class ControlBase(object):
                 self.element, attr_name)
             self.bot.log.debug(
                 MSG.CB_GETATTRVALUE_LOADED.format(attr_name, value))
-            return value
+            return str(value)
         except CoreException as err:
             self.bot.log.error(MSG.CB_GETATTRVALUE_FAILED)
             raise ControlException(err=err)
