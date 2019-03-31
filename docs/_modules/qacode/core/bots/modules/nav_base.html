@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>qacode.core.bots.modules.nav_base &#8212; qacode v0.6.0 documentation</title>
+    <link rel="stylesheet" href="../../../../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../../_static/language_data.js"></script>
+    <script type="text/javascript" src="../../../../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../../../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../../../../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../../../_static/bootstrap-sphinx.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../../../../index.html">
+          qacode</a>
+        <span class="navbar-text navbar-version pull-left"><b>6.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../../../../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../bots.html">package: qacode.core.bots</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../controls.html">package: qacode.core.webs.controls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../enums.html">package: qacode.core.enums</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../exceptions.html">package: qacode.core.exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../loggers.html">package: qacode.core.loggers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../pages.html">package: qacode.core.webs.pages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../testing.html">package: qacode.core.testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../testlink.html">package: qacode.core.testing.testlink</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"></ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../../../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <h1>Source code for qacode.core.bots.modules.nav_base</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;Created on 04 march 2017</span>
+
+<span class="sd">@author: ntz</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="kn">from</span> <span class="nn">qacode.core.exceptions.core_exception</span> <span class="k">import</span> <span class="n">CoreException</span>
+<span class="kn">from</span> <span class="nn">selenium.common.exceptions</span> <span class="k">import</span> <span class="p">(</span>
+    <span class="n">NoSuchElementException</span><span class="p">,</span>
+    <span class="n">StaleElementReferenceException</span><span class="p">,</span>
+    <span class="n">WebDriverException</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.common.by</span> <span class="k">import</span> <span class="n">By</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.remote.webelement</span> <span class="k">import</span> <span class="n">WebElement</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.support</span> <span class="k">import</span> <span class="n">expected_conditions</span> <span class="k">as</span> <span class="n">EC</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.support.ui</span> <span class="k">import</span> <span class="n">WebDriverWait</span>
+
+
+<div class="viewcode-block" id="NavBase"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase">[docs]</a><span class="k">class</span> <span class="nc">NavBase</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Main navigation methods to use on selenium scripts&quot;&quot;&quot;</span>
+
+    <span class="n">driver</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">log</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">driver_wait</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">driver_actions</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">driver_touch</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">driver</span><span class="p">,</span> <span class="n">log</span><span class="p">,</span> <span class="n">driver_wait</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">driver_actions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">driver_touch</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialize self properties</span>
+
+<span class="sd">        Arguments:</span>
+<span class="sd">            driver {WebDriver} -- instance of any browser type/mode</span>
+<span class="sd">            log {logging.logger} -- Logger for methods usage</span>
+
+<span class="sd">        Keyword Arguments:</span>
+<span class="sd">            driver_wait {selenium.webdriver.support.ui.WebDriverWait}</span>
+<span class="sd">                -- web driver wait for conditions (default: {None})</span>
+<span class="sd">            driver_actions</span>
+<span class="sd">                {from selenium.webdriver.common.action_chains.ActionChains}</span>
+<span class="sd">                -- web driver for perform actions on elements</span>
+<span class="sd">            driver_touch</span>
+<span class="sd">                {selenium.webdriver.common.touch_actions.TouchActions}</span>
+<span class="sd">                -- web driver for perform touch actions on elements</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span> <span class="o">=</span> <span class="n">driver</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span> <span class="o">=</span> <span class="n">log</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver_wait</span> <span class="o">=</span> <span class="n">driver_wait</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver_actions</span> <span class="o">=</span> <span class="n">driver_actions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver_touch</span> <span class="o">=</span> <span class="n">driver_touch</span>
+
+<div class="viewcode-block" id="NavBase.get_driver_wait"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.get_driver_wait">[docs]</a>    <span class="k">def</span> <span class="nf">get_driver_wait</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">driver_wait</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;TODO: doc method&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">driver_wait</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver_wait</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">CoreException</span><span class="p">(</span><span class="n">msg</span><span class="o">=</span><span class="s1">&#39;Nav instanced without driver_wait&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">driver_wait</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">driver_wait</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver_wait</span>
+        <span class="k">return</span> <span class="n">driver_wait</span></div>
+
+<div class="viewcode-block" id="NavBase.get_url"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.get_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">wait_for_load</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Do get_url including implicit wait for page load&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">wait_for_load</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">implicitly_wait</span><span class="p">(</span><span class="n">wait_for_load</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NavBase.get_maximize_window"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.get_maximize_window">[docs]</a>    <span class="k">def</span> <span class="nf">get_maximize_window</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Maximize browser window&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">maximize_window</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="NavBase.get_window_handle"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.get_window_handle">[docs]</a>    <span class="k">def</span> <span class="nf">get_window_handle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get window object to handle with selenium on scripts&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">current_window_handle</span></div>
+
+<div class="viewcode-block" id="NavBase.add_cookie"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.add_cookie">[docs]</a>    <span class="k">def</span> <span class="nf">add_cookie</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cookie_dict</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adds a cookie to your current session.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            cookie_dict: A dictionary object, with required</span>
+<span class="sd">                keys - &quot;name&quot; and &quot;value&quot;</span>
+<span class="sd">                optional keys - &quot;path&quot;, &quot;domain&quot;, &quot;secure&quot;, &quot;expiry&quot;</span>
+<span class="sd">        Usage:</span>
+<span class="sd">            driver.add_cookie({</span>
+<span class="sd">                &quot;name&quot; : &quot;foo&quot;,</span>
+<span class="sd">                &quot;value&quot; : &quot;bar&quot;})</span>
+<span class="sd">            driver.add_cookie({</span>
+<span class="sd">                &#39;name&#39; : &#39;foo&#39;,</span>
+<span class="sd">                &#39;value&#39; : &#39;bar&#39;,</span>
+<span class="sd">                &#39;path&#39; : &#39;/&#39;,</span>
+<span class="sd">                &#39;secure&#39;:True,</span>
+<span class="sd">                &#39;domain&#39;: None})</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">valid_keys</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">cookie_dict</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">CoreException</span><span class="p">(</span><span class="n">msg</span><span class="o">=</span><span class="s2">&quot;Can&#39;t add None cookie&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">valid_keys</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">cookie_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Can&#39;t add new cookie without &#39;</span><span class="si">{}</span><span class="s2">&#39;&quot;</span>
+                <span class="k">raise</span> <span class="n">CoreException</span><span class="p">(</span><span class="n">msg</span><span class="o">=</span><span class="n">msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">add_cookie</span><span class="p">(</span><span class="n">cookie_dict</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">WebDriverException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">CoreException</span><span class="p">(</span><span class="n">err</span><span class="o">=</span><span class="n">err</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NavBase.get_cookies"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.get_cookies">[docs]</a>    <span class="k">def</span> <span class="nf">get_cookies</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a set of dictionaries, corresponding to cookies</span>
+<span class="sd">            visible in the current session.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">get_cookies</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="NavBase.delete_cookie_by_key"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.delete_cookie_by_key">[docs]</a>    <span class="k">def</span> <span class="nf">delete_cookie_by_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Deletes a single cookie with the given name&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">delete_cookie</span><span class="p">(</span><span class="n">key_name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NavBase.delete_cookies"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.delete_cookies">[docs]</a>    <span class="k">def</span> <span class="nf">delete_cookies</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Delete all cookies in the scope of the session&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">delete_all_cookies</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="NavBase.get_capabilities"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.get_capabilities">[docs]</a>    <span class="k">def</span> <span class="nf">get_capabilities</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieve current capabilities applied to selenium driver&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">desired_capabilities</span></div>
+
+<div class="viewcode-block" id="NavBase.execute_js"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.execute_js">[docs]</a>    <span class="k">def</span> <span class="nf">execute_js</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">script</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Execute arbitrary Javascript code</span>
+
+<span class="sd">        Arguments:</span>
+<span class="sd">            script {str} -- JS code to be executed on WebDriver</span>
+<span class="sd">            *args {[type]} -- More arguments ( like element selector )</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str -- JS script returns</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">execute_script</span><span class="p">(</span><span class="n">script</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NavBase.set_css_rule"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.set_css_rule">[docs]</a>    <span class="k">def</span> <span class="nf">set_css_rule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">css_selector</span><span class="p">,</span> <span class="n">css_prop</span><span class="p">,</span> <span class="n">css_value</span><span class="p">,</span>
+                     <span class="n">css_important</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set new value for given CSS property name</span>
+
+<span class="sd">        Arguments:</span>
+<span class="sd">            css_selector {str} -- CSS selector to apply rule</span>
+<span class="sd">            css_prop {str} -- CSS property to be applied to rule</span>
+<span class="sd">            css_value {str} -- CSS property value to be applied to rule</span>
+
+<span class="sd">        Keyword Arguments:</span>
+<span class="sd">            css_important {bool} -- Allow to include &#39;!important&#39;</span>
+<span class="sd">                to rule (default: {False})</span>
+<span class="sd">            index {int} -- Position to insert new CSS rule</span>
+<span class="sd">                on first stylesheet (default: {0})</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str -- JS script returns</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">css_important_text</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">css_important</span><span class="p">:</span>
+            <span class="n">css_important_text</span> <span class="o">=</span> <span class="s1">&#39;!important&#39;</span>
+        <span class="n">css_rule</span> <span class="o">=</span> <span class="s2">&quot; </span><span class="si">{0!s}</span><span class="s2"> {{ </span><span class="si">{1!s}</span><span class="s2"> : </span><span class="si">{2!s}</span><span class="s2"> </span><span class="si">{3!s}</span><span class="s2">; }}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">css_selector</span><span class="p">,</span>
+            <span class="n">css_prop</span><span class="p">,</span>
+            <span class="n">css_value</span><span class="p">,</span>
+            <span class="n">css_important_text</span><span class="p">)</span>
+        <span class="n">js_script</span> <span class="o">=</span> <span class="s2">&quot;document.styleSheets[0].insertRule(</span><span class="se">\&quot;</span><span class="si">{0!s}</span><span class="se">\&quot;</span><span class="s2">, </span><span class="si">{1:d}</span><span class="s2">);&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>  <span class="c1"># noqa: E501</span>
+            <span class="n">css_rule</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">execute_js</span><span class="p">(</span><span class="n">js_script</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NavBase.find_element"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.find_element">[docs]</a>    <span class="k">def</span> <span class="nf">find_element</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selector</span><span class="p">,</span> <span class="n">locator</span><span class="o">=</span><span class="n">By</span><span class="o">.</span><span class="n">CSS_SELECTOR</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Just divided execution ways for search web element</span>
+<span class="sd">            throught selenium</span>
+
+<span class="sd">        Arguments:</span>
+<span class="sd">            selector {str} -- string selector used to locate one</span>
+<span class="sd">                element or first obtained</span>
+
+<span class="sd">        Keyword Arguments:</span>
+<span class="sd">            locator {By} -- locator strategy used to find</span>
+<span class="sd">                WebElement selector (default: {By.CSS_SELECTOR})</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            CoreException -- If locator is None</span>
+<span class="sd">            CoreException -- Element selector+locator strategy raises</span>
+<span class="sd">                selenium NoSuchElementException</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            WebElement -- selenium representation for a web element</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Locator not selected at find_element, selector=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">selector</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">locator</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">CoreException</span><span class="p">(</span><span class="n">msg</span><span class="o">=</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element</span><span class="p">(</span><span class="n">locator</span><span class="p">,</span> <span class="n">selector</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">NoSuchElementException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">CoreException</span><span class="p">(</span><span class="n">err</span><span class="o">=</span><span class="n">err</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NavBase.find_elements"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.find_elements">[docs]</a>    <span class="k">def</span> <span class="nf">find_elements</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selector</span><span class="p">,</span> <span class="n">locator</span><span class="o">=</span><span class="n">By</span><span class="o">.</span><span class="n">CSS_SELECTOR</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Just divided execution ways for search web elements</span>
+<span class="sd">            throught selenium</span>
+
+<span class="sd">        Arguments:</span>
+<span class="sd">            selector {str} -- string selector used to locate</span>
+<span class="sd">                one or more elements</span>
+
+<span class="sd">        Keyword Arguments:</span>
+<span class="sd">            locator {By} -- locator strategy used to find</span>
+<span class="sd">                WebElement selector (default: {By.CSS_SELECTOR})</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            CoreException -- If locator is None</span>
+<span class="sd">            CoreException -- Element selector+locator strategy raises</span>
+<span class="sd">                selenium NoSuchElementException</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list(WebElement) -- selenium representation for a</span>
+<span class="sd">                list of web elements</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Locator not selected at find_element, selector=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">selector</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">locator</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">CoreException</span><span class="p">(</span><span class="n">msg</span><span class="o">=</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">elements</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">find_elements</span><span class="p">(</span><span class="n">locator</span><span class="p">,</span> <span class="n">selector</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">elements</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">CoreException</span><span class="p">(</span><span class="n">msg</span><span class="o">=</span><span class="s2">&quot;0 elements found&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">elements</span>
+        <span class="k">except</span> <span class="n">NoSuchElementException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">CoreException</span><span class="p">(</span><span class="n">err</span><span class="o">=</span><span class="n">err</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NavBase.find_element_wait"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.find_element_wait">[docs]</a>    <span class="k">def</span> <span class="nf">find_element_wait</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selector</span><span class="p">,</span>
+                          <span class="n">locator</span><span class="o">=</span><span class="n">By</span><span class="o">.</span><span class="n">CSS_SELECTOR</span><span class="p">,</span> <span class="n">driver_wait</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Search element using WebDriverWait class</span>
+<span class="sd">            and ElementConditions presence_of_element_located</span>
+
+<span class="sd">        Arguments:</span>
+<span class="sd">            selector {str} -- string selector used to locate one</span>
+<span class="sd">                element or first obtained</span>
+
+<span class="sd">        Keyword Arguments:</span>
+<span class="sd">            locator {By} -- locator strategy used to find</span>
+<span class="sd">                WebElement selector (default: {By.CSS_SELECTOR})</span>
+<span class="sd">            driver_wait {WebDriverWait} -- driver that supports</span>
+<span class="sd">                ExpectedConditions methods (default: {None})</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            CoreException -- if NavBase instanced</span>
+<span class="sd">                without driver_wait</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            WebElement -- element through selenium</span>
+<span class="sd">                WebDriverWait class</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">driver_wait</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_driver_wait</span><span class="p">(</span><span class="n">driver_wait</span><span class="o">=</span><span class="n">driver_wait</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">driver_wait</span><span class="o">.</span><span class="n">until</span><span class="p">(</span>
+                <span class="n">EC</span><span class="o">.</span><span class="n">presence_of_element_located</span><span class="p">((</span><span class="n">locator</span><span class="p">,</span> <span class="n">selector</span><span class="p">)))</span>
+        <span class="k">except</span> <span class="p">(</span><span class="n">NoSuchElementException</span><span class="p">,</span> <span class="n">StaleElementReferenceException</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">driver_wait</span><span class="o">.</span><span class="n">until</span><span class="p">(</span>
+                <span class="n">EC</span><span class="o">.</span><span class="n">visibility_of_element_located</span><span class="p">((</span><span class="n">locator</span><span class="p">,</span> <span class="n">selector</span><span class="p">)))</span></div>
+
+<div class="viewcode-block" id="NavBase.find_elements_wait"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.find_elements_wait">[docs]</a>    <span class="k">def</span> <span class="nf">find_elements_wait</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selector</span><span class="p">,</span>
+                           <span class="n">locator</span><span class="o">=</span><span class="n">By</span><span class="o">.</span><span class="n">CSS_SELECTOR</span><span class="p">,</span> <span class="n">driver_wait</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Search elements using WebDriverWait class</span>
+<span class="sd">            and ElementConditions presence_of_all_elements_located</span>
+
+<span class="sd">        Arguments:</span>
+<span class="sd">            selector {str} -- string selector used to locate</span>
+<span class="sd">                multiple elements</span>
+
+<span class="sd">        Keyword Arguments:</span>
+<span class="sd">            locator {By} -- locator strategy used to find</span>
+<span class="sd">                WebElement selector (default: {By.CSS_SELECTOR})</span>
+<span class="sd">            driver_wait {WebDriverWait} -- driver that supports</span>
+<span class="sd">                ExpectedConditions methods (default: {None})</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            CoreException -- if NavBase instanced</span>
+<span class="sd">                without driver_wait</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            WebElement -- element through selenium</span>
+<span class="sd">                WebDriverWait class</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">driver_wait</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_driver_wait</span><span class="p">(</span><span class="n">driver_wait</span><span class="o">=</span><span class="n">driver_wait</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">driver_wait</span><span class="o">.</span><span class="n">until</span><span class="p">(</span>
+                <span class="n">EC</span><span class="o">.</span><span class="n">presence_of_all_elements_located</span><span class="p">((</span><span class="n">locator</span><span class="p">,</span> <span class="n">selector</span><span class="p">)))</span>
+        <span class="k">except</span> <span class="p">(</span><span class="n">NoSuchElementException</span><span class="p">,</span> <span class="n">StaleElementReferenceException</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">driver_wait</span><span class="o">.</span><span class="n">until</span><span class="p">(</span>
+                <span class="n">EC</span><span class="o">.</span><span class="n">visibility_of_all_elements_located</span><span class="p">((</span><span class="n">locator</span><span class="p">,</span> <span class="n">selector</span><span class="p">)))</span></div>
+
+<div class="viewcode-block" id="NavBase.find_element_child"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.find_element_child">[docs]</a>    <span class="k">def</span> <span class="nf">find_element_child</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">child_selector</span><span class="p">,</span>
+                           <span class="n">locator</span><span class="o">=</span><span class="n">By</span><span class="o">.</span><span class="n">CSS_SELECTOR</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;TODO: doc method&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">element</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">WebElement</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">CoreException</span><span class="p">(</span><span class="n">msg</span><span class="o">=</span><span class="s2">&quot;Cant find child if not element found&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">element</span><span class="o">.</span><span class="n">find_element</span><span class="p">(</span><span class="n">locator</span><span class="p">,</span> <span class="n">child_selector</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="n">NoSuchElementException</span><span class="p">,</span> <span class="n">StaleElementReferenceException</span><span class="p">)</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="c1"># at Java lang exist 1 expected condition</span>
+            <span class="c1"># named : visibilityOfNestedElementsLocatedBy</span>
+            <span class="c1"># doc : https://selenium-python.readthedocs.io/waits.html</span>
+            <span class="c1"># maybe must exist at python too</span>
+            <span class="c1"># then, create and use new method named: find_element_child_wait()</span>
+            <span class="c1"># raise NotImplementedError(&quot;TODO:open an issue at github please&quot;)</span>
+            <span class="k">raise</span> <span class="n">CoreException</span><span class="p">(</span><span class="n">err</span><span class="o">=</span><span class="n">err</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NavBase.find_element_children"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.find_element_children">[docs]</a>    <span class="k">def</span> <span class="nf">find_element_children</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">child_selector</span><span class="p">,</span>
+                              <span class="n">locator</span><span class="o">=</span><span class="n">By</span><span class="o">.</span><span class="n">CSS_SELECTOR</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;TODO: doc method&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">element</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">WebElement</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">CoreException</span><span class="p">(</span><span class="n">msg</span><span class="o">=</span><span class="s2">&quot;Cant find children if not element found&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">element</span><span class="o">.</span><span class="n">find_elements</span><span class="p">(</span><span class="n">locator</span><span class="p">,</span> <span class="n">child_selector</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="n">NoSuchElementException</span><span class="p">,</span> <span class="n">StaleElementReferenceException</span><span class="p">)</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="c1"># at Java lang exist 1 expected condition</span>
+            <span class="c1"># named : visibilityOfNestedElementsLocatedBy</span>
+            <span class="c1"># doc : https://selenium-python.readthedocs.io/waits.html</span>
+            <span class="c1"># maybe must exist at python too</span>
+            <span class="c1"># then, create and use new method named: find_element_child_wait()</span>
+            <span class="c1"># raise NotImplementedError(&quot;TODO:open an issue at github please&quot;)</span>
+            <span class="k">raise</span> <span class="n">CoreException</span><span class="p">(</span><span class="n">err</span><span class="o">=</span><span class="n">err</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NavBase.find_elements_child"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.find_elements_child">[docs]</a>    <span class="k">def</span> <span class="nf">find_elements_child</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;TODO: doc method&quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;TODO: open an issue at github please&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NavBase.find_elements_children"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.find_elements_children">[docs]</a>    <span class="k">def</span> <span class="nf">find_elements_children</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;TODO: doc method&quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;TODO: open an issue at github please&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NavBase.forward"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Go forward using browser functionality&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">forward</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="NavBase.reload"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.reload">[docs]</a>    <span class="k">def</span> <span class="nf">reload</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Go reload page using browser functionality&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="NavBase.get_log"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.get_log">[docs]</a>    <span class="k">def</span> <span class="nf">get_log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log_name</span><span class="o">=</span><span class="s1">&#39;browser&#39;</span><span class="p">,</span> <span class="n">raises</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get selenium log by name, this depends of</span>
+<span class="sd">            driver mode and browser what it&#39;s using each time</span>
+
+<span class="sd">        Keyword Arguments:</span>
+<span class="sd">            log_name {str} -- get log type lanes (default: {&#39;browser&#39;})</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            CoreException -- if log_name value not in list</span>
+<span class="sd">                of valid values : browser, driver, client, server</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list() -- list of messages typed on a log_name</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">log_name</span> <span class="o">==</span> <span class="s1">&#39;browser&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">get_log</span><span class="p">(</span><span class="n">log_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">log_name</span> <span class="o">==</span> <span class="s1">&#39;driver&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">get_log</span><span class="p">(</span><span class="n">log_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">log_name</span> <span class="o">==</span> <span class="s1">&#39;client&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">get_log</span><span class="p">(</span><span class="n">log_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">log_name</span> <span class="o">==</span> <span class="s1">&#39;server&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">get_log</span><span class="p">(</span><span class="n">log_name</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">WebDriverException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;nav | get_log: log_name=</span><span class="si">{}</span><span class="s2">, err=</span><span class="si">{}</span><span class="s2">&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">log_name</span><span class="p">,</span> <span class="n">err</span><span class="o">.</span><span class="n">msg</span><span class="p">))</span>
+            <span class="c1"># Selenium said, not all drivers will be handled</span>
+            <span class="c1"># by them with all options values</span>
+            <span class="k">if</span> <span class="n">raises</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">CoreException</span><span class="p">(</span>
+                    <span class="n">msg</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;selenium log_name just can be:&quot;</span>
+                         <span class="s2">&quot; [browser,driver,client,server]&quot;</span><span class="p">))</span>
+            <span class="k">return</span> <span class="p">[]</span></div>
+
+<div class="viewcode-block" id="NavBase.get_screenshot_as_base64"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.get_screenshot_as_base64">[docs]</a>    <span class="k">def</span> <span class="nf">get_screenshot_as_base64</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets the screenshot of the current window as a base64 encoded string</span>
+<span class="sd">        which is useful in embedded images in HTML</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">get_screenshot_as_base64</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="NavBase.get_screenshot_as_file"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.get_screenshot_as_file">[docs]</a>    <span class="k">def</span> <span class="nf">get_screenshot_as_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets the screenshot of the current window. Returns False</span>
+<span class="sd">            if there is any IOError, else returns True. Use full paths</span>
+<span class="sd">            in your filename.</span>
+
+<span class="sd">        Arguments:</span>
+<span class="sd">            file_name {str} -- name of file path where</span>
+<span class="sd">                want to save screenshot</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list(byte) -- file binary object of screenshot bytes</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">get_screenshot_as_file</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NavBase.get_screenshot_as_png"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.get_screenshot_as_png">[docs]</a>    <span class="k">def</span> <span class="nf">get_screenshot_as_png</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets the screenshot of the current window as a</span>
+<span class="sd">            binary data.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            File -- file binary object of screenshot with PNG format</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">get_screenshot_as_png</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="NavBase.get_screenshot_save"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.get_screenshot_save">[docs]</a>    <span class="k">def</span> <span class="nf">get_screenshot_save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets the screenshot of the current window. Returns False</span>
+<span class="sd">            if there is any IOError, else returns True.</span>
+<span class="sd">            Use full paths in your filename.</span>
+
+<span class="sd">        Arguments:</span>
+<span class="sd">            file_name {str} -- name of file path where</span>
+<span class="sd">                want to save screenshot</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list(byte) -- file binary object of screenshot bytes</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">save_screenshot</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NavBase.js_set_timeout"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.js_set_timeout">[docs]</a>    <span class="k">def</span> <span class="nf">js_set_timeout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set the amount of time that the script should wait during an</span>
+<span class="sd">            execute_async_script call before throwing an error.</span>
+
+<span class="sd">        Keyword Arguments:</span>
+<span class="sd">            timeout {int} -- seconds to raise script</span>
+<span class="sd">                wait (default: {60})</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">set_script_timeout</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NavBase.set_window_size"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.set_window_size">[docs]</a>    <span class="k">def</span> <span class="nf">set_window_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pos_x</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">pos_y</span><span class="o">=</span><span class="mi">600</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the width and height of the current</span>
+<span class="sd">            window. (window.resizeTo)</span>
+
+<span class="sd">        Keyword Arguments:</span>
+<span class="sd">            pos_x {int} -- width of new window size (default: {800})</span>
+<span class="sd">            pos_y {int} -- height of new window size (default: {600})</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">set_window_size</span><span class="p">(</span><span class="n">pos_x</span><span class="p">,</span> <span class="n">pos_y</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NavBase.get_title"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.get_title">[docs]</a>    <span class="k">def</span> <span class="nf">get_title</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Obtains the title of the current page and return it</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str -- title of current page opened</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">title</span></div>
+
+<div class="viewcode-block" id="NavBase.get_current_url"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.get_current_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_current_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return current url from opened bot</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            CoreException -- if can&#39;t obtains url with this</span>
+<span class="sd">                selenium driver</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str -- string representation of current driver url</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Failed at obtain selenium driver property &#39;current_url&#39;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">current_url</span>
+        <span class="k">except</span> <span class="n">WebDriverException</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">CoreException</span><span class="p">(</span><span class="n">msg</span><span class="o">=</span><span class="n">msg</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NavBase.is_url"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.is_url">[docs]</a>    <span class="k">def</span> <span class="nf">is_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">ignore_raises</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check if url it&#39;s the same what selenium current and visible url</span>
+
+<span class="sd">        Arguments:</span>
+<span class="sd">            url {str} -- string value used to verify url</span>
+
+<span class="sd">        Keyword Arguments:</span>
+<span class="sd">            ignore_raises {bool} -- allows to ignore errors</span>
+<span class="sd">                when executes if raises errors (default: {True})</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            exceptions -- [description]</span>
+<span class="sd">            CoreException -- [description]</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool -- if current driver url match with param url,</span>
+<span class="sd">                then returns True, False if not</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_current_url</span><span class="p">()</span> <span class="o">!=</span> <span class="n">url</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">ignore_raises</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">CoreException</span><span class="p">(</span><span class="n">msg</span><span class="o">=</span><span class="s2">&quot;&#39;Current url&#39; is not &#39;param url&#39;&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="NavBase.set_web_element"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.set_web_element">[docs]</a>    <span class="k">def</span> <span class="nf">set_web_element</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_attr_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create web element using selenium adding to DOM</span>
+
+<span class="sd">        Arguments:</span>
+<span class="sd">            new_attr_id {str} -- html attribute ID for</span>
+<span class="sd">                new web element</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">create_web_element</span><span class="p">(</span><span class="n">new_attr_id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NavBase.ele_click"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.ele_click">[docs]</a>    <span class="k">def</span> <span class="nf">ele_click</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">selector</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">locator</span><span class="o">=</span><span class="n">By</span><span class="o">.</span><span class="n">CSS_SELECTOR</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Perform click webelement with locator param or search it by default</span>
+<span class="sd">            CSS_SELECTOR value if element it&#39;s none but selector</span>
+<span class="sd">            it&#39;s not default value</span>
+
+<span class="sd">        Keyword Arguments:</span>
+<span class="sd">            element {WebElement} -- selenium object, instance of WebElement</span>
+<span class="sd">                (default: {None})</span>
+<span class="sd">            selector {str} -- selector to search and element to click</span>
+<span class="sd">                (default: {None})</span>
+<span class="sd">            locator {By} -- locator selenium strategy</span>
+<span class="sd">                (default: {By.CSS_SELECTOR})</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            CoreException -- Bad params combination, need element</span>
+<span class="sd">                or selector to search element</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            WebElement -- returns element clicked (to allow chaining)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">curr_ele</span> <span class="o">=</span> <span class="n">element</span>
+        <span class="n">curr_selector</span> <span class="o">=</span> <span class="n">selector</span>
+        <span class="n">can_click</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="n">curr_ele</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">curr_selector</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">CoreException</span><span class="p">(</span>
+                <span class="n">msg</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Can&#39;t click over None element and None selector&quot;</span>
+                     <span class="s2">&quot;arguments: curr_ele=</span><span class="si">{}</span><span class="s2">, curr_selector=</span><span class="si">{}</span><span class="s2">&quot;</span>
+                     <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">curr_ele</span><span class="p">,</span> <span class="n">curr_selector</span><span class="p">)))</span>
+        <span class="k">elif</span> <span class="n">curr_ele</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">curr_ele</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_element</span><span class="p">(</span><span class="n">curr_selector</span><span class="p">,</span> <span class="n">locator</span><span class="o">=</span><span class="n">locator</span><span class="p">)</span>
+            <span class="n">can_click</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="n">curr_ele</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">curr_ele</span><span class="p">,</span> <span class="n">WebElement</span><span class="p">):</span>
+            <span class="n">can_click</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="n">can_click</span><span class="p">:</span>
+            <span class="n">curr_ele</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">curr_ele</span></div>
+
+<div class="viewcode-block" id="NavBase.ele_write"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.ele_write">[docs]</a>    <span class="k">def</span> <span class="nf">ele_write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Over element perform send_keys , if not sended text, then will write</span>
+<span class="sd">        empty over element</span>
+<span class="sd">        :param element: WebElement</span>
+<span class="sd">        :return: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">WebElement</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">CoreException</span><span class="p">(</span>
+                <span class="n">msg</span><span class="o">=</span><span class="s2">&quot;Param &#39;element&#39; it&#39;s not instance of WebElement&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">text</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">element</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># it&#39;s neccessary because some fields shows validation message and</span>
+            <span class="c1"># color after try to send empty message</span>
+            <span class="n">element</span><span class="o">.</span><span class="n">send_keys</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="NavBase.ele_is_displayed"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.ele_is_displayed">[docs]</a>    <span class="k">def</span> <span class="nf">ele_is_displayed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Whether the element is visible to a user</span>
+
+<span class="sd">        Webdriver spec to determine if element it&#39;s displayed:</span>
+<span class="sd">            https://w3c.github.io/webdriver/webdriver-spec.html#widl-WebElement-isDisplayed-boolean</span>
+
+<span class="sd">        Arguments:</span>
+<span class="sd">            element {WebElement} -- selenium web element</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool -- Value based on selenium SPEC to determine if an element</span>
+<span class="sd">                is enabled</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">element</span><span class="o">.</span><span class="n">is_displayed</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="NavBase.ele_is_enabled"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.ele_is_enabled">[docs]</a>    <span class="k">def</span> <span class="nf">ele_is_enabled</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns whether the element is enabled</span>
+
+<span class="sd">        Arguments:</span>
+<span class="sd">            element {WebElement} -- selenium web element</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool -- Value based on selenium SPEC to determine if an element</span>
+<span class="sd">                is enabled</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">element</span><span class="o">.</span><span class="n">is_enabled</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="NavBase.ele_is_selected"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.ele_is_selected">[docs]</a>    <span class="k">def</span> <span class="nf">ele_is_selected</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns whether the element is selected</span>
+
+<span class="sd">        Arguments:</span>
+<span class="sd">            element {WebElement} -- selenium web element</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool -- Value based on selenium SPEC to determine if an element</span>
+<span class="sd">                is enabled</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">element</span><span class="o">.</span><span class="n">is_selected</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="NavBase.ele_text"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.ele_text">[docs]</a>    <span class="k">def</span> <span class="nf">ele_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">on_screen</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get element content text.</span>
+<span class="sd">            If the isDisplayed() method can sometimes trip over when</span>
+<span class="sd">            the element is not really hidden but outside the viewport</span>
+<span class="sd">            get_text() returns an empty string for such an element.</span>
+
+<span class="sd">        Keyword Arguments:</span>
+<span class="sd">            on_screen {bool} -- allow to obtain text if element</span>
+<span class="sd">                it not displayed to this element before</span>
+<span class="sd">                read text (default: {True})</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str -- Return element content text (innerText property)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">on_screen</span><span class="p">:</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">text</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ele_attribute</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="s1">&#39;innerText&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;text obtained from innerText&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ele_is_displayed</span><span class="p">(</span><span class="n">element</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="n">CoreException</span><span class="p">(</span>
+                    <span class="n">msg</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;on_screen param must use when&quot;</span>
+                         <span class="s2">&quot;element it&#39;s not displayed&quot;</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">text</span></div>
+
+<div class="viewcode-block" id="NavBase.ele_input_value"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.ele_input_value">[docs]</a>    <span class="k">def</span> <span class="nf">ele_input_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return value of value attribute, usefull for inputs&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ele_attribute</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NavBase.ele_attribute"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.ele_attribute">[docs]</a>    <span class="k">def</span> <span class="nf">ele_attribute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns tuple with (attr, value) if founds</span>
+<span class="sd">            This method will first try to return the value of a property with</span>
+<span class="sd">            the given name. If a property with that name doesn&#39;t exist, it</span>
+<span class="sd">            returns the value of the attribute with the same name. If there&#39;s</span>
+<span class="sd">            no attribute with that name, None is returned.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="n">attr_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">value</span> <span class="o">==</span> <span class="n">attr_name</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">CoreException</span><span class="p">(</span><span class="n">msg</span><span class="o">=</span><span class="s2">&quot;Attr &#39;</span><span class="si">{}</span><span class="s2">&#39; not found&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">attr_name</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="NavBase.ele_tag"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.ele_tag">[docs]</a>    <span class="k">def</span> <span class="nf">ele_tag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns element.tag_name value&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">element</span><span class="o">.</span><span class="n">tag_name</span></div>
+
+<div class="viewcode-block" id="NavBase.ele_clear"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.ele_clear">[docs]</a>    <span class="k">def</span> <span class="nf">ele_clear</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Clear element text&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">element</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="NavBase.ele_css"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.ele_css">[docs]</a>    <span class="k">def</span> <span class="nf">ele_css</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">prop_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Allows to obtain CSS value based on CSS property name</span>
+
+<span class="sd">        Arguments:</span>
+<span class="sd">            element {WebElement} -- WebElement to modify CSS property</span>
+<span class="sd">            prop_name {str} -- CSS property name</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str -- Value of CSS property searched</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">element</span><span class="o">.</span><span class="n">value_of_css_property</span><span class="p">(</span><span class="n">prop_name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NavBase.ele_wait_invisible"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.ele_wait_invisible">[docs]</a>    <span class="k">def</span> <span class="nf">ele_wait_invisible</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selector</span><span class="p">,</span> <span class="n">locator</span><span class="o">=</span><span class="n">By</span><span class="o">.</span><span class="n">CSS_SELECTOR</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Wait for invisible element (display:none), returns element&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">selector</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">CoreException</span><span class="p">(</span>
+                <span class="s2">&quot;Can&#39;t wait invisible element if None selector given&quot;</span><span class="p">)</span>
+        <span class="n">locator_tuple</span> <span class="o">=</span> <span class="p">(</span><span class="n">locator</span><span class="p">,</span> <span class="n">selector</span><span class="p">)</span>
+        <span class="n">driver_wait</span> <span class="o">=</span> <span class="n">WebDriverWait</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">element</span> <span class="o">=</span> <span class="n">driver_wait</span><span class="o">.</span><span class="n">until</span><span class="p">(</span>
+                <span class="n">EC</span><span class="o">.</span><span class="n">invisibility_of_element_located</span><span class="p">(</span><span class="n">locator_tuple</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">CoreException</span><span class="p">(</span><span class="s2">&quot;Fails at wait for invisible element&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">element</span></div>
+
+<div class="viewcode-block" id="NavBase.ele_wait_visible"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.ele_wait_visible">[docs]</a>    <span class="k">def</span> <span class="nf">ele_wait_visible</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Wait for visible condition element, returns self&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">element</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">CoreException</span><span class="p">(</span><span class="s2">&quot;Can&#39;t wait visible if element is None&quot;</span><span class="p">)</span>
+        <span class="n">driver_wait</span> <span class="o">=</span> <span class="n">WebDriverWait</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">element</span> <span class="o">=</span> <span class="n">driver_wait</span><span class="o">.</span><span class="n">until</span><span class="p">(</span><span class="n">EC</span><span class="o">.</span><span class="n">visibility_of</span><span class="p">(</span><span class="n">element</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">CoreException</span><span class="p">(</span><span class="s2">&quot;Fails at wait for visible element&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">element</span></div>
+
+<div class="viewcode-block" id="NavBase.ele_wait_text"><a class="viewcode-back" href="../../../../../bots.html#qacode.core.bots.modules.nav_base.NavBase.ele_wait_text">[docs]</a>    <span class="k">def</span> <span class="nf">ele_wait_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selector</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span>
+                      <span class="n">locator</span><span class="o">=</span><span class="n">By</span><span class="o">.</span><span class="n">CSS_SELECTOR</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Wait if the given text is present in the specified element&quot;&quot;&quot;</span>
+        <span class="n">locator_tuple</span> <span class="o">=</span> <span class="p">(</span><span class="n">locator</span><span class="p">,</span> <span class="n">selector</span><span class="p">)</span>
+        <span class="n">driver_wait</span> <span class="o">=</span> <span class="n">WebDriverWait</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">driver</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">element</span> <span class="o">=</span> <span class="n">driver_wait</span><span class="o">.</span><span class="n">until</span><span class="p">(</span>
+                <span class="n">EC</span><span class="o">.</span><span class="n">text_to_be_present_in_element</span><span class="p">(</span><span class="n">locator_tuple</span><span class="p">,</span> <span class="n">text</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">CoreException</span><span class="p">(</span><span class="s2">&quot;Fails at wait for element text&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">element</span></div>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Show basic properties for this object&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="s2">&quot;ControlBase: drivers instanced are... </span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="s2">&quot;  driver_wait=</span><span class="si">{}</span><span class="s2">,</span><span class="se">\n</span><span class="s2">  driver_actions=</span><span class="si">{}</span><span class="s2">,</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="s2">&quot;  driver_touch=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">driver_wait</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">driver_actions</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">driver_touch</span><span class="p">)</span></div>
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2019, Netzulo.com.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
