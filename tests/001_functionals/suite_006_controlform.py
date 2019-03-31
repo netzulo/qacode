@@ -5,7 +5,6 @@
 import pytest
 from qacode.core.exceptions.control_exception import ControlException
 from qacode.core.testing.test_info import TestInfoBotUnique
-from qacode.core.webs.controls.control_base import ControlBase
 from qacode.core.webs.controls.control_form import ControlForm
 from qautils.files import settings
 from selenium.webdriver.remote.webelement import WebElement
@@ -43,36 +42,19 @@ class TestControlForm(TestInfoBotUnique):
         super(TestControlForm, cls).setup_class(
             config=settings(file_path="qacode/configs/"),
             skip_force=SKIP_CONTROLS)
-        cls.add_property(
-            'app', value=cls.settings_app('qadmin'))
+        cls.add_property('app', cls.settings_app('qadmin'))
         # page
-        cls.add_property(
-            'page', value=cls.settings_page('qacode_login'))
-        cls.add_property(
-            'url', value=cls.page.get('url'))
-        cls.add_property(
-            'form_login',
-            value=cls.settings_control('form_login'))
-        cls.add_property(
-            'txt_username',
-            value=cls.settings_control('txt_username'))
-        cls.add_property(
-            'txt_password',
-            value=cls.settings_control('txt_password'))
-        cls.add_property(
-            'btn_submit',
-            value=cls.settings_control('btn_submit'))
+        cls.add_property('page', cls.settings_page('qacode_login'))
+        cls.add_property('url', cls.page.get('url'))
+        cls.add_property('form_login', cls.settings_control('form_login'))
+        cls.add_property('txt_username', cls.settings_control('txt_username'))
+        cls.add_property('txt_password', cls.settings_control('txt_password'))
+        cls.add_property('btn_submit', cls.settings_control('btn_submit'))
         # page_inputs
-        cls.add_property(
-            'page_inputs', value=cls.settings_page('qacode_inputs'))
-        cls.add_property(
-            'url_inputs', value=cls.page_inputs.get('url'))
-        cls.add_property(
-            'dd_base',
-            value=cls.settings_control('dd_base'))
-        cls.add_property(
-            'dd_multiple',
-            value=cls.settings_control('dd_multiple'))
+        cls.add_property('page_inputs', cls.settings_page('qacode_inputs'))
+        cls.add_property('url_inputs', cls.page_inputs.get('url'))
+        cls.add_property('dd_base', cls.settings_control('dd_base'))
+        cls.add_property('dd_multiple', cls.settings_control('dd_multiple'))
         # start setup
         cls.bot.navigation.get_url(cls.url)
         # login
@@ -92,103 +74,74 @@ class TestControlForm(TestInfoBotUnique):
             test_method, config=settings(file_path="qacode/configs/"))
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    @pytest.mark.parametrize("selector", ["#txtTest002"])
-    @pytest.mark.parametrize("instance", ["ControlForm"])
-    @pytest.mark.parametrize("on_instance_search", [True])
-    @pytest.mark.parametrize("on_instance_load", [True])
-    @pytest.mark.parametrize("auto_reload", [True])
-    @pytest.mark.parametrize("on_instance_strict", [True, False])
+    @pytest.mark.parametrize("on_instance_search", [True, False])
+    @pytest.mark.parametrize("on_instance_load", [True, False])
+    @pytest.mark.parametrize("auto_reload", [True, False])
     @pytest.mark.parametrize("strict_rules", [
-        [
-            {"tag": "select", "type": "tag", "severity": "hight"}
-        ]
+        [{"tag": "select", "type": "tag", "severity": "hight"}]
     ])
-    def test_instance_form(self, selector, instance, on_instance_search,
-                           on_instance_load, on_instance_strict, strict_rules,
-                           auto_reload):
+    def test_controlform_instance(self, on_instance_search, on_instance_load,
+                                  strict_rules, auto_reload):
         """Testcase: test_001_instance_selector"""
-        control_config = {
-            "name": "txt_username_strict",
-            "locator": "css selector",
-            "selector": selector,
-            "instance": instance,
+        cfg = self.dd_base
+        cfg.update({
+            "instance": "ControlForm",
             "on_instance_search": on_instance_search,
             "on_instance_load": on_instance_load,
             "auto_reload": auto_reload,
-            "on_instance_strict": on_instance_strict,
             "strict_rules": strict_rules
-        }
-        control = ControlForm(self.bot, **control_config)
-        self.assert_is_instance(control, ControlBase)
-        self.assert_is_instance(control, ControlForm)
-        self.assert_is_instance(control.element, WebElement)
+        })
+        # negative testcases
+        if not on_instance_search and on_instance_load:
+            with pytest.raises(ControlException):
+                ControlForm(self.bot, **cfg)
+            return True
+        # functional testcases
+        ctl = ControlForm(self.bot, **cfg)
+        self.assert_is_instance(ctl, ControlForm)
+        self.assert_equals(ctl.selector, cfg.get('selector'))
+        self.assert_equals(ctl.instance, cfg.get('instance'))
+        self.assert_equals(ctl.name, cfg.get('name'))
+        self.assert_equals(ctl.locator, 'css selector')
         self.assert_equals(
-            control.selector, control_config.get('selector'))
+            ctl.on_instance_search, cfg.get('on_instance_search'))
         self.assert_equals(
-            control.name, control_config.get('name'))
+            ctl.on_instance_load, cfg.get('on_instance_load'))
+        self.assert_equals(ctl.auto_reload, cfg.get('auto_reload'))
         self.assert_equals(
-            control.locator, control_config.get('locator'))
-        self.assert_equals(
-            control.on_instance_search,
-            control_config.get('on_instance_search'))
-        self.assert_equals(
-            control.on_instance_load,
-            control_config.get('on_instance_load'))
-        self.assert_equals(
-            control.auto_reload,
-            control_config.get('auto_reload'))
-        self.assert_equals(
-            control.instance,
-            control_config.get('instance'))
-        self.assert_equals(
-            control.on_instance_strict,
-            control_config.get('on_instance_strict'))
-        self.assert_equals(
-            len(control.strict_rules),
-            len(control_config.get('strict_rules')))
-        if control.tag == 'select' and on_instance_strict:
-            self.assert_is_instance(
-                control.dropdown,
-                Select)
-        elif control.tag == 'select' and not on_instance_strict:
-            self.assert_none(
-                control.dropdown)
+            len(ctl.strict_rules), len(cfg.get('strict_rules')))
+        if on_instance_search:
+            self.assert_is_instance(ctl.element, WebElement)
+        if ctl.tag == 'select':
+            self.assert_is_instance(ctl.dropdown, Select)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    @pytest.mark.parametrize("selector", ["#txtTest002"])
-    @pytest.mark.parametrize("instance", ["ControlForm"])
-    @pytest.mark.parametrize("auto_reload", [True])
-    def test_method_reload_form(self, selector, instance, auto_reload):
+    @pytest.mark.parametrize("auto_reload", [True, False])
+    def test_method_reload_form(self, auto_reload):
         """Testcase: test_method_setcssrule"""
         # must be supported
-        control_config = {
-            "name": "txt_username_base",
-            "locator": "css selector",
-            "selector": selector,
-            "instance": instance,
+        cfg = self.dd_base
+        cfg.update({
             "auto_reload": auto_reload,
             "on_instance_search": False,
             "on_instance_load": False,
-            "on_instance_strict": False,
-            "strict_rules": [],
-        }
-        control = ControlForm(self.bot, **control_config)
-        self.assert_equals(control.on_instance_search, False)
-        self.assert_equals(control.on_instance_load, False)
-        self.assert_equals(control.on_instance_strict, False)
-        self.assert_none(control.element)
+        })
+        ctl = ControlForm(self.bot, **cfg)
+        self.assert_equals(ctl.on_instance_search, False)
+        self.assert_equals(ctl.on_instance_load, False)
+        self.assert_none(ctl.element)
+        self.assert_none(ctl.dropdown)
         # Real test behaviour
         update_config = {
             "on_instance_search": True,
             "on_instance_load": True,
-            "on_instance_strict": True,
         }
-        control_config.update(update_config)
-        control.reload(**control_config)
-        self.assert_equals(control.on_instance_search, True)
-        self.assert_equals(control.on_instance_load, True)
-        self.assert_equals(control.on_instance_strict, True)
-        self.assert_is_instance(control.element, WebElement)
+        cfg.update(update_config)
+        ctl.reload(**cfg)
+        self.assert_equals(ctl.on_instance_search, True)
+        self.assert_equals(ctl.on_instance_load, True)
+        self.assert_is_instance(ctl.element, WebElement)
+        self.assert_is_instance(ctl.dropdown, Select)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize("text", ["Link 1.1", "Link 1.2"])
@@ -269,8 +222,8 @@ class TestControlForm(TestInfoBotUnique):
         control = ControlForm(self.bot, **self.dd_multiple)
         control.dropdown_select(text)
         control.dropdown = None
-        with pytest.raises(ControlException):
-            control.dropdown_deselect(text)
+        control.dropdown_deselect(text)
+        self.assert_is_instance(control.dropdown, Select)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize("text", ["Link 1.1"])
@@ -333,5 +286,5 @@ class TestControlForm(TestInfoBotUnique):
         for text in texts:
             control.dropdown_select(text)
         control.dropdown = None
-        with pytest.raises(ControlException):
-            control.dropdown_deselect_all()
+        control.dropdown_deselect_all()
+        self.assert_is_instance(control.dropdown, Select)
