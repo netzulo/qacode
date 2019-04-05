@@ -597,7 +597,7 @@ class NavBase(object):
             str -- Return element content text (innerText property)
         """
         if on_screen:
-            text = element.text
+            text = str(element.text)
         else:
             text = self.ele_attribute(element, 'innerText')
             self.log.warning("text obtained from innerText")
