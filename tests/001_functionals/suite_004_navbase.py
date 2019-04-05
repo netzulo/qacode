@@ -404,7 +404,7 @@ class TestNavBase(TestInfoBotUnique):
             selector_title, "Buttonss", timeout=12)
         self.assert_true(is_changed)
         self.assert_is_instance(
-            self.bot.navigation.ele_text(ele_text, on_screen=False),
+            self.bot.navigation.ele_text(ele_text),
             "Buttonss")
 
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
