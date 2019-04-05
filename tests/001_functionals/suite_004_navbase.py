@@ -403,7 +403,9 @@ class TestNavBase(TestInfoBotUnique):
         is_changed = self.bot.navigation.ele_wait_text(
             selector_title, "Buttonss", timeout=12)
         self.assert_true(is_changed)
-        self.assert_is_instance(ele_text.text, "Buttonss")
+        self.assert_is_instance(
+            self.bot.navigation.ele_text(ele_text),
+            "Buttonss")
 
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_elewaitvalue_ok(self):
@@ -416,4 +418,6 @@ class TestNavBase(TestInfoBotUnique):
         is_changed = self.bot.navigation.ele_wait_value(
             selector, "bad_text", timeout=12)
         self.assert_true(is_changed)
-        self.assert_is_instance(ele_text.get_attribute("value"), "bad_text")
+        self.assert_is_instance(
+            self.bot.navigation.ele_attribute(ele_text, "value"),
+            "bad_text")

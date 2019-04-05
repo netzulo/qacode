@@ -618,7 +618,7 @@ class NavBase(object):
             returns the value of the attribute with the same name. If there's
             no attribute with that name, None is returned.
         """
-        value = element.get_attribute(attr_name)
+        value = str(element.get_attribute(attr_name))
         if value is None or value == attr_name:
             raise CoreException(msg="Attr '{}' not found".format(attr_name))
         return value
