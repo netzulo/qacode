@@ -9,16 +9,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 - New module at 'qacode.core.loggers' named 'logger_messages' #untracked
+- New nav_base method named ele_wait_value #untracked
 
 ### Changed
 - Separate benchmark test from all functional tests at tox -e coverage #251
 - Moved log messages to new class to centralize them #untracked
 - Refactor for control suites after changes from #247 , #untracked
 - Updated USAGE.rst documentation #untracked
-
++ Now get_text check for input tag #untracked
 ### Fixed
 - Can't use dropdown methods if ControlForm strict_tags is disabled #247
 - Some PageExceptions was failing at instantiation #untracked
+- Now get_tag update self property
 
 ### Removed
 

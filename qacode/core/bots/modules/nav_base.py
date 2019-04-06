@@ -597,7 +597,7 @@ class NavBase(object):
             str -- Return element content text (innerText property)
         """
         if on_screen:
-            text = element.text
+            text = str(element.text)
         else:
             text = self.ele_attribute(element, 'innerText')
             self.log.warning("text obtained from innerText")
@@ -618,7 +618,7 @@ class NavBase(object):
             returns the value of the attribute with the same name. If there's
             no attribute with that name, None is returned.
         """
-        value = element.get_attribute(attr_name)
+        value = str(element.get_attribute(attr_name))
         if value is None or value == attr_name:
             raise CoreException(msg="Attr '{}' not found".format(attr_name))
         return value
@@ -674,11 +674,21 @@ class NavBase(object):
         locator_tuple = (locator, selector)
         driver_wait = WebDriverWait(self.driver, timeout)
         try:
-            element = driver_wait.until(
+            return driver_wait.until(
                 EC.text_to_be_present_in_element(locator_tuple, text))
         except Exception:
             raise CoreException("Fails at wait for element text")
-        return element
+
+    def ele_wait_value(self, selector, value,
+                       locator=By.CSS_SELECTOR, timeout=0):
+        """Wait if the given value is present in the specified element"""
+        locator_tuple = (locator, selector)
+        driver_wait = WebDriverWait(self.driver, timeout)
+        try:
+            return driver_wait.until(
+                EC.text_to_be_present_in_element_value(locator_tuple, value))
+        except Exception:
+            raise CoreException("Fails at wait for element value")
 
     def __repr__(self):
         """Show basic properties for this object"""

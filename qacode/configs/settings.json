@@ -101,7 +101,10 @@
                 "strict_rules": [
                   { "tag": "select", "type": "tag", "severity": "hight" }
                 ]
-              }
+              },
+              { "name": "btn_click_invisible", "selector": "#btnInvisibleAtTimeout" },
+              { "name": "btn_click_visible", "selector": "#btnVisibleAtTimeout" },
+              { "name": "title_buttons", "selector": "#titleButtons" }
             ]
           },
           { "name": "qacode_logout",

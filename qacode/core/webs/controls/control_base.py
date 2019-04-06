@@ -230,6 +230,7 @@ class ControlBase(object):
         tag_name = self.bot.navigation.ele_tag(self.element)
         if tag_name:
             self.bot.log.debug(MSG.CB_GETTAG_LOADED.format(tag_name))
+        self.tag = tag_name
         return tag_name
 
     def type_text(self, text, clear=False):
@@ -288,8 +289,11 @@ class ControlBase(object):
         self.__check_reload__()
         text = None
         try:
-            text = self.bot.navigation.ele_text(
-                self.element, on_screen=on_screen)
+            if self.tag == 'input':
+                text = self.get_attr_value('value')
+            else:
+                text = self.bot.navigation.ele_text(
+                    self.element, on_screen=on_screen)
         except CoreException as err:
             self.bot.log.error(MSG.CB_GETTEXT_FAILED)
             raise ControlException(err=err)
@@ -337,7 +341,7 @@ class ControlBase(object):
                 self.element, attr_name)
             self.bot.log.debug(
                 MSG.CB_GETATTRVALUE_LOADED.format(attr_name, value))
-            return value
+            return str(value)
         except CoreException as err:
             self.bot.log.error(MSG.CB_GETATTRVALUE_FAILED)
             raise ControlException(err=err)
@@ -417,9 +421,16 @@ class ControlBase(object):
 
     def wait_text(self, text, timeout=0):
         """Wait if the given text is present in the specified control"""
-        self.element = self.bot.navigation.ele_wait_text(
-            self.selector, text, locator=self.locator, timeout=timeout)
-        return self
+        if self.tag == 'input':
+            is_text = self.bot.navigation.ele_wait_value(
+                self.selector, text, locator=self.locator, timeout=timeout)
+        try:
+            is_text = self.bot.navigation.ele_wait_text(
+                self.selector, text, locator=self.locator, timeout=timeout)
+        except CoreException:
+            self.bot.log.warning("skipped failed at wait for text on control")
+        self.get_text()
+        return is_text
 
     def wait_blink(self, timeout=0):
         """Wait until control pops and dissapears"""
