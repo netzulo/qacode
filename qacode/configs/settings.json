@@ -82,7 +82,9 @@
               { "name": "lst_ordered", "selector": "ol:nth-child(1)"},
               { "name": "lst_ordered_child", "selector": "li"},
               { "name": "dd_menu_data", "selector": "#ddData"},
-              { "name": "dd_menu_data_lists", "selector": "a[href='/qacode/data/lists']"}
+              { "name": "dd_menu_data_lists", "selector": "a[href='/qacode/data/lists']"},
+              { "name": "tbl_ok", "selector": "#tblOk"},
+              { "name": "tbl_html5_ok", "selector": "#tblHtml5Ok"}
             ]
           },
           { "name": "qacode_inputs",

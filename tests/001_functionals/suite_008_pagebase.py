@@ -6,7 +6,6 @@ import pytest
 from qacode.core.testing.test_info import TestInfoBotUnique
 from qacode.core.webs.controls.control_base import ControlBase
 from qacode.core.webs.controls.control_form import ControlForm
-from qacode.core.webs.controls.control_group import ControlGroup
 from qacode.core.webs.pages.page_base import PageBase
 from qautils.files import settings
 
@@ -134,6 +133,4 @@ class TestPageBase(TestInfoBotUnique):
                 self.assert_is_instance(ctl, ControlBase)
             elif instance_name == 'ControlForm':
                 self.assert_is_instance(ctl, ControlForm)
-            elif instance_name == 'ControlGroup':
-                self.assert_is_instance(ctl, ControlGroup)
             self.assert_in(name, dir(page))

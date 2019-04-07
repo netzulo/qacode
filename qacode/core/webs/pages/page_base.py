@@ -7,7 +7,6 @@ from qacode.core.exceptions.core_exception import CoreException
 from qacode.core.exceptions.page_exception import PageException
 from qacode.core.webs.controls.control_base import ControlBase
 from qacode.core.webs.controls.control_form import ControlForm
-from qacode.core.webs.controls.control_group import ControlGroup
 
 from selenium.webdriver.common.by import By
 
@@ -97,7 +96,6 @@ class PageBase(object):
                 control = {
                     'ControlBase': ControlBase,
                     'ControlForm': ControlForm,
-                    'ControlGroup': ControlGroup,
                 }[instance](self.bot, **cfg_control)
             except KeyError:
                 self.log.debug(("Bad instance name selected for "
@@ -152,7 +150,7 @@ class PageBase(object):
             instance = config_control.get("instance")
             control = None
             try:
-                control_types = (ControlBase, ControlForm, ControlGroup)
+                control_types = (ControlBase, ControlForm)
                 if isinstance(instance, control_types):
                     controls.append(control)
                 else:

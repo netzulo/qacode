@@ -24,7 +24,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Now get_tag update self property
 
 ### Removed
-
+- Deleted ControlGroup + tests #256
 
 ## [v0.6.0] - 2019-03-18
 
