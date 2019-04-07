@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Refactor for control suites after changes from #247 , #untracked
 - Updated USAGE.rst documentation #untracked
 + Now get_text check for input tag #untracked
+
 ### Fixed
 - Can't use dropdown methods if ControlForm strict_tags is disabled #247
 - Some PageExceptions was failing at instantiation #untracked
