@@ -93,8 +93,6 @@ class TestConfig(TestInfoBase):
             self.assert_is_instance(
                 key_value.get('web_controls').get('control_form'), bool)
             self.assert_is_instance(
-                key_value.get('web_controls').get('control_group'), bool)
-            self.assert_is_instance(
                 key_value.get('web_pages'), bool)
             self.assert_is_instance(
                 key_value.get('benchmarks'), bool)

@@ -18,12 +18,3 @@ Class: ControlForm
     :show-inheritance:
  .. autoclass::  qacode.core.webs.controls.control_form.ControlForm
     :members:
-
-Class: ControlGroup
--------------------
- .. automodule:: qacode.core.webs.controls.control_group
-    :members:
-    :undoc-members:
-    :show-inheritance:
- .. autoclass::  qacode.core.webs.controls.control_group.ControlGroup
-    :members:

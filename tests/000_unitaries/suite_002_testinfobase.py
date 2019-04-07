@@ -4,6 +4,7 @@
 
 import logging
 import pytest
+from qacode.core.loggers.logger_manager import LoggerManager
 from qacode.core.testing.test_info import TestInfoBase
 from qatestlink.core.testlink_manager import TLManager
 from qautils.files import settings
@@ -43,3 +44,18 @@ class TestTestInfoBase(TestInfoBase):
             self.log.error(msg)
         if log_level == 'CRITICAL':
             self.log.critical(msg)
+
+    def test_loggermanager_notlogpath(self):
+        """Testcase: test_loggermanager_notlogpath"""
+        with pytest.raises(Exception):
+            LoggerManager(log_path=None)
+
+    def test_loggermanager_notlogname(self):
+        """Testcase: test_loggermanager_notlogname"""
+        with pytest.raises(Exception):
+            LoggerManager(log_name=None)
+
+    def test_loggermanager_allflagsfalse(self):
+        """Testcase: test_loggermanager_allflagsfalse"""
+        with pytest.raises(Exception):
+            LoggerManager(is_output_console=False, is_output_file=False)

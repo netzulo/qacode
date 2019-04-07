@@ -152,12 +152,6 @@ ControlForm
   + method **dropdown_deselect** : The Select class only works with tags which have select tags
   + method **dropdown_deselect_all** : The Select class only works with tags which have select tags with multiple="multiple" attribute.
 
-ControlGroup
-~~~~~~~~~~~~
-
-+ Param **on_instance_group** : by default it's disabled, at enable raises when strict_rules type warning logs message with 'hight severity' or when type error log messages with 'medium or more severity'
-+ Param **group** : allow to track all ControlBase elements using `elements` (*instances of WebElement*) and `group` (*instances of ControlBase*) properties 
-
 Pages
 -----
 
