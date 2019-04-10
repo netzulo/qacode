@@ -38,7 +38,7 @@ class ControlBase(object):
     is_enabled = None
     is_selected = None
     attr_id = None
-    attr_class = None 
+    attr_class = None
 
     def __init__(self, bot, **kwargs):
         """Wrapper for Selenium class named 'WebElement' using
