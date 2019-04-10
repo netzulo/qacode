@@ -16,12 +16,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Moved log messages to new class to centralize them #untracked
 - Refactor for control suites after changes from #247 , #untracked
 - Updated USAGE.rst documentation #untracked
-+ Now get_text check for input tag #untracked
+- Now get_text check for input tag #untracked
 
 ### Fixed
 - Can't use dropdown methods if ControlForm strict_tags is disabled #247
 - Some PageExceptions was failing at instantiation #untracked
 - Now get_tag update self property
+- fixed CI complexity issue for #261
 
 ### Removed
 - Deleted ControlGroup + tests #256

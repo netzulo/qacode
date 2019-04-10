@@ -165,10 +165,14 @@ class TestNavBase(TestInfoBotUnique):
 
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     @pytest.mark.parametrize(
-        "log_name", ['browser', 'driver', 'client', 'server'])
+        "log_name", [None, 'browser', 'driver', 'client', 'server'])
     def test_getlog_lognames(self, log_name):
         """Testcase: test_getlog_lognames"""
         self.bot.navigation.get_url(self.page.get('url'))
+        if log_name is None:
+            with pytest.raises(CoreException):
+                self.bot.navigation.get_log(log_name=log_name)
+            return True
         log_data = self.bot.navigation.get_log(log_name=log_name)
         self.assert_not_none(log_data)
         msg = "selenium logs, log_name={}, log_data={}".format(
