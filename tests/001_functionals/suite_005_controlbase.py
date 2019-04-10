@@ -103,10 +103,8 @@ class TestControlBase(TestInfoBotUnique):
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize("on_instance_search", [True, False])
-    @pytest.mark.parametrize("on_instance_load", [True, False])
     @pytest.mark.parametrize("auto_reload", [True, False])
-    def test_controlbase_instance(self, on_instance_search,
-                                  on_instance_load, auto_reload):
+    def test_controlbase_instance(self, on_instance_search, auto_reload):
         """Testcase: test_instance_base"""
         tag_name = "input"
         cfg = {
@@ -115,14 +113,8 @@ class TestControlBase(TestInfoBotUnique):
             "selector": "#txtUsername-field",
             "instance": "ControlBase",
             "on_instance_search": on_instance_search,
-            "on_instance_load": on_instance_load,
             "auto_reload": auto_reload,
         }
-        # negative testcases
-        if not on_instance_search and on_instance_load:
-            with pytest.raises(ControlException):
-                ControlBase(self.bot, **cfg)
-            return True
         # functional testcases
         ctl = ControlBase(self.bot, **cfg)
         self.assert_is_instance(ctl, ControlBase)
@@ -132,13 +124,11 @@ class TestControlBase(TestInfoBotUnique):
         self.assert_equals(ctl.locator, cfg.get('locator'))
         self.assert_equals(
             ctl.on_instance_search, cfg.get('on_instance_search'))
-        self.assert_equals(ctl.on_instance_load, cfg.get('on_instance_load'))
         self.assert_equals(ctl.auto_reload, cfg.get('auto_reload'))
         self.assert_equals(ctl.instance, cfg.get('instance'))
-        if on_instance_search and on_instance_load:
-            self.assert_equals(ctl.tag, tag_name)
         if on_instance_search:
             self.assert_is_instance(ctl.element, WebElement)
+            self.assert_equals(ctl.tag, tag_name)
         else:
             self.assert_none(ctl.element)
 
@@ -150,7 +140,6 @@ class TestControlBase(TestInfoBotUnique):
             "selector": None,
             "instance": None,
             "on_instance_search": None,
-            "on_instance_load": None,
             "auto_reload": None,
         }
         with pytest.raises(ControlException):
@@ -170,22 +159,15 @@ class TestControlBase(TestInfoBotUnique):
     def test_property_gettext(self):
         """Testcase: test_property_gettext"""
         cfg_btn = self.btn_submit.copy()
-        cfg_btn.update({"on_instance_load": True})
+        cfg_btn.update({"on_instance_search": True})
         control = ControlBase(self.bot, **cfg_btn)
         self.assert_equals(control.text, 'Login')
-
-    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    def test_property_raises_gettext(self):
-        """Testcase: test_property_raises_gettext"""
-        cfg_btn = self.btn_submit.copy()
-        control = ControlBase(self.bot, **cfg_btn)
-        self.assert_equals(control.text, None)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_method_gettext(self):
         """Testcase: test_method_gettext"""
         cfg_btn = self.btn_submit.copy()
-        cfg_btn.update({"on_instance_load": True})
+        cfg_btn.update({"on_instance_search": True})
         control = ControlBase(self.bot, **cfg_btn)
         self.assert_equals(control.get_text(), 'Login')
 
@@ -193,7 +175,7 @@ class TestControlBase(TestInfoBotUnique):
     def test_property_attr_id(self):
         """Testcase: test_property_attr_id"""
         cfg_input = self.txt_username.copy()
-        cfg_input.update({"on_instance_load": True})
+        cfg_input.update({"on_instance_search": True})
         control = ControlBase(self.bot, **cfg_input)
         self.assert_not_none(control.attr_id)
 
@@ -201,7 +183,7 @@ class TestControlBase(TestInfoBotUnique):
     def test_property_attr_class(self):
         """Testcase: test_property_attr_class"""
         cfg_form = self.form_login.copy()
-        cfg_form.update({"on_instance_load": True})
+        cfg_form.update({"on_instance_search": True})
         control = ControlBase(self.bot, **cfg_form)
         self.assert_in('ember-view', control.attr_class)
 
@@ -209,7 +191,7 @@ class TestControlBase(TestInfoBotUnique):
     def test_method_getattrvalue(self):
         """Testcase: test_method_getattrvalue"""
         cfg_form = self.form_login.copy()
-        cfg_form.update({"on_instance_load": True})
+        cfg_form.update({"on_instance_search": True})
         control = ControlBase(self.bot, **cfg_form)
         self.assert_not_none(control.get_attr_value('id'))
 
@@ -217,7 +199,7 @@ class TestControlBase(TestInfoBotUnique):
     def test_method_get_attrs(self):
         """Testcase: test_method_get_attrs"""
         cfg_form = self.form_login.copy()
-        cfg_form.update({"on_instance_load": True})
+        cfg_form.update({"on_instance_search": True})
         control = ControlBase(self.bot, **cfg_form)
         attrs = control.get_attrs(['id', 'class'])
         self.assert_equals(attrs[0]['name'], 'id')
@@ -229,7 +211,7 @@ class TestControlBase(TestInfoBotUnique):
     def test_property_tag(self):
         """Testcase: test_property_tag"""
         cfg_form = self.form_login.copy()
-        cfg_form.update({"on_instance_load": True})
+        cfg_form.update({"on_instance_search": True})
         control = ControlBase(self.bot, **cfg_form)
         self.assert_equals(control.tag, 'form')
 
@@ -246,7 +228,7 @@ class TestControlBase(TestInfoBotUnique):
     @pytest.mark.parametrize(
         "control_config",
         [
-            {"on_instance_load": True},
+            {"on_instance_search": True},
             {"auto_reload": True}
         ])
     def test_method_typetext(self, control_config, clear):
@@ -263,7 +245,7 @@ class TestControlBase(TestInfoBotUnique):
     def test_method_getcssvalue(self):
         """Testcase: test_method_getcssvalue"""
         cfg_input = self.txt_username.copy()
-        cfg_input.update({"on_instance_load": True})
+        cfg_input.update({"on_instance_search": True})
         control = ControlBase(self.bot, **cfg_input)
         self.assert_equals(
             control.get_css_value('color'),
@@ -273,7 +255,7 @@ class TestControlBase(TestInfoBotUnique):
     def test_method_setcssrule(self):
         """Testcase: test_method_setcssrule"""
         cfg_input = self.txt_username.copy()
-        cfg_input.update({"on_instance_load": True})
+        cfg_input.update({"on_instance_search": True})
         control = ControlBase(self.bot, **cfg_input)
         control.type_text('test')
         control.set_css_value('color', 'red')
@@ -286,7 +268,7 @@ class TestControlBase(TestInfoBotUnique):
         """Testcase: test_method_gettext_onscreenfalse"""
         msg_err = 'Failed at obtain text, open issue on Github'
         cfg_btn = self.btn_submit.copy()
-        cfg_btn.update({"on_instance_load": True})
+        cfg_btn.update({"on_instance_search": True})
         control = ControlBase(self.bot, **cfg_btn)
         control.set_css_value('display', 'none')
         text = control.get_text(on_screen=False)
@@ -304,21 +286,14 @@ class TestControlBase(TestInfoBotUnique):
             "selector": selector,
             "instance": instance,
             "on_instance_search": False,
-            "on_instance_load": False,
         }
         control = ControlBase(self.bot, **cfg_base)
         self.assert_equals(control.on_instance_search, False)
-        self.assert_equals(control.on_instance_load, False)
         self.assert_none(control.element)
         # Real test behaviour
-        cfg_update = {
-            "on_instance_search": True,
-            "on_instance_load": True
-        }
-        cfg_base.update(cfg_update)
+        cfg_base.update({"on_instance_search": True})
         control.reload(**cfg_base)
         self.assert_equals(control.on_instance_search, True)
-        self.assert_equals(control.on_instance_load, True)
         self.assert_is_instance(control.element, WebElement)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)

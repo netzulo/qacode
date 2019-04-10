@@ -28,7 +28,6 @@ class ControlBase(object):
     locator = None
     selector = None
     on_instance_search = None
-    on_instance_load = None
     auto_reload = None
     instance = None
     # Element properties
@@ -39,12 +38,7 @@ class ControlBase(object):
     is_enabled = None
     is_selected = None
     attr_id = None
-    attr_class = None
-    # Reload configuration
-    RELOAD_CONFIG = {
-        "on_instance_search": True,
-        "on_instance_load": True,
-    }
+    attr_class = None 
 
     def __init__(self, bot, **kwargs):
         """Wrapper for Selenium class named 'WebElement' using
@@ -69,7 +63,6 @@ class ControlBase(object):
         self._load_search(
             enabled=self.on_instance_search,
             element=self.settings.get("element"))
-        self._load_properties(enabled=self.on_instance_load)
 
     def load_settings_keys(self, settings, update=False, default_keys=None):
         """Load default setting for ControlBase instance"""
@@ -81,7 +74,6 @@ class ControlBase(object):
                 ("name", "UNNAMED"),
                 ("locator", By.CSS_SELECTOR),
                 ("on_instance_search", False),
-                ("on_instance_load", False),
                 ("auto_reload", True),
                 ("instance", 'ControlBase'),
                 ("element", None)
@@ -110,8 +102,9 @@ class ControlBase(object):
 
     def _load_search(self, enabled=False, element=None):
         """Load element searching at selenium WebDriver"""
-        if not enabled or enabled is None:
+        if enabled is None or not enabled:
             self.bot.log.debug(MSG.CB_SEARCH_DISABLED)
+            self.bot.log.debug(MSG.CB_PROP_DISABLED)
             return False
         self.bot.log.debug(MSG.CB_SEARCH_LOADING)
         try:
@@ -130,26 +123,6 @@ class ControlBase(object):
                 self.selector, locator=self.locator)
         if self.element:
             self.bot.log.debug(MSG.CB_SEARCH_FOUND)
-        return True
-
-    def _load_properties(self, enabled=False):
-        """Load default properties for base element
-
-        Keyword Arguments:
-            enabled {bool} -- load at enabled (default: {False})
-
-        Raises:
-            ControlException -- if enabled and settings
-                haven't key on_instance_search
-        """
-        if enabled and not self.settings.get('on_instance_search'):
-            msg = ("Can't call to load_properties "
-                   "wihout call first to load_search")
-            self.bot.log.error(msg)
-            raise ControlException(msg=msg)
-        if not enabled or enabled is None:
-            self.bot.log.debug(MSG.CB_PROP_DISABLED)
-            return False
         self.bot.log.debug(MSG.CB_PROP_LOADING)
         self.tag = self.get_tag()
         self.text = self.get_text()
@@ -395,14 +368,13 @@ class ControlBase(object):
             config = kwargs.copy()
         else:
             config = self.settings.copy()
-        config.update(self.RELOAD_CONFIG)
+        config.update({"on_instance_search": True})
         # needed for self._load_* functions
         self.load_settings_keys(config, update=True)
         # instance logic
         self._load_search(
             enabled=self.on_instance_search,
             element=self.element)
-        self._load_properties(enabled=self.on_instance_load)
         if class_name == 'ControlBase':
             self.bot.log.debug(MSG.CB_RELOAD_LOADED.format(class_name))
 

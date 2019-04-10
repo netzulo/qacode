@@ -75,27 +75,20 @@ class TestControlForm(TestInfoBotUnique):
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize("on_instance_search", [True, False])
-    @pytest.mark.parametrize("on_instance_load", [True, False])
     @pytest.mark.parametrize("auto_reload", [True, False])
     @pytest.mark.parametrize("strict_rules", [
         [{"tag": "select", "type": "tag", "severity": "hight"}]
     ])
-    def test_controlform_instance(self, on_instance_search, on_instance_load,
+    def test_controlform_instance(self, on_instance_search,
                                   strict_rules, auto_reload):
         """Testcase: test_001_instance_selector"""
         cfg = self.dd_base
         cfg.update({
             "instance": "ControlForm",
             "on_instance_search": on_instance_search,
-            "on_instance_load": on_instance_load,
             "auto_reload": auto_reload,
             "strict_rules": strict_rules
         })
-        # negative testcases
-        if not on_instance_search and on_instance_load:
-            with pytest.raises(ControlException):
-                ControlForm(self.bot, **cfg)
-            return True
         # functional testcases
         ctl = ControlForm(self.bot, **cfg)
         self.assert_is_instance(ctl, ControlForm)
@@ -105,8 +98,6 @@ class TestControlForm(TestInfoBotUnique):
         self.assert_equals(ctl.locator, 'css selector')
         self.assert_equals(
             ctl.on_instance_search, cfg.get('on_instance_search'))
-        self.assert_equals(
-            ctl.on_instance_load, cfg.get('on_instance_load'))
         self.assert_equals(ctl.auto_reload, cfg.get('auto_reload'))
         self.assert_equals(
             len(ctl.strict_rules), len(cfg.get('strict_rules')))
@@ -124,22 +115,15 @@ class TestControlForm(TestInfoBotUnique):
         cfg.update({
             "auto_reload": auto_reload,
             "on_instance_search": False,
-            "on_instance_load": False,
         })
         ctl = ControlForm(self.bot, **cfg)
         self.assert_equals(ctl.on_instance_search, False)
-        self.assert_equals(ctl.on_instance_load, False)
         self.assert_none(ctl.element)
         self.assert_none(ctl.dropdown)
         # Real test behaviour
-        update_config = {
-            "on_instance_search": True,
-            "on_instance_load": True,
-        }
-        cfg.update(update_config)
+        cfg.update({"on_instance_search": True})
         ctl.reload(**cfg)
         self.assert_equals(ctl.on_instance_search, True)
-        self.assert_equals(ctl.on_instance_load, True)
         self.assert_is_instance(ctl.element, WebElement)
         self.assert_is_instance(ctl.dropdown, Select)
 
