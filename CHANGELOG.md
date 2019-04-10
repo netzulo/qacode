@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Removed
 - Deleted ControlGroup + tests #256
+- Deleted controls property named 'on_instance_load' #259
 
 ## [v0.6.0] - 2019-03-18
 

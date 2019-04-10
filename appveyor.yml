@@ -55,7 +55,7 @@ install:
   - "python -m pip install --pre -U tox"
 
 test_script:
- - "tox -e %TOXENV%,flake8"
+ - "tox -e flake8,%TOXENV%"
 
 after_test:
   - "python setup.py sdist"

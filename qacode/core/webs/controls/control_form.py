@@ -39,7 +39,6 @@ class ControlForm(ControlBase):
         self._load_search(
             enabled=self.on_instance_search,
             element=self.settings.get("element"))
-        self._load_properties(enabled=self.on_instance_load)
         # at least 1 rule to enable this feature
         self.__load__rules__(enabled=len(self.strict_rules))
 
@@ -53,7 +52,6 @@ class ControlForm(ControlBase):
                 ("name", "UNNAMED"),
                 ("locator", By.CSS_SELECTOR),
                 ("on_instance_search", False),
-                ("on_instance_load", False),
                 ("auto_reload", True),
                 ("instance", 'ControlForm'),
                 ("strict_rules", []),
@@ -134,14 +132,13 @@ class ControlForm(ControlBase):
             config = kwargs.copy()
         else:
             config = self.settings.copy()
-        config.update(self.RELOAD_CONFIG)
+        config.update({"on_instance_search": True})
         # needed for self._load_* functions
         self.load_settings_keys(config, update=True)
         # instance logic
         self._load_search(
             enabled=self.on_instance_search,
             element=self.element)
-        self._load_properties(enabled=self.on_instance_load)
         # at least 1 rule to enable this feature
         self.__load__rules__(enabled=len(kwargs.get("strict_rules")))
         self.bot.log.debug(MSG.CF_RELOAD_LOADED)

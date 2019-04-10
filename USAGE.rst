@@ -65,8 +65,7 @@ It's base control to load web element from ``WebDriver + browser session`` , *th
 + Param **locator** : This text it's parsed down selenium class ``selenium.webdriver.common.by.By`` (*default:* ``css selector`` == ``By.CSS_SELECTOR``)
 + Param **instance** : Allow to generate your own inherit classes from ``ControlBase`` and instance them  using qacode strategy (*default:* ``ControlBase``)
 + Param **auto_reload** : Allow to reload element searching first when need to use some function of control instance and isn't loaded (*default:* ``True``)
-+ Param **on_instance_search** : enable searching element at instance `ControlBase` (*default:* `False`)
-+ Param **on_instance_load** : enable loading ``ControlBase`` properties when element it's loaded (*default:* ``False``) , will need enabled if want to access to base properties values obtained from selenium methods at ``BotBase.navigation``
++ Param **on_instance_search** : enable searching element at instance `ControlBase` , also properties when element it's loaded (*default:* `False`) *access to base properties values obtained from selenium methods at* ``BotBase.navigation``
 
 - Methods for **ControlBase**
 
@@ -115,7 +114,6 @@ Example of usage
           "selector": "button[type='submit']",
           "instance": "ControlBase",
           "on_instance_search": false,
-          "on_instance_load": false,
           "auto_reload": True,
         }
     ]
