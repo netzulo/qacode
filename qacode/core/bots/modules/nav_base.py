@@ -349,24 +349,20 @@ class NavBase(object):
             list() -- list of messages typed on a log_name
         """
         try:
-            if log_name == 'browser':
-                return self.driver.get_log(log_name)
-            if log_name == 'driver':
-                return self.driver.get_log(log_name)
-            if log_name == 'client':
-                return self.driver.get_log(log_name)
-            if log_name == 'server':
-                return self.driver.get_log(log_name)
-        except WebDriverException as err:
-            msg = "nav | get_log: log_name={}, err={}"
-            self.log.warning(msg.format(log_name, err.msg))
-            # Selenium said, not all drivers will be handled
-            # by them with all options values
-            if raises:
-                raise CoreException(
-                    msg=("selenium log_name just can be:"
-                         " [browser,driver,client,server]"))
-            return []
+            return {
+                'browser': self.driver.get_log,
+                'driver': self.driver.get_log,
+                'client': self.driver.get_log,
+                'server': self.driver.get_log,
+            }[log_name](log_name)
+        except (KeyError, WebDriverException) as err:
+            if isinstance(err, KeyError):
+                raise CoreException("Can't use not valid value to get log")
+            self.log.debug(("nav | get_log: Selenium, not all drivers will"
+                            " be handled by them with all optionsvalues"))
+            self.log.warning("nav | get_log: log_name={}, err={}".format(
+                log_name, err.msg))
+        return list()
 
     def get_screenshot_as_base64(self):
         """Gets the screenshot of the current window as a base64 encoded string
