@@ -51,7 +51,7 @@
       "web_controls": {
         "control_base": false,
         "control_form": false,
-        "control_group": false
+        "control_dropdown": false
       },
       "web_pages": false,
       "benchmarks": true
