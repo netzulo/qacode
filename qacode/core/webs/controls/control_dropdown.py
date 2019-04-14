@@ -32,8 +32,8 @@ class ControlDropdown(ControlForm):
             if it's neccessary reload element properties
         """
         super(ControlDropdown, self).__check_reload__form__()
-        reload_dropdown_needed = not self.element or not self.dropdown
-        if reload_dropdown_needed:
+        reload_needed = not self.element or not self.dropdown
+        if reload_needed:
             self.reload(**self.settings)
 
     def reload(self, **kwargs):

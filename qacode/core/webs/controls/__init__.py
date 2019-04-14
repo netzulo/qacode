@@ -3,7 +3,10 @@
 
 
 from qacode.core.webs.controls import control_base
+from qacode.core.webs.controls import control_dropdown
 from qacode.core.webs.controls import control_form
+from qacode.core.webs.controls import control_table
 
 
-__all__ = ['control_base', 'control_form']
+__all__ = [
+    'control_base', 'control_dropdown', 'control_form', 'control_table']

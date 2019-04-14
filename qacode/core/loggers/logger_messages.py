@@ -72,3 +72,5 @@ CDD_DESELECTALL_LOADING = "ctl_form | dropdown_select: deselecting all..."  # no
 CDD_DESELECTALL_LOADED = "ctl_form | dropdown_select: deselected all"  # noqa:E501
 CDD_LOADED = "ctl_form | ctl.dropdown property for <select>"  # noqa:E501
 CDD_BADTAG = "Can't use this for not <select> tag element"  # noqa:E501
+# ControlTable
+CT_BADTAG = "Can't use this for not <table> tag element"  # noqa:E501
