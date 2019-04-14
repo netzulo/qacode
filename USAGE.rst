@@ -70,9 +70,8 @@ It's base control to load web element from ``WebDriver + browser session`` , *th
 - Methods for **ControlBase**
 
   + method **load** : Load properties from settings dict. Some elements need to search False to be search at future
-  + method **load_settings_keys** : Load default setting for ControlBase instance
-  + method **_load_properties** : Load default properties for base element
-  + method **_load_search** : Load element searching at selenium WebDriver
+  + method **__load_settings_keys__** : Load default setting for ControlBase instance and default properties for base element
+  + method **__load_search__** : Load element searching at selenium WebDriver
   + method **clear** : Clear input element text value
   + method **click** : Click on element
   + method **find_child** : Find child element using bot with default By.CSS_SELECTOR strategy for internal element trought selenium WebElement
@@ -135,20 +134,27 @@ Example of usage
 ControlForm
 ~~~~~~~~~~~
 
-+ Param **on_instance_strict** : by default it's disabled, at enable raises when strict_rules type warning logs message with 'hight severity' or when type error log messages with 'medium or more severity'
 + Param **strict_rules** : Allow to add strict_rules configuration to laod StrictRule class for each rule ( example: ``strict_rule = StrictRule('my_named_rule', StrictType.TAG, StrictSeverity.HIGHT)`` )
 
 - Methods for **ControlForm**
 
   + method **__load__** : Load properties from settings dict. Some elements need to search False to be search at future
-  + method **load_settings_keys** : Load default setting for ControlForm instance
+  + method **__load_settings_keys__** : Load default setting for ControlForm instance
   + method **__load__rules__** : Parse array of configurations dicts of strict_rules to instances list of StrictRule
   + method **__load_strict_tag__** : alidate if element.tag is in list of strict_tags and instance ControlForm specific properties
   + method **__check_reload__form__** : Allow to check before methods calls to ensure if it's neccessary reload element properties
   + method **reload** : Reload 'self.settings' property:dict and call to instance logic with new configuration
-  + method **dropdown_select** : The Select class only works with tags which have select tags
-  + method **dropdown_deselect** : The Select class only works with tags which have select tags
-  + method **dropdown_deselect_all** : The Select class only works with tags which have select tags with multiple="multiple" attribute.
+
+ControlDropdown
+~~~~~~~~~~~~~~~
+
+- Methods for **ControlDropdown**
+
+  + method **__check_reload__form__** : Allow to check before methods calls to ensure if it's neccessary reload element properties
+  + method **reload** : Reload 'self.settings' property:dict and call to instance logic with new configuration
+  + method **select** : The Select class only works with tags which have select tags
+  + method **deselect** : The Select class only works with tags which have select tags
+  + method **deselect_all** : The Select class only works with tags which have select tags with multiple="multiple" attribute.
 
 Pages
 -----

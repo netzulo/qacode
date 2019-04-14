@@ -18,3 +18,12 @@ Class: ControlForm
     :show-inheritance:
  .. autoclass::  qacode.core.webs.controls.control_form.ControlForm
     :members:
+
+Class: ControlDropdown
+------------------
+ .. automodule:: qacode.core.webs.controls.control_dropdown
+    :members:
+    :undoc-members:
+    :show-inheritance:
+ .. autoclass::  qacode.core.webs.controls.control_dropdown.ControlDropdown
+    :members:

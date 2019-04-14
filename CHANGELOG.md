@@ -10,12 +10,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - New module at 'qacode.core.loggers' named 'logger_messages' #untracked
 - New nav_base method named ele_wait_value #untracked
+- Move dropdown methods to new control dropdown class #258
 
 ### Changed
 - Separate benchmark test from all functional tests at tox -e coverage #251
 - Moved log messages to new class to centralize them #untracked
 - Refactor for control suites after changes from #247 , #untracked
-- Updated USAGE.rst documentation #untracked
+- Updated USAGE.rst documentation #258
 - Now get_text check for input tag #untracked
 
 ### Fixed

@@ -63,10 +63,12 @@ CF_PARSERULES_LOADING = "ctl_form | parse_rules: parsing..."  # noqa:E501
 CF_PARSERULES_LOADED = "ctl_form | parse_rules: parsed"  # noqa:E501
 CF_RELOAD_LOADED = "ctl_form | reload: reloaded ctl"  # noqa:E501
 CF_STRICT_ATTRS_RAISES = "Validation raises for strict_attrs for this element: control={}, strict_attrs=[{}]"  # noqa:E501
-CF_DROPDOWNSELECT_LOADING = "ctl_form | dropdown_select: selecting..."  # noqa:E501
-CF_DROPDOWNSELECT_LOADED = "ctl_form | dropdown_select: selected"  # noqa:E501
-CF_DROPDOWNDESELECT_LOADING = "ctl_form | dropdown_select: deselecting..."  # noqa:E501
-CF_DROPDOWNDESELECT_LOADED = "ctl_form | dropdown_select: deselected"  # noqa:E501
-CF_DROPDOWNDESELECTALL_LOADING = "ctl_form | dropdown_select: deselecting all..."  # noqa:E501
-CF_DROPDOWNDESELECTALL_LOADED = "ctl_form | dropdown_select: deselected all"  # noqa:E501
-CF_DROPDOWN_LOADED = "ctl_form | ctl.dropdown property for <select>"  # noqa:E501
+# ControlDropdown
+CDD_SELECT_LOADING = "ctl_dd | select: selecting..."  # noqa:E501
+CDD_SELECT_LOADED = "ctl_dd | select: selected"  # noqa:E501
+CDD_SELECT_LOADING = "ctl_dd | deselect: deselecting..."  # noqa:E501
+CDD_DESESELECT_LOADED = "ctl_dd | select: deselected"  # noqa:E501
+CDD_DESELECTALL_LOADING = "ctl_form | dropdown_select: deselecting all..."  # noqa:E501
+CDD_DESELECTALL_LOADED = "ctl_form | dropdown_select: deselected all"  # noqa:E501
+CDD_LOADED = "ctl_form | ctl.dropdown property for <select>"  # noqa:E501
+CDD_BADTAG = "Can't use this for not <select> tag element"  # noqa:E501

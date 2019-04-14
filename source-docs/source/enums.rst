@@ -1,8 +1,8 @@
 package: qacode.core.enums
 ==========================
 
-Class: CoreException
---------------------
+Class: EnumBase
+---------------
  .. automodule:: qacode.core.enums.enum_base
     :members:
     :undoc-members:

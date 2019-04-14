@@ -6,15 +6,12 @@ from collections import defaultdict
 from qacode.core.bots.bot_base import BotBase
 from qacode.core.exceptions.control_exception import ControlException
 from qacode.core.exceptions.core_exception import CoreException
-from qacode.core.loggers import logger_messages
+from qacode.core.loggers import logger_messages as MSG
 from selenium.common.exceptions import (
     ElementNotVisibleException, NoSuchElementException
 )
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
-
-
-MSG = logger_messages
 
 
 class ControlBase(object):
@@ -51,20 +48,15 @@ class ControlBase(object):
             raise ControlException(msg="Bad param 'bot'")
         self.bot = bot
         # load settings before try to instance
-        self.load(**kwargs)
-
-    def load(self, **kwargs):
-        """Load properties from settings dict.
-            Some elements need to search False to be search at future
-        """
         # needed for self._load_* functions
-        self.load_settings_keys(kwargs.copy(), update=True)
+        self.__load_settings_keys__(kwargs.copy(), update=True)
         # instance logic
-        self._load_search(
+        self.__load_search__(
             enabled=self.on_instance_search,
             element=self.settings.get("element"))
 
-    def load_settings_keys(self, settings, update=False, default_keys=None):
+    def __load_settings_keys__(self, settings,
+                               update=False, default_keys=None):
         """Load default setting for ControlBase instance"""
         self.bot.log.debug(MSG.CB_SETTINGS_LOADING)
         # generate default dict
@@ -100,7 +92,7 @@ class ControlBase(object):
             self.settings = updated_settings
         self.bot.log.debug(MSG.CB_SETTINGS_LOADED)
 
-    def _load_search(self, enabled=False, element=None):
+    def __load_search__(self, enabled=False, element=None):
         """Load element searching at selenium WebDriver"""
         if enabled is None or not enabled:
             self.bot.log.debug(MSG.CB_SEARCH_DISABLED)
@@ -370,9 +362,9 @@ class ControlBase(object):
             config = self.settings.copy()
         config.update({"on_instance_search": True})
         # needed for self._load_* functions
-        self.load_settings_keys(config, update=True)
+        self.__load_settings_keys__(config, update=True)
         # instance logic
-        self._load_search(
+        self.__load_search__(
             enabled=self.on_instance_search,
             element=self.element)
         if class_name == 'ControlBase':
