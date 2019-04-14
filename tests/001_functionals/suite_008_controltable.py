@@ -3,13 +3,11 @@
 
 
 import pytest
-from qacode.core.exceptions.control_exception import ControlException
 from qacode.core.testing.test_info import TestInfoBotUnique
 from qacode.core.webs.controls.control_base import ControlBase
 from qacode.core.webs.controls.control_table import ControlTable
 from qautils.files import settings
 from selenium.webdriver.remote.webelement import WebElement
-from selenium.webdriver.support.ui import Select
 
 
 SETTINGS = settings(file_path="qacode/configs/")
@@ -123,3 +121,11 @@ class TestControlDropdown(TestInfoBotUnique):
             self.assert_none(ctl.table)
             ctl.reload(**ctl.settings)
             self.assert_is_instance(ctl.table, ControlBase)
+        self.assert_is_instance(ctl.rows, list)
+        # Use case 1. not html5:: TABLE > (TR > TH)+(TR > TD)
+        for row in ctl.rows:
+            self.assert_is_instance(row, list)
+            for cell in row:
+                self.assert_is_instance(cell, ControlBase)
+        # Use case 2. html5:: TABLE > (THEAD > (TR > TH))+(TBODY > (TR > TH))
+        # raise NotImplementedError("TODO: WIP zone")

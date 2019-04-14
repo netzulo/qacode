@@ -3,15 +3,25 @@
 
 
 from qacode.core.exceptions.control_exception import ControlException
+from qacode.core.exceptions.core_exception import CoreException
 from qacode.core.loggers import logger_messages as MSG
 from qacode.core.webs.controls.control_base import ControlBase
 from qacode.core.webs.controls.control_form import ControlForm
+from selenium.common.exceptions import WebDriverException
 
 
 class ControlTable(ControlForm):
     """TODO: doc class"""
 
     _table = None
+    _rows = None
+
+    # public properties
+
+    caption = None
+    thead = None
+    tfoot = None
+    tbodies = None
 
     def __init__(self, bot, **kwargs):
         """Instance of ControlForm. Load properties from settings dict.
@@ -25,10 +35,13 @@ class ControlTable(ControlForm):
         super(ControlTable, self).__init__(bot, **kwargs)
         if not self.IS_TABLE and self.tag is not None:
             raise ControlException(msg=MSG.CT_BADTAG)
-        self.bot.log.debug(MSG.CDD_LOADED)
+        self.bot.log.debug(MSG.CT_LOADED)
 
     def __load_table__(self, element=None):
         """Allow to load all TR > TD items from a TABLE element
+
+        Before structure some checks are necessary for some children elements:
+            caption {ControlBase}-- optional <caption> element
 
         Examples:
             Use case 1. TABLE > (TR > TH)+(TR > TD)
@@ -39,12 +52,50 @@ class ControlTable(ControlForm):
         self._table = ControlBase(self.bot, **{
             "selector": self.selector,
             "element": element})
-        # Load rows
-        # thead = self._table.find_child("thead")
-        # tbody = self._table.find_child("tbody")
-        # Load columns
-        # Load cells
+        # Preload
+        self.tbodies = self.__try__("find_children", "tbodies")
+        is_html5 = False
+        if bool(self.tbodies):
+            is_html5 = True
+            self.caption = self.__try__("find_child", "caption")
+            self.thead = self.__try__("find_child", "thead")
+            self.tfoot = self.__try__("find_child", "tfoot")
+        # Load column headers
+        if not is_html5:
+            columns = self._table.find_children("tr :not(td)")  # noqa
+            for column in columns:
+                column.name = column.text
+            rows = []
+            ctls_rows = self._table.find_children("tr")
+            for index, ctl_row in enumerate(ctls_rows):
+                if index == 0:
+                    rows.append(self.__get_row__(ctl_row, "th"))
+                else:
+                    rows.append(self.__get_row__(ctl_row, "td"))
+            self._rows = rows
+        else:
+            # is_hmtl5==True
+            # raise NotImplementedError("TODO: WIP zone")
+            pass
         # raise NotImplementedError("TODO: WIP zone")
+
+    def __get_row__(self, ctl_row, selector):
+        """WARNING: this method just can be used from __load_table__"""
+        row = []
+        for cell in ctl_row.find_children(selector):
+            text = cell.get_text()
+            cell.settings.update({"name": text})
+            cell.name = text
+            row.append(cell)
+        return row
+
+    def __try__(self, method, selector):
+        """Allow to exec some method to handle exception"""
+        try:
+            return getattr(self._table, method)(selector)
+        except (ControlException, CoreException, WebDriverException):
+            self.bot.log.debug(MSG.CT_TBLNOTCHILD.format(selector))
+            return None
 
     def __check_reload__form__(self):
         """Allow to check before methods calls to ensure
@@ -75,3 +126,8 @@ class ControlTable(ControlForm):
         if value is None or not isinstance(value, ControlBase):
             raise ControlException("Can't set not 'Control' instance")
         self.__load_table__(element=value)
+
+    @property
+    def rows(self):
+        """GETTER for 'rows' property"""
+        return self._rows

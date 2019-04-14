@@ -68,9 +68,11 @@ CDD_SELECT_LOADING = "ctl_dd | select: selecting..."  # noqa:E501
 CDD_SELECT_LOADED = "ctl_dd | select: selected"  # noqa:E501
 CDD_SELECT_LOADING = "ctl_dd | deselect: deselecting..."  # noqa:E501
 CDD_DESESELECT_LOADED = "ctl_dd | select: deselected"  # noqa:E501
-CDD_DESELECTALL_LOADING = "ctl_form | dropdown_select: deselecting all..."  # noqa:E501
-CDD_DESELECTALL_LOADED = "ctl_form | dropdown_select: deselected all"  # noqa:E501
-CDD_LOADED = "ctl_form | ctl.dropdown property for <select>"  # noqa:E501
-CDD_BADTAG = "Can't use this for not <select> tag element"  # noqa:E501
+CDD_DESELECTALL_LOADING = "ctl_dd | dropdown_select: deselecting all..."  # noqa:E501
+CDD_DESELECTALL_LOADED = "ctl_dd | dropdown_select: deselected all"  # noqa:E501
+CDD_LOADED = "ctl_dd | ctl.dropdown property for <select>"  # noqa:E501
+CDD_BADTAG = "ctl_dd | Can't use this for not <select> tag element"  # noqa:E501
 # ControlTable
-CT_BADTAG = "Can't use this for not <table> tag element"  # noqa:E501
+CT_BADTAG = "ctl_tb | Can't use this for not <table> tag element"  # noqa:E501
+CT_LOADED = "ctl_tb | ctl.table property for <table>"  # noqa:E501
+CT_TBLNOTCHILD = "ctl_tb | this table haven't got '{}' selector"  # noqa:E501
