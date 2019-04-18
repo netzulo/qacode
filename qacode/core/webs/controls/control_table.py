@@ -28,10 +28,11 @@ class ControlTable(ControlForm):
             Some elements need to search False to be search at future
         """
         kwargs.update({"instance": "ControlTable"})
-        strict_rules = kwargs.get("strict_rules")
+        strict_rules = kwargs.get("strict_rules") or []
         if not bool(strict_rules):
             strict_rules.append(
                 {"tag": "table", "type": "tag", "severity": "hight"})
+            kwargs.update({"strict_rules": strict_rules})
         super(ControlTable, self).__init__(bot, **kwargs)
         if not self.IS_TABLE and self.tag is not None:
             raise ControlException(msg=MSG.CT_BADTAG)
@@ -54,17 +55,20 @@ class ControlTable(ControlForm):
             "element": element})
         # Preload
         self.tbodies = self.__try__("find_children", "tbodies")
-        is_html5 = False
         if bool(self.tbodies):
-            is_html5 = True
+            # table html5 structure
             self.caption = self.__try__("find_child", "caption")
             self.thead = self.__try__("find_child", "thead")
             self.tfoot = self.__try__("find_child", "tfoot")
-        # Load column headers
-        if not is_html5:
-            columns = self._table.find_children("tr :not(td)")  # noqa
-            for column in columns:
-                column.name = column.text
+            if len(self.tbodies) > 1:
+                raise ControlException(MSG.CT_TBL2ORMORETBODIES)
+            rows = []
+            rows.append(self.__get_row__(self.thead.find_child("tr"), "th"))
+            for ctl_row in self.tbodies[0].find_children("tr"):
+                rows.append(self.__get_row__(ctl_row, "td"))
+            self._rows = rows
+        else:
+            # table <html5 structure
             rows = []
             ctls_rows = self._table.find_children("tr")
             for index, ctl_row in enumerate(ctls_rows):
@@ -73,11 +77,6 @@ class ControlTable(ControlForm):
                 else:
                     rows.append(self.__get_row__(ctl_row, "td"))
             self._rows = rows
-        else:
-            # is_hmtl5==True
-            # raise NotImplementedError("TODO: WIP zone")
-            pass
-        # raise NotImplementedError("TODO: WIP zone")
 
     def __get_row__(self, ctl_row, selector):
         """WARNING: this method just can be used from __load_table__"""

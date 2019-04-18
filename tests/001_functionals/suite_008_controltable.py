@@ -90,7 +90,8 @@ class TestControlDropdown(TestInfoBotUnique):
     @pytest.mark.parametrize("on_instance_search", [True, False])
     @pytest.mark.parametrize("auto_reload", [True, False])
     @pytest.mark.parametrize("strict_rules", [
-        [{"tag": "table", "type": "tag", "severity": "hight"}]
+        [{"tag": "table", "type": "tag", "severity": "hight"}],
+        []
     ])
     def test_controltable_instance(self, on_instance_search,
                                    strict_rules, auto_reload):
@@ -113,8 +114,9 @@ class TestControlDropdown(TestInfoBotUnique):
         self.assert_equals(
             ctl.on_instance_search, cfg.get('on_instance_search'))
         self.assert_equals(ctl.auto_reload, cfg.get('auto_reload'))
-        self.assert_equals(
-            len(ctl.strict_rules), len(cfg.get('strict_rules')))
+        if bool(strict_rules):
+            self.assert_equals(
+                len(ctl.strict_rules), len(cfg.get('strict_rules')))
         if on_instance_search:
             self.assert_is_instance(ctl.element, WebElement)
         if auto_reload is not None:
@@ -123,9 +125,36 @@ class TestControlDropdown(TestInfoBotUnique):
             self.assert_is_instance(ctl.table, ControlBase)
         self.assert_is_instance(ctl.rows, list)
         # Use case 1. not html5:: TABLE > (TR > TH)+(TR > TD)
+        self.assert_lower(len(ctl.rows), 3)
         for row in ctl.rows:
             self.assert_is_instance(row, list)
+            self.assert_lower(len(row), 2)
             for cell in row:
                 self.assert_is_instance(cell, ControlBase)
         # Use case 2. html5:: TABLE > (THEAD > (TR > TH))+(TBODY > (TR > TH))
-        # raise NotImplementedError("TODO: WIP zone")
+
+    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
+    @pytest.mark.parametrize("strict_rules", [None])
+    def test_controltable_instance_raises(self, strict_rules):
+        """Testcase: test_controltable_instance_raises"""
+        self.setup_login_to_data()
+        cfg = self.tbl_ok
+        cfg.update({
+            "instance": "ControlTable",
+            "strict_rules": strict_rules,
+            "selector": "span"
+        })
+        # functional testcases
+        ctl = ControlTable(self.bot, **cfg)
+        self.assert_is_instance(ctl, ControlTable)
+        self.assert_equals(ctl.selector, cfg.get('selector'))
+        self.assert_equals(ctl.instance, cfg.get('instance'))
+        self.assert_equals(ctl.name, cfg.get('name'))
+        self.assert_equals(ctl.locator, 'css selector')
+
+    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
+    def test_controltable_loadtable_ok(self):
+        """Testcase: test_controltable_loadtable"""
+        self.setup_login_to_data()
+        ctl = ControlTable(self.bot, **self.tbl_ok)
+        ctl.__load_table__()

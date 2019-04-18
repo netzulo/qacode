@@ -63,6 +63,7 @@ CF_PARSERULES_LOADING = "ctl_form | parse_rules: parsing..."  # noqa:E501
 CF_PARSERULES_LOADED = "ctl_form | parse_rules: parsed"  # noqa:E501
 CF_RELOAD_LOADED = "ctl_form | reload: reloaded ctl"  # noqa:E501
 CF_STRICT_ATTRS_RAISES = "Validation raises for strict_attrs for this element: control={}, strict_attrs=[{}]"  # noqa:E501
+CF_BADTAG = "ctl_form | This tag can't be loaded as strict_rule"  # noqa:E501
 # ControlDropdown
 CDD_SELECT_LOADING = "ctl_dd | select: selecting..."  # noqa:E501
 CDD_SELECT_LOADED = "ctl_dd | select: selected"  # noqa:E501
@@ -72,7 +73,10 @@ CDD_DESELECTALL_LOADING = "ctl_dd | dropdown_select: deselecting all..."  # noqa
 CDD_DESELECTALL_LOADED = "ctl_dd | dropdown_select: deselected all"  # noqa:E501
 CDD_LOADED = "ctl_dd | ctl.dropdown property for <select>"  # noqa:E501
 CDD_BADTAG = "ctl_dd | Can't use this for not <select> tag element"  # noqa:E501
+CDD_BADPARAMS = "ctl_dd | Can't use this function with all flags with True values"  # noqa:E501
+CDD_BADINDEXTYPE = "ctl_dd | index must be an int value"  # noqa:E501
 # ControlTable
 CT_BADTAG = "ctl_tb | Can't use this for not <table> tag element"  # noqa:E501
 CT_LOADED = "ctl_tb | ctl.table property for <table>"  # noqa:E501
 CT_TBLNOTCHILD = "ctl_tb | this table haven't got '{}' selector"  # noqa:E501
+CT_TBL2ORMORETBODIES = "2 or more tbodys not supported, Open an issue on Github"  # noqa:E501
