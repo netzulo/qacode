@@ -43,23 +43,23 @@ class TestControlTable(TestInfoBotUnique):
         super(TestControlTable, cls).setup_class(
             config=settings(file_path="qacode/configs/"),
             skip_force=SKIP_CONTROLS)
-        cls.add_property('app', cls.settings_app('qadmin'))
+        cls.add_property('app', cls.cfg_app('qadmin'))
         # page
-        cls.add_property('page', cls.settings_page('qacode_login'))
+        cls.add_property('page', cls.cfg_page('qacode_login'))
         cls.add_property('url', cls.page.get('url'))
-        cls.add_property('form_login', cls.settings_control('form_login'))
-        cls.add_property('txt_username', cls.settings_control('txt_username'))
-        cls.add_property('txt_password', cls.settings_control('txt_password'))
-        cls.add_property('btn_submit', cls.settings_control('btn_submit'))
+        cls.add_property('form_login', cls.cfg_control('form_login'))
+        cls.add_property('txt_username', cls.cfg_control('txt_username'))
+        cls.add_property('txt_password', cls.cfg_control('txt_password'))
+        cls.add_property('btn_submit', cls.cfg_control('btn_submit'))
         # page_inputs
-        cls.add_property('page_inputs', cls.settings_page('qacode_inputs'))
+        cls.add_property('page_inputs', cls.cfg_page('qacode_inputs'))
         cls.add_property('url_inputs', cls.page_inputs.get('url'))
-        cls.add_property('dd_base', cls.settings_control('dd_base'))
-        cls.add_property('dd_menu_data', cls.settings_control('dd_menu_data'))
+        cls.add_property('dd_base', cls.cfg_control('dd_base'))
+        cls.add_property('dd_menu_data', cls.cfg_control('dd_menu_data'))
         cls.add_property(
-            'dd_menu_data_lists', cls.settings_control('dd_menu_data_lists'))
-        cls.add_property('tbl_ok', cls.settings_control('tbl_ok'))
-        cls.add_property('tbl_html5_ok', cls.settings_control('tbl_html5_ok'))
+            'dd_menu_data_lists', cls.cfg_control('dd_menu_data_lists'))
+        cls.add_property('tbl_ok', cls.cfg_control('tbl_ok'))
+        cls.add_property('tbl_html5_ok', cls.cfg_control('tbl_html5_ok'))
 
     def setup_method(self, test_method):
         """Configure self.attribute"""

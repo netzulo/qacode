@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Function with Cognitive Complexity of 13 (exceeds 5 allowed) #265
 - New internal method to reduce duplication at ControlDropdown #untracked
 - Fix similar code at #271
+- Renamed settings_ methods to cfg_ #267
 
 ### Fixed
 - Can't use dropdown methods if ControlForm strict_tags is disabled #247

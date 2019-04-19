@@ -42,19 +42,19 @@ class TestControlDropdown(TestInfoBotUnique):
         super(TestControlDropdown, cls).setup_class(
             config=settings(file_path="qacode/configs/"),
             skip_force=SKIP_CONTROLS)
-        cls.add_property('app', cls.settings_app('qadmin'))
+        cls.add_property('app', cls.cfg_app('qadmin'))
         # page
-        cls.add_property('page', cls.settings_page('qacode_login'))
+        cls.add_property('page', cls.cfg_page('qacode_login'))
         cls.add_property('url', cls.page.get('url'))
-        cls.add_property('form_login', cls.settings_control('form_login'))
-        cls.add_property('txt_username', cls.settings_control('txt_username'))
-        cls.add_property('txt_password', cls.settings_control('txt_password'))
-        cls.add_property('btn_submit', cls.settings_control('btn_submit'))
+        cls.add_property('form_login', cls.cfg_control('form_login'))
+        cls.add_property('txt_username', cls.cfg_control('txt_username'))
+        cls.add_property('txt_password', cls.cfg_control('txt_password'))
+        cls.add_property('btn_submit', cls.cfg_control('btn_submit'))
         # page_inputs
-        cls.add_property('page_inputs', cls.settings_page('qacode_inputs'))
+        cls.add_property('page_inputs', cls.cfg_page('qacode_inputs'))
         cls.add_property('url_inputs', cls.page_inputs.get('url'))
-        cls.add_property('dd_base', cls.settings_control('dd_base'))
-        cls.add_property('dd_multiple', cls.settings_control('dd_multiple'))
+        cls.add_property('dd_base', cls.cfg_control('dd_base'))
+        cls.add_property('dd_multiple', cls.cfg_control('dd_multiple'))
         # start setup
         cls.bot.navigation.get_url(cls.url)
         # login

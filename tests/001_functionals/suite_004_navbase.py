@@ -33,27 +33,22 @@ class TestNavBase(TestInfoBotUnique):
         super(TestNavBase, self).setup_method(
             test_method,
             config=settings(file_path="qacode/configs/"))
-        self.add_property('app', self.settings_app('qadmin'))
-        self.add_property('page', self.settings_page('qacode_login'))
+        self.add_property('app', self.cfg_app('qadmin'))
+        self.add_property('page', self.cfg_page('qacode_login'))
+        self.add_property('txt_username', self.cfg_control('txt_username'))
+        self.add_property('txt_password', self.cfg_control('txt_password'))
+        self.add_property('btn_submit', self.cfg_control('btn_submit'))
+        self.add_property('lst_ordered', self.cfg_control('lst_ordered'))
         self.add_property(
-            'txt_username', self.settings_control('txt_username'))
+            'lst_ordered_child', self.cfg_control('lst_ordered_child'))
+        self.add_property('dd_menu_data', self.cfg_control('dd_menu_data'))
         self.add_property(
-            'txt_password', self.settings_control('txt_password'))
-        self.add_property('btn_submit', self.settings_control('btn_submit'))
-        self.add_property('lst_ordered', self.settings_control('lst_ordered'))
+            'dd_menu_data_lists', self.cfg_control('dd_menu_data_lists'))
         self.add_property(
-            'lst_ordered_child', self.settings_control('lst_ordered_child'))
+            'btn_click_invisible', self.cfg_control('btn_click_invisible'))
         self.add_property(
-            'dd_menu_data', self.settings_control('dd_menu_data'))
-        self.add_property(
-            'dd_menu_data_lists', self.settings_control('dd_menu_data_lists'))
-        self.add_property(
-            'btn_click_invisible',
-            self.settings_control('btn_click_invisible'))
-        self.add_property(
-            'btn_click_visible', self.settings_control('btn_click_visible'))
-        self.add_property(
-            'title_buttons', self.settings_control('title_buttons'))
+            'btn_click_visible', self.cfg_control('btn_click_visible'))
+        self.add_property('title_buttons', self.cfg_control('title_buttons'))
 
     def setup_login_to_inputs(self):
         """Do login before to exec some testcases"""
