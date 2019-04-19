@@ -15,7 +15,7 @@ SKIP_CONTROLS = SETTINGS['tests']['skip']['web_controls']['control_table']
 SKIP_CONTROLS_MSG = 'web_controls DISABLED by config file'
 
 
-class TestControlDropdown(TestInfoBotUnique):
+class TestControlTable(TestInfoBotUnique):
     """Test Suite for ControlBase class"""
 
     # app from config
@@ -40,7 +40,7 @@ class TestControlDropdown(TestInfoBotUnique):
     @classmethod
     def setup_class(cls, **kwargs):
         """TODO: doc method"""
-        super(TestControlDropdown, cls).setup_class(
+        super(TestControlTable, cls).setup_class(
             config=settings(file_path="qacode/configs/"),
             skip_force=SKIP_CONTROLS)
         cls.add_property('app', cls.settings_app('qadmin'))
@@ -63,7 +63,7 @@ class TestControlDropdown(TestInfoBotUnique):
 
     def setup_method(self, test_method):
         """Configure self.attribute"""
-        super(TestControlDropdown, self).setup_method(
+        super(TestControlTable, self).setup_method(
             test_method, config=settings(file_path="qacode/configs/"))
         self.setup_login_to_data()
 
