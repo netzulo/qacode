@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - New nav_base method named ele_wait_value #untracked
 - Move dropdown methods to new control dropdown class #258
 - Added new class named 'ControlTable' #248
+- Add coverage tests for function: driver_name_filter #268
 
 ### Changed
 - Separate benchmark test from all functional tests at tox -e coverage #251

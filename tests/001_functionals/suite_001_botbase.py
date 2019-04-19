@@ -101,6 +101,7 @@ class TestBotBase(TestInfoBase):
         self.assert_equals(self.bot.settings.get('mode'), driver_mode)
         self.assert_equals(self.bot.curr_caps['browserName'], browser_name)
 
+    @pytest.mark.skipIf(SKIP, SKIP_MSG)
     def test_botbase_invalidsettingskey(self):
         """Testcase: test_botbase_invalidsettingskey"""
         settings = SETTINGS.copy()
@@ -108,6 +109,7 @@ class TestBotBase(TestInfoBase):
         with pytest.raises(CoreException):
             BotBase(**settings)
 
+    @pytest.mark.skipIf(SKIP, SKIP_MSG)
     def test_botbase_invalidmode(self):
         """Testcase: test_botbase_invalidmode"""
         settings = SETTINGS.copy()
@@ -115,9 +117,36 @@ class TestBotBase(TestInfoBase):
         with pytest.raises(CoreException):
             self.bot = BotBase(**settings)
 
+    @pytest.mark.skipIf(SKIP, SKIP_MSG)
     def test_botbase_invalidbrowser(self):
         """Testcase: test_botbase_invalidbrowser"""
         settings = SETTINGS.copy()
         settings.get('bot').update({"browser": "must_raises"})
         with pytest.raises(CoreException):
             self.bot = BotBase(**settings)
+
+    @pytest.mark.skipIf(SKIP, SKIP_MSG)
+    @pytest.mark.parametrize("is_win", [True, False])
+    @pytest.mark.parametrize("is_64bits", [True, False])
+    @pytest.mark.parametrize("browser", ["chrome", "firefox"])
+    def test_botbase_drivernamefilter_ok(self, browser, is_win, is_64bits):
+        """Testcase: test_botbase_drivernamefilter_ok"""
+        if 'bot' not in dir(self):
+            settings = SETTINGS.copy()
+            self.bot = BotBase(**settings)
+        # end setup
+        self.bot.IS_WIN = is_win
+        self.bot.IS_64BITS = is_64bits
+        name_formatted = self.bot.driver_name_filter(browser)
+        if is_win and not is_64bits:
+            self.assert_equals(
+                name_formatted, "{}driver_32.exe".format(browser))
+        if is_win and is_64bits:
+            self.assert_equals(
+                name_formatted, "{}driver_64.exe".format(browser))
+        if not is_win and not is_64bits:
+            self.assert_equals(
+                name_formatted, "{}driver_32".format(browser))
+        if not is_win and is_64bits:
+            self.assert_equals(
+                name_formatted, "{}driver_64".format(browser))
