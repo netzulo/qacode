@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Move dropdown methods to new control dropdown class #258
 - Added new class named 'ControlTable' #248
 - Add coverage tests for function: driver_name_filter #268
+- Add coverage tests for module : 'qacode.core.webs.strict_rules' #273
 
 ### Changed
 - Separate benchmark test from all functional tests at tox -e coverage #251
