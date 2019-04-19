@@ -8,6 +8,7 @@ from qacode.core.loggers import logger_messages as MSG
 from qacode.core.webs.controls.control_base import ControlBase
 from qacode.core.webs.controls.control_form import ControlForm
 from selenium.common.exceptions import WebDriverException
+from selenium.webdriver.remote.webelement import WebElement
 
 
 class ControlTable(ControlForm):
@@ -54,29 +55,39 @@ class ControlTable(ControlForm):
             "selector": self.selector,
             "element": element})
         # Preload
-        self.tbodies = self.__try__("find_children", "tbodies")
+        self.tbodies = self.__try__("find_children", "tbody")
         if bool(self.tbodies):
-            # table html5 structure
-            self.caption = self.__try__("find_child", "caption")
-            self.thead = self.__try__("find_child", "thead")
-            self.tfoot = self.__try__("find_child", "tfoot")
-            if len(self.tbodies) > 1:
-                raise ControlException(MSG.CT_TBL2ORMORETBODIES)
-            rows = []
-            rows.append(self.__get_row__(self.thead.find_child("tr"), "th"))
-            for ctl_row in self.tbodies[0].find_children("tr"):
-                rows.append(self.__get_row__(ctl_row, "td"))
-            self._rows = rows
+            self._rows = self.__load_table_html5__()
         else:
-            # table <html5 structure
-            rows = []
-            ctls_rows = self._table.find_children("tr")
-            for index, ctl_row in enumerate(ctls_rows):
-                if index == 0:
-                    rows.append(self.__get_row__(ctl_row, "th"))
-                else:
-                    rows.append(self.__get_row__(ctl_row, "td"))
-            self._rows = rows
+            self._rows = self.__load_table_html4__()
+
+    def __load_table_html4__(self):
+        """Allow to load table with this structure
+            TABLE > (TR > TH)+(TR > TD)
+        """
+        rows = []
+        ctls_rows = self._table.find_children("tr")
+        for index, ctl_row in enumerate(ctls_rows):
+            if index == 0:
+                rows.append(self.__get_row__(ctl_row, "th"))
+            else:
+                rows.append(self.__get_row__(ctl_row, "td"))
+        return rows
+
+    def __load_table_html5__(self):
+        """Allow to load table with this structure
+            TABLE > (THEAD > (TR > TH))+(TBODY > (TR > TH))
+        """
+        self.caption = self.__try__("find_child", "caption")
+        self.thead = self.__try__("find_child", "thead")
+        self.tfoot = self.__try__("find_child", "tfoot")
+        if len(self.tbodies) > 1:
+            raise ControlException(MSG.CT_TBL2ORMORETBODIES)
+        rows = []
+        rows.append(self.__get_row__(self.thead.find_child("tr"), "th"))
+        for ctl_row in self.tbodies[0].find_children("tr"):
+            rows.append(self.__get_row__(ctl_row, "td"))
+        return rows
 
     def __get_row__(self, ctl_row, selector):
         """WARNING: this method just can be used from __load_table__"""
@@ -122,11 +133,12 @@ class ControlTable(ControlForm):
     @table.setter
     def table(self, value):
         """SETTER for 'table' property"""
-        if value is None or not isinstance(value, ControlBase):
-            raise ControlException("Can't set not 'Control' instance")
+        if value is None or not isinstance(value, WebElement):
+            raise ControlException("Can't set not 'WebElement' instance")
         self.__load_table__(element=value)
 
     @property
     def rows(self):
         """GETTER for 'rows' property"""
+        self.__check_reload__form__()
         return self._rows

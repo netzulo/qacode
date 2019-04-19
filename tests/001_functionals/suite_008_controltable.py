@@ -59,11 +59,13 @@ class TestControlDropdown(TestInfoBotUnique):
         cls.add_property(
             'dd_menu_data_lists', cls.settings_control('dd_menu_data_lists'))
         cls.add_property('tbl_ok', cls.settings_control('tbl_ok'))
+        cls.add_property('tbl_html5_ok', cls.settings_control('tbl_html5_ok'))
 
     def setup_method(self, test_method):
         """Configure self.attribute"""
         super(TestControlDropdown, self).setup_method(
             test_method, config=settings(file_path="qacode/configs/"))
+        self.setup_login_to_data()
 
     def setup_login_to_data(self):
         """Do login before to exec some testcases"""
@@ -93,11 +95,11 @@ class TestControlDropdown(TestInfoBotUnique):
         [{"tag": "table", "type": "tag", "severity": "hight"}],
         []
     ])
+    @pytest.mark.parametrize("ctl_name", ['tbl_ok', 'tbl_html5_ok'])
     def test_controltable_instance(self, on_instance_search,
-                                   strict_rules, auto_reload):
+                                   strict_rules, auto_reload, ctl_name):
         """Testcase: test_controltable_instance"""
-        self.setup_login_to_data()
-        cfg = self.tbl_ok
+        cfg = getattr(self, ctl_name)
         cfg.update({
             "instance": "ControlTable",
             "on_instance_search": on_instance_search,
@@ -125,20 +127,28 @@ class TestControlDropdown(TestInfoBotUnique):
             self.assert_is_instance(ctl.table, ControlBase)
         self.assert_is_instance(ctl.rows, list)
         # Use case 1. not html5:: TABLE > (TR > TH)+(TR > TD)
-        self.assert_lower(len(ctl.rows), 3)
-        for row in ctl.rows:
-            self.assert_is_instance(row, list)
-            self.assert_lower(len(row), 2)
-            for cell in row:
-                self.assert_is_instance(cell, ControlBase)
+        if ctl_name == 'tbl_ok':
+            self.assert_lower(len(ctl.rows), 3)
+            for row in ctl.rows:
+                self.assert_is_instance(row, list)
+                self.assert_lower(len(row), 2)
+                for cell in row:
+                    self.assert_is_instance(cell, ControlBase)
         # Use case 2. html5:: TABLE > (THEAD > (TR > TH))+(TBODY > (TR > TH))
+        if ctl_name == 'tbl_html5_ok':
+            self.assert_lower(len(ctl.rows), 4)
+            for row in ctl.rows:
+                self.assert_is_instance(row, list)
+                self.assert_lower(len(row), 3)
+                for cell in row:
+                    self.assert_is_instance(cell, ControlBase)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize("strict_rules", [None])
-    def test_controltable_instance_raises(self, strict_rules):
+    @pytest.mark.parametrize("ctl_name", ['tbl_ok', 'tbl_html5_ok'])
+    def test_controltable_instance_raises(self, strict_rules, ctl_name):
         """Testcase: test_controltable_instance_raises"""
-        self.setup_login_to_data()
-        cfg = self.tbl_ok
+        cfg = getattr(self, ctl_name)
         cfg.update({
             "instance": "ControlTable",
             "strict_rules": strict_rules,
@@ -153,8 +163,18 @@ class TestControlDropdown(TestInfoBotUnique):
         self.assert_equals(ctl.locator, 'css selector')
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    def test_controltable_loadtable_ok(self):
-        """Testcase: test_controltable_loadtable"""
-        self.setup_login_to_data()
+    def test_controltable_internals_ok(self):
+        """Testcase: test_controltable_internals_ok"""
         ctl = ControlTable(self.bot, **self.tbl_ok)
         ctl.__load_table__()
+        ctl.__check_reload__form__()
+
+    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
+    def test_controltable_properties_ok(self):
+        """Testcase: test_controltable_properties_ok"""
+        ctl = ControlTable(self.bot, **self.tbl_ok)
+        rows_before = len(ctl.rows)
+        ctl.table = ctl.element
+        rows_after = len(ctl.rows)
+        self.assert_is_instance(ctl.table, ControlBase)
+        self.assert_equals(rows_before, rows_after)
