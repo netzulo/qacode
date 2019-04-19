@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - New module at 'qacode.core.loggers' named 'logger_messages' #untracked
 - New nav_base method named ele_wait_value #untracked
 - Move dropdown methods to new control dropdown class #258
+- Added new class named 'ControlTable' #248
 
 ### Changed
 - Separate benchmark test from all functional tests at tox -e coverage #251
@@ -18,12 +19,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Refactor for control suites after changes from #247 , #untracked
 - Updated USAGE.rst documentation #258
 - Now get_text check for input tag #untracked
+- Function with Cognitive Complexity of 13 (exceeds 5 allowed) #265
+- New internal method to reduce duplication at ControlDropdown #untracked
 
 ### Fixed
 - Can't use dropdown methods if ControlForm strict_tags is disabled #247
 - Some PageExceptions was failing at instantiation #untracked
 - Now get_tag update self property
-- fixed CI complexity issue for #261
+- Fixed CI complexity issue for #261
+- Some ControlForm+inherit could fail if stric_rules was None #248
 
 ### Removed
 - Deleted ControlGroup + tests #256

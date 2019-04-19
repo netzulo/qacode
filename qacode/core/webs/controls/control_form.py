@@ -18,6 +18,8 @@ class ControlForm(ControlBase):
     strict_tag = None
     # tag=select
     IS_DROPDOWN = None
+    # tag=select
+    IS_TABLE = None
 
     def __init__(self, bot, **kwargs):
         """Instance of ControlForm. Load properties from settings dict.
@@ -54,7 +56,7 @@ class ControlForm(ControlBase):
         """Validate strict rules for each type of StricRule"""
         self.bot.log.debug(MSG.CF_PARSERULES_LOADING)
         if not enabled:
-            self.warning(MSG.CF_STRICT_DISABLED)
+            self.bot.log.warning(MSG.CF_STRICT_DISABLED)
             return False
         typed_rules = list()
         # parsing rules > to enums > to instance
@@ -97,14 +99,16 @@ class ControlForm(ControlBase):
             instance ControlForm specific properties
         """
         self.IS_DROPDOWN = False
+        self.IS_TABLE = False
         self.strict_tag = strict_tag
-        valid_tags = ['select']
+        valid_tags = ['select', 'table']
         self.bot.log.debug(MSG.CF_STRICTTAG_LOADING)
         if self.strict_tag.value not in valid_tags:
-            raise ControlException(
-                msg="This tag can be loaded as strict_rule")
+            raise ControlException(msg=MSG.CF_BADTAG)
         if self.tag == HtmlTag.TAG_SELECT.value:
             self.IS_DROPDOWN = True
+        if self.tag == HtmlTag.TAG_TABLE.value:
+            self.IS_TABLE = True
         self.bot.log.debug(MSG.CF_STRICTTAG_LOADED)
         return True
 
