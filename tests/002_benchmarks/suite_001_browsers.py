@@ -47,12 +47,6 @@ class TestBotBase(TestInfoBase):
             pytest.skip(msg="Browser not configured")
         if browser_name == 'iexplorer':
             browser_name = 'internet explorer'
-        if browser_name == 'opera':
-            pytest.skip(
-                msg=("Issue opened on official opera"
-                     " chromium github: "
-                     "https://github.com/operasoftware"
-                     "/operachromiumdriver/issues/9"))
         self.bot = BotBase(**settings)
         self.assert_is_instance(self.bot, BotBase)
         self.assert_equals(
@@ -69,12 +63,7 @@ class TestBotBase(TestInfoBase):
 
     @pytest.mark.benchmark(group='BROWSERS')
     @pytest.mark.parametrize("browser_name", [
-        "chrome",
-        "firefox",
-        "iexplorer",
-        "edge",
-        "opera"
-    ])
+        "chrome", "firefox", "iexplorer", "edge"])
     @pytest.mark.parametrize("driver_mode", ["local", "remote"])
     @pytest.mark.skipIf(SKIP, SKIP_MSG)
     def test_benchmark_browsers(self, benchmark, browser_name, driver_mode):
@@ -93,9 +82,7 @@ class TestBotBase(TestInfoBase):
             rounds=ROUNDS)
 
     @pytest.mark.benchmark(group='BROWSERS_HEADLESS')
-    @pytest.mark.parametrize("browser_name", [
-        "chrome", "firefox", "opera"
-    ])
+    @pytest.mark.parametrize("browser_name", ["chrome", "firefox"])
     @pytest.mark.parametrize("driver_mode", ["local", "remote"])
     @pytest.mark.skipIf(SKIP, SKIP_MSG)
     def test_benchmark_browsers_headless(self, benchmark,

@@ -28,20 +28,47 @@ class TestBotBase(TestInfoBase):
 
     def teardown_method(self, method):
         """TODO: doc method"""
+        if method.__name__ == 'test_botbase_drivernamefilter_ok':
+            return True
+        self.try_bot_close()
+
+    def try_bot_close(self):
+        """Utility method for tests"""
         try:
             if self.bot:
                 self.bot.close()
         except Exception:
-            print(
-                "Fail at try to close bot, maybe never opened")
+            print("ERROR: Failed at try to close bot")
+
+    @pytest.mark.skipIf(SKIP, SKIP_MSG)
+    @pytest.mark.parametrize("is_win", [True, False])
+    @pytest.mark.parametrize("is_64bits", [True, False])
+    @pytest.mark.parametrize("browser", ["chrome", "firefox"])
+    def test_botbase_drivernamefilter_ok(self, browser, is_win, is_64bits):
+        """Testcase: test_botbase_drivernamefilter_ok"""
+        if 'bot' not in dir(self):
+            settings = SETTINGS.copy()
+            self.add_property('bot', BotBase(**settings))
+        # end setup
+        self.bot.IS_WIN = is_win
+        self.bot.IS_64BITS = is_64bits
+        name_formatted = self.bot.driver_name_filter(browser)
+        if is_win and not is_64bits:
+            self.assert_equals(
+                name_formatted, "{}driver_32.exe".format(browser))
+        if is_win and is_64bits:
+            self.assert_equals(
+                name_formatted, "{}driver_64.exe".format(browser))
+        if not is_win and not is_64bits:
+            self.assert_equals(
+                name_formatted, "{}driver_32".format(browser))
+        if not is_win and is_64bits:
+            self.assert_equals(
+                name_formatted, "{}driver_64".format(browser))
+            self.try_bot_close()
 
     @pytest.mark.parametrize("browser_name", [
-        "chrome",
-        "firefox",
-        "iexplorer",
-        "edge",
-        "opera"
-    ])
+        "chrome", "firefox", "iexplorer", "edge"])
     @pytest.mark.parametrize("driver_mode", ["local", "remote"])
     def test_bot_modes_and_names(self, driver_mode, browser_name):
         """Testcase: test_001_bot_local_chrome"""
@@ -57,12 +84,6 @@ class TestBotBase(TestInfoBase):
             pytest.skip(msg="Browser not configured")
         if browser_name == 'iexplorer':
             browser_name = 'internet explorer'
-        if browser_name == 'opera':
-            pytest.skip(
-                msg=("Issue opened on official opera"
-                     " chromium github: "
-                     "https://github.com/operasoftware"
-                     "/operachromiumdriver/issues/9"))
         self.bot = BotBase(**settings)
         self.timer(wait=WAIT_TO_CLOSE)
         self.assert_is_instance(self.bot, BotBase)
@@ -72,9 +93,7 @@ class TestBotBase(TestInfoBase):
         self.assert_equals(self.bot.settings.get('mode'), driver_mode)
         self.assert_equals(self.bot.curr_caps['browserName'], browser_name)
 
-    @pytest.mark.parametrize("browser_name", [
-        "chrome", "firefox", "opera"
-    ])
+    @pytest.mark.parametrize("browser_name", ["chrome", "firefox"])
     @pytest.mark.parametrize("driver_mode", ["local", "remote"])
     def test_bot_modes_headless(self, driver_mode, browser_name):
         """Testcase: test_bot_modes_headless"""
@@ -86,12 +105,6 @@ class TestBotBase(TestInfoBase):
             'mode': str(driver_mode),
             'options': {"headless": True}
         })
-        if browser_name == 'opera':
-            pytest.skip(
-                msg=("Issue opened on official opera"
-                     " chromium github: "
-                     "https://github.com/operasoftware"
-                     "/operachromiumdriver/issues/9"))
         self.bot = BotBase(**settings)
         self.timer(wait=WAIT_TO_CLOSE)
         self.assert_is_instance(self.bot, BotBase)
@@ -101,6 +114,7 @@ class TestBotBase(TestInfoBase):
         self.assert_equals(self.bot.settings.get('mode'), driver_mode)
         self.assert_equals(self.bot.curr_caps['browserName'], browser_name)
 
+    @pytest.mark.skipIf(SKIP, SKIP_MSG)
     def test_botbase_invalidsettingskey(self):
         """Testcase: test_botbase_invalidsettingskey"""
         settings = SETTINGS.copy()
@@ -108,6 +122,7 @@ class TestBotBase(TestInfoBase):
         with pytest.raises(CoreException):
             BotBase(**settings)
 
+    @pytest.mark.skipIf(SKIP, SKIP_MSG)
     def test_botbase_invalidmode(self):
         """Testcase: test_botbase_invalidmode"""
         settings = SETTINGS.copy()
@@ -115,6 +130,7 @@ class TestBotBase(TestInfoBase):
         with pytest.raises(CoreException):
             self.bot = BotBase(**settings)
 
+    @pytest.mark.skipIf(SKIP, SKIP_MSG)
     def test_botbase_invalidbrowser(self):
         """Testcase: test_botbase_invalidbrowser"""
         settings = SETTINGS.copy()

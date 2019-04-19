@@ -102,11 +102,7 @@ Configuration File
           "iexplorerdriver_32.exe",
           "iexplorerdriver_64.exe",
           "edgedriver_32.exe",
-          "edgedriver_64.exe",
-          "operadriver_32.exe",
-          "operadriver_64.exe",
-          "operadriver_32",
-          "operadriver_64"
+          "edgedriver_64.exe"
         ]
       }
     }
