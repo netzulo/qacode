@@ -109,15 +109,15 @@ class TestInfoBase(object):
         """Obtain inherit dict from 'cls.config' dict named
             'config.tests.apps[i].pages' filtering by 'page_name' param
         """
-        page_selected = None
-        apps = cls.cfg_apps()
-        if isinstance(app_name, str):
-            apps = [cls.cfg_app(app_name)]
+        apps = []
+        if app_name is None:
+            apps.extend(cls.cfg_apps())
+        else:
+            apps.append(cls.cfg_app(app_name))
         for app in apps:
             for page in app.get('pages'):
                 if page.get('name') == page_name:
-                    page_selected = page
-        return page_selected
+                    return page
 
     @classmethod
     def cfg_control(cls, control_name, page_name=None, app_name=None):

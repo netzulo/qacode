@@ -92,9 +92,7 @@ class TestControlTable(TestInfoBotUnique):
     @pytest.mark.parametrize("on_instance_search", [True, False])
     @pytest.mark.parametrize("auto_reload", [True, False])
     @pytest.mark.parametrize("strict_rules", [
-        [{"tag": "table", "type": "tag", "severity": "hight"}],
-        []
-    ])
+        [{"tag": "table", "type": "tag", "severity": "hight"}]])
     @pytest.mark.parametrize("ctl_name", ['tbl_ok', 'tbl_html5_ok'])
     def test_controltable_instance(self, on_instance_search,
                                    strict_rules, auto_reload, ctl_name):

@@ -75,7 +75,8 @@ class TestControlForm(TestInfoBotUnique):
     @pytest.mark.parametrize("on_instance_search", [True, False])
     @pytest.mark.parametrize("auto_reload", [True, False])
     @pytest.mark.parametrize("strict_rules", [
-        [{"tag": "select", "type": "tag", "severity": "hight"}]
+        [{"tag": "select", "type": "tag", "severity": "hight"}],
+        []
     ])
     def test_controlform_instance(self, on_instance_search,
                                   strict_rules, auto_reload):
@@ -102,7 +103,10 @@ class TestControlForm(TestInfoBotUnique):
         if on_instance_search:
             self.assert_is_instance(ctl.element, WebElement)
         if ctl.tag == 'select':
-            self.assert_true(ctl.IS_DROPDOWN)
+            if bool(strict_rules):
+                self.assert_true(ctl.IS_DROPDOWN)
+            else:
+                self.assert_none(ctl.IS_DROPDOWN)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize("auto_reload", [True, False])

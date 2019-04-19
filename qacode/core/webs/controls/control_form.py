@@ -38,6 +38,7 @@ class ControlForm(ControlBase):
 
     def __load_settings_keys__(self, settings, update=False):
         """Load default setting for ControlForm instance"""
+        settings.update({"strict_rules": settings.get('strict_rules') or []})
         super(ControlForm, self).__load_settings_keys__(
             settings,
             update=update,
