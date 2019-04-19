@@ -43,7 +43,10 @@ class ControlTable(ControlForm):
         """Allow to load all TR > TD items from a TABLE element
 
         Before structure some checks are necessary for some children elements:
-            caption {ControlBase}-- optional <caption> element
+            tbody {ControlBase}-- required 1 or more <tbody> elements
+            caption {ControlBase}-- optional <caption> element if tbody found
+            thead {ControlBase}-- optional <thead> element if tbody found
+            tfoot {ControlBase}-- optional <tfoot> element if tbody found
 
         Examples:
             Use case 1. TABLE > (TR > TH)+(TR > TD)
@@ -90,7 +93,9 @@ class ControlTable(ControlForm):
         return rows
 
     def __get_row__(self, ctl_row, selector):
-        """WARNING: this method just can be used from __load_table__"""
+        """Allow to get cells of a <TR> element
+            WARNING: this method just can be used from __load_table__
+        """
         row = []
         for cell in ctl_row.find_children(selector):
             text = cell.get_text()

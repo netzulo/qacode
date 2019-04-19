@@ -14,7 +14,6 @@ from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.touch_actions import TouchActions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
-from selenium.webdriver.opera.options import Options as OperaOptions
 from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
 from selenium.webdriver.support.ui import WebDriverWait
 
@@ -156,12 +155,22 @@ class BotBase(object):
                 "firefox": DesiredCapabilities.FIREFOX.copy(),
                 "iexplorer": DesiredCapabilities.INTERNETEXPLORER.copy(),
                 "edge": DesiredCapabilities.EDGE.copy(),
-                "opera": DesiredCapabilities.OPERA.copy(),
             }[browser_name]
         except KeyError:
             msg = 'Bad browser selected at load options'
             raise CoreException(msg=msg, log=self.log)
         return capabilities
+
+    def __check_driver_ready__(self, driver_path, capabilities, options):
+        """Some checks to ensure driver path, caps and options
+            are ready to be used
+        """
+        if driver_path is None:
+            driver_path = self.curr_driver_path
+        if capabilities is None:
+            capabilities = self.curr_caps
+        if options is None:
+            options = self.curr_options
 
     def get_options(self, browser_name='chrome', headless_enabled=False):
         """Instance Options class from selenium and return it
@@ -186,7 +195,6 @@ class BotBase(object):
             options = {
                 "chrome": ChromeOptions(),
                 "firefox": FirefoxOptions(),
-                "opera": OperaOptions(),
             }[browser_name]
             if headless_enabled:
                 options.add_argument("--headless")
@@ -245,12 +253,7 @@ class BotBase(object):
         Returns:
             [WebDriver.Chrome] -- WebDriver opened and ready to be used
         """
-        if driver_path is None:
-            driver_path = self.curr_driver_path
-        if capabilities is None:
-            capabilities = self.curr_caps
-        if options is None:
-            options = self.curr_options
+        self.__check_driver_ready__(driver_path, capabilities, options)
         return WebDriver.Chrome(
             executable_path=driver_path,
             desired_capabilities=capabilities,
@@ -270,12 +273,7 @@ class BotBase(object):
         Returns:
             [WebDriver.Firefox] -- WebDriver opened and ready to be used
         """
-        if driver_path is None:
-            driver_path = self.curr_driver_path
-        if capabilities is None:
-            capabilities = self.curr_caps
-        if options is None:
-            options = self.curr_options
+        self.__check_driver_ready__(driver_path, capabilities, options)
         return WebDriver.Firefox(
             executable_path=driver_path,
             capabilities=capabilities,
@@ -293,10 +291,7 @@ class BotBase(object):
         Returns:
             [WebDriver.Ie] -- WebDriver opened and ready to be used
         """
-        if driver_path is None:
-            driver_path = self.curr_driver_path
-        if capabilities is None:
-            capabilities = self.curr_caps
+        self.__check_driver_ready__(driver_path, capabilities)
         return WebDriver.Ie(
             executable_path=driver_path,
             capabilities=capabilities)
@@ -314,35 +309,8 @@ class BotBase(object):
         Returns:
             [WebDriver.Edge] -- WebDriver opened and ready to be used
         """
-        if driver_path is None:
-            driver_path = self.curr_driver_path
-        if capabilities is None:
-            capabilities = self.curr_caps
+        self.__check_driver_ready__(driver_path, capabilities)
         return WebDriver.Edge(
-            executable_path=driver_path,
-            capabilities=capabilities)
-
-    def get_driver_opera(self, driver_path=None, capabilities=None,
-                         options=None):
-        """Open WebDriver selenium based on Opera browser
-
-        Keyword Arguments:
-            driver_path {str} -- Path for driver binary path
-                (default: {None})
-            capabilities {DesiredCapabilities} -- Capabilities for browser
-                (default: {None})
-            options {Options} -- Options for browser (default: {None})
-
-        Returns:
-            [WebDriver.Opera] -- WebDriver opened and ready to be used
-        """
-        if driver_path is None:
-            driver_path = self.curr_driver_path
-        if capabilities is None:
-            capabilities = self.curr_caps
-        if options is None:
-            options = self.curr_options
-        return WebDriver.Opera(
             executable_path=driver_path,
             capabilities=capabilities)
 
@@ -366,7 +334,6 @@ class BotBase(object):
                 "firefox": self.get_driver_firefox(),
                 "iexplorer": self.get_driver_iexplorer(),
                 "edge": self.get_driver_edge(),
-                "opera": self.get_driver_opera(),
             }[browser_name]
         except KeyError:
             raise CoreException(

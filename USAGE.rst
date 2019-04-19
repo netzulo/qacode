@@ -39,11 +39,7 @@ Have classes for this down package: ``qacode.core.bots``
                 "iexplorerdriver_32.exe",
                 "iexplorerdriver_64.exe",
                 "edgedriver_32.exe",
-                "edgedriver_64.exe",
-                "operadriver_32.exe",
-                "operadriver_64.exe",
-                "operadriver_32",
-                "operadriver_64"
+                "edgedriver_64.exe"
             ]
         }
     }
@@ -155,6 +151,24 @@ ControlDropdown
   + method **select** : The Select class only works with tags which have select tags
   + method **deselect** : The Select class only works with tags which have select tags
   + method **deselect_all** : The Select class only works with tags which have select tags with multiple="multiple" attribute.
+
+ControlTable
+~~~~~~~~~~~~
+
+- Methods for **ControlTable**
+
+  + method **__check_reload__form__** : Allow to check before methods calls to ensure if it's neccessary reload element properties
+  + method **__load_table__** : Allow to load all TR > TD items from a TABLE element
+  + method **__load_table_html4__** : Allow to load table with this structure ``TABLE > (TR > TH)+(TR > TD)``
+  + method **__load_table_html5__** : Allow to load table with this structure ``TABLE > (THEAD > (TR > TH))+(TBODY > (TR > TH))``
+  + method **__get_row__** : Allow to get cells of a <TR> element
+  + method **__try__** : Allow to exec some method to handle exception
+  + method **reload** : Reload 'self.settings' property:dict and call to instance logic with new configuration
+
+- Properties for **ControlTable**
+
+  + property **table**: GET / SET for table element ( *just a ``WebElement`` based on ``table`` tag*)
+  + property **rows**: GET for rows cells based on controls instances
 
 Pages
 -----

@@ -36,12 +36,7 @@ class TestBotBase(TestInfoBase):
                 "Fail at try to close bot, maybe never opened")
 
     @pytest.mark.parametrize("browser_name", [
-        "chrome",
-        "firefox",
-        "iexplorer",
-        "edge",
-        "opera"
-    ])
+        "chrome", "firefox", "iexplorer", "edge"])
     @pytest.mark.parametrize("driver_mode", ["local", "remote"])
     def test_bot_modes_and_names(self, driver_mode, browser_name):
         """Testcase: test_001_bot_local_chrome"""
@@ -57,12 +52,6 @@ class TestBotBase(TestInfoBase):
             pytest.skip(msg="Browser not configured")
         if browser_name == 'iexplorer':
             browser_name = 'internet explorer'
-        if browser_name == 'opera':
-            pytest.skip(
-                msg=("Issue opened on official opera"
-                     " chromium github: "
-                     "https://github.com/operasoftware"
-                     "/operachromiumdriver/issues/9"))
         self.bot = BotBase(**settings)
         self.timer(wait=WAIT_TO_CLOSE)
         self.assert_is_instance(self.bot, BotBase)
@@ -72,9 +61,7 @@ class TestBotBase(TestInfoBase):
         self.assert_equals(self.bot.settings.get('mode'), driver_mode)
         self.assert_equals(self.bot.curr_caps['browserName'], browser_name)
 
-    @pytest.mark.parametrize("browser_name", [
-        "chrome", "firefox", "opera"
-    ])
+    @pytest.mark.parametrize("browser_name", ["chrome", "firefox"])
     @pytest.mark.parametrize("driver_mode", ["local", "remote"])
     def test_bot_modes_headless(self, driver_mode, browser_name):
         """Testcase: test_bot_modes_headless"""
@@ -86,12 +73,6 @@ class TestBotBase(TestInfoBase):
             'mode': str(driver_mode),
             'options': {"headless": True}
         })
-        if browser_name == 'opera':
-            pytest.skip(
-                msg=("Issue opened on official opera"
-                     " chromium github: "
-                     "https://github.com/operasoftware"
-                     "/operachromiumdriver/issues/9"))
         self.bot = BotBase(**settings)
         self.timer(wait=WAIT_TO_CLOSE)
         self.assert_is_instance(self.bot, BotBase)

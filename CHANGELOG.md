@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Now get_text check for input tag #untracked
 - Function with Cognitive Complexity of 13 (exceeds 5 allowed) #265
 - New internal method to reduce duplication at ControlDropdown #untracked
+- Fix similar code at #271
 
 ### Fixed
 - Can't use dropdown methods if ControlForm strict_tags is disabled #247
@@ -33,6 +34,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Removed
 - Deleted ControlGroup + tests #256
 - Deleted controls property named 'on_instance_load' #259
+- Deleted opera support #270
 
 ## [v0.6.0] - 2019-03-18
 
