@@ -99,7 +99,7 @@ class TestControlTable(TestInfoBotUnique):
     def test_controltable_instance(self, on_instance_search,
                                    strict_rules, auto_reload, ctl_name):
         """Testcase: test_controltable_instance"""
-        cfg = getattr(self, ctl_name)
+        cfg = getattr(self, ctl_name).copy()
         cfg.update({
             "instance": "ControlTable",
             "on_instance_search": on_instance_search,
@@ -148,7 +148,7 @@ class TestControlTable(TestInfoBotUnique):
     @pytest.mark.parametrize("ctl_name", ['tbl_ok', 'tbl_html5_ok'])
     def test_controltable_instance_raises(self, strict_rules, ctl_name):
         """Testcase: test_controltable_instance_raises"""
-        cfg = getattr(self, ctl_name)
+        cfg = getattr(self, ctl_name).copy()
         cfg.update({
             "instance": "ControlTable",
             "strict_rules": strict_rules,
