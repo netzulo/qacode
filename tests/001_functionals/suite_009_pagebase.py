@@ -42,21 +42,13 @@ class TestPageBase(TestInfoBotUnique):
         """Configure self.attribute"""
         super(TestPageBase, self).setup_method(
             test_method, config=settings(file_path="qacode/configs/"))
-        self.add_property(
-            'app', value=self.settings_app('qadmin'))
+        self.add_property('app', self.cfg_app('qadmin'))
         # page
-        self.add_property(
-            'page', value=self.settings_page('qacode_logout'))
-        self.add_property(
-            'url', value=self.page.get('url'))
-        self.add_property(
-            'btn_logout',
-            value=self.settings_control('btn_logout'))
-        self.add_property(
-            'btn_login',
-            value=self.settings_control('btn_login'))
-        self.add_property(
-            'page_base', value=self.settings_page('qacode_login'))
+        self.add_property('page', self.cfg_page('qacode_logout'))
+        self.add_property('url', self.page.get('url'))
+        self.add_property('btn_logout', self.cfg_control('btn_logout'))
+        self.add_property('btn_login', self.cfg_control('btn_login'))
+        self.add_property('page_base', self.cfg_page('qacode_login'))
         self.bot.navigation.get_url(self.page_base.get('url'))
 
     @pytest.mark.skipIf(SKIP_PAGES, SKIP_PAGES_MSG)

@@ -60,7 +60,7 @@ class TestInfoBase(object):
         return bot.close()
 
     @classmethod
-    def settings_apps(cls):
+    def cfg_apps(cls):
         """Obtain inherit dict from 'cls.config' dict named
             'config.tests.apps'
         """
@@ -69,35 +69,35 @@ class TestInfoBase(object):
         return cls.config.get('tests').get('apps')
 
     @classmethod
-    def settings_pages(cls):
+    def cfg_pages(cls):
         """Obtain inherit dict from 'cls.config' dict named
             'config.tests.apps[i].pages'
         """
         if cls.config is None:
             raise CoreException(msg="Call to cls.load() first")
         pages = []
-        for app in cls.settings_apps():
+        for app in cls.cfg_apps():
             pages.extend(app.get('pages'))
         return pages
 
     @classmethod
-    def settings_controls(cls):
+    def cfg_controls(cls):
         """Obtain inherit dict from 'cls.config' dict named
             'config.tests.apps[i].pages[j].controls'
         """
         if cls.config is None:
             raise CoreException(msg="Call to cls.load() first")
         controls = []
-        for page in cls.settings_pages():
+        for page in cls.cfg_pages():
             controls.extend(page.get('controls'))
         return controls
 
     @classmethod
-    def settings_app(cls, app_name):
+    def cfg_app(cls, app_name):
         """Obtain inherit dict from 'cls.config' dict named
             'config.tests.apps' filtering by 'app_name' param
         """
-        for app in cls.settings_apps():
+        for app in cls.cfg_apps():
             if app.get('name') == app_name:
                 return app
         raise Exception(
@@ -105,39 +105,34 @@ class TestInfoBase(object):
                 app_name))
 
     @classmethod
-    def settings_page(cls, page_name, app_name=None):
+    def cfg_page(cls, page_name, app_name=None):
         """Obtain inherit dict from 'cls.config' dict named
             'config.tests.apps[i].pages' filtering by 'page_name' param
         """
-        page_selected = None
-        apps = cls.settings_apps()
-        if isinstance(app_name, str):
-            apps = [cls.settings_app(app_name)]
+        apps = []
+        if app_name is None:
+            apps.extend(cls.cfg_apps())
+        else:
+            apps.append(cls.cfg_app(app_name))
         for app in apps:
             for page in app.get('pages'):
                 if page.get('name') == page_name:
-                    page_selected = page
-        return page_selected
+                    return page
 
     @classmethod
-    def settings_control(cls, control_name, page_name=None, app_name=None):
+    def cfg_control(cls, control_name, page_name=None, app_name=None):
         """Obtain inherit dict from 'cls.config' dict named
             'config.tests.apps[i].pages[j].controls' filtering by
             'control_name' param
         """
-        page_selected = None
-        if isinstance(page_name, str):
-            page_selected = cls.settings_page(
-                page_name, app_name=app_name)
-        if page_selected:
-            for control in page_selected.get('controls'):
-                if control.get('name') == control_name:
-                    return control
+        controls = []
+        if page_name is None:
+            controls.extend(cls.cfg_controls())
         else:
-            controls = cls.settings_controls()
-            for control in controls:
-                if control.get('name') == control_name:
-                    return control
+            controls.extend(cls.cfg_page(page_name, app_name=app_name))
+        for control in controls:
+            if control.get('name') == control_name:
+                return control
 
     @classmethod
     def assert_message(cls, assert_name, actual, expected, msg=None):

@@ -233,10 +233,10 @@ TestInfoBase
   + method **load** : Load default config dict
   + method **bot_open** : Open browser using BotBase instance
   + method **bot_close** : Close bot calling bot.close() from param
-  + method **settings_apps** : Obtain inherit dict from 'cls.config' dict named 'config.tests.apps'
-  + method **settings_app** : Obtain inherit dict from 'cls.config' dict named 'config.tests.apps' filtering by 'app_name' param
-  + method **settings_page** : Obtain inherit dict from 'cls.config' dict named 'config.tests.apps[i].pages' filtering by 'page_name' param
-  + method **settings_control** : Obtain inherit dict from 'cls.config' dict named 'config.tests.apps[i].pages[j].controls' filtering by 'control_name' param
+  + method **cfg_apps** : Obtain inherit dict from 'cls.config' dict named 'config.tests.apps'
+  + method **cfg_app** : Obtain inherit dict from 'cls.config' dict named 'config.tests.apps' filtering by 'app_name' param
+  + method **cfg_page** : Obtain inherit dict from 'cls.config' dict named 'config.tests.apps[i].pages' filtering by 'page_name' param
+  + method **cfg_control** : Obtain inherit dict from 'cls.config' dict named 'config.tests.apps[i].pages[j].controls' filtering by 'control_name' param
 - Methods for **Test Suites + Test Cases**
 
   + method **setup_method** : Configure self.attribute
