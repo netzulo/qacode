@@ -8,6 +8,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased] - xxxx-xx-xx
 
 ### Added
+
+### Changed
+
+### Fixed
+
+### Removed
+
+
+## [v0.6.1] - 2019-04-20
+
+### Added
 - New module at 'qacode.core.loggers' named 'logger_messages' #untracked
 - New nav_base method named ele_wait_value #untracked
 - Move dropdown methods to new control dropdown class #258
