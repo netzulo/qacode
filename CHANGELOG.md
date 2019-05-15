@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 
 ### Fixed
+- Package build error after qacode==v0.6.0, urllib3<1.25 #280
 
 ### Removed
 
