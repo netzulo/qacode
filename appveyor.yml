@@ -47,18 +47,18 @@ install:
   # the parent CMD process).
   - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
   # Check that we have the expected version and architecture for Python
-  - "python --version"
-  - "python -c \"import struct; print(struct.calcsize('P') * 8)\""
+  - "%PYTHON% --version"
+  - "%PYTHON% -c \"import struct; print(struct.calcsize('P') * 8)\""
   # Upgrade to the latest version of pip to avoid it displaying warnings
   # about it being out of date.
-  - "python -m pip install wheel"
-  - "python -m pip install --pre -U tox"
+  - "%PYTHON% -m pip install wheel"
 
 test_script:
+ - "%PYTHON% -m pip install --pre -U tox"
  - "tox -e flake8,%TOXENV%"
 
 after_test:
-  - "python setup.py sdist"
+  - "%PYTHON% setup.py sdist"
 
 artifacts:
 - path: "dist\\*"
