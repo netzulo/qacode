@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 
 ### Fixed
+- Can't load ControlTable si no existe un THEAD y existe TBODY #282
 
 ### Removed
 
