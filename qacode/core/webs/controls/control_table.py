@@ -87,7 +87,8 @@ class ControlTable(ControlForm):
         if len(self.tbodies) > 1:
             raise ControlException(MSG.CT_TBL2ORMORETBODIES)
         rows = []
-        rows.append(self.__get_row__(self.thead.find_child("tr"), "th"))
+        if self.thead is not None:
+            rows.append(self.__get_row__(self.thead.find_child("tr"), "th"))
         for ctl_row in self.tbodies[0].find_children("tr"):
             rows.append(self.__get_row__(ctl_row, "td"))
         return rows
