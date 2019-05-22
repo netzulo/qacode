@@ -13,8 +13,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 - Can't load ControlTable si no existe un THEAD y existe TBODY #282
+- Package build error after qacode==v0.6.0, urllib3<1.25 #280
 
 ### Removed
+- Removed nosetest and nose-config support #280
 
 
 ## [v0.6.1] - 2019-04-20
