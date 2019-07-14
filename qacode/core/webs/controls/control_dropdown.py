@@ -11,48 +11,44 @@ from selenium.webdriver.support.ui import Select
 class ControlDropdown(ControlForm):
     """TODO: doc class"""
 
-    dropdown = None
-
     def __init__(self, bot, **kwargs):
         """Instance of ControlForm. Load properties from settings dict.
             Some elements need to search False to be search at future
         """
-        kwargs.update({"instance": "ControlDropdown"})
-        strict_rules = kwargs.get("strict_rules") or []
-        if not bool(strict_rules):
-            strict_rules.append(
+        rules = kwargs.get("rules") or []
+        if not bool(rules):
+            rules.append(
                 {"tag": "select", "type": "tag", "severity": "hight"})
-            kwargs.update({"strict_rules": strict_rules})
+            kwargs.update({"rules": rules})
         super(ControlDropdown, self).__init__(bot, **kwargs)
-        if not self.IS_DROPDOWN and self.tag is not None:
-            raise ControlException(msg=MSG.CDD_BADTAG)
-        self.bot.log.debug(MSG.CDD_LOADED)
+        self._dropdown = None
 
-    def __check_reload__form__(self):
-        """Allow to check before methods calls to ensure
-            if it's neccessary reload element properties
-        """
-        super(ControlDropdown, self).__check_reload__form__()
-        reload_needed = not self.element or not self.dropdown
-        if reload_needed:
-            self.reload(**self.settings)
+    def __load__(self, **kwargs):
+        """Allow to reinstance control properties"""
+        super(ControlDropdown, self).__load__(**kwargs)
+        if self.tag is not None and self.tag != "select":
+            self.bot.log.error(MSG.CDD_BADTAG)
+            raise ControlException(MSG.CDD_BADTAG)
+        if self._on_instance_search:
+            self._dropdown = Select(self._element)
+
+    def __check_dropdown__(self, text, by_value=False, by_index=False):
+        """Internal funcionality for select/deselect methods"""
+        if not self._element or not self._dropdown:
+            self.reload(**self._settings)
+        if self._dropdown is None:
+            raise ControlException(MSG.CDD_BADTAG)
+        if by_value and by_index:
+            raise ControlException(MSG.CDD_BADPARAMS)
+        if by_index and not isinstance(text, int):
+            raise ControlException(MSG.CDD_BADINDEXTYPE)
 
     def reload(self, **kwargs):
         """Reload 'self.settings' property:dict and call to instance
             logic with new configuration
         """
         super(ControlDropdown, self).reload(**kwargs)
-        self.dropdown = Select(self.element)
-
-    def __check_dropdown__(self, text, by_value=False, by_index=False):
-        """Internal funcionality for select/deselect methods"""
-        self.__check_reload__form__()
-        if self.dropdown is None:
-            raise ControlException(msg=MSG.CDD_BADTAG)
-        if by_value and by_index:
-            raise ControlException(msg=MSG.CDD_BADPARAMS)
-        if by_index and not isinstance(text, int):
-            raise ControlException(msg=MSG.CDD_BADINDEXTYPE)
+        self._dropdown = Select(self.element)
 
     def select(self, text, by_value=False, by_index=False):
         """The Select class only works with tags which have select tags.
@@ -127,3 +123,15 @@ class ControlDropdown(ControlForm):
         self.__check_dropdown__('')
         self.dropdown.deselect_all()
         self.bot.log.debug(MSG.CDD_DESELECTALL_LOADED)
+
+    @property
+    def dropdown(self):
+        """GET for _dropdown attribute"""
+        return self._dropdown
+
+    @dropdown.setter
+    def dropdown(self, value):
+        """SET for _dropdown attribute"""
+        # if not isinstance(value, Select):
+        #    raise ControlException("Dropdown must be a type == Select")
+        self._dropdown = value

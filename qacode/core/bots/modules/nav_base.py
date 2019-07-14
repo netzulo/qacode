@@ -51,7 +51,7 @@ class NavBase(object):
         self.driver_touch = driver_touch
 
     def get_driver_wait(self, driver_wait=None):
-        """TODO: doc method"""
+        """Allow to obatin an instance of WebDriverWait"""
         if driver_wait is None and self.driver_wait is None:
             raise CoreException(msg='Nav instanced without driver_wait')
         if driver_wait is None:

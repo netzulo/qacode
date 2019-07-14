@@ -31,7 +31,7 @@ class TestTestInfoBase(TestInfoBase):
         "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"
     ])
     def test_002_log_levels(self, log_level):
-        """TODO: doc method"""
+        """Testcase: test_002_log_levels"""
         msg = "Unitary test, checking level type'{}'".format(
             log_level)
         if log_level == 'DEBUG':

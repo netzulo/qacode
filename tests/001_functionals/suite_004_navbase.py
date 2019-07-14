@@ -23,7 +23,7 @@ class TestNavBase(TestInfoBotUnique):
 
     @classmethod
     def setup_class(cls, **kwargs):
-        """TODO: doc method"""
+        """Setup class (suite) to be executed"""
         super(TestNavBase, cls).setup_class(
             config=settings(file_path="qacode/configs/"),
             skip_force=SKIP_NAVS)

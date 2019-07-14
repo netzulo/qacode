@@ -38,7 +38,7 @@ class TestControlDropdown(TestInfoBotUnique):
 
     @classmethod
     def setup_class(cls, **kwargs):
-        """TODO: doc method"""
+        """Setup class (suite) to be executed"""
         super(TestControlDropdown, cls).setup_class(
             config=settings(file_path="qacode/configs/"),
             skip_force=SKIP_CONTROLS)
@@ -76,31 +76,36 @@ class TestControlDropdown(TestInfoBotUnique):
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize("on_instance_search", [True, False])
     @pytest.mark.parametrize("auto_reload", [True, False])
-    @pytest.mark.parametrize("strict_rules", [
-        [{"tag": "select", "type": "tag", "severity": "hight"}]
+    @pytest.mark.parametrize("rules", [
+        [{"tag": "select", "type": "tag", "severity": "hight"}],
+        []
     ])
     def test_controldropdown_instance(self, on_instance_search,
-                                      strict_rules, auto_reload):
+                                      rules, auto_reload):
         """Testcase: test_001_instance_selector"""
         cfg = self.dd_base
         cfg.update({
             "instance": "ControlDropdown",
             "on_instance_search": on_instance_search,
             "auto_reload": auto_reload,
-            "strict_rules": strict_rules
+            "rules": rules
         })
         # functional testcases
         ctl = ControlDropdown(self.bot, **cfg)
         self.assert_is_instance(ctl, ControlDropdown)
         self.assert_equals(ctl.selector, cfg.get('selector'))
-        self.assert_equals(ctl.instance, cfg.get('instance'))
         self.assert_equals(ctl.name, cfg.get('name'))
         self.assert_equals(ctl.locator, 'css selector')
         self.assert_equals(
             ctl.on_instance_search, cfg.get('on_instance_search'))
         self.assert_equals(ctl.auto_reload, cfg.get('auto_reload'))
-        self.assert_equals(
-            len(ctl.strict_rules), len(cfg.get('strict_rules')))
+        rules = cfg.get('rules')
+        if not bool(rules):
+            # auto add default rule, when 0 rules by param, must exist 1 rule
+            self.assert_equals(len(ctl.rules), len(rules) + 1)
+        else:
+            # rules by param == rules loaded
+            self.assert_equals(len(ctl.rules), len(rules))
         if on_instance_search:
             self.assert_is_instance(ctl.element, WebElement)
         if auto_reload is not None:

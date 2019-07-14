@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 """Module related with all logging messages"""
 
-
+# Commons
+NOT_IMPLEMENTED = "Open an issue on github if raise here"  # noqa:E501
+BAD_PARAM = "ctl_form | bad param '{}', invalid value"  # noqa:E501
 # ControlBase
 CB_SETTINGS_LOADING = "ctl | load_settings_keys: loading keys..."  # noqa:E501
 CB_SETTINGS_LOADED = "ctl | load_settings_keys: loaded keys"  # noqa:E501
@@ -37,33 +39,16 @@ CB_GETCSSRULE_LOADED = "ctl | get_css_value: css_value='{}'"  # noqa:E501
 CB_RELOAD_LOADING = "{} | reload: reloading control..."  # noqa:E501
 CB_RELOAD_LOADED = "{} | reload: reloaded control"  # noqa:E501
 # ControlForm
-CF_STRICT_LOADING = "ctl_form | _load_strict: loading strict_rules..."  # noqa:E501
-CF_STRICT_DISABLED = "ctl_form | _load_strict: disabled loading StrictRules"  # noqa:E501
-CF_STRICT_LOADED = "ctl_form | _load_strict: loaded strict_rules"  # noqa:E501
-CF_ADDRULES_BASE_ADDING = "ctl_form | add_rules: adding base list of strict_rules..."  # noqa:E501
-CF_ADDRULES_BASE_ADDED = "ctl_form | add_rules: added base list of strict_rules"  # noqa:E501
-CF_ADDRULES_TYPED_ADDING = "ctl_form | add_rules: adding typed list of strict_rules..."  # noqa:E501
-CF_ADDRULES_TYPED_ADDED = "ctl_form | add_rules: added typed list of strict_rules"  # noqa:E501
-CF_NOT_IMPLEMENTED_TYPES = "ctl_form | Open an issue on github if raise here"  # noqa:E501
-CF_STRICTTAG_LOADING = "ctl_form | load_strict_tag: loading strict_tags..."  # noqa:E501
-CF_STRICTTAG_NOTAGS = "ctl_form | load_strict_tag: 0 strict_tags"  # noqa:E501
-CF_STRICTTAG_SOMUCHTAGS = "ctl_form | load_strict_tag: more than 1 strict_tag"  # noqa:E501
-CF_STRICTTAG_LOADED = "ctl_form | load_strict_tag: loaded"  # noqa:E501
-CF_STRICTTAG_RAISES = "Validation raises for strict_tag for this element: strict_tag={}"  # noqa:E501
-CF_STRICTTAG_NOT_LOADED = "ctl_form | load_strict_tag: not loaded"  # noqa:E501
-CF_STRICTATTRS_LOADING = "ctl_form | load_strict_attrs: loading strict_attrs..."  # noqa:E501
-CF_STRICTATTRS_NOT_LOADED = "ctl_form | load_strict_attrs: not loaded strict_attrs"  # noqa:E501
-CF_STRICTATTRS_ERROR = "ctl_form | load_strict_attrs: not loaded strict_attrs with enabled strict_mode"  # noqa:E501
-CF_STRICTATTRS_LOADED = "ctl_form | load_strict_attrs: loaded strict_attrs"  # noqa:E501
-CF_STRICTCSS_LOADING = "ctl_form | load_strict_css_props: loading..."  # noqa:E501
-CF_STRICTCSS_LOADED = "ctl_form | load_strict_css_props: loaded"  # noqa:E501
-CF_STRICTCSS_NOT_LOADED = "ctl_form | load_strict_css_props: not loaded strict_attrs"  # noqa:E501
-CF_STRICTCSS_ERROR = "ctl_form | load_strict_css_props: not loaded strict_css_props with enabled strict_mode"  # noqa:E501
-CF_PARSERULES_LOADING = "ctl_form | parse_rules: parsing..."  # noqa:E501
-CF_PARSERULES_LOADED = "ctl_form | parse_rules: parsed"  # noqa:E501
+CF_RULES_LOADING = "ctl_form | loading rules..."  # noqa:E501
+CF_RULES_DISABLED = "ctl_form | disabled rules functionality for this control"  # noqa:E501
+CF_RULES_PARSING = "ctl_form | parsing rules..."  # noqa:E501
+CF_RULES_PARSED = "ctl_form | parsed rules"  # noqa:E501
+CF_RULES_APPLYING = "ctl_form | applying rules..."  # noqa:E501
+CF_RULES_APPLIED = "ctl_form | applied rules"  # noqa:E501
+CF_RULES_APPLYING_TAG = "ctl_form | applying tag rule..."  # noqa:E501
+CF_RULES_APPLIED_TAG = "ctl_form | applied tag rule"  # noqa:E501
 CF_RELOAD_LOADED = "ctl_form | reload: reloaded ctl"  # noqa:E501
-CF_STRICT_ATTRS_RAISES = "Validation raises for strict_attrs for this element: control={}, strict_attrs=[{}]"  # noqa:E501
-CF_BADTAG = "ctl_form | This tag can't be loaded as strict_rule"  # noqa:E501
+CF_BADTAG = "ctl_form | This tag can't be loaded due a check, element must contains tag equals to validation rule tag type"  # noqa:E501
 # ControlDropdown
 CDD_SELECT_LOADING = "ctl_dd | select: selecting..."  # noqa:E501
 CDD_SELECT_LOADED = "ctl_dd | select: selected"  # noqa:E501
@@ -71,7 +56,6 @@ CDD_SELECT_LOADING = "ctl_dd | deselect: deselecting..."  # noqa:E501
 CDD_DESESELECT_LOADED = "ctl_dd | select: deselected"  # noqa:E501
 CDD_DESELECTALL_LOADING = "ctl_dd | dropdown_select: deselecting all..."  # noqa:E501
 CDD_DESELECTALL_LOADED = "ctl_dd | dropdown_select: deselected all"  # noqa:E501
-CDD_LOADED = "ctl_dd | ctl.dropdown property for <select>"  # noqa:E501
 CDD_BADTAG = "ctl_dd | Can't use this for not <select> tag element"  # noqa:E501
 CDD_BADPARAMS = "ctl_dd | Can't use this function with all flags with True values"  # noqa:E501
 CDD_BADINDEXTYPE = "ctl_dd | index must be an int value"  # noqa:E501

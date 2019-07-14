@@ -5,7 +5,7 @@
     "mode": "remote",
     "browser": "chrome",
     "options": { "headless": false },
-    "url_hub": "http://ntz-qa.tk:11000/wd/hub",
+    "url_hub": "http://netzulo.tk:11000/wd/hub",
     "drivers_path": "../qadrivers",
     "drivers_names": [
       "chromedriver_32.exe",
@@ -29,7 +29,7 @@
   "testlink": {
     "connection":{
       "is_https": false,
-      "host": "ntz-qa.tk",
+      "host": "netzulo.tk",
       "port": 86
     },
     "dev_key": "1bfd2ef4ceda22b482b12f2b25457495",

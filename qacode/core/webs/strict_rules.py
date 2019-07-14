@@ -62,6 +62,16 @@ class StrictRule(object):
         else:
             raise CoreException(msg="bad param 'strict_type', invalid value")
 
+    def __repr__(self):
+        """Show basic properties for this object"""
+        return ("{}: name={}, "
+                "enum_type={}, strict_type={}, severity={}").format(
+            self.__class__.__name__,
+            self.name,
+            self.enum_type,
+            self.strict_type,
+            self.severity)
+
 
 class StrictType(EnumBase):
     """Just message type enum for warning and errors on control form class

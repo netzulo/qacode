@@ -2,7 +2,6 @@
 """Package module qacode.core.webs.control_base"""
 
 
-from collections import defaultdict
 from qacode.core.bots.bot_base import BotBase
 from qacode.core.exceptions.control_exception import ControlException
 from qacode.core.exceptions.core_exception import CoreException
@@ -15,123 +14,132 @@ from selenium.webdriver.remote.webelement import WebElement
 
 
 class ControlBase(object):
-    """Requirements: #35, #70"""
+    """This class allow to reference remote NodeElement (JS) or Html Tag to
+        use checks , obtain information or handle actions using this instance.
+        Wrapper for Selenium class named 'WebElement' using wrapper of
+        WebDriver named qacode.core.bots.BotBase
 
-    # Instance properties
-    bot = None
-    settings = None
-    # Settings properties
-    name = None
-    locator = None
-    selector = None
-    on_instance_search = None
-    auto_reload = None
-    instance = None
-    # Element properties
-    element = None
-    tag = None
-    text = None
-    is_displayed = None
-    is_enabled = None
-    is_selected = None
-    attr_id = None
-    attr_class = None
+    Arguments:
+        object {object} -- Base class to inherit
+    """
 
     def __init__(self, bot, **kwargs):
-        """Wrapper for Selenium class named 'WebElement' using
-            wrapper of WebDriver named qacode.core.bots.BotBase
+        """Initialize an instance of ControlBase
 
         Arguments:
             bot {BotBase} -- BotBase instance
         """
         if not bot or not isinstance(bot, BotBase):
             raise ControlException(msg="Bad param 'bot'")
-        self.bot = bot
-        # load settings before try to instance
-        # needed for self._load_* functions
-        self.__load_settings_keys__(kwargs.copy(), update=True)
-        # instance logic
-        self.__load_search__(
-            enabled=self.on_instance_search,
-            element=self.settings.get("element"))
+        # instance minimal data
+        self._bot = bot
+        self._name = None
+        self._locator = None
+        self._selector = None
+        self._element = None
+        self._on_instance_search = None
+        self._auto_reload = None
+        # __search__, step 2
+        self._tag = None
+        self._text = None
+        self._is_displayed = None
+        self._is_enabled = None
+        self._is_selected = None
+        self._attr_id = None
+        self._attr_class = None
+        self._bot.log.debug(
+            "ctl | Generating instance of type {}...".format(
+                self.__class__.__name__))
+        self.__load__(**kwargs)
 
-    def __load_settings_keys__(self, settings,
-                               update=False, default_keys=None):
-        """Load default setting for ControlBase instance"""
-        self.bot.log.debug(MSG.CB_SETTINGS_LOADING)
-        # generate default dict
-        if default_keys is None:
-            default_keys = [
-                ("selector", None),  # required
-                ("name", "UNNAMED"),
-                ("locator", By.CSS_SELECTOR),
-                ("on_instance_search", False),
-                ("auto_reload", True),
-                ("instance", 'ControlBase'),
-                ("element", None)
-            ]
-        default_settings = defaultdict(list, default_keys)
-        updated_settings = {}
-        # Parse param settings, key is each one of default_keys
-        for key in default_settings.keys():
-            # value from params dict
-            value = settings.get(key)
-            # required keys checks
-            if value is None and key == 'selector':
-                msg = "Bad settings: key={}, value={}".format(
-                    key, value)
-                raise ControlException(msg=msg)
-            # optional keys, update with default value
-            if value is None:
-                value = default_settings.get(key)
-            # update object property value and prepare
-            # settings to be updated
-            updated_settings.update({key: value})
-            setattr(self, key, updated_settings.get(key))
-        if update:
-            self.settings = updated_settings
-        self.bot.log.debug(MSG.CB_SETTINGS_LOADED)
-
-    def __load_search__(self, enabled=False, element=None):
-        """Load element searching at selenium WebDriver"""
-        if enabled is None or not enabled:
+    def __load__(self, **kwargs):
+        """Allow to reinstance control properties"""
+        self._settings = self.__settings_parse__(**kwargs)
+        if self._element:
+            # Control instanced from child
+            self._bot.log.debug("ctl | Child instance...")
+            if self._on_instance_search:
+                raise ControlException(
+                    "ctl | Can't auto search when child element")
+        if not self._on_instance_search:
             self.bot.log.debug(MSG.CB_SEARCH_DISABLED)
             self.bot.log.debug(MSG.CB_PROP_DISABLED)
-            return False
+            return
+        self.__search__()
+
+    def __settings_parse__(self, **kwargs):
+        """Allow to parse settings dict from instance kwargs updating
+            just valid keys with default values if it's required
+        """
+        self.bot.log.debug(MSG.CB_SETTINGS_LOADING)
+        self._selector = kwargs.get("selector")
+        self._name = kwargs.get("name")
+        self._locator = kwargs.get("locator")
+        self._on_instance_search = kwargs.get("on_instance_search")
+        self._auto_reload = kwargs.get("auto_reload")
+        self._element = kwargs.get("element")
+        # validate params
+        if self._selector is None or self._selector == '':
+            raise ControlException(
+                "ctl | Selector it's required to use instance")
+        if self._name is None:
+            self._name = "UNNAMED"
+        if self._locator is None:
+            self._locator = By.CSS_SELECTOR
+        if self._on_instance_search is None:
+            self._on_instance_search = False
+        if self._auto_reload is None:
+            self._auto_reload = True
+        settings = {
+            "name": self._name,
+            "locator": self._locator,
+            "selector": self._selector,
+            "on_instance_search": self._on_instance_search,
+            "auto_reload": self._auto_reload,
+        }
+        self.bot.log.debug(MSG.CB_SETTINGS_LOADED)
+        return settings
+
+    def __search__(self):
+        """Load element searching at selenium WebDriver"""
         self.bot.log.debug(MSG.CB_SEARCH_LOADING)
+        # Step 1 ensure web element
+        is_element = isinstance(self._element, WebElement)
+        nav = self.bot.navigation
+        if self._element and not is_element:
+            raise ControlException("Child is not instance of WebElement")
+        if self._element and is_element:
+            # nothing to do
+            self.bot.log.debug(MSG.CB_SEARCH_FOUND_CHILD)
+            return
         try:
-            if element is not None:
-                if not isinstance(element, WebElement):
-                    msg = "Child is not instance of WebElement"
-                    raise ControlException(msg=msg)
-                self.bot.log.debug(MSG.CB_SEARCH_FOUND_CHILD)
-                self.element = element
-            else:
-                self.element = self.bot.navigation.find_element(
-                    self.selector, locator=self.locator)
+            self._element = nav.find_element(
+                self._selector, locator=self._locator)
         except CoreException:
             self.bot.log.warning(MSG.CB_SEARCH_WAITING)
-            self.element = self.bot.navigation.find_element_wait(
-                self.selector, locator=self.locator)
-        if self.element:
+            self._element = nav.find_element_wait(
+                self._selector, locator=self._locator)
+        if self._element:
             self.bot.log.debug(MSG.CB_SEARCH_FOUND)
+        # Step 2 load minimal properties defined by qacode
         self.bot.log.debug(MSG.CB_PROP_LOADING)
-        self.tag = self.get_tag()
-        self.text = self.get_text()
-        self.is_displayed = self.bot.navigation.ele_is_displayed(self.element)
-        self.is_enabled = self.bot.navigation.ele_is_enabled(self.element)
-        self.is_selected = self.bot.navigation.ele_is_selected(self.element)
-        self.attr_id = self.get_attr_value('id')
-        self.attr_class = self.get_attr_value('class').split()
+        self._tag = self.get_tag()
+        self._text = self.get_text()
+        self._is_displayed = nav.ele_is_displayed(self.element)
+        self._is_enabled = nav.ele_is_enabled(self.element)
+        self._is_selected = nav.ele_is_selected(self.element)
+        self._attr_id = self.get_attr_value('id')
+        self._attr_class = self.get_attr_value('class').split()
         self.bot.log.debug(MSG.CB_PROP_LOADED)
-        return True
 
     def __check_reload__(self):
         """Allow to check before methods calls to ensure
             if it's neccessary reload element properties
         """
-        if not self.element and self.auto_reload:
-            self.reload(**self.settings)
+        if not self._element and self._auto_reload:
+            self.reload()
+            return True
+        return False
 
     def find_child(self, selector, locator=By.CSS_SELECTOR):
         """Find child element using bot with default By.CSS_SELECTOR strategy
@@ -192,11 +200,10 @@ class ControlBase(object):
         """Returns tag_name from Webelement"""
         self.bot.log.debug(MSG.CB_GETTAG_LOADING)
         self.__check_reload__()
-        tag_name = self.bot.navigation.ele_tag(self.element)
-        if tag_name:
-            self.bot.log.debug(MSG.CB_GETTAG_LOADED.format(tag_name))
-        self.tag = tag_name
-        return tag_name
+        tag = self.bot.navigation.ele_tag(self.element)
+        self.bot.log.debug(MSG.CB_GETTAG_LOADED.format(tag))
+        self._tag = tag
+        return tag
 
     def type_text(self, text, clear=False):
         """Type text on input element
@@ -212,7 +219,7 @@ class ControlBase(object):
         if clear:
             self.clear()
         self.bot.navigation.ele_write(self.element, text)
-        self.text = text
+        self._text = text
 
     def clear(self):
         """Clear input element text value"""
@@ -263,7 +270,7 @@ class ControlBase(object):
             self.bot.log.error(MSG.CB_GETTEXT_FAILED)
             raise ControlException(err=err)
         if text:
-            self.text = text
+            self._text = text
             self.bot.log.debug(MSG.CB_GETTEXT_LOADED.format(text))
         return text
 
@@ -361,12 +368,7 @@ class ControlBase(object):
         else:
             config = self.settings.copy()
         config.update({"on_instance_search": True})
-        # needed for self._load_* functions
-        self.__load_settings_keys__(config, update=True)
-        # instance logic
-        self.__load_search__(
-            enabled=self.on_instance_search,
-            element=self.element)
+        self.__load__(**config)
         if class_name == 'ControlBase':
             self.bot.log.debug(MSG.CB_RELOAD_LOADED.format(class_name))
 
@@ -417,3 +419,111 @@ class ControlBase(object):
             self.is_displayed,
             self.is_enabled,
             self.is_selected)
+
+    @property
+    def bot(self):
+        """GET for _bot attribute"""
+        return self._bot
+
+    @bot.setter
+    def bot(self, value):
+        """SET for _bot attribute"""
+        if not value or not isinstance(value, BotBase):
+            raise ControlException(msg="Bad param 'bot'")
+        self._bot = value
+
+    @property
+    def settings(self):
+        """GET for _settings attribute"""
+        return self._settings
+
+    @settings.setter
+    def settings(self, value):
+        """SET for _settings attribute"""
+        if not value or not isinstance(value, dict):
+            raise ControlException(msg="Bad param 'settings'")
+        self._settings = self.__settings_parse__(**value)
+
+    @property
+    def name(self):
+        """GET for _name attribute"""
+        return self._name
+
+    @name.setter
+    def name(self, value):
+        """SET for _name attribute"""
+        if not value or not isinstance(value, str):
+            raise ControlException(msg="Bad param 'name'")
+        self._name = value
+
+    @property
+    def selector(self):
+        """GET for _selector attribute"""
+        return self._selector
+
+    @selector.setter
+    def selector(self, value):
+        """SET for _selector attribute"""
+        if not value or not isinstance(value, str):
+            raise ControlException(msg="Bad param 'selector'")
+        self._selector = value
+
+    @property
+    def element(self):
+        """GET for _element attribute"""
+        return self._element
+
+    @element.setter
+    def element(self, value):
+        """SET for _element attribute"""
+        self._element = value
+
+    @property
+    def locator(self):
+        """GET for _locator attribute"""
+        return self._locator
+
+    @property
+    def on_instance_search(self):
+        """GET for _on_instance_search attribute"""
+        return self._on_instance_search
+
+    @property
+    def auto_reload(self):
+        """GET for _auto_reload attribute"""
+        return self._auto_reload
+
+    @property
+    def tag(self):
+        """GET for _tag attribute"""
+        return self._tag
+
+    @property
+    def text(self):
+        """GET for _text attribute"""
+        return self._text
+
+    @property
+    def is_displayed(self):
+        """GET for _is_displayed attribute"""
+        return self._is_displayed
+
+    @property
+    def is_enabled(self):
+        """GET for _is_enabled attribute"""
+        return self._is_enabled
+
+    @property
+    def is_selected(self):
+        """GET for _is_selected attribute"""
+        return self._is_selected
+
+    @property
+    def attr_id(self):
+        """GET for _attr_id attribute"""
+        return self._attr_id
+
+    @property
+    def attr_class(self):
+        """GET for _attr_class attribute"""
+        return self._attr_class

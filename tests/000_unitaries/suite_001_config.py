@@ -41,7 +41,7 @@ class TestConfig(TestInfoBase):
         "drivers_names", "log_output_file", "log_name", "log_level"
     ])
     def test_config_bot_keys(self, key_name):
-        """TODO: doc method"""
+        """Testcase: test_config_bot_keys"""
         if SKIP_CONFIG:
             pytest.skip(msg=SKIP_CONFIG_MSG)
         key_value = self.config['bot'][key_name]
@@ -72,7 +72,7 @@ class TestConfig(TestInfoBase):
         "skip", "apps"
     ])
     def test_config_tests_keys(self, key_name):
-        """TODO: doc method"""
+        """Testcase: test_config_tests_keys"""
         if SKIP_CONFIG:
             pytest.skip(msg=SKIP_CONFIG_MSG)
         key_value = self.config['tests'][key_name]
