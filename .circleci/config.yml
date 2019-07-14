@@ -22,6 +22,7 @@ jobs:
             chmod +x ./cc-test-reporter
             pip install codeclimate-test-reporter
             # project dependencies
+            pip install setuptools==40.0.0
             pip install tox
             pip install coverage==4.2
 
