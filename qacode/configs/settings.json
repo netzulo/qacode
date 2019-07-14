@@ -3,7 +3,7 @@
     "log_name": "qacode",
     "log_level": "INFO",
     "mode": "remote",
-    "browser": "chrome",
+    "browser": "firefox",
     "options": { "headless": false },
     "url_hub": "http://netzulo.tk:11000/wd/hub",
     "drivers_path": "../qadrivers",
@@ -41,7 +41,7 @@
       "browsers": {
         "chrome": {"local":true, "remote":false},
         "firefox": {"local":true, "remote":true},
-        "iexplorer": {"local":true, "remote":false},
+        "iexplorer": {"local":true, "remote":true},
         "edge": {"local":true, "remote":true},
         "opera": {"local":true, "remote":false}
       },
