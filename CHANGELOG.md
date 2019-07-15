@@ -8,12 +8,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased] - xxxx-xx-xx
 
 ### Added
+- New '__repr__' method for class 'StrictRule' #287
 
 ### Changed
+- Internal vars at controls packages moved to pythonic properties #287
+- Clarify settings methods for controls,now is more readable #287
 
 ### Fixed
 
 ### Removed
+- Key from controls settings names 'instance' #287
 
 
 ## [v.0.6.2] - 2019-05-22
