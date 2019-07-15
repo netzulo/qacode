@@ -39,7 +39,7 @@ class TestControlTable(TestInfoBotUnique):
 
     @classmethod
     def setup_class(cls, **kwargs):
-        """TODO: doc method"""
+        """Setup class (suite) to be executed"""
         super(TestControlTable, cls).setup_class(
             config=settings(file_path="qacode/configs/"),
             skip_force=SKIP_CONTROLS)
@@ -91,32 +91,31 @@ class TestControlTable(TestInfoBotUnique):
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize("on_instance_search", [True, False])
     @pytest.mark.parametrize("auto_reload", [True, False])
-    @pytest.mark.parametrize("strict_rules", [
+    @pytest.mark.parametrize("rules", [
         [{"tag": "table", "type": "tag", "severity": "hight"}]])
     @pytest.mark.parametrize("ctl_name", ['tbl_ok', 'tbl_html5_ok'])
     def test_controltable_instance(self, on_instance_search,
-                                   strict_rules, auto_reload, ctl_name):
+                                   rules, auto_reload, ctl_name):
         """Testcase: test_controltable_instance"""
         cfg = getattr(self, ctl_name).copy()
         cfg.update({
             "instance": "ControlTable",
             "on_instance_search": on_instance_search,
             "auto_reload": auto_reload,
-            "strict_rules": strict_rules
+            "rules": rules
         })
         # functional testcases
         ctl = ControlTable(self.bot, **cfg)
         self.assert_is_instance(ctl, ControlTable)
         self.assert_equals(ctl.selector, cfg.get('selector'))
-        self.assert_equals(ctl.instance, cfg.get('instance'))
         self.assert_equals(ctl.name, cfg.get('name'))
         self.assert_equals(ctl.locator, 'css selector')
         self.assert_equals(
             ctl.on_instance_search, cfg.get('on_instance_search'))
         self.assert_equals(ctl.auto_reload, cfg.get('auto_reload'))
-        if bool(strict_rules):
+        if bool(rules):
             self.assert_equals(
-                len(ctl.strict_rules), len(cfg.get('strict_rules')))
+                len(ctl.rules), len(cfg.get('rules')))
         if on_instance_search:
             self.assert_is_instance(ctl.element, WebElement)
         if auto_reload is not None:
@@ -156,7 +155,6 @@ class TestControlTable(TestInfoBotUnique):
         ctl = ControlTable(self.bot, **cfg)
         self.assert_is_instance(ctl, ControlTable)
         self.assert_equals(ctl.selector, cfg.get('selector'))
-        self.assert_equals(ctl.instance, cfg.get('instance'))
         self.assert_equals(ctl.name, cfg.get('name'))
         self.assert_equals(ctl.locator, 'css selector')
 
@@ -165,7 +163,7 @@ class TestControlTable(TestInfoBotUnique):
         """Testcase: test_controltable_internals_ok"""
         ctl = ControlTable(self.bot, **self.tbl_ok)
         ctl.__load_table__()
-        ctl.__check_reload__form__()
+        ctl.__check_reload__()
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_controltable_properties_ok(self):

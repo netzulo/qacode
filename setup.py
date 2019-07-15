@@ -76,10 +76,10 @@ def read(file_path='./', file_name=None, is_encoding=True, ignore_raises=False):
 VERSION = "0.6.2"
 CURR_PATH = "{}{}".format(path.abspath(path.dirname(__file__)), '/')
 INSTALL_REQUIRES = [
+    'six==1.10.0',
     'appdirs',
     'packaging>=16.8',
     'pyparsing',
-    'six==1.10.0',
     'more-itertools<6.0.0',
     'urllib3<1.25,>=1.21.1',
     'selenium==3.14.0',

@@ -31,7 +31,7 @@ class TestControlBase(TestInfoBotUnique):
 
     @classmethod
     def setup_class(cls, **kwargs):
-        """TODO: doc method"""
+        """Setup class (suite) to be executed"""
         super(TestControlBase, cls).setup_class(
             config=settings(file_path="qacode/configs/"),
             skip_force=SKIP_CONTROLS)
@@ -120,7 +120,6 @@ class TestControlBase(TestInfoBotUnique):
         self.assert_equals(
             ctl.on_instance_search, cfg.get('on_instance_search'))
         self.assert_equals(ctl.auto_reload, cfg.get('auto_reload'))
-        self.assert_equals(ctl.instance, cfg.get('instance'))
         if on_instance_search:
             self.assert_is_instance(ctl.element, WebElement)
             self.assert_equals(ctl.tag, tag_name)

@@ -20,7 +20,7 @@ class TestTestInfoBotUnique(TestInfoBotUnique):
 
     @classmethod
     def setup_class(cls, **kwargs):
-        """TODO: doc method"""
+        """Setup class (suite) to be executed"""
         super(TestTestInfoBotUnique, cls).setup_class(
             config=settings(file_path="qacode/configs/"),
             skip_force=SKIP_BOT_UNIQUE)
@@ -28,7 +28,7 @@ class TestTestInfoBotUnique(TestInfoBotUnique):
     @pytest.mark.parametrize('run_time', [1, 2])
     @pytest.mark.skipIf(SKIP_BOT_UNIQUE, SKIP_BOT_UNIQUE_MSG)
     def test_unique_bot_multiple_tests(self, run_time):
-        """TODO: doc method"""
+        """Testcase: test_unique_bot_multiple_tests"""
         self.log.debug("TestInfoBotUnique, test='{}'".format(run_time))
         self.assert_is_instance(self, object)
         self.assert_is_instance(self, TestInfoBotUnique)

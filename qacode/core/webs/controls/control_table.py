@@ -14,30 +14,29 @@ from selenium.webdriver.remote.webelement import WebElement
 class ControlTable(ControlForm):
     """TODO: doc class"""
 
-    _table = None
-    _rows = None
-
-    # public properties
-
-    caption = None
-    thead = None
-    tfoot = None
-    tbodies = None
-
     def __init__(self, bot, **kwargs):
-        """Instance of ControlForm. Load properties from settings dict.
+        """Instance of ControlTable. Load properties from settings dict.
             Some elements need to search False to be search at future
         """
-        kwargs.update({"instance": "ControlTable"})
-        strict_rules = kwargs.get("strict_rules") or []
-        if not bool(strict_rules):
-            strict_rules.append(
+        rules = kwargs.get("rules") or []
+        if not bool(rules):
+            rules.append(
                 {"tag": "table", "type": "tag", "severity": "hight"})
-            kwargs.update({"strict_rules": strict_rules})
+            kwargs.update({"rules": rules})
         super(ControlTable, self).__init__(bot, **kwargs)
-        if not self.IS_TABLE and self.tag is not None:
-            raise ControlException(msg=MSG.CT_BADTAG)
-        self.bot.log.debug(MSG.CT_LOADED)
+        self._table = None
+        self._rows = None
+        # public properties
+        self._caption = None
+        self._thead = None
+        self._tfoot = None
+        self._tbodies = None
+
+    def __load__(self, **kwargs):
+        """Allow to reinstance control properties"""
+        super(ControlTable, self).__load__(**kwargs)
+        if self._on_instance_search:
+            self.__load_table__()
 
     def __load_table__(self, element=None):
         """Allow to load all TR > TD items from a TABLE element
@@ -53,13 +52,13 @@ class ControlTable(ControlForm):
             Use case 2. TABLE > (THEAD > (TR > TH))+(TBODY > (TR > TH))
         """
         if element is None:
-            element = self.element
+            element = self._element
         self._table = ControlBase(self.bot, **{
             "selector": self.selector,
             "element": element})
         # Preload
-        self.tbodies = self.__try__("find_children", "tbody")
-        if bool(self.tbodies):
+        self._tbodies = self.__try__("find_children", "tbody")
+        if bool(self._tbodies):
             self._rows = self.__load_table_html5__()
         else:
             self._rows = self.__load_table_html4__()
@@ -81,15 +80,15 @@ class ControlTable(ControlForm):
         """Allow to load table with this structure
             TABLE > (THEAD > (TR > TH))+(TBODY > (TR > TH))
         """
-        self.caption = self.__try__("find_child", "caption")
-        self.thead = self.__try__("find_child", "thead")
-        self.tfoot = self.__try__("find_child", "tfoot")
-        if len(self.tbodies) > 1:
+        self._caption = self.__try__("find_child", "caption")
+        self._thead = self.__try__("find_child", "thead")
+        self._tfoot = self.__try__("find_child", "tfoot")
+        if len(self._tbodies) > 1:
             raise ControlException(MSG.CT_TBL2ORMORETBODIES)
         rows = []
-        if self.thead is not None:
-            rows.append(self.__get_row__(self.thead.find_child("tr"), "th"))
-        for ctl_row in self.tbodies[0].find_children("tr"):
+        if self._thead is not None:
+            rows.append(self.__get_row__(self._thead.find_child("tr"), "th"))
+        for ctl_row in self._tbodies[0].find_children("tr"):
             rows.append(self.__get_row__(ctl_row, "td"))
         return rows
 
@@ -113,23 +112,18 @@ class ControlTable(ControlForm):
             self.bot.log.debug(MSG.CT_TBLNOTCHILD.format(selector))
             return None
 
-    def __check_reload__form__(self):
+    def __check_reload__(self):
         """Allow to check before methods calls to ensure
             if it's neccessary reload element properties
         """
-        super(ControlTable, self).__check_reload__form__()
-        reload_needed = not self.element or not self.table
-        if reload_needed:
-            self.reload(**self.settings)
-        if not self.IS_TABLE and self.tag is not None:
-            raise ControlException(msg=MSG.CT_BADTAG)
+        super(ControlForm, self).__check_reload__()
 
     def reload(self, **kwargs):
         """Reload 'self.settings' property:dict and call to instance
             logic with new configuration
         """
         super(ControlTable, self).reload(**kwargs)
-        self.__load_table__(element=self.element)
+        self.__load_table__(element=self._element)
 
     @property
     def table(self):
@@ -146,5 +140,5 @@ class ControlTable(ControlForm):
     @property
     def rows(self):
         """GETTER for 'rows' property"""
-        self.__check_reload__form__()
+        self.__check_reload__()
         return self._rows

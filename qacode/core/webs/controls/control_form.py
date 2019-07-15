@@ -4,7 +4,6 @@
 
 from qacode.core.exceptions.control_exception import ControlException
 from qacode.core.loggers import logger_messages as MSG
-from qacode.core.webs.controls.control_base import By
 from qacode.core.webs.controls.control_base import ControlBase
 from qacode.core.webs.html_tags import HtmlTag
 from qacode.core.webs.strict_rules import (
@@ -12,70 +11,84 @@ from qacode.core.webs.strict_rules import (
 
 
 class ControlForm(ControlBase):
-    """Requirements: #63"""
+    """This class allow to reference remote NodeElement (JS) or Html Tag to
+        use checks , obtain information or handle actions using this instance.
+        Wrapper for Selenium class named 'WebElement' using wrapper of
+        WebDriver named qacode.core.bots.BotBase
+        This class inherit of ControlBase and add functionality to ensure
+        tag names, html attributes, css properties values and element behaviour
+        at instance based on configuration
 
-    # Strict properties
-    strict_tag = None
-    # tag=select
-    IS_DROPDOWN = None
-    # tag=select
-    IS_TABLE = None
+    Arguments:
+        object {ControlBase} -- qacode wrapper for WebElement from Selenium
+    """
 
     def __init__(self, bot, **kwargs):
-        """Instance of ControlForm. Load properties from settings dict.
-            Some elements need to search False to be search at future
+        """Initialize an instance of ControlForm
+
+        Arguments:
+            bot {BotBase} -- BotBase instance
         """
         super(ControlForm, self).__init__(bot, **kwargs)
-        # needed for self._load_* functions
-        self.__load_settings_keys__(kwargs.copy(), update=True)
-        # instance logic
-        self.__load_search__(
-            enabled=self.on_instance_search,
-            element=self.settings.get("element"))
-        if self.on_instance_search:
-            # at least 1 rule to enable this feature
-            self.__load__rules__(enabled=len(self.strict_rules))
+        # instance minimal data
+        self._rules = kwargs.get("rules") or []
 
-    def __load_settings_keys__(self, settings, update=False):
-        """Load default setting for ControlForm instance"""
-        settings.update({"strict_rules": settings.get('strict_rules') or []})
-        super(ControlForm, self).__load_settings_keys__(
-            settings,
-            update=update,
-            default_keys=[
-                ("selector", None),  # required
-                ("name", "UNNAMED"),
-                ("locator", By.CSS_SELECTOR),
-                ("on_instance_search", False),
-                ("auto_reload", True),
-                ("instance", 'ControlForm'),
-                ("strict_rules", []),
-            ]
-        )
+    def __load__(self, **kwargs):
+        """Allow to instance settings obtaining from super
+            and applying self instance behaviour
+        """
+        super(ControlForm, self).__load__(**kwargs)
+        if self._on_instance_search:
+            self.bot.log.debug(MSG.CF_RULES_LOADING)
+            self.__rules_apply__(rules=self._rules)
 
-    def __load__rules__(self, enabled=False):
-        """Validate strict rules for each type of StricRule"""
-        self.bot.log.debug(MSG.CF_PARSERULES_LOADING)
-        if not enabled:
-            self.bot.log.warning(MSG.CF_STRICT_DISABLED)
-            return False
+    def __settings_parse__(self, **kwargs):
+        """Allow to parse settings obtaining from super
+            and applying self instance behaviour
+        """
+        settings = super(ControlForm, self).__settings_parse__(**kwargs)
+        _rules = kwargs.get("rules") or []
+        # at least 1 rule to enable this feature
+        if not isinstance(_rules, list) or not bool(_rules):
+            _rules = list()
+        self._rules = self.__rules_parse__(rules=_rules)
+        settings.update({"rules": self._rules})
+        return settings
+
+    def __rules_parse__(self, rules=[]):
+        """Validate rules for each type of StricRule"""
+        self.bot.log.debug(MSG.CF_RULES_PARSING)
+        if not bool(rules):
+            self.bot.log.warning(MSG.CF_RULES_DISABLED)
+            return []
         typed_rules = list()
         # parsing rules > to enums > to instance
-        for strict_cfg in self.strict_rules:
-            cfg = {
-                "tag": strict_cfg.get('tag'),
-                "type": strict_cfg.get('type'),
-                "severity": strict_cfg.get('severity')
-            }
-            if cfg.get('severity') is None:
-                cfg.update({"severity": "low"})
-            typed_rules.append(
-                StrictRule(
-                    HtmlTag(cfg.get('tag')),
-                    StrictType(cfg.get('type')),
-                    StrictSeverity(cfg.get('severity'))))
+        for _rule in rules:
+            self.bot.log.debug(MSG.CF_RULES_PARSING)
+            rule = None
+            if isinstance(_rule, StrictRule):
+                rule = _rule
+            else:
+                _tag = HtmlTag(_rule.get('tag'))
+                _type = StrictType(_rule.get('type'))
+                _severity = _rule.get('severity')
+                if _severity is None:
+                    _severity = StrictSeverity("low")
+                else:
+                    _severity = StrictSeverity(_severity)
+                rule = StrictRule(_tag, _type, _severity)
+            typed_rules.append(rule)
+            self.bot.log.debug(MSG.CF_RULES_PARSED)
         # parsed rules at this point
-        self.bot.log.debug(MSG.CF_PARSERULES_LOADED)
+        self.bot.log.debug(MSG.CF_RULES_PARSED)
+        return typed_rules
+
+    def __rules_apply__(self, rules=[]):
+        """Allow to apply rules using self WebElement"""
+        self.bot.log.debug(MSG.CF_RULES_APPLYING)
+        if not bool(rules):
+            self.bot.log.warning(MSG.CF_RULES_DISABLED)
+            return False
         # not implemented list
         not_implemented_types = [
             StrictType.HTML_ATTR,
@@ -86,62 +99,51 @@ class ControlForm(ControlBase):
             StrictType.SEO
         ]
         # validate rules and apply it
-        for strict_rule in typed_rules:
-            if strict_rule.strict_type in not_implemented_types:
-                raise NotImplementedError(MSG.CF_NOT_IMPLEMENTED_TYPES)
-            if strict_rule.strict_type == StrictType.TAG:
-                self.__load_strict_tag__(strict_rule.enum_type)
+        for rule in rules:
+            if rule.strict_type in not_implemented_types:
+                raise NotImplementedError(MSG.NOT_IMPLEMENTED)
+            if rule.strict_type == StrictType.TAG:
+                self.__rules_apply_tag__(rule)
             else:
-                raise ControlException(
-                    message="bad param 'strict_type', invalid value")
+                msg = MSG.BAD_PARAM.format("strict_type")
+                self.bot.log.debug(msg)
+                raise ControlException(msg)
+        self.bot.log.debug(MSG.CF_RULES_APPLIED)
 
-    def __load_strict_tag__(self, strict_tag):
-        """Validate if element.tag is in list of strict_tags and
-            instance ControlForm specific properties
-        """
-        self.IS_DROPDOWN = False
-        self.IS_TABLE = False
-        self.strict_tag = strict_tag
-        valid_tags = ['select', 'table']
-        self.bot.log.debug(MSG.CF_STRICTTAG_LOADING)
-        if self.strict_tag.value not in valid_tags:
+    def __rules_apply_tag__(self, rule):
+        """Apply Tag based on StictType.TAG enum"""
+        self.bot.log.debug(MSG.CF_RULES_APPLYING_TAG)
+        valid_tags = [HtmlTag.TAG_SELECT.value, HtmlTag.TAG_TABLE.value]
+        if not isinstance(rule.enum_type, HtmlTag):
+            msg = MSG.BAD_PARAM.format("tag")
+            self.bot.log.debug(msg)
+            raise ControlException(msg)
+        # element must exist to get working this instance
+        _tag = HtmlTag(self._tag)
+        if rule.enum_type.value not in valid_tags:
             raise ControlException(msg=MSG.CF_BADTAG)
-        if self.tag == HtmlTag.TAG_SELECT.value:
-            self.IS_DROPDOWN = True
-        if self.tag == HtmlTag.TAG_TABLE.value:
-            self.IS_TABLE = True
-        self.bot.log.debug(MSG.CF_STRICTTAG_LOADED)
-        return True
+        # Validate at instance
+        if _tag != rule.enum_type:
+            raise ControlException("ctl | Tag validation Error")
+        self.bot.log.debug(MSG.CF_RULES_APPLIED_TAG)
 
-    def __check_reload__form__(self):
+    def __check_reload__(self):
         """Allow to check before methods calls to ensure
             if it's neccessary reload element properties
         """
-        reload_needed = not self.element and self.auto_reload
-        if reload_needed:
-            self.reload(**self.settings)
+        super(ControlForm, self).__check_reload__()
 
     def reload(self, **kwargs):
         """Reload 'self.settings' property:dict and call to instance
             logic with new configuration
         """
-        # load settings again
-        if kwargs:
-            config = kwargs.copy()
-        else:
-            config = self.settings.copy()
-        config.update({"on_instance_search": True})
-        # needed for self._load_* functions
-        self.__load_settings_keys__(config, update=True)
-        # instance logic
-        self.__load_search__(
-            enabled=self.on_instance_search,
-            element=self.element)
-        if self.on_instance_search:
-            # at least 1 rule to enable this feature
-            self.__load__rules__(enabled=len(kwargs.get("strict_rules")))
-        self.bot.log.debug(MSG.CF_RELOAD_LOADED)
+        super(ControlForm, self).reload(**kwargs)
 
     def __repr__(self):
         """Show basic properties for this object"""
         return super(ControlForm, self).__repr__()
+
+    @property
+    def rules(self):
+        """GET for rules attribute"""
+        return self._rules

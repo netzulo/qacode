@@ -5,6 +5,9 @@
 import pytest
 from qacode.core.testing.test_info import TestInfoBotUnique
 from qacode.core.webs.controls.control_form import ControlForm
+from qacode.core.webs.html_tags import HtmlTag
+from qacode.core.webs.strict_rules import (
+    StrictRule, StrictSeverity, StrictType)
 from qautils.files import settings
 from selenium.webdriver.remote.webelement import WebElement
 
@@ -36,7 +39,7 @@ class TestControlForm(TestInfoBotUnique):
 
     @classmethod
     def setup_class(cls, **kwargs):
-        """TODO: doc method"""
+        """Setup class (suite) to be executed"""
         super(TestControlForm, cls).setup_class(
             config=settings(file_path="qacode/configs/"),
             skip_force=SKIP_CONTROLS)
@@ -74,49 +77,76 @@ class TestControlForm(TestInfoBotUnique):
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize("on_instance_search", [True, False])
     @pytest.mark.parametrize("auto_reload", [True, False])
-    @pytest.mark.parametrize("strict_rules", [
+    @pytest.mark.parametrize("rules", [
         [{"tag": "select", "type": "tag", "severity": "hight"}],
         []
     ])
     def test_controlform_instance(self, on_instance_search,
-                                  strict_rules, auto_reload):
+                                  rules, auto_reload):
         """Testcase: test_001_instance_selector"""
         cfg = self.dd_base
         cfg.update({
             "instance": "ControlForm",
             "on_instance_search": on_instance_search,
             "auto_reload": auto_reload,
-            "strict_rules": strict_rules
+            "rules": rules
         })
         # functional testcases
         ctl = ControlForm(self.bot, **cfg)
         self.assert_is_instance(ctl, ControlForm)
         self.assert_equals(ctl.selector, cfg.get('selector'))
-        self.assert_equals(ctl.instance, cfg.get('instance'))
         self.assert_equals(ctl.name, cfg.get('name'))
         self.assert_equals(ctl.locator, 'css selector')
         self.assert_equals(
             ctl.on_instance_search, cfg.get('on_instance_search'))
         self.assert_equals(ctl.auto_reload, cfg.get('auto_reload'))
         self.assert_equals(
-            len(ctl.strict_rules), len(cfg.get('strict_rules')))
+            len(ctl.rules), len(cfg.get('rules')))
         if on_instance_search:
             self.assert_is_instance(ctl.element, WebElement)
-        if ctl.tag == 'select':
-            if bool(strict_rules):
-                self.assert_true(ctl.IS_DROPDOWN)
+        if not bool(rules):
+            self.assert_lower(len(ctl.rules), 0)
+            # this lane just for testing purpose, avoid indent 1 lane more
+            rules = ctl.rules
+        # don't care number of rules at checking
+        for i, rule in enumerate(rules):
+            self.assert_is_instance(rule["tag"], str)
+            self.assert_is_instance(rule["type"], str)
+            self.assert_is_instance(rule["severity"], str)
+            # params ok at this point
+            ctl_rule = ctl.rules[i]
+            if isinstance(ctl_rule, dict):
+                self.assert_is_instance(ctl_rule["tag"], str)
+                self.assert_is_instance(ctl_rule["type"], str)
+                self.assert_is_instance(ctl_rule["severity"], str)
+                self.assert_equals(rule["tag"], ctl_rule["tag"])
+                self.assert_equals(rule["type"], ctl_rule["type"])
+                self.assert_equals(rule["severity"], ctl_rule["severity"])
+            elif isinstance(ctl_rule, StrictRule):
+                self.assert_is_instance(ctl_rule.name, str)
+                self.assert_is_instance(ctl_rule.strict_type, StrictType)
+                self.assert_is_instance(ctl_rule.enum_type, HtmlTag)
+                self.assert_is_instance(ctl_rule.severity, StrictSeverity)
+                if ctl.tag == 'select':
+                    self.assert_equals(
+                        ctl_rule.enum_type.value, HtmlTag.TAG_SELECT.value)
             else:
-                self.assert_none(ctl.IS_DROPDOWN)
+                pytest.fail("Unkown type for this rule")
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize("auto_reload", [True, False])
-    def test_method_reload_form(self, auto_reload):
+    @pytest.mark.parametrize("rules", [
+        [{"tag": "select", "type": "tag", "severity": "hight"}],
+        []
+    ])
+    def test_method_reload_form(self, auto_reload, rules):
         """Testcase: test_method_setcssrule"""
         # must be supported
         cfg = self.dd_base
         cfg.update({
             "auto_reload": auto_reload,
             "on_instance_search": False,
+            "rules": rules
         })
         ctl = ControlForm(self.bot, **cfg)
         self.assert_equals(ctl.on_instance_search, False)

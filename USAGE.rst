@@ -59,31 +59,50 @@ It's base control to load web element from ``WebDriver + browser session`` , *th
 + Param **selector** (**REQUIRED**): Valid selector for locator selected
 + Param **name** : Allows to set value to ``ControlBase.name`` property, also it's used by pages to set property page with ``control.name`` value
 + Param **locator** : This text it's parsed down selenium class ``selenium.webdriver.common.by.By`` (*default:* ``css selector`` == ``By.CSS_SELECTOR``)
-+ Param **instance** : Allow to generate your own inherit classes from ``ControlBase`` and instance them  using qacode strategy (*default:* ``ControlBase``)
-+ Param **auto_reload** : Allow to reload element searching first when need to use some function of control instance and isn't loaded (*default:* ``True``)
 + Param **on_instance_search** : enable searching element at instance `ControlBase` , also properties when element it's loaded (*default:* `False`) *access to base properties values obtained from selenium methods at* ``BotBase.navigation``
++ Param **auto_reload** : Allow to reload element searching first when need to use some function of control instance and isn't loaded (*default:* ``True``)
 
 - Methods for **ControlBase**
 
-  + method **load** : Load properties from settings dict. Some elements need to search False to be search at future
-  + method **__load_settings_keys__** : Load default setting for ControlBase instance and default properties for base element
-  + method **__load_search__** : Load element searching at selenium WebDriver
-  + method **clear** : Clear input element text value
-  + method **click** : Click on element
+  + method **__load__** : Load properties from settings dict. Some elements need to search False to be search at future
+  + method **__settings_parse__** : Allow to parse settings dict from instance kwargs updating just valid keys with default values if it's required
+  + method **__search__** : Load element searching at selenium WebDriver
+  + method **__check_reload__** : Allow to check before methods calls to ensure if it's neccessary reload element properties
   + method **find_child** : Find child element using bot with default By.CSS_SELECTOR strategy for internal element trought selenium WebElement
   + method **find_children** : Find children elements using bot with default By.CSS_SELECTOR strategy for internal element trought selenium WebElement
-  + method **get_attr_value** : Search and attribute name over self.element and get value, if attr_value is obtained, then compare and raise if not
+  + method **get_tag** : Returns tag_name from Webelement
+  + method **type_text** : Type text on input element
+  + method **clear** : Clear input element text value
+  + method **click** : Click on element
+  + method **get_text** : Get element content textget_attrs
   + method **get_attrs** : Find a list of attributes on WebElement and returns a dict list of {name, value}
+  + method **get_attr_value** : Search and attribute name over self.element and get value, if attr_value is obtained, then compare and raise if not
   + method **get_css_value** : Allows to obtain CSS value based on CSS property name
   + method **set_css_value** : Set new value for given CSS property name on ControlBase selector
-  + method **get_tag** : Returns tag_name from Webelement
-  + method **get_text** : Get element content text
   + method **reload** : Reload 'self.settings' property:dict and call to instance logic with new configuration
-  + method **type_text** : Type text on input element
   + method **wait_invisible** : Wait for invisible element, returns control
   + method **wait_visible** : Wait for visible element, returns control
-  + method **wait_blink** : Wait until control pops and dissapears
   + method **wait_text** : Wait if the given text is present in the specified control
+  + method **wait_blink** : Wait until control pops and dissapears
+
+- Properties for **ControlBase**
+
+  + property **bot** : `GET` + `SET`
+  + property **settings** : `GET` + `SET`
+  + property **name** : `GET` + `SET`
+  + property **selector** : `GET` + `SET`
+  + property **element** : `GET` + `SET`
+  + property **locator** : `GET` + `SET`
+  + property **on_instance_search** : `GET` + `SET`
+  + property **auto_reload** : `GET` + `SET`
+  + property **tag** : `GET`
+  + property **text** : `GET`
+  + property **is_displayed** : `GET`
+  + property **is_enabled** : `GET`
+  + property **is_selected** : `GET`
+  + property **attr_id** : `GET`
+  + property **attr_class** : `GET`
+
 
 Example of usage
 ^^^^^^^^^^^^^^^^
@@ -107,7 +126,6 @@ Example of usage
           "name": "btn_submit",
           "locator": "css selector",
           "selector": "button[type='submit']",
-          "instance": "ControlBase",
           "on_instance_search": false,
           "auto_reload": True,
         }
@@ -127,30 +145,43 @@ Example of usage
     txt_password.type_text('SuperSecretPassword!', clear=True)
     btn_login.click()
 
+
+
 ControlForm
 ~~~~~~~~~~~
 
-+ Param **strict_rules** : Allow to add strict_rules configuration to laod StrictRule class for each rule ( example: ``strict_rule = StrictRule('my_named_rule', StrictType.TAG, StrictSeverity.HIGHT)`` )
++ Param **rules** : Allow to add strict_rules configuration to laod StrictRule class for each rule ( example: ``strict_rule = StrictRule('my_named_rule', StrictType.TAG, StrictSeverity.HIGHT)`` )
 
 - Methods for **ControlForm**
 
   + method **__load__** : Load properties from settings dict. Some elements need to search False to be search at future
-  + method **__load_settings_keys__** : Load default setting for ControlForm instance
-  + method **__load__rules__** : Parse array of configurations dicts of strict_rules to instances list of StrictRule
-  + method **__load_strict_tag__** : alidate if element.tag is in list of strict_tags and instance ControlForm specific properties
-  + method **__check_reload__form__** : Allow to check before methods calls to ensure if it's neccessary reload element properties
+  + method **__settings_parse__** : Allow to parse settings obtaining from super and applying self instance behaviour
+  + method **__rules_parse__** : Validate rules for each type of StricRule
+  + method **__rules_apply__** : Allow to apply rules using self WebElement
+  + method **__rules_apply_tag__** : Apply Tag based on StictType.TAG enum
+  + method **__check_reload__** : Allow to check before methods calls to ensure if it's neccessary reload element properties
   + method **reload** : Reload 'self.settings' property:dict and call to instance logic with new configuration
+
+- Properties for **ControlForm**
+
+  + property **rules** : `GET`
 
 ControlDropdown
 ~~~~~~~~~~~~~~~
 
 - Methods for **ControlDropdown**
 
-  + method **__check_reload__form__** : Allow to check before methods calls to ensure if it's neccessary reload element properties
+  + method **__load__** : Allow to reinstance control properties
+  + method **__check_dropdown__** : Internal funcionality for select/deselect methods
   + method **reload** : Reload 'self.settings' property:dict and call to instance logic with new configuration
   + method **select** : The Select class only works with tags which have select tags
   + method **deselect** : The Select class only works with tags which have select tags
-  + method **deselect_all** : The Select class only works with tags which have select tags with multiple="multiple" attribute.
+  + method **deselect_all** : The Select class only works with tags which have select tags with multiple="multiple" attribute
+
+- Properties for **ControlForm**
+
+  + property **dropdown** : `GET` + `SET`
+
 
 ControlTable
 ~~~~~~~~~~~~
@@ -163,12 +194,13 @@ ControlTable
   + method **__load_table_html5__** : Allow to load table with this structure ``TABLE > (THEAD > (TR > TH))+(TBODY > (TR > TH))``
   + method **__get_row__** : Allow to get cells of a <TR> element
   + method **__try__** : Allow to exec some method to handle exception
+  + method **__check_reload__** : Allow to check before methods calls to ensure if it's neccessary reload element properties
   + method **reload** : Reload 'self.settings' property:dict and call to instance logic with new configuration
 
 - Properties for **ControlTable**
 
-  + property **table**: GET / SET for table element ( *just a ``WebElement`` based on ``table`` tag*)
-  + property **rows**: GET for rows cells based on controls instances
+  + property **table**: `GET` + `SET` for table element ( *just a ``WebElement`` based on ``table`` tag*)
+  + property **rows**: `GET` for rows cells based on controls instances
 
 Pages
 -----

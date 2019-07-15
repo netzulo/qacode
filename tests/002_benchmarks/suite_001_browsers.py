@@ -22,7 +22,7 @@ class TestBotBase(TestInfoBase):
     """Testcases for class BotBase"""
 
     def setup_method(self, test_method):
-        """TODO: doc method"""
+        """Setup test_method to be executed"""
         super(TestBotBase, self).setup_method(
             test_method,
             config=settings(file_path="qacode/configs/"),

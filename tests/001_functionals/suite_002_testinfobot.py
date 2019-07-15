@@ -19,14 +19,14 @@ class TestTestInfoBot(TestInfoBot):
     """Testcases for class TestInfoBot"""
 
     def setup_method(self, test_method):
-        """TODO: doc method"""
+        """Setup class (suite) to be executed"""
         super(TestTestInfoBot, self).setup_method(
             test_method, config=settings(file_path="qacode/configs/"))
 
     @pytest.mark.parametrize('run_time', [1, 2])
     @pytest.mark.skipIf(SKIP_BOT_MULTIPLE, SKIP_BOT_MULTIPLE_MSG)
     def test_multiple_bots(self, run_time):
-        """TODO: doc method"""
+        """Testcase: test_multiple_bots"""
         self.log.debug("TestInfoBotUnique, test='{}'".format(run_time))
         self.assert_is_instance(self, object)
         self.assert_is_instance(self, TestInfoBot)
