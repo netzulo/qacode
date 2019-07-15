@@ -63,4 +63,3 @@ CDD_BADINDEXTYPE = "ctl_dd | index must be an int value"  # noqa:E501
 CT_BADTAG = "ctl_tb | Can't use this for not <table> tag element"  # noqa:E501
 CT_LOADED = "ctl_tb | ctl.table property for <table>"  # noqa:E501
 CT_TBLNOTCHILD = "ctl_tb | this table haven't got '{}' selector"  # noqa:E501
-CT_TBL2ORMORETBODIES = "2 or more tbodys not supported, Open an issue on Github"  # noqa:E501

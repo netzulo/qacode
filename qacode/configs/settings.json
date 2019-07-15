@@ -85,7 +85,8 @@
               { "name": "dd_menu_data", "selector": "#ddData"},
               { "name": "dd_menu_data_lists", "selector": "a[href='/qacode/data/lists']"},
               { "name": "tbl_ok", "selector": "#tblOk"},
-              { "name": "tbl_html5_ok", "selector": "#tblHtml5Ok"}
+              { "name": "tbl_html5_ok", "selector": "#tblHtml5Ok"},
+              { "name": "tbl_html_tbodies_ok", "selector": "#tblHtml5OkTbodies"}
             ]
           },
           { "name": "qacode_inputs",

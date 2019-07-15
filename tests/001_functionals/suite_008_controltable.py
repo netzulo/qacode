@@ -60,6 +60,8 @@ class TestControlTable(TestInfoBotUnique):
             'dd_menu_data_lists', cls.cfg_control('dd_menu_data_lists'))
         cls.add_property('tbl_ok', cls.cfg_control('tbl_ok'))
         cls.add_property('tbl_html5_ok', cls.cfg_control('tbl_html5_ok'))
+        cls.add_property(
+            'tbl_html_tbodies_ok', cls.cfg_control('tbl_html_tbodies_ok'))
 
     def setup_method(self, test_method):
         """Configure self.attribute"""
@@ -93,17 +95,23 @@ class TestControlTable(TestInfoBotUnique):
     @pytest.mark.parametrize("auto_reload", [True, False])
     @pytest.mark.parametrize("rules", [
         [{"tag": "table", "type": "tag", "severity": "hight"}]])
-    @pytest.mark.parametrize("ctl_name", ['tbl_ok', 'tbl_html5_ok'])
+    @pytest.mark.parametrize(
+        "ctl_name,rows,cols", [
+            ('tbl_ok', 3, 2),
+            ('tbl_html5_ok', 4, 3),
+            ('tbl_html_tbodies_ok', 4, 3)
+        ])
     def test_controltable_instance(self, on_instance_search,
-                                   rules, auto_reload, ctl_name):
+                                   rules, auto_reload, ctl_name, rows, cols):
         """Testcase: test_controltable_instance"""
         cfg = getattr(self, ctl_name).copy()
         cfg.update({
-            "instance": "ControlTable",
             "on_instance_search": on_instance_search,
             "auto_reload": auto_reload,
             "rules": rules
         })
+        if ctl_name == "tbl_html_tbodies_ok" and not on_instance_search:
+            import pdb; pdb.set_trace()
         # functional testcases
         ctl = ControlTable(self.bot, **cfg)
         self.assert_is_instance(ctl, ControlTable)
@@ -124,21 +132,15 @@ class TestControlTable(TestInfoBotUnique):
             self.assert_is_instance(ctl.table, ControlBase)
         self.assert_is_instance(ctl.rows, list)
         # Use case 1. not html5:: TABLE > (TR > TH)+(TR > TD)
-        if ctl_name == 'tbl_ok':
-            self.assert_lower(len(ctl.rows), 3)
-            for row in ctl.rows:
-                self.assert_is_instance(row, list)
-                self.assert_lower(len(row), 2)
-                for cell in row:
-                    self.assert_is_instance(cell, ControlBase)
         # Use case 2. html5:: TABLE > (THEAD > (TR > TH))+(TBODY > (TR > TH))
-        if ctl_name == 'tbl_html5_ok':
-            self.assert_lower(len(ctl.rows), 4)
-            for row in ctl.rows:
-                self.assert_is_instance(row, list)
-                self.assert_lower(len(row), 3)
-                for cell in row:
-                    self.assert_is_instance(cell, ControlBase)
+        # Use case 3. html5:: TABLE >
+        #   (THEAD > (TR > TH))+[(TBODY > (TR > TH))]
+        self.assert_lower(len(ctl.rows), rows)
+        for row in ctl.rows:
+            self.assert_is_instance(row, list)
+            self.assert_lower(len(row), cols)
+            for cell in row:
+                self.assert_is_instance(cell, ControlBase)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize("strict_rules", [None])

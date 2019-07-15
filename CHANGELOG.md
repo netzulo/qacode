@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 - New '__repr__' method for class 'StrictRule' #287
+- Now 'ControlTable' support multiples tbodies #248
 
 ### Changed
 - Internal vars at controls packages moved to pythonic properties #287

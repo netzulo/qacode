@@ -83,13 +83,12 @@ class ControlTable(ControlForm):
         self._caption = self.__try__("find_child", "caption")
         self._thead = self.__try__("find_child", "thead")
         self._tfoot = self.__try__("find_child", "tfoot")
-        if len(self._tbodies) > 1:
-            raise ControlException(MSG.CT_TBL2ORMORETBODIES)
         rows = []
         if self._thead is not None:
             rows.append(self.__get_row__(self._thead.find_child("tr"), "th"))
-        for ctl_row in self._tbodies[0].find_children("tr"):
-            rows.append(self.__get_row__(ctl_row, "td"))
+        for tbody in self._tbodies:
+            for ctl_row in tbody.find_children("tr"):
+                rows.append(self.__get_row__(ctl_row, "td"))
         return rows
 
     def __get_row__(self, ctl_row, selector):
