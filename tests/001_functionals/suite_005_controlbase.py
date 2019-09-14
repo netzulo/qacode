@@ -3,7 +3,6 @@
 
 
 import pytest
-from qacode.core.exceptions.control_exception import ControlException
 from qacode.core.exceptions.core_exception import CoreException
 from qacode.core.testing.test_info import TestInfoBotUnique
 from qacode.core.webs.controls.control_base import ControlBase

@@ -18,7 +18,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 
-
 class NavBase(object):
     """Main navigation methods to use on selenium scripts"""
 
