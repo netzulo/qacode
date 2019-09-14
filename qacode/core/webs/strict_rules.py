@@ -28,18 +28,18 @@ class StrictRule(object):
                 (for logging messages)
         """
         if name is None:
-            raise CoreException(msg="bad param 'name' can't be None")
+            raise CoreException("bad param 'name' can't be None")
         if isinstance(name, (HtmlTag, HtmlAttr, CssProperty)):
             self.name = name.value
         else:
             self.name = name.lower()
         if not isinstance(strict_type, StrictType):
             raise CoreException(
-                msg="bad param 'strict_type' isn't instance of StrictType")
+                "bad param 'strict_type' isn't instance of StrictType")
         self.strict_type = strict_type
         if not isinstance(severity, StrictSeverity):
             raise CoreException(
-                msg="bad param 'severity' isnt instance of StrictSeverity")
+                "bad param 'severity' isnt instance of StrictSeverity")
         self.severity = severity
 
         if strict_type == StrictType.TAG:
@@ -60,7 +60,7 @@ class StrictRule(object):
         elif strict_type == StrictType.SEO:
             raise NotImplementedError("Open an issue on github if raise here")
         else:
-            raise CoreException(msg="bad param 'strict_type', invalid value")
+            raise CoreException("bad param 'strict_type', invalid value")
 
     def __repr__(self):
         """Show basic properties for this object"""

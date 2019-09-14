@@ -103,7 +103,7 @@ class BotBase(object):
             if setting not in required_keys:
                 msg = ("Key for config isn't valid for"
                        " key='{}'").format(setting)
-                raise CoreException(msg=msg, log=self.log)
+                raise CoreException(msg, log=self.log)
         # Configure browser settings
         browser_name = self.settings.get('browser')
         headless_enabled = self.settings.get(
@@ -122,7 +122,7 @@ class BotBase(object):
         else:
             msg = "Bad mode selected, mode={}".format(
                 self.settings.get('mode'))
-            raise CoreException(msg=msg, log=self.log)
+            raise CoreException(msg, log=self.log)
         # Instance all needed for BotBase instance
         self.curr_driver_wait = WebDriverWait(self.curr_driver, 10)
         self.curr_driver_actions = ActionChains(self.curr_driver)
@@ -158,7 +158,7 @@ class BotBase(object):
             }[browser_name]
         except KeyError:
             msg = 'Bad browser selected at load options'
-            raise CoreException(msg=msg, log=self.log)
+            raise CoreException(msg, log=self.log)
         return capabilities
 
     def __check_driver_ready__(self, driver_path, capabilities, options):
@@ -202,7 +202,7 @@ class BotBase(object):
             if browser_name in self.BROWSERS_WITHOUT_OPTIONS:
                 self.log.debug(msg_not_conf)
             else:
-                raise CoreException(msg="Bad browser selected", log=self.log)
+                raise CoreException("Bad browser selected", log=self.log)
         return options
 
     def driver_name_filter(self, driver_name=None):
@@ -220,24 +220,24 @@ class BotBase(object):
             str -- name of driver
                 (example: chromedriver_32.exe)
         """
-        driver_name_format = '{}{}{}'
+        driver_name_format = "{}{}{}"
         if driver_name is None:
-            raise CoreException(msg='driver_name received it\'s None')
+            raise CoreException("driver_name received it\'s None")
         driver_name_format = driver_name_format.format(
-            driver_name, '{}', '{}')
+            driver_name, "{}", "{}")
         if self.IS_WIN:
-            driver_name_format = driver_name_format.format('{}', '.exe')
+            driver_name_format = driver_name_format.format("{}", ".exe")
         else:
-            driver_name_format = driver_name_format.format('{}', '')
+            driver_name_format = driver_name_format.format("{}", "")
         if self.IS_64BITS:
-            driver_name_format = driver_name_format.format('driver_64')
+            driver_name_format = driver_name_format.format("driver_64")
         else:
-            driver_name_format = driver_name_format.format('driver_32')
-        for name in self.settings.get('drivers_names'):
+            driver_name_format = driver_name_format.format("driver_32")
+        for name in self.settings.get("drivers_names"):
             if name.endswith(driver_name_format):
                 return driver_name_format
-        msg = 'Driver name not found {}'.format(driver_name_format)
-        raise CoreException(msg=msg, log=self.log)
+        msg = "Driver name not found {}".format(driver_name_format)
+        raise CoreException(msg, log=self.log)
 
     def get_driver_chrome(self, driver_path=None, capabilities=None,
                           options=None):
@@ -336,11 +336,10 @@ class BotBase(object):
                 "edge": self.get_driver_edge(),
             }[browser_name]
         except KeyError:
-            raise CoreException(
-                msg=("config file error, SECTION=bot, KEY=browser isn't "
-                     "valid value: {}".format(browser_name)),
-                log=self.log)
-        self.log.info('Started browser with mode : REMOTE OK')
+            msg = ("config file error, SECTION=bot, KEY=browser isn't "
+                   "valid value: {}".format(browser_name))
+            raise CoreException(msg, log=self.log)
+        self.log.info('Started browser with mode : LOCAL OK')
 
     def mode_remote(self, browser_name='chrome'):
         """Open new brower on remote mode

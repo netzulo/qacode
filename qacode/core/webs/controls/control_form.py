@@ -59,7 +59,7 @@ class ControlForm(ControlBase):
         """Validate rules for each type of StricRule"""
         self.bot.log.debug(MSG.CF_RULES_PARSING)
         if not bool(rules):
-            self.bot.log.warning(MSG.CF_RULES_DISABLED)
+            self.bot.log.debug(MSG.CF_RULES_DISABLED)
             return []
         typed_rules = list()
         # parsing rules > to enums > to instance
@@ -87,7 +87,7 @@ class ControlForm(ControlBase):
         """Allow to apply rules using self WebElement"""
         self.bot.log.debug(MSG.CF_RULES_APPLYING)
         if not bool(rules):
-            self.bot.log.warning(MSG.CF_RULES_DISABLED)
+            self.bot.log.debug(MSG.CF_RULES_DISABLED)
             return False
         # not implemented list
         not_implemented_types = [
@@ -107,7 +107,7 @@ class ControlForm(ControlBase):
             else:
                 msg = MSG.BAD_PARAM.format("strict_type")
                 self.bot.log.debug(msg)
-                raise ControlException(msg)
+                raise ControlException(msg, info_bot=self._info_bot)
         self.bot.log.debug(MSG.CF_RULES_APPLIED)
 
     def __rules_apply_tag__(self, rule):
@@ -117,14 +117,15 @@ class ControlForm(ControlBase):
         if not isinstance(rule.enum_type, HtmlTag):
             msg = MSG.BAD_PARAM.format("tag")
             self.bot.log.debug(msg)
-            raise ControlException(msg)
+            raise ControlException(msg, info_bot=self._info_bot)
         # element must exist to get working this instance
         _tag = HtmlTag(self._tag)
         if rule.enum_type.value not in valid_tags:
-            raise ControlException(msg=MSG.CF_BADTAG)
+            raise ControlException(MSG.CF_BADTAG, info_bot=self._info_bot)
         # Validate at instance
         if _tag != rule.enum_type:
-            raise ControlException("ctl | Tag validation Error")
+            raise ControlException(
+                "ctl | Tag validation Error", info_bot=self._info_bot)
         self.bot.log.debug(MSG.CF_RULES_APPLIED_TAG)
 
     def __check_reload__(self):

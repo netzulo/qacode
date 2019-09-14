@@ -28,7 +28,7 @@ class ControlDropdown(ControlForm):
         super(ControlDropdown, self).__load__(**kwargs)
         if self.tag is not None and self.tag != "select":
             self.bot.log.error(MSG.CDD_BADTAG)
-            raise ControlException(MSG.CDD_BADTAG)
+            raise ControlException(MSG.CDD_BADTAG, info_bot=self._info_bot)
         if self._on_instance_search:
             self._dropdown = Select(self._element)
 
@@ -37,11 +37,12 @@ class ControlDropdown(ControlForm):
         if not self._element or not self._dropdown:
             self.reload(**self._settings)
         if self._dropdown is None:
-            raise ControlException(MSG.CDD_BADTAG)
+            raise ControlException(MSG.CDD_BADTAG, info_bot=self._info_bot)
         if by_value and by_index:
-            raise ControlException(MSG.CDD_BADPARAMS)
+            raise ControlException(MSG.CDD_BADPARAMS, info_bot=self._info_bot)
         if by_index and not isinstance(text, int):
-            raise ControlException(MSG.CDD_BADINDEXTYPE)
+            raise ControlException(
+                MSG.CDD_BADINDEXTYPE, info_bot=self._info_bot)
 
     def reload(self, **kwargs):
         """Reload 'self.settings' property:dict and call to instance

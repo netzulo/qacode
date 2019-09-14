@@ -30,7 +30,7 @@ class ControlBase(object):
             bot {BotBase} -- BotBase instance
         """
         if not bot or not isinstance(bot, BotBase):
-            raise ControlException(msg="Bad param 'bot'")
+            raise CoreException("Bad param 'bot'")
         # instance minimal data
         self._bot = bot
         self._name = None
@@ -47,6 +47,8 @@ class ControlBase(object):
         self._is_selected = None
         self._attr_id = None
         self._attr_class = None
+        # Raises
+        self._info_bot = {}
         self._bot.log.debug(
             "ctl | Generating instance of type {}...".format(
                 self.__class__.__name__))
@@ -55,12 +57,13 @@ class ControlBase(object):
     def __load__(self, **kwargs):
         """Allow to reinstance control properties"""
         self._settings = self.__settings_parse__(**kwargs)
+        self._info_bot.update({"selector": self._settings.get("selector")})
         if self._element:
             # Control instanced from child
             self._bot.log.debug("ctl | Child instance...")
             if self._on_instance_search:
-                raise ControlException(
-                    "ctl | Can't auto search when child element")
+                msg = "ctl | Can't auto search when child element"
+                raise ControlException(msg, info_bot=self._info_bot)
         if not self._on_instance_search:
             self.bot.log.debug(MSG.CB_SEARCH_DISABLED)
             self.bot.log.debug(MSG.CB_PROP_DISABLED)
@@ -80,8 +83,8 @@ class ControlBase(object):
         self._element = kwargs.get("element")
         # validate params
         if self._selector is None or self._selector == '':
-            raise ControlException(
-                "ctl | Selector it's required to use instance")
+            msg = "ctl | Selector it's required to use instance"
+            raise CoreException(msg, info_bot=self._info_bot)
         if self._name is None:
             self._name = "UNNAMED"
         if self._locator is None:
@@ -107,7 +110,8 @@ class ControlBase(object):
         is_element = isinstance(self._element, WebElement)
         nav = self.bot.navigation
         if self._element and not is_element:
-            raise ControlException("Child is not instance of WebElement")
+            msg = "Child is not instance of WebElement"
+            raise ControlException(msg, info_bot=self._info_bot)
         if self._element and is_element:
             # nothing to do
             self.bot.log.debug(MSG.CB_SEARCH_FOUND_CHILD)
@@ -116,7 +120,7 @@ class ControlBase(object):
             self._element = nav.find_element(
                 self._selector, locator=self._locator)
         except CoreException:
-            self.bot.log.warning(MSG.CB_SEARCH_WAITING)
+            self.bot.log.debug(MSG.CB_SEARCH_WAITING)
             self._element = nav.find_element_wait(
                 self._selector, locator=self._locator)
         if self._element:
@@ -236,7 +240,7 @@ class ControlBase(object):
             self.bot.navigation.ele_click(element=self.element)
         except (ElementNotVisibleException, NoSuchElementException) as err:
             if retry:
-                self.bot.log.warning(MSG.CB_CLICK_RETRY)
+                self.bot.log.debug(MSG.CB_CLICK_RETRY)
                 self.reload(**self.settings)
                 self.bot.navigation.ele_click(element=self.element)
             else:
@@ -257,6 +261,8 @@ class ControlBase(object):
         Returns:
             str -- Return element content text (innerText property)
         """
+        method = self.bot.navigation.method_name()
+        self._info_bot.update({"method": method})
         self.bot.log.debug(MSG.CB_GETTEXT_LOADING)
         self.__check_reload__()
         text = None
@@ -268,7 +274,8 @@ class ControlBase(object):
                     self.element, on_screen=on_screen)
         except CoreException as err:
             self.bot.log.error(MSG.CB_GETTEXT_FAILED)
-            raise ControlException(err=err)
+            self._info_bot.update({"err": err})
+            raise ControlException(info_bot=self._info_bot)
         if text:
             self._text = text
             self.bot.log.debug(MSG.CB_GETTEXT_LOADED.format(text))
@@ -306,6 +313,7 @@ class ControlBase(object):
         Returns:
             str -- value of html attr_name
         """
+        method = self.bot.navigation.method_name()
         self.bot.log.debug(MSG.CB_GETATTRVALUE_LOADING.format(attr_name))
         self.__check_reload__()
         try:
@@ -316,7 +324,8 @@ class ControlBase(object):
             return str(value)
         except CoreException as err:
             self.bot.log.error(MSG.CB_GETATTRVALUE_FAILED)
-            raise ControlException(err=err)
+            self._info_bot.update({"err": err, "method": method})
+            raise ControlException(info_bot=self._info_bot)
 
     def get_css_value(self, prop_name):
         """Allows to obtain CSS value based on CSS property name
@@ -353,7 +362,8 @@ class ControlBase(object):
             css_important=css_important)
         if self.selector is None:
             self.bot.log.error(MSG.CB_SETCSSRULE_FAILED)
-            raise ControlException(msg="Couldn't reload element")
+            raise ControlException(
+                "Couldn't reload element", info_bot=self._info_bot)
         self.reload(**self.settings)
 
     def reload(self, **kwargs):
@@ -394,7 +404,7 @@ class ControlBase(object):
             is_text = self.bot.navigation.ele_wait_text(
                 self.selector, text, locator=self.locator, timeout=timeout)
         except CoreException:
-            self.bot.log.warning("skipped failed at wait for text on control")
+            self.bot.log.debug("skipped failed at wait for text on control")
         self.get_text()
         return is_text
 
@@ -429,7 +439,7 @@ class ControlBase(object):
     def bot(self, value):
         """SET for _bot attribute"""
         if not value or not isinstance(value, BotBase):
-            raise ControlException(msg="Bad param 'bot'")
+            raise AttributeError("Bad param 'bot'")
         self._bot = value
 
     @property
@@ -441,7 +451,7 @@ class ControlBase(object):
     def settings(self, value):
         """SET for _settings attribute"""
         if not value or not isinstance(value, dict):
-            raise ControlException(msg="Bad param 'settings'")
+            raise AttributeError("Bad param 'settings'")
         self._settings = self.__settings_parse__(**value)
 
     @property
@@ -453,7 +463,7 @@ class ControlBase(object):
     def name(self, value):
         """SET for _name attribute"""
         if not value or not isinstance(value, str):
-            raise ControlException(msg="Bad param 'name'")
+            raise AttributeError("Bad param 'name'")
         self._name = value
 
     @property
@@ -465,7 +475,7 @@ class ControlBase(object):
     def selector(self, value):
         """SET for _selector attribute"""
         if not value or not isinstance(value, str):
-            raise ControlException(msg="Bad param 'selector'")
+            raise AttributeError("Bad param 'selector'")
         self._selector = value
 
     @property

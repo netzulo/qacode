@@ -133,7 +133,7 @@ class ControlTable(ControlForm):
     def table(self, value):
         """SETTER for 'table' property"""
         if value is None or not isinstance(value, WebElement):
-            raise ControlException("Can't set not 'WebElement' instance")
+            raise AttributeError("Can't set not 'WebElement' instance")
         self.__load_table__(element=value)
 
     @property

@@ -28,7 +28,7 @@ class TestInfoBase(object):
     def load(cls, config):
         """Load default config dict"""
         if config is None and not cls.is_loaded:
-            raise CoreException(msg="Bad param 'config' provided")
+            raise CoreException("Bad param 'config' provided")
         cls.add_property('config', value=config)
         if cls.log is None:
             config_bot = cls.config.get('bot')
@@ -65,7 +65,7 @@ class TestInfoBase(object):
             'config.tests.apps'
         """
         if cls.config is None:
-            raise CoreException(msg="Call to cls.load() first")
+            raise CoreException("Call to cls.load() first")
         return cls.config.get('tests').get('apps')
 
     @classmethod
@@ -74,7 +74,7 @@ class TestInfoBase(object):
             'config.tests.apps[i].pages'
         """
         if cls.config is None:
-            raise CoreException(msg="Call to cls.load() first")
+            raise CoreException("Call to cls.load() first")
         pages = []
         for app in cls.cfg_apps():
             pages.extend(app.get('pages'))
@@ -86,7 +86,7 @@ class TestInfoBase(object):
             'config.tests.apps[i].pages[j].controls'
         """
         if cls.config is None:
-            raise CoreException(msg="Call to cls.load() first")
+            raise CoreException("Call to cls.load() first")
         controls = []
         for page in cls.cfg_pages():
             controls.extend(page.get('controls'))

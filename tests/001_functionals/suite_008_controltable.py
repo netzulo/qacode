@@ -110,8 +110,6 @@ class TestControlTable(TestInfoBotUnique):
             "auto_reload": auto_reload,
             "rules": rules
         })
-        if ctl_name == "tbl_html_tbodies_ok" and not on_instance_search:
-            import pdb; pdb.set_trace()
         # functional testcases
         ctl = ControlTable(self.bot, **cfg)
         self.assert_is_instance(ctl, ControlTable)

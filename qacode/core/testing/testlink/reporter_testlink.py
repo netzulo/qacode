@@ -34,7 +34,7 @@ class ReporterTestlink(object):
             CoreException -- If LoggerManager it's None
         """
         if logger_manager is None:
-            raise CoreException(msg='Testlink logger_manager can\'t be None')
+            raise CoreException("Testlink logger_manager can\'t be None")
         self.logger_manager = logger_manager
         # connect with success params
         self.conn = self.connect()

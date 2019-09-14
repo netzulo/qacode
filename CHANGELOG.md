@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Internal vars at controls packages moved to pythonic properties #287
 - Clarify settings methods for controls,now is more readable #287
+- Some WARN and ERR messages must be DEBUG messages #289
+- Now exceptions group certain params+values+selenium when raises #289
 
 ### Fixed
 
