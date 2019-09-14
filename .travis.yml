@@ -27,7 +27,7 @@ matrix:
 before_install:
 - pip freeze
 install:
-- pip install tox
+- pip install tox pytest==3.9.3
 - python setup.py clean build install sdist
 script:
 - tox -e "flake8,{$TOXENV}"
