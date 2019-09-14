@@ -56,8 +56,7 @@ install:
   - "python -m pip install --pre -U tox pytest==3.9.3"
 
 test_script:
- - "tox -e flake8"
- - "python setup.py test"
+ - "tox -e flake8,%TOXENV%"
 
 after_test:
   - "python setup.py sdist"

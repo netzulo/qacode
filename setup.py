@@ -92,7 +92,7 @@ SETUP_REQUIRES = [
     'tox',
 ]
 TESTS_REQUIRE = [
-    'pytest-html',
+    'pytest-html==1.22.0',
     'pytest-dependency',
     'coverage==4.3.4',
     'pytest-cov==2.5.0',
