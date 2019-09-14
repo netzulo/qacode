@@ -30,6 +30,6 @@ install:
 - pip install tox
 - python setup.py clean build install sdist
 script:
-- tox -e "flake8,{$TOXENV}"
+- tox -e "flake8,coverage"
 after_success:
 - tox -e docs
