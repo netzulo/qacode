@@ -98,12 +98,11 @@ class NavBase(object):
         method = self.method_name()
         valid_keys = ["name", "value"]
         if cookie_dict is None:
-            raise CoreException(
-                "Can't add None cookie", bot_info={"method": method})
+            raise CoreException("Can't add None cookie")
         for key in valid_keys:
             if cookie_dict.get(key) is None:
                 msg = "Can't add new cookie without '{}'".format(key)
-                raise CoreException(msg, bot_info={"method": method})
+                raise CoreException(msg)
         try:
             return self.driver.add_cookie(cookie_dict)
         except WebDriverException as err:
