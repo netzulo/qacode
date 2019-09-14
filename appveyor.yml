@@ -53,7 +53,7 @@ install:
   # about it being out of date.
   - "python -m pip install wheel"
   - "python -m pip install --upgrade pip"
-  - "python -m pip install --pre -U tox"
+  - "python -m pip install --pre -U tox pytest==3.9.3"
 
 test_script:
  - "tox -e flake8"
