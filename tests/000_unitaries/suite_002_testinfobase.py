@@ -4,7 +4,7 @@
 
 import logging
 import pytest
-from qacode.core.loggers.logger_manager import LoggerManager
+from qacode.core.loggers.logger_manager import Log
 from qacode.core.testing.test_info import TestInfoBase
 from qatestlink.core.testlink_manager import TLManager
 from qautils.files import settings
@@ -18,7 +18,7 @@ class TestTestInfoBase(TestInfoBase):
         super(TestTestInfoBase, self).setup_method(
             test_method, config=settings(file_path="qacode/configs/"))
 
-    def test_001_inheritance(self):
+    def test_log_inheritance(self):
         """Test: test_001_inheritance"""
         self.assert_is_instance(self, object)
         self.assert_is_instance(self, TestInfoBase)
@@ -30,7 +30,7 @@ class TestTestInfoBase(TestInfoBase):
     @pytest.mark.parametrize("log_level", [
         "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"
     ])
-    def test_002_log_levels(self, log_level):
+    def test_log_levels(self, log_level):
         """Testcase: test_002_log_levels"""
         msg = "Unitary test, checking level type'{}'".format(
             log_level)
@@ -45,17 +45,17 @@ class TestTestInfoBase(TestInfoBase):
         if log_level == 'CRITICAL':
             self.log.critical(msg)
 
-    def test_loggermanager_notlogpath(self):
-        """Testcase: test_loggermanager_notlogpath"""
+    def test_log_notlogpath(self):
+        """Testcase: test_log_notlogpath"""
         with pytest.raises(Exception):
-            LoggerManager(log_path=None)
+            Log(log_path=None)
 
-    def test_loggermanager_notlogname(self):
-        """Testcase: test_loggermanager_notlogname"""
+    def test_log_notlogname(self):
+        """Testcase: test_log_notlogname"""
         with pytest.raises(Exception):
-            LoggerManager(log_name=None)
+            Log(log_name=None)
 
-    def test_loggermanager_allflagsfalse(self):
-        """Testcase: test_loggermanager_allflagsfalse"""
+    def test_log_allflagsfalse(self):
+        """Testcase: test_log_notlogname"""
         with pytest.raises(Exception):
-            LoggerManager(is_output_console=False, is_output_file=False)
+            Log(is_output_console=False, is_output_file=False)

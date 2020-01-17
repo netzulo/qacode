@@ -25,13 +25,13 @@ class ReporterTestlink(object):
         """Instance testlink api and save as self.conn property
 
         Keyword Arguments:
-            logger_manager {[qacode.core.loggers.LoggerManager]} -- Class used
+            logger_manager {Log} -- Class used
                 for logging, raise if None obtained (default: None)
-            url_api {[str]} -- url to TestlinkAPI (default: None)
-            dev_key {[str]} -- developerKey for TestlinkAPI (default: None)
+            url_api {str} -- url to TestlinkAPI (default: None)
+            dev_key {str} -- developerKey for TestlinkAPI (default: None)
 
         Raises:
-            CoreException -- If LoggerManager it's None
+            CoreException -- If Log it's None
         """
         if logger_manager is None:
             raise CoreException("Testlink logger_manager can\'t be None")

@@ -8,7 +8,7 @@ import time
 import pytest
 from qacode.core.bots.bot_base import BotBase
 from qacode.core.exceptions.core_exception import CoreException
-from qacode.core.loggers.logger_manager import LoggerManager
+from qacode.core.loggers.logger_manager import Log
 from qatestlink.core.testlink_manager import TLManager
 
 
@@ -34,7 +34,7 @@ class TestInfoBase(object):
             config_bot = cls.config.get('bot')
             log_path = "{}/".format(
                 config_bot.get('log_output_file'))
-            lgm = LoggerManager(
+            lgm = Log(
                 log_path=log_path,
                 log_name=config_bot.get('log_name'),
                 log_level=config_bot.get('log_level')
