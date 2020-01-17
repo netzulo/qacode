@@ -3,7 +3,7 @@
 
 
 from logging import (
-    FileHandler, Formatter, getLogger, INFO, StreamHandler)
+    FileHandler, Formatter, INFO, StreamHandler, getLogger)
 
 
 class Log(object):
