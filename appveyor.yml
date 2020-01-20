@@ -62,14 +62,15 @@ install:
   - "pip install tox"
 
 test_script:
-  - "tox -e flake8,%TOXENV%"
+  - "tox -e flake8"
+  - "tox -e %TOXENV%"
       
 after_test:
   # If tests are successful, create binary packages for the project.
   - "python setup.py sdist"
-  - "%CMD_IN_ENV% python setup.py bdist_wheel"
-  - "%CMD_IN_ENV% python setup.py bdist_wininst"
-  - "%CMD_IN_ENV% python setup.py bdist_msi"
+  - "python setup.py bdist_wheel"
+  - "python setup.py bdist_wininst"
+  - "python setup.py bdist_msi"
   - ps: "ls dist"
 
 artifacts:
