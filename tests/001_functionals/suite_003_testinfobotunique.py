@@ -6,8 +6,8 @@ import logging
 import pytest
 from qacode.core.bots.bot_base import BotBase
 from qacode.core.testing.test_info import TestInfoBotUnique
-from qatestlink.core.testlink_manager import TLManager
 from qacode.utils import settings
+from qatestlink.core.testlink_manager import TLManager
 
 
 SETTINGS = settings(file_path="qacode/configs/")
