@@ -76,6 +76,8 @@ def read(file_path='./', file_name=None, is_encoding=True, ignore_raises=False):
 VERSION = "0.6.2"
 CURR_PATH = "{}{}".format(path.abspath(path.dirname(__file__)), '/')
 INSTALL_REQUIRES = [
+    'appdirs',
+    'urllib3<1.25,>=1.21.1',
     'selenium==3.141.0',
     'qatestlink',
 ]
