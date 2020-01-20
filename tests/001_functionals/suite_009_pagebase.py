@@ -7,7 +7,7 @@ from qacode.core.testing.test_info import TestInfoBotUnique
 from qacode.core.webs.controls.control_base import ControlBase
 from qacode.core.webs.controls.control_form import ControlForm
 from qacode.core.webs.pages.page_base import PageBase
-from qautils.files import settings
+from qacode.utils import settings
 
 
 SETTINGS = settings(file_path="qacode/configs/")

@@ -76,29 +76,14 @@ def read(file_path='./', file_name=None, is_encoding=True, ignore_raises=False):
 VERSION = "0.6.2"
 CURR_PATH = "{}{}".format(path.abspath(path.dirname(__file__)), '/')
 INSTALL_REQUIRES = [
-    'six==1.10.0',
-    'appdirs',
-    'packaging>=16.8',
-    'pyparsing',
-    'more-itertools<6.0.0',
-    'urllib3<1.25,>=1.21.1',
-    'selenium==3.14.0',
-    'pytest==3.9.3',
-    'qautils==0.0.2',
-    'qatestlink==0.1.0',
+    'selenium==3.141.0',
+    'qatestlink',
 ]
 SETUP_REQUIRES = [
     'pytest-runner',
     'tox',
 ]
-TESTS_REQUIRE = [
-    'pytest-html==1.22.0',
-    'pytest-dependency',
-    'coverage==4.3.4',
-    'pytest-cov==2.5.0',
-    'pytest-benchmark',
-    'pytest-benchmark[histogram]',
-]
+TESTS_REQUIRE = []
 KEYWORDS = ['qacode', 'qa', 'testing', 'logging', 'functional', 'selenium', 'test']
 GIT_URL = "https://github.com/netzulo/qacode"
 GIT_URL_DOWNLOAD = "{}/tarball/v{}".format(GIT_URL, VERSION)

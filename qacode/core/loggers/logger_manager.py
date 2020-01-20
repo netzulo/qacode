@@ -3,7 +3,7 @@
 
 
 import logging
-from qautils.files import path_format
+from qacode.utils import path_format
 
 
 class LoggerManager(object):

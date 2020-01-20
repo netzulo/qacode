@@ -10,7 +10,7 @@ Have classes for this down package: ``qacode.core.bots``
 .. code:: python
 
 
-    from qautils.files import settings
+    from qacode.utils import settings
     from qacode.core.bots import BotBase
     # SETTINGS = settings()
     SETTINGS = {
@@ -110,7 +110,7 @@ Example of usage
 .. code:: python
 
 
-    from qautils.files import settings
+    from qacode.utils import settings
     from qacode.core.bots import BotBase
 
     # Load settings for bot and controls
@@ -223,7 +223,7 @@ Example : just using pages methods
 .. code:: python
 
 
-    from qautils.files import settings
+    from qacode.utils import settings
     from qacode.core.bots import BotBase
 
     # Load settings for bot and pages
@@ -309,7 +309,7 @@ Example : inherit from TestInfoBase class
 .. code:: python
 
 
-    from qautils.files import settings
+    from qacode.utils import settings
     from qacode.core.bots import BotBase
     from qacode.core.testing.test_info import TestInfoBase
 

@@ -4,7 +4,7 @@
 
 from qacode.core.enums.enum_base import EnumBase
 from qacode.core.testing.test_info import TestInfoBase
-from qautils.files import settings
+from qacode.utils import settings
 
 
 class TestEnum(EnumBase):

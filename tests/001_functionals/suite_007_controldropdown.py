@@ -6,7 +6,7 @@ import pytest
 from qacode.core.exceptions.control_exception import ControlException
 from qacode.core.testing.test_info import TestInfoBotUnique
 from qacode.core.webs.controls.control_dropdown import ControlDropdown
-from qautils.files import settings
+from qacode.utils import settings
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.ui import Select
 

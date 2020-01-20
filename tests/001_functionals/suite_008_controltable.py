@@ -6,7 +6,7 @@ import pytest
 from qacode.core.testing.test_info import TestInfoBotUnique
 from qacode.core.webs.controls.control_base import ControlBase
 from qacode.core.webs.controls.control_table import ControlTable
-from qautils.files import settings
+from qacode.utils import settings
 from selenium.webdriver.remote.webelement import WebElement
 
 

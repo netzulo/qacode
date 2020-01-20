@@ -10,7 +10,7 @@ from qacode.core.webs.html_attrs import HtmlAttr
 from qacode.core.webs.html_tags import HtmlTag
 from qacode.core.webs.strict_rules import (
     StrictRule, StrictSeverity, StrictType)
-from qautils.files import settings
+from qacode.utils import settings
 
 
 class Teststrictrules(TestInfoBase):

@@ -118,7 +118,7 @@ Getting Started
 
     from qacode.core.bots.bot_base import BotBase
     from qacode.core.webs.controls.control_base import ControlBase
-    from qautils.files import settings
+    from qacode.utils import settings
     
     
     SETTINGS = settings(
