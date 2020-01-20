@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Now exceptions group certain params+values+selenium when raises #289
 
 ### Fixed
+- Tests execution failed after fresh install #293
 
 ### Removed
 - Key from controls settings names 'instance' #287
