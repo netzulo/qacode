@@ -6,7 +6,7 @@ import pytest
 from qacode.core.bots.modules.nav_base import NavBase
 from qacode.core.exceptions.core_exception import CoreException
 from qacode.core.testing.test_info import TestInfoBotUnique
-from qautils.files import settings
+from qacode.utils import settings
 from selenium.webdriver.remote.webelement import WebElement
 
 

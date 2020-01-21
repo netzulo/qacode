@@ -8,7 +8,7 @@ from qacode.core.webs.controls.control_form import ControlForm
 from qacode.core.webs.html_tags import HtmlTag
 from qacode.core.webs.strict_rules import (
     StrictRule, StrictSeverity, StrictType)
-from qautils.files import settings
+from qacode.utils import settings
 from selenium.webdriver.remote.webelement import WebElement
 
 

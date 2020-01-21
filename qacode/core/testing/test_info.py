@@ -5,7 +5,6 @@
 import os
 import re
 import time
-import pytest
 from qacode.core.bots.bot_base import BotBase
 from qacode.core.exceptions.core_exception import CoreException
 from qacode.core.loggers.logger_manager import LoggerManager
@@ -279,25 +278,6 @@ class TestInfoBase(object):
             raise AssertionError(instance, class_type, _msg)
         return True
 
-    def assert_raises(self, expected_exception, function, *args, **kwargs):
-        """Allow to encapsulate pytest.raises method(
-            *args=(
-                expected_exception,
-                function,
-            ),
-            **kwargs={
-                msg: ASSERT_MSG_DEFAULT
-            }
-        )
-        """
-        _msg = self.assert_message(
-            "assert_raises",
-            "TODO:not implemented value",
-            expected_exception, msg=kwargs.get('msg'))
-        # https://docs.pytest.org/en/latest/reference.html#pytest-raises
-        kwargs.update({"message": _msg})
-        return pytest.raises(expected_exception, function, *args, **kwargs)
-
     def assert_greater(self, actual, greater, msg=None):
         """Allow to encapsulate method assertGreater(a, b, msg=msg)"""
         _msg = self.assert_message(
@@ -415,8 +395,7 @@ class TestInfoBot(TestInfoBase):
         """
         super(TestInfoBot, self).setup_method(test_method, **kwargs)
         if 'skipIf' in dir(test_method) and test_method.skipIf.args[0]:
-            pytest.skip(test_method.skipIf.args[1])
-            return
+            return False
         if not isinstance(self.bot, BotBase):
             self.add_property('bot', value=self.bot_open(self.config))
 
@@ -453,7 +432,7 @@ class TestInfoBotUnique(TestInfoBot):
                 if 'skipIf' in dir(method) and method.skipIf.args[0]:
                     skip_methods.append(method)
         if tests_methods == skip_methods or skip_force:
-            pytest.skip("Testsuite skipped")
+            return False
         else:
             if not isinstance(cls.bot, BotBase):
                 cls.load(kwargs.get('config'))

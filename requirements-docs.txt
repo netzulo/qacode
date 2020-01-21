@@ -1,0 +1,5 @@
+check-manifest
+twine
+readme_renderer
+Sphinx
+sphinx_bootstrap_theme

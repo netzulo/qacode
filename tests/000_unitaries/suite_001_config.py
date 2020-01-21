@@ -4,7 +4,7 @@
 
 import pytest
 from qacode.core.testing.test_info import TestInfoBase
-from qautils.files import settings
+from qacode.utils import settings
 
 
 SETTINGS = settings(file_path="qacode/configs/")

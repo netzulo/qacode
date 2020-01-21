@@ -7,5 +7,6 @@
 
 from qacode import configs
 from qacode import core
+from qacode import utils
 
-__all__ = ['configs', 'core']
+__all__ = ['configs', 'core', 'utils']

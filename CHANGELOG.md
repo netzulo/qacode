@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - New '__repr__' method for class 'StrictRule' #287
 - Now 'ControlTable' support multiples tbodies #248
+- Support for Python 3.7 after 20-01-2020 #298
 
 ### Changed
 - Internal vars at controls packages moved to pythonic properties #287
@@ -18,9 +19,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Now exceptions group certain params+values+selenium when raises #289
 
 ### Fixed
+- Tests execution failed after fresh install #293
 
 ### Removed
 - Key from controls settings names 'instance' #287
+- Support for Python 2.7 after 2020-01-01 #295
 
 
 ## [v.0.6.2] - 2019-05-22

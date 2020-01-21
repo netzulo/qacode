@@ -6,7 +6,7 @@ import pytest
 from qacode.core.exceptions.core_exception import CoreException
 from qacode.core.testing.test_info import TestInfoBotUnique
 from qacode.core.webs.controls.control_base import ControlBase
-from qautils.files import settings
+from qacode.utils import settings
 from selenium.webdriver.remote.webelement import WebElement
 
 
@@ -138,16 +138,6 @@ class TestControlBase(TestInfoBotUnique):
         }
         with pytest.raises(CoreException):
             ControlBase(self.bot, **cfg)
-
-    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    def test_instance_raises_nonebot(self):
-        """Testcase: test_instance_raises_nonebot"""
-        self.assert_raises(CoreException, ControlBase, None)
-
-    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    def test_instance_raises_nonesettings(self):
-        """Testcase: test_instance_raises_nonesettings"""
-        self.assert_raises(CoreException, ControlBase, self.bot)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_property_gettext(self):
