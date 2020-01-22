@@ -2,6 +2,6 @@ coverage==4.3.4
 pytest
 pytest-html==1.22.0
 pytest-dependency
-pytest-cov==2.5.0
+pytest-cov==2.8.1
 pytest-benchmark
 pytest-benchmark[histogram]
