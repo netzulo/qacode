@@ -19,7 +19,7 @@ class Log(object):
     def __init__(self, *args, **kwargs):
         """TODO: doc method"""
         self._name = kwargs.get('log_name') or "qacode"
-        self._path = kwargs.get('log_path') or 'logs/{}.log'.format(self._name)
+        self._path = kwargs.get('log_path') or './logs/{}.log'.format(self._name)
         self._level = kwargs.get('log_level') or INFO
 
         self._formatter = Formatter(
@@ -46,7 +46,6 @@ class Log(object):
         for handler in handlers:
             handler.setFormatter(self._formatter)
             handler.setLevel(self._level)
-            handler.log_level = self._level
         return {
             "console": handlers[0],
             "file": handlers[1],
