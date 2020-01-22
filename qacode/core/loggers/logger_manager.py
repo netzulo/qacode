@@ -42,14 +42,14 @@ class Log(object):
 
     def __handlers__(self):
         """TODO: doc method"""
-        handlers = {
-            "console": StreamHandler(),
-            "file": FileHandler(self._path)
+        handlers = [StreamHandler(), FileHandler(self._path)]
+        for handler in handlers:
+            handler.setFormatter(self._formatter)
+            handler.setLevel(self._level)
+        return {
+            "console": handlers[0],
+            "file": handlers[1],
         }
-        for i in handlers.keys():
-            handlers[i].setFormatter(self._formatter)
-            handlers[i].setLevel(self._level)
-        return handlers
 
     # PUBLIC METHODS
 
