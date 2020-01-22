@@ -6,7 +6,7 @@ import pytest
 from qacode.core.loggers.logger_manager import Log
 from qacode.core.testing.test_info import TestInfoBase
 from qacode.core.testing.testlink.reporter_testlink import ReporterTestlink
-from qautils.files import settings
+from qacode.utils import settings
 
 
 SETTINGS = settings(file_path="qacode/configs/")

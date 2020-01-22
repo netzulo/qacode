@@ -7,7 +7,7 @@ import sys
 from qacode.core.bots.modules.nav_base import NavBase
 from qacode.core.exceptions.core_exception import CoreException
 from qacode.core.loggers.logger_manager import Log
-from qautils.files import settings
+from qacode.utils import settings
 from selenium import webdriver as WebDriver
 from selenium.webdriver import DesiredCapabilities
 from selenium.webdriver.chrome.options import Options as ChromeOptions

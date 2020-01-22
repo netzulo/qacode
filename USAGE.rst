@@ -10,7 +10,7 @@ Have classes for this down package: ``qacode.core.bots``
 .. code:: python
 
 
-    from qautils.files import settings
+    from qacode.utils import settings
     from qacode.core.bots import BotBase
     # SETTINGS = settings()
     SETTINGS = {
@@ -110,7 +110,7 @@ Example of usage
 .. code:: python
 
 
-    from qautils.files import settings
+    from qacode.utils import settings
     from qacode.core.bots import BotBase
 
     # Load settings for bot and controls
@@ -223,7 +223,7 @@ Example : just using pages methods
 .. code:: python
 
 
-    from qautils.files import settings
+    from qacode.utils import settings
     from qacode.core.bots import BotBase
 
     # Load settings for bot and pages
@@ -287,7 +287,6 @@ TestInfoBase
   + method **assert_contains_url** : Allow to compare 2 urls and check if 1st contains 2nd url
   + method **assert_not_contains_url** : Allow to compare 2 urls and check if 1st not contains 2nd url
   + method **assert_is_instance** : Allow to encapsulate method assertIsInstance(obj, cls, msg='')
-  + method **assert_raises** : Allow to encapsulate pytest.raises
   + method **assert_greater** : Allow to encapsulate method assertGreater(a, b, msg=msg)
   + method **assert_lower** : Allow to encapsulate method assertLower(a, b, msg=msg)
   + method **assert_in** : Allow to compare if value it's in to 2nd list of values
@@ -309,7 +308,7 @@ Example : inherit from TestInfoBase class
 .. code:: python
 
 
-    from qautils.files import settings
+    from qacode.utils import settings
     from qacode.core.bots import BotBase
     from qacode.core.testing.test_info import TestInfoBase
 
