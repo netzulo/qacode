@@ -31,5 +31,6 @@ install:
 script:
 - tox -e "flake8"
 - tox -e "$TOXENV"
+- pip freeze
 after_success:
 - tox -e docs
