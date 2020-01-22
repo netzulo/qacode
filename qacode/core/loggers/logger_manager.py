@@ -46,6 +46,7 @@ class Log(object):
         for handler in handlers:
             handler.setFormatter(self._formatter)
             handler.setLevel(self._level)
+            handler.log_level = self._level
         return {
             "console": handlers[0],
             "file": handlers[1],
