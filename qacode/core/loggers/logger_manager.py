@@ -74,3 +74,7 @@ class Log(object):
     def error(self, msg):
         """TODO: doc method"""
         self._logger.warning(msg)
+
+    def critical(self, msg):
+        """TODO: doc method"""
+        self._logger.critical(msg)

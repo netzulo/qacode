@@ -22,7 +22,7 @@ class TestTestInfoBase(TestInfoBase):
         """Test: test_001_inheritance"""
         self.assert_is_instance(self, object)
         self.assert_is_instance(self, TestInfoBase)
-        self.assert_is_instance(self.log, logging.Logger)
+        self.assert_is_instance(self.log._logger, logging.Logger)
         self.assert_is_instance(self.config, dict)
         if self.config.get('testlink'):
             self.assert_is_instance(self.tlm, TLManager)
@@ -45,17 +45,9 @@ class TestTestInfoBase(TestInfoBase):
         if log_level == 'CRITICAL':
             self.log.critical(msg)
 
-    def test_log_notlogpath(self):
-        """Testcase: test_log_notlogpath"""
-        with pytest.raises(Exception):
-            Log(log_path=None)
-
-    def test_log_notlogname(self):
+    def test_log_notparams(self):
         """Testcase: test_log_notlogname"""
-        with pytest.raises(Exception):
-            Log(log_name=None)
-
-    def test_log_allflagsfalse(self):
-        """Testcase: test_log_notlogname"""
-        with pytest.raises(Exception):
-            Log(is_output_console=False, is_output_file=False)
+        log = Log(**{})
+        self.assert_equals(log._name, "qacode")
+        self.assert_equals(log._name_file, "qacode.log")
+        self.assert_equals(log._path, "./logs/")

@@ -37,10 +37,7 @@ class BotBase(object):
 
         bot_config -- Bot configuration object
 
-        logger_manager -- logger manager class loaded from
-            Log object
-
-        log -- log class to write messages
+        Log -- logger manager class loaded from Log object to write messages
     """
 
     settings = None
@@ -57,7 +54,6 @@ class BotBase(object):
     # Perform touch actions on elements
     curr_driver_touch = None
     navigation = None
-    logger_manager = None
     log = None
     IS_64BITS = sys.maxsize > 2**32
     IS_WIN = os.name == 'nt'
@@ -83,11 +79,10 @@ class BotBase(object):
         self._load()
 
     def _load(self):
-        self.logger_manager = Log(
+        self.log = Log(
             log_path=self.settings.get('log_output_file'),
             log_name=self.settings.get('log_name'),
             log_level=self.settings.get('log_level'))
-        self.log = self.logger_manager.logger
         required_keys = [
             'mode',
             'browser',

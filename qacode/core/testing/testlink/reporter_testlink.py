@@ -19,7 +19,7 @@ class ReporterTestlink(object):
     builds = None
 
     def __init__(self,
-                 logger_manager=None,
+                 log=None,
                  url_api=None,
                  dev_key=None):
         """Instance testlink api and save as self.conn property
@@ -33,9 +33,9 @@ class ReporterTestlink(object):
         Raises:
             CoreException -- If Log it's None
         """
-        if logger_manager is None:
-            raise CoreException("Testlink logger_manager can\'t be None")
-        self.logger_manager = logger_manager
+        if log is None:
+            raise CoreException("Testlink log can\'t be None")
+        self.log = log
         # connect with success params
         self.conn = self.connect()
         # verify content exist

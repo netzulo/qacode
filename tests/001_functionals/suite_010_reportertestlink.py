@@ -23,9 +23,9 @@ class TestReporterTestlink(TestInfoBase):
     def test_reportertestlink_ok(self):
         """Test: test_reportertestlink_ok"""
         settings = SETTINGS.get("bot")
-        lgm = Log(
+        log = Log(
             log_path=settings.get('log_output_file'),
             log_name=settings.get('log_name'),
             log_level=settings.get('log_level'))
         with pytest.raises(NotImplementedError):
-            ReporterTestlink(logger_manager=lgm)
+            ReporterTestlink(log=log)

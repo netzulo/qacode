@@ -32,6 +32,6 @@ class TestTestInfoBotUnique(TestInfoBotUnique):
         self.log.debug("TestInfoBotUnique, test='{}'".format(run_time))
         self.assert_is_instance(self, object)
         self.assert_is_instance(self, TestInfoBotUnique)
-        self.assert_is_instance(self.log, logging.Logger)
+        self.assert_is_instance(self.log._logger, logging.Logger)
         self.assert_is_instance(self.bot, BotBase)
         self.assert_is_instance(self.tlm, TLManager)
