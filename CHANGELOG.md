@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Clarify settings methods for controls,now is more readable #287
 - Some WARN and ERR messages must be DEBUG messages #289
 - Now exceptions group certain params+values+selenium when raises #289
+- Refactor LoggerManager #290
 
 ### Fixed
 - Tests execution failed after fresh install #293
