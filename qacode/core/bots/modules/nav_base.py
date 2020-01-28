@@ -33,7 +33,7 @@ class NavBase(object):
 
         Arguments:
             driver {WebDriver} -- instance of any browser type/mode
-            log {logging.logger} -- Logger for methods usage
+            log {Log} -- Logger for methods usage
 
         Keyword Arguments:
             driver_wait {selenium.webdriver.support.ui.WebDriverWait}

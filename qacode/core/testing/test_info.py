@@ -7,7 +7,7 @@ import re
 import time
 from qacode.core.bots.bot_base import BotBase
 from qacode.core.exceptions.core_exception import CoreException
-from qacode.core.loggers.logger_manager import LoggerManager
+from qacode.core.loggers.logger_manager import Log
 from qatestlink.core.testlink_manager import TLManager
 
 
@@ -33,12 +33,12 @@ class TestInfoBase(object):
             config_bot = cls.config.get('bot')
             log_path = "{}/".format(
                 config_bot.get('log_output_file'))
-            lgm = LoggerManager(
+            log = Log(
                 log_path=log_path,
                 log_name=config_bot.get('log_name'),
                 log_level=config_bot.get('log_level')
             )
-            cls.add_property('log', lgm.logger)
+            cls.add_property('log', log)
             tl_key = cls.config.get('testlink')
             if cls.tlm is None and tl_key is not None:
                 cls.tlm = TLManager(settings=tl_key)

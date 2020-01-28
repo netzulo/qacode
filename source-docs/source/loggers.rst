@@ -1,11 +1,11 @@
 package: qacode.core.loggers
 ============================
 
-Class: LoggerManager
---------------------
+Class: Log
+----------
  .. automodule:: qacode.core.loggers.logger_manager
     :members:
     :undoc-members:
     :show-inheritance:
- .. autoclass::  qacode.core.loggers.logger_manager.LoggerManager
+ .. autoclass::  qacode.core.loggers.logger_manager.Log
     :members:

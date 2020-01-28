@@ -5,7 +5,7 @@
 import pytest
 from qacode.core.bots.bot_base import BotBase
 from qacode.core.exceptions.core_exception import CoreException
-from qacode.core.loggers.logger_manager import LoggerManager
+from qacode.core.loggers.logger_manager import Log
 from qacode.core.testing.test_info import TestInfoBase
 from qacode.utils import settings
 
@@ -15,7 +15,7 @@ SKIP = SETTINGS['tests']['skip']['browsers']
 SKIP_MSG = 'browsers.{} DISABLED by config file'
 # TODO: must be setteable from config JSON
 WAIT_TO_CLOSE = int(3)
-LOGGER_MANAGER = LoggerManager(log_level=SETTINGS['bot']['log_level'])
+LOGGER_MANAGER = Log(log_level=SETTINGS['bot']['log_level'])
 
 
 class TestBotBase(TestInfoBase):

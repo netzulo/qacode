@@ -4,7 +4,7 @@
 
 import pytest
 from qacode.core.bots.bot_base import BotBase
-from qacode.core.loggers.logger_manager import LoggerManager
+from qacode.core.loggers.logger_manager import Log
 from qacode.core.testing.test_info import TestInfoBase
 from qacode.utils import settings
 
@@ -13,7 +13,7 @@ SETTINGS = settings(file_path="qacode/configs/")
 SKIP = SETTINGS['tests']['skip']['benchmarks']
 SKIP_MSG = 'benchmarks DISABLED by config file'
 # TODO: must be setteable from config JSON
-LOGGER_MANAGER = LoggerManager(log_level=SETTINGS['bot']['log_level'])
+LOGGER_MANAGER = Log(log_level=SETTINGS['bot']['log_level'])
 ITERATIONS = 2
 ROUNDS = 2
 

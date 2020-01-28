@@ -2,7 +2,7 @@
 """Main Exceptions for qacode library"""
 
 
-from qacode.core.loggers.logger_manager import LoggerManager
+from qacode.core.loggers.logger_manager import Log
 from selenium.common.exceptions import WebDriverException
 
 
@@ -17,7 +17,7 @@ class CoreException(Exception):
 
         Keyword Arguments:
             msg {str} -- Exception message (default: {NOT_MSG})
-            log {LoggerManager} -- Logging class (default: {None})
+            log {Log} -- Logging class (default: {None})
             info_bot {dict} -- Qacode+Selenium information (default: {None})
         """
         self.is_just_msg = False
@@ -31,7 +31,7 @@ class CoreException(Exception):
         self.method = self.info_bot.get("method") or ""
         self.err = info_bot.get("err") or {}
         if log is None:
-            self.log = LoggerManager().logger
+            self.log = Log()
         else:
             self.log = log
         self.log.error(str(self))

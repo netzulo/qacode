@@ -19,23 +19,23 @@ class ReporterTestlink(object):
     builds = None
 
     def __init__(self,
-                 logger_manager=None,
+                 log=None,
                  url_api=None,
                  dev_key=None):
         """Instance testlink api and save as self.conn property
 
         Keyword Arguments:
-            logger_manager {[qacode.core.loggers.LoggerManager]} -- Class used
+            logger_manager {Log} -- Class used
                 for logging, raise if None obtained (default: None)
-            url_api {[str]} -- url to TestlinkAPI (default: None)
-            dev_key {[str]} -- developerKey for TestlinkAPI (default: None)
+            url_api {str} -- url to TestlinkAPI (default: None)
+            dev_key {str} -- developerKey for TestlinkAPI (default: None)
 
         Raises:
-            CoreException -- If LoggerManager it's None
+            CoreException -- If Log it's None
         """
-        if logger_manager is None:
-            raise CoreException("Testlink logger_manager can\'t be None")
-        self.logger_manager = logger_manager
+        if log is None:
+            raise CoreException("Testlink log can\'t be None")
+        self.log = log
         # connect with success params
         self.conn = self.connect()
         # verify content exist
