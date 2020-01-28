@@ -73,7 +73,7 @@ def read(file_path='./', file_name=None, is_encoding=True, ignore_raises=False):
             ignore_raises=ignore_raises))
 
 
-VERSION = "0.6.2"
+VERSION = "0.6.3"
 CURR_PATH = "{}{}".format(path.abspath(path.dirname(__file__)), '/')
 INSTALL_REQUIRES = [
     'selenium==3.141.0',

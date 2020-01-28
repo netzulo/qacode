@@ -8,6 +8,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased] - xxxx-xx-xx
 
 ### Added
+
+### Changed
+
+### Fixed
+
+### Removed
+
+
+## [v0.6.3] - 2020-01-29
+
+### Added
 - New '__repr__' method for class 'StrictRule' #287
 - Now 'ControlTable' support multiples tbodies #248
 - Support for Python 3.7 after 20-01-2020 #298
@@ -27,7 +38,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Support for Python 2.7 after 2020-01-01 #295
 
 
-## [v.0.6.2] - 2019-05-22
+## [v0.6.2] - 2019-05-22
 
 ### Added
 
