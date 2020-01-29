@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite id="" name="" >
+<node_order><![CDATA[]]></node_order>
+<details><![CDATA[]]></details> 
+<testsuite id="23" name="Bots" >
+<node_order><![CDATA[1]]></node_order>
+<details><![CDATA[]]></details> 
+
+<testcase internalid="43" name="Crear un Bot">
+	<node_order><![CDATA[0]]></node_order>
+	<externalid><![CDATA[4]]></externalid>
+	<fullexternalid><![CDATA[tc-4]]></fullexternalid>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>Como cliente quiero crear un Bot</p>
+]]></summary>
+	<preconditions><![CDATA[<p>Un servidor remoto de selenium que permita abrir navegadores</p>
+]]></preconditions>
+	<execution_type><![CDATA[2]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+<steps>
+<step>
+	<step_number><![CDATA[1]]></step_number>
+	<actions><![CDATA[<p>Generar un objeto de la clase <strong>Bot</strong></p>
+]]></actions>
+	<expectedresults><![CDATA[<p><em>Sin errores de sintaxis<br />
+El objeto es del tipo de clase esperado</em></p>
+]]></expectedresults>
+	<execution_type><![CDATA[2]]></execution_type>
+</step>
+</steps>
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Crear un Bot]]></req_spec_title>
+			<doc_id><![CDATA[UC-00001]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Crear un Bot]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="24" name="Listar navegadores en un Bot">
+	<node_order><![CDATA[1]]></node_order>
+	<externalid><![CDATA[1]]></externalid>
+	<fullexternalid><![CDATA[tc-1]]></fullexternalid>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>Como cliente quiero listar navegadores en un Bot</p>
+]]></summary>
+	<preconditions><![CDATA[<p>Un servidor remoto de selenium que permita abrir navegadores</p>
+]]></preconditions>
+	<execution_type><![CDATA[2]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Listar navegadores en un Bot]]></req_spec_title>
+			<doc_id><![CDATA[UC-00002]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Listar navegadores en un Bot]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="26" name="Listar paginas en un Bot">
+	<node_order><![CDATA[2]]></node_order>
+	<externalid><![CDATA[2]]></externalid>
+	<fullexternalid><![CDATA[tc-2]]></fullexternalid>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>Como cliente quiero listar navegadores en un Bot</p>
+]]></summary>
+	<preconditions><![CDATA[<p>Un servidor remoto de selenium que permita abrir navegadores</p>
+]]></preconditions>
+	<execution_type><![CDATA[2]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Listar paginas en un Bot]]></req_spec_title>
+			<doc_id><![CDATA[UC-00003]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Listar paginas en un Bot]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+
+<testcase internalid="28" name="Listar controles en un Bot">
+	<node_order><![CDATA[3]]></node_order>
+	<externalid><![CDATA[3]]></externalid>
+	<fullexternalid><![CDATA[tc-3]]></fullexternalid>
+	<version><![CDATA[1]]></version>
+	<summary><![CDATA[<p>Como cliente quiero listar navegadores en un Bot</p>
+]]></summary>
+	<preconditions><![CDATA[<p>Un servidor remoto de selenium que permita abrir navegadores</p>
+]]></preconditions>
+	<execution_type><![CDATA[2]]></execution_type>
+	<importance><![CDATA[3]]></importance>
+	<estimated_exec_duration></estimated_exec_duration>
+	<status>1</status>
+	<is_open>1</is_open>
+	<active>1</active>
+
+	<requirements>
+		<requirement>
+			<req_spec_title><![CDATA[Listar controles en un Bot]]></req_spec_title>
+			<doc_id><![CDATA[UC-00004]]></doc_id>
+			<version><![CDATA[1]]></version>
+			<title><![CDATA[Listar controles en un Bot]]></title>
+		</requirement>
+	</requirements>
+</testcase>
+</testsuite></testsuite>
