@@ -65,7 +65,7 @@ install:
   - "pip install tox"
 
 test_script:
-  - "echo ""> logs\qacode.log"
+  - "echo ''> logs\qacode.log"
   - "tox -e flake8"
   - "tox -e %TOXENV%"
       
