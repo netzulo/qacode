@@ -2,8 +2,7 @@
 """package qacode.core.testing"""
 
 
-from qacode.core.testing import test_info
-from qacode.core.testing import testlink
+from qacode.core.testing import asserts
 
 
-__all__ = ['test_info', 'testlink']
+__all__ = ['asserts']

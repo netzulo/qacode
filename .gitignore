@@ -103,9 +103,11 @@ ENV/
 
 # QACODE ignores
 qacode/configs/settings.json
-tests/reports/*
-tests/reports/coverage/*
-tests/reports/benchmarks/benchmark.*.svg
+qacode_old/configs/settings.json
+
+tests_old/reports/*
+tests_old/reports/coverage/*
+tests_old/reports/benchmarks/benchmark.*.svg
 # Visual Studio
 .vs/
 # Visual code
