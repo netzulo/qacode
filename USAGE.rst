@@ -145,27 +145,6 @@ Example of usage
     txt_password.type_text('SuperSecretPassword!', clear=True)
     btn_login.click()
 
-
-
-ControlForm
-~~~~~~~~~~~
-
-+ Param **rules** : Allow to add strict_rules configuration to laod StrictRule class for each rule ( example: ``strict_rule = StrictRule('my_named_rule', StrictType.TAG, StrictSeverity.HIGHT)`` )
-
-- Methods for **ControlForm**
-
-  + method **__load__** : Load properties from settings dict. Some elements need to search False to be search at future
-  + method **__settings_parse__** : Allow to parse settings obtaining from super and applying self instance behaviour
-  + method **__rules_parse__** : Validate rules for each type of StricRule
-  + method **__rules_apply__** : Allow to apply rules using self WebElement
-  + method **__rules_apply_tag__** : Apply Tag based on StictType.TAG enum
-  + method **__check_reload__** : Allow to check before methods calls to ensure if it's neccessary reload element properties
-  + method **reload** : Reload 'self.settings' property:dict and call to instance logic with new configuration
-
-- Properties for **ControlForm**
-
-  + property **rules** : `GET`
-
 ControlDropdown
 ~~~~~~~~~~~~~~~
 

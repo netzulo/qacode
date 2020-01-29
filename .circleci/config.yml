@@ -36,6 +36,7 @@ jobs:
           name: Before Tests
           command: |
             ./cc-test-reporter before-build
+            touch logs/qacode.log
 
       - run:
           name: Run Tests

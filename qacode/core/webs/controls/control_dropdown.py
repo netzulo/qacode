@@ -1,34 +1,26 @@
 # -*- coding: utf-8 -*-
-"""Package module qacode.core.webs.control_form"""
+"""Package module qacode.core.webs.control_dropdown"""
 
 
 from qacode.core.exceptions.control_exception import ControlException
 from qacode.core.loggers import logger_messages as MSG
-from qacode.core.webs.controls.control_form import ControlForm
+from qacode.core.webs.controls.control_base import ControlBase
 from selenium.webdriver.support.ui import Select
 
 
-class ControlDropdown(ControlForm):
+class ControlDropdown(ControlBase):
     """TODO: doc class"""
 
     def __init__(self, bot, **kwargs):
-        """Instance of ControlForm. Load properties from settings dict.
+        """Instance of ControlDropdown. Load properties from settings dict.
             Some elements need to search False to be search at future
         """
-        rules = kwargs.get("rules") or []
-        if not bool(rules):
-            rules.append(
-                {"tag": "select", "type": "tag", "severity": "hight"})
-            kwargs.update({"rules": rules})
         super(ControlDropdown, self).__init__(bot, **kwargs)
         self._dropdown = None
 
     def __load__(self, **kwargs):
         """Allow to reinstance control properties"""
         super(ControlDropdown, self).__load__(**kwargs)
-        if self.tag is not None and self.tag != "select":
-            self.bot.log.error(MSG.CDD_BADTAG)
-            raise ControlException(MSG.CDD_BADTAG, info_bot=self._info_bot)
         if self._on_instance_search:
             self._dropdown = Select(self._element)
 
