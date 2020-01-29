@@ -118,5 +118,8 @@ class TestPageBase(TestInfoBotUnique):
             cfg.get('url'))
         for config_control in self.page.get('controls'):
             name = config_control.get('name')
+            instance_name = config_control.get('instance')
             ctl = page.get_element(config_control)
             self.assert_in(name, dir(page))
+            if instance_name == 'ControlBase':
+                self.assert_is_instance(ctl, ControlBase)
