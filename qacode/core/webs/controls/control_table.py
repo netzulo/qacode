@@ -1,28 +1,22 @@
 # -*- coding: utf-8 -*-
-"""Package module qacode.core.webs.control_form"""
+"""Package module qacode.core.webs.control_table"""
 
 
 from qacode.core.exceptions.control_exception import ControlException
 from qacode.core.exceptions.core_exception import CoreException
 from qacode.core.loggers import logger_messages as MSG
 from qacode.core.webs.controls.control_base import ControlBase
-from qacode.core.webs.controls.control_form import ControlForm
 from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.remote.webelement import WebElement
 
 
-class ControlTable(ControlForm):
+class ControlTable(ControlBase):
     """TODO: doc class"""
 
     def __init__(self, bot, **kwargs):
         """Instance of ControlTable. Load properties from settings dict.
             Some elements need to search False to be search at future
         """
-        rules = kwargs.get("rules") or []
-        if not bool(rules):
-            rules.append(
-                {"tag": "table", "type": "tag", "severity": "hight"})
-            kwargs.update({"rules": rules})
         super(ControlTable, self).__init__(bot, **kwargs)
         self._table = None
         self._rows = None
@@ -115,7 +109,7 @@ class ControlTable(ControlForm):
         """Allow to check before methods calls to ensure
             if it's neccessary reload element properties
         """
-        super(ControlForm, self).__check_reload__()
+        super(ControlTable, self).__check_reload__()
 
     def reload(self, **kwargs):
         """Reload 'self.settings' property:dict and call to instance

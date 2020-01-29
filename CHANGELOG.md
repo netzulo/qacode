@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Removed
 
+- [BP] remove ControlForm and StrictRules + tests #305
+
 
 ## [v0.6.3] - 2020-01-29
 

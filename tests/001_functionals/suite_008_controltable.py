@@ -119,9 +119,6 @@ class TestControlTable(TestInfoBotUnique):
         self.assert_equals(
             ctl.on_instance_search, cfg.get('on_instance_search'))
         self.assert_equals(ctl.auto_reload, cfg.get('auto_reload'))
-        if bool(rules):
-            self.assert_equals(
-                len(ctl.rules), len(cfg.get('rules')))
         if on_instance_search:
             self.assert_is_instance(ctl.element, WebElement)
         if auto_reload is not None:
@@ -141,16 +138,11 @@ class TestControlTable(TestInfoBotUnique):
                 self.assert_is_instance(cell, ControlBase)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    @pytest.mark.parametrize("strict_rules", [None])
     @pytest.mark.parametrize("ctl_name", ['tbl_ok', 'tbl_html5_ok'])
-    def test_controltable_instance_raises(self, strict_rules, ctl_name):
+    def test_controltable_instance_raises(self, ctl_name):
         """Testcase: test_controltable_instance_raises"""
         cfg = getattr(self, ctl_name).copy()
-        cfg.update({
-            "instance": "ControlTable",
-            "strict_rules": strict_rules,
-            "selector": "span"
-        })
+        cfg.update({"selector": "span"})
         # functional testcases
         ctl = ControlTable(self.bot, **cfg)
         self.assert_is_instance(ctl, ControlTable)

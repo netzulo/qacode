@@ -99,13 +99,6 @@ class TestControlDropdown(TestInfoBotUnique):
         self.assert_equals(
             ctl.on_instance_search, cfg.get('on_instance_search'))
         self.assert_equals(ctl.auto_reload, cfg.get('auto_reload'))
-        rules = cfg.get('rules')
-        if not bool(rules):
-            # auto add default rule, when 0 rules by param, must exist 1 rule
-            self.assert_equals(len(ctl.rules), len(rules) + 1)
-        else:
-            # rules by param == rules loaded
-            self.assert_equals(len(ctl.rules), len(rules))
         if on_instance_search:
             self.assert_is_instance(ctl.element, WebElement)
         if auto_reload is not None:
