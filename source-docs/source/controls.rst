@@ -10,15 +10,6 @@ Class: ControlBase
  .. autoclass::  qacode.core.webs.controls.control_base.ControlBase
     :members:
 
-Class: ControlForm
-------------------
- .. automodule:: qacode.core.webs.controls.control_form
-    :members:
-    :undoc-members:
-    :show-inheritance:
- .. autoclass::  qacode.core.webs.controls.control_form.ControlForm
-    :members:
-
 Class: ControlDropdown
 ------------------
  .. automodule:: qacode.core.webs.controls.control_dropdown

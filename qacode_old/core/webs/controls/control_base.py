@@ -40,7 +40,6 @@ class ControlBase(object):
         self._on_instance_search = None
         self._auto_reload = None
         # __search__, step 2
-        self._tag = None
         self._text = None
         self._is_displayed = None
         self._is_enabled = None
@@ -127,7 +126,6 @@ class ControlBase(object):
             self.bot.log.debug(MSG.CB_SEARCH_FOUND)
         # Step 2 load minimal properties defined by qacode
         self.bot.log.debug(MSG.CB_PROP_LOADING)
-        self._tag = self.get_tag()
         self._text = self.get_text()
         self._is_displayed = nav.ele_is_displayed(self.element)
         self._is_enabled = nav.ele_is_enabled(self.element)
@@ -199,15 +197,6 @@ class ControlBase(object):
         if bool(ctls):
             self.bot.log.debug(MSG.CB_FINDCHILD_LOADED)
         return ctls
-
-    def get_tag(self):
-        """Returns tag_name from Webelement"""
-        self.bot.log.debug(MSG.CB_GETTAG_LOADING)
-        self.__check_reload__()
-        tag = self.bot.navigation.ele_tag(self.element)
-        self.bot.log.debug(MSG.CB_GETTAG_LOADED.format(tag))
-        self._tag = tag
-        return tag
 
     def type_text(self, text, clear=False):
         """Type text on input element
@@ -418,14 +407,13 @@ class ControlBase(object):
         return ("{}: name={}, "
                 "bot.browser={}, bot.mode={} \n"
                 "settings={} \n"
-                "tag={}, is_displayed={}, "
+                "is_displayed={}, "
                 "is_enabled={}, is_selected={}").format(
             self.__class__.__name__,
             self.name,
             self.bot.settings.get('browser'),
             self.bot.settings.get('mode'),
             self.settings,
-            self.tag,
             self.is_displayed,
             self.is_enabled,
             self.is_selected)
@@ -505,8 +493,12 @@ class ControlBase(object):
 
     @property
     def tag(self):
-        """GET for _tag attribute"""
-        return self._tag
+        """GET for _tag attribute. Returns from Webelement directly"""
+        self.bot.log.debug(MSG.CB_GETTAG_LOADING)
+        self.__check_reload__()
+        tag = self.bot.navigation.ele_tag(self.element)
+        self.bot.log.debug(MSG.CB_GETTAG_LOADED.format(tag))
+        return tag
 
     @property
     def text(self):

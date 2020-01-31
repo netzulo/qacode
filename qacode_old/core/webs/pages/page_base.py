@@ -6,7 +6,6 @@ from qacode.core.exceptions.control_exception import ControlException
 from qacode.core.exceptions.core_exception import CoreException
 from qacode.core.exceptions.page_exception import PageException
 from qacode.core.webs.controls.control_base import ControlBase
-from qacode.core.webs.controls.control_form import ControlForm
 
 from selenium.webdriver.common.by import By
 
@@ -87,20 +86,8 @@ class PageBase(object):
             self.log.debug(
                 ("page action: Loading element "
                  "as property name='{}'").format(cfg_control.get('name')))
-            control = None
-            instance = cfg_control.get('instance')
             # load default value
-            if instance is None:
-                instance = 'ControlBase'
-            try:
-                control = {
-                    'ControlBase': ControlBase,
-                    'ControlForm': ControlForm,
-                }[instance](self.bot, **cfg_control)
-            except KeyError:
-                self.log.debug(("Bad instance name selected for "
-                                "cfg_control={}").format(cfg_control))
-                control = ControlBase(self.bot, **cfg_control)
+            control = ControlBase(self.bot, **cfg_control)
             cfg_control.update({'instance': control})
             self._set_control(cfg_control)
 
@@ -150,7 +137,7 @@ class PageBase(object):
             instance = config_control.get("instance")
             control = None
             try:
-                control_types = (ControlBase, ControlForm)
+                control_types = (ControlBase,)
                 if isinstance(instance, control_types):
                     controls.append(control)
                 else:
