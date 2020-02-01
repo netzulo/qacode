@@ -2,6 +2,11 @@
 """TODO"""
 
 
+from qacode.core.bots.bot_config import BotConfig
+from qacode.core.browsers.browser import Browser
+from qacode.core.loggers.log import Log
+
+
 class Bot(object):
     """Class Base for handle selenium functionality throught this wrapper"""
 
@@ -10,6 +15,23 @@ class Bot(object):
         self._browsers = []
         self._pages = []
         self._controls = []
+        self._config = self.__config__(kwargs)
+        self._log = Log(**{
+            "name": self._config.log_name,
+            "path": self._config.log_path,
+            "level": self._config.log_level})
+
+    def __config__(self, config):
+        """TODO: doc method"""
+        _config = None
+        if config is None:
+            raise Exception("Can't create browser without configuration")
+        if isinstance(config, BotConfig):
+            return config
+        elif isinstance(config, dict):
+            return BotConfig(**config)
+        else:
+            raise Exception("Just accepted types: dict, BotConfig")
 
     def browser(self, session_id):
         """TODO: doc method"""
@@ -31,6 +53,29 @@ class Bot(object):
             if control.selector == selector:
                 return control
         raise Exception("control not found")
+
+    def browser_create(self, config):
+        """TODO: doc method"""
+        driver_name = self._config.drivers_names[config.get("browser")]
+        driver_path = self._config.drivers_path
+        _config = config.copy()
+        _config.update({
+            "driver_path": driver_path, "driver_name": driver_name})
+        browser = Browser(self.log, **_config)
+        import pdb; pdb.set_trace()
+        self._browsers.append(browser)
+        return browser
+
+    @property
+    def config(self):
+        """TODO: doc method"""
+        return self._config
+
+    @config.setter
+    def config(self, value):
+        """TODO: doc method"""
+        self._config = self.__config__(value)
+
 
     @property
     def browsers(self):
@@ -61,3 +106,8 @@ class Bot(object):
     def controls(self, value):
         """TODO: doc method"""
         self._controls = value
+
+    @property
+    def log(self):
+        """TODO: doc method"""
+        return self._log
