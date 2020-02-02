@@ -198,20 +198,20 @@ class Assert(object):
 
     def true(self, actual, msg=None):
         """Allow to compare and check if value it's equals to 'True'"""
-        self.assert_is_instance(actual, bool)
-        self.assert_equals(actual, True, msg=msg)
+        self.is_instance(actual, bool)
+        self.equals(actual, True, msg=msg)
         return True
 
     def false(self, actual, msg=None):
         """Allow to compare and check if value it's equals to 'False'"""
-        self.assert_is_instance(actual, bool)
-        self.assert_equals(actual, False, msg=msg)
+        self.is_instance(actual, bool)
+        self.equals(actual, False, msg=msg)
         return True
 
     def none(self, actual, msg=None):
         """Allow to compare and check if value it's equals to 'None'"""
-        return self.assert_equals(actual, None, msg=msg)
+        return self.equals(actual, None, msg=msg)
 
     def not_none(self, actual, msg=None):
         """Allow to compare and check if value it's not equals to 'None'"""
-        return self.assert_not_equals(actual, None, msg=msg)
+        return self.not_equals(actual, None, msg=msg)

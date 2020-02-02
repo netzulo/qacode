@@ -6,8 +6,9 @@ import os
 import sys
 from qacode.core.browsers.browser_config import BrowserConfig
 from qacode.core.exceptions.core_exception import CoreException
-from qacode.core.loggers.log import Log
-from selenium.webdriver import (Chrome, Firefox, Ie, Edge)
+# from qacode.core.loggers.log import Log
+from selenium.common.exceptions import SessionNotCreatedException
+from selenium.webdriver import (Chrome, Edge, Firefox, Ie)
 from selenium.webdriver import DesiredCapabilities
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.common.action_chains import ActionChains
@@ -31,7 +32,6 @@ class Browser(object):
 
     def __config__(self, config):
         """TODO: doc method"""
-        _config = None
         if config is None:
             raise Exception("Can't create browser without configuration")
         if isinstance(config, BrowserConfig):
@@ -72,12 +72,12 @@ class Browser(object):
                 "chrome": ChromeOptions(),
                 "firefox": FirefoxOptions(),
             }[self._config.browser]
+            if is_headless:
+                options.add_argument("--headless")
+            return options
         except KeyError:
             # this browser hasn't options
-            pass
-        if is_headless:
-            options.add_argument("--headless")
-        return options
+            return None
 
     def __driver_local__(self):
         """TODO: doc method"""
@@ -98,7 +98,7 @@ class Browser(object):
     def __driver_remote__(self):
         """TODO: doc method"""
         return RemoteWebDriver
-    
+
     def __open_local__(self):
         """TODO: doc method"""
         driver_class = self.__driver_local__()
@@ -115,13 +115,12 @@ class Browser(object):
         """TODO: doc method"""
         driver_class = self.__driver_remote__()
         try:
-            import pdb; pdb.set_trace()
             driver = driver_class(
                 command_executor=self._config.hub_url,
                 desired_capabilities=self.capabilities,
                 options=self.options)
             return driver
-        except (AttributeError) as err:
+        except (AttributeError, SessionNotCreatedException) as err:
             if err.args[0] == "'NoneType' object has no attribute 'execute'":
                 raise Exception(
                     "Check if hub it's running at: {}".format(
@@ -130,13 +129,13 @@ class Browser(object):
 
     def __drivers_selenium__(self):
         """TODO: doc method"""
-        self._driver_wait = WebDriverWait(self.curr_driver, 10)
-        self._driver_actions = ActionChains(self.curr_driver)
-        self._driver_touch = TouchActions(self.curr_driver)
+        self._driver_wait = WebDriverWait(self._driver, 10)
+        self._driver_actions = ActionChains(self._driver)
+        self._driver_touch = TouchActions(self._driver)
 
     def __drivers_modules__(self):
         """TODO: doc method"""
-        self._navs = {}
+        self._modules = {}
 
     def open(self):
         """TODO: doc method"""
@@ -151,9 +150,12 @@ class Browser(object):
 
     def close(self):
         """TODO: doc method"""
-        # try to call selenium driver.quit
-        # try to call selenium driver.close
-        raise NotImplementedError("WIP code")
+        self.driver.quit()
+        self._driver = None
+        self._driver_wait = None
+        self._driver_actions = None
+        self._driver_touch = None
+        self._modules = None
 
     @property
     def config(self):
@@ -164,17 +166,17 @@ class Browser(object):
     def config(self, value):
         """TODO: doc method"""
         self._config = self.__config__(value)
-    
+
     @property
     def capabilities(self):
         """TODO: doc method"""
         return self.__capabilities__()
-    
+
     @property
     def options(self):
         """TODO: doc method"""
         return self.__options__()
-    
+
     @property
     def driver_abs_path(self):
         """TODO: doc method"""
@@ -184,11 +186,11 @@ class Browser(object):
     def driver(self):
         """TODO: doc method"""
         return self._driver
-    
+
     @property
-    def navs(self):
+    def modules(self):
         """TODO: doc method"""
-        return self._navs
+        return self._modules
 
     @property
     def session_id(self):

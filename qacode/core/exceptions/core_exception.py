@@ -2,8 +2,8 @@
 """Main Exceptions for qacode library"""
 
 
-from qacode.core.loggers.log import Log
-from selenium.common.exceptions import WebDriverException
+# from qacode.core.loggers.log import Log
+# from selenium.common.exceptions import WebDriverException
 
 
 NOT_MSG = 'Exception without message'

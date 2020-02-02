@@ -23,7 +23,6 @@ class Bot(object):
 
     def __config__(self, config):
         """TODO: doc method"""
-        _config = None
         if config is None:
             raise Exception("Can't create browser without configuration")
         if isinstance(config, BotConfig):
@@ -77,7 +76,6 @@ class Bot(object):
         """TODO: doc method"""
         self._config = self.__config__(value)
 
-
     @property
     def browsers(self):
         """TODO: doc method"""
@@ -87,7 +85,7 @@ class Bot(object):
     def browsers(self, value):
         """TODO: doc method"""
         self._browsers = value
-    
+
     @property
     def pages(self):
         """TODO: doc method"""
@@ -97,7 +95,7 @@ class Bot(object):
     def pages(self, value):
         """TODO: doc method"""
         self._pages = value
-    
+
     @property
     def controls(self):
         """TODO: doc method"""

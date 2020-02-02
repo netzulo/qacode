@@ -4,6 +4,7 @@
 
 import pytest
 from qacode.core.browsers.browser import Browser
+from qacode.core.browsers.browser_config import BrowserConfig
 from qacode.core.loggers.log import Log
 from qacode.core.testing.asserts import Assert
 from qacode.utils import settings
@@ -23,11 +24,20 @@ def config_browser_remote():
     return cfg
 
 
+def browser_close(browser):
+    """TODO: doc method"""
+    browser.close()
+
+
 @pytest.mark.dependency(name="browser_create")
 def test_browser_create():
     """TODO: doc method"""
     browser = Browser(LOG, **config_browser_remote())
     ASSERT.is_instance(browser, Browser)
+    ASSERT.is_instance(browser.config, BrowserConfig)
+    ASSERT.not_none(browser.capabilities)
+    if browser.config.browser not in ("iexplorer", "edge", "opera"):
+        ASSERT.not_none(browser.options)
 
 
 @pytest.mark.dependency(name="browser_open", depends=['browser_create'])
@@ -35,3 +45,23 @@ def test_browser_open():
     """TODO: doc method"""
     browser = Browser(LOG, **config_browser_remote())
     browser.open()
+    ASSERT.not_none(browser.driver)
+    ASSERT.is_instance(browser.session_id, str)
+    ASSERT.not_none(browser._driver_wait)
+    ASSERT.not_none(browser._driver_actions)
+    ASSERT.not_none(browser._driver_touch)
+    ASSERT.is_instance(browser.modules, dict)
+    browser_close(browser)
+
+
+@pytest.mark.dependency(name="browser_close", depends=['browser_open'])
+def test_browser_close():
+    """TODO: doc method"""
+    browser = Browser(LOG, **config_browser_remote())
+    browser.open()
+    browser.close()
+    ASSERT.none(browser.driver)
+    ASSERT.none(browser._driver_wait)
+    ASSERT.none(browser._driver_actions)
+    ASSERT.none(browser._driver_touch)
+    ASSERT.none(browser.modules)
