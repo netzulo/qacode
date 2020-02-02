@@ -28,3 +28,7 @@ class BrowserConfig(object):
     @property
     def driver_name(self):
         return self._config.get("driver_name")
+    
+    @property
+    def hub_url(self):
+        return self._config.get("hub_url")

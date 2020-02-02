@@ -7,7 +7,14 @@ import sys
 from qacode.core.browsers.browser_config import BrowserConfig
 from qacode.core.exceptions.core_exception import CoreException
 from qacode.core.loggers.log import Log
+from selenium.webdriver import (Chrome, Firefox, Ie, Edge)
 from selenium.webdriver import DesiredCapabilities
+from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.touch_actions import TouchActions
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
+from selenium.webdriver.remote.webdriver import WebDriver as RemoteWebDriver
+from selenium.webdriver.support.ui import WebDriverWait
 
 
 class Browser(object):
@@ -17,9 +24,10 @@ class Browser(object):
         """TODO: doc method"""
         self._log = log
         self._config = self.__config__(kwargs)
-        self._driver = None
         self._capabilities = self.__capabilities__()
+        self._options = self.__options__()
         self._driver_abs_path = self.__driver_abs_path__()
+        self._driver = None
 
     def __config__(self, config):
         """TODO: doc method"""
@@ -56,13 +64,90 @@ class Browser(object):
         sys.path.append(abs_path)
         return abs_path
 
+    def __options__(self):
+        """TODO: doc method"""
+        is_headless = self._config.options.get("headless")
+        try:
+            options = {
+                "chrome": ChromeOptions(),
+                "firefox": FirefoxOptions(),
+            }[self._config.browser]
+        except KeyError:
+            # this browser hasn't options
+            pass
+        if is_headless:
+            options.add_argument("--headless")
+        return options
+
+    def __driver_local__(self):
+        """TODO: doc method"""
+        driver = None
+        try:
+            driver = {
+                "chrome": Chrome,
+                "firefox": Firefox,
+                "iexplorer": Ie,
+                "edge": Edge
+            }[self._config.browser]
+        except KeyError:
+            msg = ("Just browser names allowed: "
+                   "chrome, firefox, iexplorer, edge")
+            raise Exception(msg)
+        return driver
+
+    def __driver_remote__(self):
+        """TODO: doc method"""
+        return RemoteWebDriver
+    
+    def __open_local__(self):
+        """TODO: doc method"""
+        driver_class = self.__driver_local__()
+        try:
+            driver = driver_class(
+                executable_path=self.driver_abs_path,
+                capabilities=self.capabilities,
+                options=self.options)
+            return driver
+        except (AttributeError) as err:
+            raise Exception(str(err))
+
+    def __open_remote__(self):
+        """TODO: doc method"""
+        driver_class = self.__driver_remote__()
+        try:
+            import pdb; pdb.set_trace()
+            driver = driver_class(
+                command_executor=self._config.hub_url,
+                desired_capabilities=self.capabilities,
+                options=self.options)
+            return driver
+        except (AttributeError) as err:
+            if err.args[0] == "'NoneType' object has no attribute 'execute'":
+                raise Exception(
+                    "Check if hub it's running at: {}".format(
+                        self._config.hub_url))
+            raise Exception(str(err))
+
+    def __drivers_selenium__(self):
+        """TODO: doc method"""
+        self._driver_wait = WebDriverWait(self.curr_driver, 10)
+        self._driver_actions = ActionChains(self.curr_driver)
+        self._driver_touch = TouchActions(self.curr_driver)
+
+    def __drivers_modules__(self):
+        """TODO: doc method"""
+        self._navs = {}
+
     def open(self):
         """TODO: doc method"""
-        # based on mode use or not drivers path
-        # get capabilities
-        # bassed on browser get options or not
-        # others webdrivers ?
-        raise NotImplementedError("WIP code")
+        if self._config.mode == "local":
+            self._driver = self.__open_local__()
+        elif self._config.mode == "remote":
+            self._driver = self.__open_remote__()
+        else:
+            raise Exception("Just allowed modes: local, remote")
+        self.__drivers_selenium__()
+        self.__drivers_modules__()
 
     def close(self):
         """TODO: doc method"""
@@ -86,9 +171,24 @@ class Browser(object):
         return self.__capabilities__()
     
     @property
+    def options(self):
+        """TODO: doc method"""
+        return self.__options__()
+    
+    @property
     def driver_abs_path(self):
         """TODO: doc method"""
         return self.__driver_abs_path__()
+
+    @property
+    def driver(self):
+        """TODO: doc method"""
+        return self._driver
+    
+    @property
+    def navs(self):
+        """TODO: doc method"""
+        return self._navs
 
     @property
     def session_id(self):

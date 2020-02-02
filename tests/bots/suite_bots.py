@@ -16,7 +16,7 @@ CFG = settings(file_path="qacode/configs/", file_name="settings.json")
 @pytest.mark.dependency(name="bot_create")
 def test_bot_create():
     """TODO: doc method"""
-    bot = Bot()
+    bot = Bot(**CFG)
     ASSERT.is_instance(bot, Bot)
 
 
@@ -36,6 +36,7 @@ def test_bot_pages():
 def test_bot_controls():
     """TODO: doc method"""
     pytest.fail("Not developed yet")
+
 
 @pytest.mark.dependency(name="bot_browser_create", depends=['bot_create'])
 def test_bot_browser_create():

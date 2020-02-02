@@ -44,3 +44,7 @@ class BotConfig(object):
     @property
     def controls(self):
         return self._bot.get("controls")
+    
+    @property
+    def hub_url(self):
+        return self._bot.get("hub_url")

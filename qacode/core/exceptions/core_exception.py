@@ -21,34 +21,34 @@ class CoreException(Exception):
             info_bot {dict} -- Qacode+Selenium information (default: {None})
         """
         raise NotImplementedError("WIP: pending refactor all class")
-        self.is_just_msg = False
-        self.msg = msg
-        if info_bot is None:
-            info_bot = {}
-            self.is_just_msg = True
-        self.info_bot = info_bot
-        self.browser = self.info_bot.get("browser") or ""
-        self.mode = self.info_bot.get("mode") or ""
-        self.method = self.info_bot.get("method") or ""
-        self.err = info_bot.get("err") or {}
-        if log is None:
-            self.log = Log()
-        else:
-            self.log = log
-        self.log.error(str(self))
-
-    def __str__(self):
-        """Representation of class"""
-        msg = ""
-        if self.is_just_msg:
-            return self.msg
-        msg += " | "
-        msg += "browser='{}' ".format(self.browser)
-        msg += "mode='{}' ".format(self.mode)
-        msg += "method='{}' ".format(self.method)
-        if self.err is None:
-            return msg
-        if isinstance(self.err, WebDriverException):
-            msg += "{}{} - args='{}'".format(
-                "Selenium error: ", type(self.err), self.err.args)
-        return "{}".format(msg)
+#        self.is_just_msg = False
+#        self.msg = msg
+#        if info_bot is None:
+#            info_bot = {}
+#            self.is_just_msg = True
+#        self.info_bot = info_bot
+#        self.browser = self.info_bot.get("browser") or ""
+#        self.mode = self.info_bot.get("mode") or ""
+#        self.method = self.info_bot.get("method") or ""
+#        self.err = info_bot.get("err") or {}
+#        if log is None:
+#            self.log = Log()
+#        else:
+#            self.log = log
+#        self.log.error(str(self))
+#
+#    def __str__(self):
+#        """Representation of class"""
+#        msg = ""
+#        if self.is_just_msg:
+#            return self.msg
+#        msg += " | "
+#        msg += "browser='{}' ".format(self.browser)
+#        msg += "mode='{}' ".format(self.mode)
+#        msg += "method='{}' ".format(self.method)
+#        if self.err is None:
+#            return msg
+#        if isinstance(self.err, WebDriverException):
+#            msg += "{}{} - args='{}'".format(
+#                "Selenium error: ", type(self.err), self.err.args)
+#        return "{}".format(msg)

@@ -3,6 +3,7 @@
     "path": "logs/", "name": "qacode", "level": "INFO"
   },
   "bot":{
+    "hub_url": "http://localhost:11000/wd/hub",
     "drivers_path": "../qadrivers",
     "drivers_names": {
       "chrome": "chromedriver_64.exe",
@@ -14,7 +15,9 @@
     "browsers": [
       {"browser": "chrome", "mode": "remote", "options": {"headless": false}},
       {"browser": "chrome", "mode": "local", "options": {"headless": false}}
-    ]
+    ],
+    "pages": [],
+    "controls": []
   },
   "testlink": {
     "connection":{

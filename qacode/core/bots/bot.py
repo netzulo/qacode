@@ -60,9 +60,10 @@ class Bot(object):
         driver_path = self._config.drivers_path
         _config = config.copy()
         _config.update({
-            "driver_path": driver_path, "driver_name": driver_name})
+            "driver_path": driver_path,
+            "driver_name": driver_name,
+            "hub_url": self._config.hub_url})
         browser = Browser(self.log, **_config)
-        import pdb; pdb.set_trace()
         self._browsers.append(browser)
         return browser
 
