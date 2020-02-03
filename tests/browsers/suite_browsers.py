@@ -5,6 +5,9 @@
 import pytest
 from qacode.core.browsers.browser import Browser
 from qacode.core.browsers.browser_config import BrowserConfig
+from qacode.core.browsers.modules.commons import ModuleCommons
+from qacode.core.browsers.modules.elements import ModuleElements
+from qacode.core.browsers.modules.waits import ModuleWaits
 from qacode.core.loggers.log import Log
 from qacode.core.testing.asserts import Assert
 from qacode.utils import settings
@@ -50,7 +53,9 @@ def test_browser_open():
     ASSERT.not_none(browser._driver_wait)
     ASSERT.not_none(browser._driver_actions)
     ASSERT.not_none(browser._driver_touch)
-    ASSERT.is_instance(browser.modules, dict)
+    ASSERT.equals(browser.Commons, ModuleCommons)
+    ASSERT.equals(browser.Elements, ModuleElements)
+    ASSERT.equals(browser.Waits, ModuleWaits)
     browser_close(browser)
 
 

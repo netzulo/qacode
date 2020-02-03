@@ -5,6 +5,9 @@
 import os
 import sys
 from qacode.core.browsers.browser_config import BrowserConfig
+from qacode.core.browsers.modules.commons import ModuleCommons
+from qacode.core.browsers.modules.elements import ModuleElements
+from qacode.core.browsers.modules.waits import ModuleWaits
 from qacode.core.exceptions.core_exception import CoreException
 # from qacode.core.loggers.log import Log
 from selenium.common.exceptions import SessionNotCreatedException
@@ -29,6 +32,10 @@ class Browser(object):
         self._options = self.__options__()
         self._driver_abs_path = self.__driver_abs_path__()
         self._driver = None
+        # modules
+        self.Commons = ModuleCommons
+        self.Elements = ModuleElements
+        self.Waits = ModuleWaits
 
     def __config__(self, config):
         """TODO: doc method"""
@@ -133,10 +140,6 @@ class Browser(object):
         self._driver_actions = ActionChains(self._driver)
         self._driver_touch = TouchActions(self._driver)
 
-    def __drivers_modules__(self):
-        """TODO: doc method"""
-        self._modules = {}
-
     def open(self):
         """TODO: doc method"""
         if self._config.mode == "local":
@@ -146,7 +149,6 @@ class Browser(object):
         else:
             raise Exception("Just allowed modes: local, remote")
         self.__drivers_selenium__()
-        self.__drivers_modules__()
 
     def close(self):
         """TODO: doc method"""
