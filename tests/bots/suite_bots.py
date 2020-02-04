@@ -23,24 +23,30 @@ def test_bot_create():
 @pytest.mark.dependency(depends=['bot_create'])
 def test_bot_browsers():
     """TODO: doc method"""
-    pytest.fail("Not developed yet")
+    cfg_browsers = CFG.get('bot').get('browsers')
+    ASSERT.equals(len(Bot(**CFG).config.browsers), len(cfg_browsers))
 
 
 @pytest.mark.dependency(depends=['bot_create'])
 def test_bot_pages():
     """TODO: doc method"""
-    pytest.fail("Not developed yet")
+    cfg_pages = CFG.get('bot').get('pages')
+    ASSERT.equals(len(Bot(**CFG).config.pages), len(cfg_pages))
 
 
 @pytest.mark.dependency(depends=['bot_create'])
 def test_bot_controls():
     """TODO: doc method"""
-    pytest.fail("Not developed yet")
+    cfg_controls = CFG.get('bot').get('controls')
+    ASSERT.equals(len(Bot(**CFG).config.controls), len(cfg_controls))
 
 
 @pytest.mark.dependency(name="bot_browser_create", depends=['bot_create'])
 def test_bot_browser_create():
     """TODO: doc method"""
     bot = Bot(**CFG)
+    before = len(bot.browsers)
     browser = bot.browser_create(bot.config.browsers[0])
     ASSERT.is_instance(browser, Browser)
+    ASSERT.equals(before+1, len(bot.browsers))
+    ASSERT.equals(browser, bot.browsers[0])
