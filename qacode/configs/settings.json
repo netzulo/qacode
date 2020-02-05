@@ -16,8 +16,29 @@
       {"browser": "chrome", "mode": "remote", "options": {"headless": false}},
       {"browser": "chrome", "mode": "local", "options": {"headless": false}}
     ],
-    "pages": [],
-    "controls": []
+    "pages": [
+      {"name": "login", "url": "http://netzulo.tk:83/qacode/login"},
+      {"name": "logout", "url": "http://netzulo.tk:83/qacode/logout"},
+      {"name": "inputs", "url": "http://netzulo.tk:83/qacode/forms/inputs"},
+      {"name": "lists", "url": "http://netzulo.tk:83/qacode/data/lists"}
+    ],
+    "controls": [
+      { "name": "form", "selector": "#frmLogin", "pages": ["login"]},
+      { "name": "username", "selector": "#txtUsername-field", "pages": ["login"]},
+      { "name": "password", "selector": "#txtPassword-field", "pages": ["login"]},
+      { "name": "submit", "selector": "#btnLogin", "pages": ["login"]},
+      { "name": "btn_logout", "selector": "a[href='/qacode/logout']", "pages": ["logout"]},
+      { "name": "btn_login", "selector": "a[href='/qacode/login']", "pages": ["logout"]},
+      { "name": "dd_base", "selector": "#txtTest002", "pages": ["inputs"]},
+      { "name": "dd_multiple", "selector": "#txtTest003", "pages": ["inputs"]},
+      { "name": "lst_ordered", "selector": "ol:nth-child(1)", "pages": ["lists"]},
+      { "name": "lst_ordered_child", "selector": "li", "pages": ["lists"]},
+      { "name": "dd_menu_data", "selector": "#ddData", "pages": ["lists"]},
+      { "name": "dd_menu_data_lists", "selector": "a[href='/qacode/data/lists']", "pages": ["lists"]},
+      { "name": "tbl_ok", "selector": "#tblOk", "pages": ["lists"]},
+      { "name": "tbl_html5_ok", "selector": "#tblHtml5Ok", "pages": ["lists"]},
+      { "name": "tbl_html_tbodies_ok", "selector": "#tblHtml5OkTbodies", "pages": ["lists"]}
+    ]
   },
   "testlink": {
     "connection":{

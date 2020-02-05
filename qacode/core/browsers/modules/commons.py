@@ -6,9 +6,9 @@ class ModuleCommons(object):
     """TODO: doc class"""
 
     @staticmethod
-    def get_title(self):
+    def get_title(driver):
         """Obtains the title of the current page and return it"""
-        return self.driver.title
+        return driver.title
 
     @staticmethod
     def get_url(driver, url, wait_for_load=0):

@@ -279,7 +279,7 @@ class TestNavBase(TestInfoBotUnique):
             pos_x=1024, pos_y=768)
 
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
-    def test_gettitle_ok(self):
+    def test_gettitle_ok(self): # YES
         """Testcase: test_gettitle_ok"""
         self.assert_not_none(
             self.bot.navigation.get_title())
