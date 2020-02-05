@@ -2,6 +2,9 @@
 """TODO"""
 
 
+from selenium.common.exceptions import WebDriverException
+
+
 class ModuleCommons(object):
     """TODO: doc class"""
 
@@ -17,17 +20,19 @@ class ModuleCommons(object):
             driver.implicitly_wait(wait_for_load)
         driver.get(url)
 
+    @staticmethod
     def get_current_url(driver):
         """Return current url from opened bot"""
         return driver.current_url
-    
+
+    @staticmethod
     def is_url(driver, url, ignore_raises=True):
         """Check if url it's the same what selenium
             current and visible url
         """
         if driver.get_current_url(driver) != url:
             if not ignore_raises:
-                raise CoreException("'Current url' is not 'param url'")
+                raise Exception("'Current url' is not 'param url'")
             return False
         return True
 
@@ -45,39 +50,36 @@ class ModuleCommons(object):
     def get_capabilities(driver):
         """Retrieve current capabilities applied to selenium driver"""
         return driver.desired_capabilities
-    
+
     @staticmethod
     def forward(driver):
         """Go forward using browser functionality"""
         driver.forward()
 
     @staticmethod
-    def reload(self):
+    def reload(driver):
         """Go reload page using browser functionality"""
         driver.refresh()
 
     @staticmethod
-    def get_log(self, log_name='browser', raises=False):
+    def get_log(driver, log_name='browser', raises=False):
         """Get selenium log by name, this depends of
             driver mode and browser what it's using each time
         """
-        method = self.method_name()
         try:
             return {
-                'browser': self.driver.get_log,
-                'driver': self.driver.get_log,
-                'client': self.driver.get_log,
-                'server': self.driver.get_log,
+                'browser': driver.get_log,
+                'driver': driver.get_log,
+                'client': driver.get_log,
+                'server': driver.get_log,
             }[log_name](log_name)
         except (KeyError, WebDriverException) as err:
             if isinstance(err, KeyError):
-                raise CoreException(
-                    "Can't use not valid value to get log",
-                    info_bot={"err": err, "method": method})
-            self.log.debug(("nav | get_log: Selenium, not all drivers will"
-                            " be handled by them with all optionsvalues"))
-            self.log.warning("nav | get_log: log_name={}, err={}".format(
-                log_name, err.msg))
+                raise Exception("Can't use not valid value to get log")
+            # self.log.debug(("nav | get_log: Selenium, not all drivers will"
+            #                 " be handled by them with all optionsvalues"))
+            # self.log.warning("nav | get_log: log_name={}, err={}".format(
+            #     log_name, err.msg))
         return list()
 
     @staticmethod
@@ -128,7 +130,7 @@ class ModuleCommons(object):
         return driver.save_screenshot(file_name)
 
     @staticmethod
-    def set_window_size(driver, pos_x=800, pos_y=600): # YES
+    def set_window_size(driver, pos_x=800, pos_y=600):
         """Sets the width and height of the current
             window. (window.resizeTo)
 

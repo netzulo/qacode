@@ -3,7 +3,7 @@
     "path": "logs/", "name": "qacode", "level": "INFO"
   },
   "bot":{
-    "hub_url": "http://localhost:11000/wd/hub",
+    "hub_url": "http://netzulo.tk:11000/wd/hub",
     "drivers_path": "../qadrivers",
     "drivers_names": {
       "chrome": "chromedriver_64.exe",

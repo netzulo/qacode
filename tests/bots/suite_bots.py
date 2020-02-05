@@ -48,5 +48,5 @@ def test_bot_browser_create():
     before = len(bot.browsers)
     browser = bot.browser_create(bot.config.browsers[0])
     ASSERT.is_instance(browser, Browser)
-    ASSERT.equals(before+1, len(bot.browsers))
+    ASSERT.equals(before + 1, len(bot.browsers))
     ASSERT.equals(browser, bot.browsers[0])
