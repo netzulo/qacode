@@ -87,23 +87,23 @@ class TestNavBase(TestInfoBotUnique):
         # end setup_login
 
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
-    def test_navbase_instance(self):
+    def test_navbase_instance(self): # NO
         """Testcase: test_navbase_instance"""
         self.assert_is_instance(self.bot.navigation, NavBase)
 
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
-    def test_gourl_withoutwaits(self):
+    def test_gourl_withoutwaits(self): # YES
         """Testcase: test_gourl_withoutwaits"""
         self.bot.navigation.get_url(self.page.get('url'))
 
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
-    def test_gourl_withwaits(self):
+    def test_gourl_withwaits(self): # YES
         """Testcase: test_gourl_withwaits"""
         self.bot.navigation.get_url(
             self.page.get('url'), wait_for_load=1)
 
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
-    def test_getcurrenturl_ok(self):
+    def test_getcurrenturl_ok(self): # YES
         """Testcase: test_getcurrenturl_ok"""
         self.assert_equals(
             self.bot.navigation.get_current_url(),

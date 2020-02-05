@@ -17,18 +17,15 @@ class ModuleCommons(object):
             driver.implicitly_wait(wait_for_load)
         driver.get(url)
 
-    def get_current_url(self):
+    def get_current_url(driver):
         """Return current url from opened bot"""
-        try:
-            return self.driver.current_url
-        except WebDriverException:
-            raise Exception("Not selenium driver property 'current_url'")
+        return driver.current_url
     
-    def is_url(self, url, ignore_raises=True):
+    def is_url(driver, url, ignore_raises=True):
         """Check if url it's the same what selenium
             current and visible url
         """
-        if self.get_current_url() != url:
+        if driver.get_current_url(driver) != url:
             if not ignore_raises:
                 raise CoreException("'Current url' is not 'param url'")
             return False
