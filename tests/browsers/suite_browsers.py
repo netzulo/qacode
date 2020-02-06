@@ -39,6 +39,7 @@ def test_browser_create():
     ASSERT.is_instance(browser, Browser)
     ASSERT.is_instance(browser.config, BrowserConfig)
     ASSERT.not_none(browser.capabilities)
+    ASSERT.not_none(browser.driver_abs_path)
     if browser.config.browser not in ("iexplorer", "edge", "opera"):
         ASSERT.not_none(browser.options)
 

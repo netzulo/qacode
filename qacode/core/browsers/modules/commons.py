@@ -8,61 +8,59 @@ from selenium.common.exceptions import WebDriverException
 class ModuleCommons(object):
     """TODO: doc class"""
 
-    @staticmethod
-    def get_title(driver):
+    @classmethod
+    def get_maximize_window(cls, driver):
+        """Maximize browser window"""
+        driver.maximize_window()
+
+    @classmethod
+    def get_title(cls, driver):
         """Obtains the title of the current page and return it"""
         return driver.title
 
-    @staticmethod
-    def get_url(driver, url, wait_for_load=0):
+    @classmethod
+    def get_window_handle(cls, driver):
+        """Get window object to handle with selenium on scripts"""
+        return driver.current_window_handle
+
+    @classmethod
+    def get_capabilities(cls, driver):
+        """Retrieve current capabilities applied to selenium driver"""
+        return driver.desired_capabilities
+
+    @classmethod
+    def forward(cls, driver):
+        """Go forward using browser functionality"""
+        driver.forward()
+
+    @classmethod
+    def reload(cls, driver):
+        """Go reload page using browser functionality"""
+        driver.refresh()
+
+    @classmethod
+    def get_url(cls, driver, url, wait_for_load=0):
         """Do get_url including implicit wait for page load"""
         if wait_for_load > 0:
             driver.implicitly_wait(wait_for_load)
         driver.get(url)
 
-    @staticmethod
-    def get_current_url(driver):
+    @classmethod
+    def get_current_url(cls, driver):
         """Return current url from opened bot"""
         return driver.current_url
 
-    @staticmethod
-    def is_url(driver, url, ignore_raises=True):
+    @classmethod
+    def is_url(cls, driver, url):
         """Check if url it's the same what selenium
             current and visible url
         """
-        if driver.get_current_url(driver) != url:
-            if not ignore_raises:
-                raise Exception("'Current url' is not 'param url'")
+        if cls.get_current_url(driver) != url:
             return False
         return True
 
-    @staticmethod
-    def get_maximize_window(driver):
-        """Maximize browser window"""
-        driver.maximize_window()
-
-    @staticmethod
-    def get_window_handle(driver):
-        """Get window object to handle with selenium on scripts"""
-        return driver.current_window_handle
-
-    @staticmethod
-    def get_capabilities(driver):
-        """Retrieve current capabilities applied to selenium driver"""
-        return driver.desired_capabilities
-
-    @staticmethod
-    def forward(driver):
-        """Go forward using browser functionality"""
-        driver.forward()
-
-    @staticmethod
-    def reload(driver):
-        """Go reload page using browser functionality"""
-        driver.refresh()
-
-    @staticmethod
-    def get_log(driver, log_name='browser', raises=False):
+    @classmethod
+    def get_log(cls, driver, log_name='browser'):
         """Get selenium log by name, this depends of
             driver mode and browser what it's using each time
         """
@@ -82,15 +80,15 @@ class ModuleCommons(object):
             #     log_name, err.msg))
         return list()
 
-    @staticmethod
-    def get_screenshot_as_base64(driver):
+    @classmethod
+    def get_screenshot_as_base64(cls, driver):
         """Gets the screenshot of the current window as a base64 encoded string
         which is useful in embedded images in HTML
         """
         return driver.get_screenshot_as_base64()
 
-    @staticmethod
-    def get_screenshot_as_file(driver, file_name):
+    @classmethod
+    def get_screenshot_as_file(cls, driver, file_name):
         """Gets the screenshot of the current window. Returns False
             if there is any IOError, else returns True. Use full paths
             in your filename.
@@ -104,8 +102,8 @@ class ModuleCommons(object):
         """
         return driver.get_screenshot_as_file(file_name)
 
-    @staticmethod
-    def get_screenshot_as_png(driver):
+    @classmethod
+    def get_screenshot_as_png(cls, driver):
         """Gets the screenshot of the current window as a
             binary data.
 
@@ -114,8 +112,8 @@ class ModuleCommons(object):
         """
         return driver.get_screenshot_as_png()
 
-    @staticmethod
-    def get_screenshot_save(driver, file_name):
+    @classmethod
+    def get_screenshot_save(cls, driver, file_name):
         """Gets the screenshot of the current window. Returns False
             if there is any IOError, else returns True.
             Use full paths in your filename.
@@ -129,8 +127,8 @@ class ModuleCommons(object):
         """
         return driver.save_screenshot(file_name)
 
-    @staticmethod
-    def set_window_size(driver, pos_x=800, pos_y=600):
+    @classmethod
+    def set_window_size(cls, driver, pos_x=800, pos_y=600):
         """Sets the width and height of the current
             window. (window.resizeTo)
 
