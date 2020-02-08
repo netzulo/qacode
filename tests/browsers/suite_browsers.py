@@ -7,6 +7,7 @@ from qacode.core.browsers.browser import Browser
 from qacode.core.browsers.browser_config import BrowserConfig
 from qacode.core.browsers.modules.commons import ModuleCommons
 from qacode.core.browsers.modules.elements import ModuleElements
+from qacode.core.browsers.modules.screenshots import ModuleScreenshots
 from qacode.core.browsers.modules.waits import ModuleWaits
 from qacode.core.loggers.log import Log
 from qacode.core.testing.asserts import Assert
@@ -56,6 +57,7 @@ def test_browser_open():
     ASSERT.not_none(browser._driver_touch)
     ASSERT.equals(browser.Commons, ModuleCommons)
     ASSERT.equals(browser.Elements, ModuleElements)
+    ASSERT.equals(browser.Screenshots, ModuleScreenshots)
     ASSERT.equals(browser.Waits, ModuleWaits)
     browser_close(browser)
 
@@ -70,4 +72,3 @@ def test_browser_close():
     ASSERT.none(browser._driver_wait)
     ASSERT.none(browser._driver_actions)
     ASSERT.none(browser._driver_touch)
-    ASSERT.none(browser.modules)

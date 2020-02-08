@@ -7,6 +7,7 @@ import sys
 from qacode.core.browsers.browser_config import BrowserConfig
 from qacode.core.browsers.modules.commons import ModuleCommons
 from qacode.core.browsers.modules.elements import ModuleElements
+from qacode.core.browsers.modules.screenshots import ModuleScreenshots
 from qacode.core.browsers.modules.waits import ModuleWaits
 from qacode.core.exceptions.core_exception import CoreException
 # from qacode.core.loggers.log import Log
@@ -36,6 +37,7 @@ class Browser(object):
         self.Commons = ModuleCommons
         self.Elements = ModuleElements
         self.Waits = ModuleWaits
+        self.Screenshots = ModuleScreenshots
 
     def __config__(self, config):
         """TODO: doc method"""
@@ -157,7 +159,6 @@ class Browser(object):
         self._driver_wait = None
         self._driver_actions = None
         self._driver_touch = None
-        self._modules = None
 
     @property
     def config(self):
@@ -188,11 +189,6 @@ class Browser(object):
     def driver(self):
         """TODO: doc method"""
         return self._driver
-
-    @property
-    def modules(self):
-        """TODO: doc method"""
-        return self._modules
 
     @property
     def session_id(self):

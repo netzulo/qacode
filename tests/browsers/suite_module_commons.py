@@ -20,7 +20,7 @@ def test_browser_open(browser):
 @pytest.mark.dependency(depends=['browser_open'])
 def test_common_getmaximizewindow(browser):
     """TODO: doc method"""
-    ASSERT.not_none(browser.Commons.get_maximize_window(browser.driver))
+    browser.Commons.get_maximize_window(browser.driver)
 
 
 @pytest.mark.dependency(depends=['browser_open'])

@@ -4,11 +4,13 @@
 
 from qacode.core.browsers.modules.commons import ModuleCommons
 from qacode.core.browsers.modules.elements import ModuleElements
+from qacode.core.browsers.modules.screenshots import ModuleScreenshots
 from qacode.core.browsers.modules.waits import ModuleWaits
 
 
 __all__ = [
     'ModuleCommons',
     'ModuleElements',
+    'ModuleScreenshots',
     'ModuleWaits',
 ]
