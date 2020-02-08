@@ -83,7 +83,8 @@ def test_common_isurl(browser, expected):
 
 
 @pytest.mark.dependency(depends=['browser_open', 'get_url'])
-@pytest.mark.parametrize("log", [None, 'browser', 'driver', 'client', 'server'])
+@pytest.mark.parametrize(
+    "log", [None, 'browser', 'driver', 'client', 'server'])
 def test_getlog_lognames(browser, log):
     """Testcase: test_getlog_lognames"""
     if not log:

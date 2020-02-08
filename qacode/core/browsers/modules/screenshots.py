@@ -2,12 +2,8 @@
 """TODO"""
 
 
-from selenium.common.exceptions import WebDriverException
-
-
 class ModuleScreenshots(object):
     """TODO: doc class"""
-
 
     @classmethod
     def get_screenshot_as_base64(cls, driver):
