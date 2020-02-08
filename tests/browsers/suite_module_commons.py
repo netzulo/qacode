@@ -93,3 +93,9 @@ def test_getlog_lognames(browser, log):
     logs = browser.Commons.get_log(browser.driver, log_name=log)
     ASSERT.not_none(logs)
     ASSERT.is_instance(logs, list)
+
+
+@pytest.mark.dependency(depends=['browser_open'])
+def test_common_setwindowsize(browser):
+    """TODO: doc method"""
+    browser.Commons.set_window_size(browser.driver)

@@ -5,7 +5,6 @@
 import pytest
 
 
-@pytest.mark.dependency(depends=['browser_open'])
 def test_mod_screenshots_dummy():
     """TODO: doc method"""
     pytest.fail("WIP: not developed yet")

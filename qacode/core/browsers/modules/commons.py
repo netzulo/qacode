@@ -81,12 +81,12 @@ class ModuleCommons(object):
         return list()
 
     @classmethod
-    def set_window_size(cls, driver, pos_x=800, pos_y=600):
+    def set_window_size(cls, driver, x=800, y=600):
         """Sets the width and height of the current
             window. (window.resizeTo)
 
         Keyword Arguments:
-            pos_x {int} -- width of new window size (default: {800})
-            pos_y {int} -- height of new window size (default: {600})
+            x {int} -- width of new window size (default: {800})
+            y {int} -- height of new window size (default: {600})
         """
         driver.set_window_size(pos_x, pos_y)
