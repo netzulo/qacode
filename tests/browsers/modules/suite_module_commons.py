@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Test Suite module for tests.browsers package"""
+"""Test Suite module for tests.browsers.modules package"""
 
 
 import pytest
@@ -12,9 +12,10 @@ CFG = settings(file_path="qacode/configs/", file_name="settings.json")
 
 
 @pytest.mark.dependency(name="browser_open")
-def test_browser_open(browser):
+def test_commons_browser_open(browser):
     """TODO: doc method"""
-    browser.open()
+    if browser.driver is None:
+        browser.open()
 
 
 @pytest.mark.dependency(depends=['browser_open'])

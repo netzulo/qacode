@@ -15,62 +15,54 @@ class ModuleElements(object):
     """TODO: doc class"""
 
     @classmethod
-    def find_element(cls, driver, selector, locator=By.CSS_SELECTOR):
+    def find(cls, driver, selector, locator=By.CSS_SELECTOR):
         """Just divided execution ways for search
             web element throught selenium
         """
         if locator is None:
-            raise Exception("find_element: Locator can't be None")
-        try:
-            return driver.find_element(locator, selector)
-        except NoSuchElementException:
-            raise Exception("find_element: Element not found")
+            raise Exception("find: Locator can't be None")
+        # Not found: NoSuchElementException, StaleElementReferenceException
+        return driver.find_element(locator, selector)
 
     @classmethod
-    def find_elements(cls, driver, selector, locator=By.CSS_SELECTOR,
-                      raises_zero=True):
+    def finds(cls, driver, selector, locator=By.CSS_SELECTOR,
+              raises_zero=True):
         """Just divided execution ways for search
             web elements throught selenium
         """
         if locator is None:
-            raise Exception("find_elements: Locator can't be None")
-        try:
-            elements = driver.find_elements(locator, selector)
-            if len(elements) == 0 and raises_zero:
-                raise Exception("find_elements: 0 elements found")
-            return elements
-        except NoSuchElementException:
-            raise Exception("find_elements: Element not found")
+            raise Exception("finds: Locator can't be None")
+        # Not found: NoSuchElementException, StaleElementReferenceException
+        elements = driver.find_elements(locator, selector)
+        if len(elements) == 0 and raises_zero:
+            raise Exception("finds: 0 elements found")
+        return elements
 
     @classmethod
-    def find_element_wait(cls, driver_wait, selector,
-                          locator=By.CSS_SELECTOR):
+    def find_wait(cls, driver_wait, selector, locator=By.CSS_SELECTOR):
         """Search element using WebDriverWait class
             and ElementConditions presence_of_element_located
         """
-        try:
-            return driver_wait.until(
-                EC.presence_of_element_located((locator, selector)))
-        except (NoSuchElementException, StaleElementReferenceException):
-            return driver_wait.until(
-                EC.visibility_of_element_located((locator, selector)))
+        if locator is None:
+            raise Exception("find_wait: Locator can't be None")
+        # Not found: NoSuchElementException, StaleElementReferenceException
+        expectation = EC.presence_of_element_located((locator, selector))
+        return driver_wait.until(expectation)
 
     @classmethod
-    def find_elements_wait(cls, driver_wait, selector,
-                           locator=By.CSS_SELECTOR):
+    def finds_wait(cls, driver_wait, selector, locator=By.CSS_SELECTOR):
         """Search elements using WebDriverWait class
             and ElementConditions presence_of_all_elements_located
         """
-        try:
-            return driver_wait.until(
-                EC.presence_of_all_elements_located((locator, selector)))
-        except (NoSuchElementException, StaleElementReferenceException):
-            return driver_wait.until(
-                EC.visibility_of_all_elements_located((locator, selector)))
+        if locator is None:
+            raise Exception("finds_wait: Locator can't be None")
+        # Not found: NoSuchElementException, StaleElementReferenceException
+        expectation = EC.presence_of_all_elements_located((locator, selector))
+        return driver_wait.until(expectation)
 
     @classmethod
-    def find_element_child(cls, driver, element, child_selector,
-                           locator=By.CSS_SELECTOR):
+    def find_child(cls, driver, element, child_selector,
+                   locator=By.CSS_SELECTOR):
         """TODO: doc method"""
         if element is None or not isinstance(element, WebElement):
             raise Exception("Cant find child if not element")
@@ -86,8 +78,8 @@ class ModuleElements(object):
             raise Exception(err)
 
     @classmethod
-    def find_element_children(cls, driver, element, child_selector,
-                              locator=By.CSS_SELECTOR):
+    def find_children(cls, driver, element, child_selector,
+                      locator=By.CSS_SELECTOR):
         """TODO: doc method"""
         if element is None or not isinstance(element, WebElement):
             raise Exception("Cant find children if not element found")
@@ -103,12 +95,12 @@ class ModuleElements(object):
             raise Exception(err)
 
     @classmethod
-    def find_elements_child(cls):
+    def finds_child(cls):
         """TODO: doc method"""
         raise NotImplementedError("TODO: open an issue at github please")
 
     @classmethod
-    def find_elements_children(cls):
+    def finds_children(cls):
         """TODO: doc method"""
         raise NotImplementedError("TODO: open an issue at github please")
 

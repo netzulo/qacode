@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Test Suite module for tests.browsers package"""
+"""Test Suite module for tests.browsers.modules package"""
 
 
 import pytest

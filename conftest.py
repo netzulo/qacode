@@ -10,6 +10,9 @@ from qacode.utils import settings
 def browser():
     CFG = settings(file_path="qacode/configs/", file_name="settings.json")
     bot = Bot(**CFG)
-    before = len(bot.browsers)
-    yield bot.browser_create(bot.config.browsers[0])
-    bot.browsers[0].close()
+    try:
+        yield bot.browser_create(bot.config.browsers[0])
+    except Exception as err:
+        raise err
+    finally:
+        bot.browsers[0].close()
