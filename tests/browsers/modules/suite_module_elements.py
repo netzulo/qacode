@@ -12,6 +12,23 @@ ASSERT = Assert()
 CFG = settings(file_path="qacode/configs/", file_name="settings.json")
 
 
+def setup_selectors():
+    """TODO: doc method"""
+    # setup parent
+    selector = CFG.get('bot').get('controls')[0].get('selector')
+    ASSERT.is_instance(selector, str)
+    ASSERT.greater(len(selector), 0, "invalid empty selector")
+    # setup child
+    child_sel = CFG.get('bot').get('controls')[1].get('selector')
+    ASSERT.is_instance(child_sel, str)
+    ASSERT.greater(len(child_sel), 0, "invalid empty selector")
+    # setup child
+    children_sel = "*"
+    ASSERT.is_instance(child_sel, str)
+    ASSERT.greater(len(child_sel), 0, "invalid empty selector")
+    return {"parent": selector, "child": child_sel, "children": children_sel}
+
+
 @pytest.mark.dependency(name="browser_open")
 def test_elements_browser_open(browser):
     """TODO: doc method"""
@@ -25,9 +42,7 @@ def test_elements_browser_open(browser):
 @pytest.mark.dependency(depends=['browser_open'])
 def test_elements_find(browser):
     """TODO: doc method"""
-    selector = CFG.get('bot').get('controls')[0].get('selector')
-    ASSERT.is_instance(selector, str)
-    ASSERT.greater(len(selector), 0, "invalid empty selector")
+    selector = setup_selectors().get('parent')
     element = browser.Elements.find(browser.driver, selector)
     ASSERT.is_instance(element, WebElement)
 
@@ -43,3 +58,44 @@ def test_elements_finds(browser):
     ASSERT.is_instance(elements, list)
     for element in elements:
         ASSERT.is_instance(element, WebElement)
+
+
+@pytest.mark.dependency(depends=['browser_open'])
+def test_elements_findwait(browser):
+    """TODO: doc method"""
+    selector = setup_selectors().get('parent')
+    element = browser.Elements.find_wait(browser._driver_wait, selector)
+    ASSERT.is_instance(element, WebElement)
+
+
+@pytest.mark.dependency(depends=['browser_open'])
+def test_elements_findswait(browser):
+    """TODO: doc method"""
+    selector = "{}{}".format(setup_selectors().get('parent'), " input")
+    elements = browser.Elements.finds_wait(browser._driver_wait, selector)
+    ASSERT.is_instance(elements, list)
+    for element in elements:
+        ASSERT.is_instance(element, WebElement)
+
+
+@pytest.mark.dependency(depends=['browser_open'])
+def test_elements_findchild(browser):
+    """TODO: doc method"""
+    selectors = setup_selectors()
+    element = browser.Elements.find(browser.driver, selectors.get('parent'))
+    ASSERT.is_instance(element, WebElement)
+    child = browser.Elements.find_child(element, selectors.get('child'))
+    ASSERT.is_instance(child, WebElement)
+
+
+@pytest.mark.dependency(depends=['browser_open'])
+def test_elements_findchildren(browser):
+    """TODO: doc method"""
+    selectors = setup_selectors()
+    element = browser.Elements.find(browser.driver, selectors.get('parent'))
+    ASSERT.is_instance(element, WebElement)
+    children = browser.Elements.find_children(
+        element, selectors.get('children'))
+    ASSERT.is_instance(children, list)
+    for child in children:
+        ASSERT.is_instance(child, WebElement)

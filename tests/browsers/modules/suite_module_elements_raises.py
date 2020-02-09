@@ -13,7 +13,7 @@ CFG = settings(file_path="qacode/configs/", file_name="settings.json")
 
 
 @pytest.mark.dependency(name="browser_open")
-def test_elements_browser_open(browser):
+def test_elements_raises_browser_open(browser):
     """TODO: doc method"""
     if browser.driver is None:
         browser.open()
@@ -32,9 +32,63 @@ def test_elements_find_raises(browser, selector, locator):
 
 @pytest.mark.dependency(depends=['browser_open'])
 @pytest.mark.parametrize("selector, locator", [
-    ("invalid", None), ("invalid", By.CSS_SELECTOR)
+    ("invalid", None), ("invalid", By.CSS_SELECTOR),
 ])
 def test_elements_finds_raises(browser, selector, locator):
     """TODO: doc method"""
     with pytest.raises(Exception):
         browser.Elements.finds(browser.driver, selector, locator=locator)
+
+
+@pytest.mark.dependency(depends=['browser_open'])
+@pytest.mark.parametrize("selector, locator", [("invalid", None)])
+def test_elements_findwait_raises(browser, selector, locator):
+    """TODO: doc method"""
+    with pytest.raises(Exception):
+        browser.Elements.find_wait(browser.driver, selector, locator=locator)
+
+
+@pytest.mark.dependency(depends=['browser_open'])
+@pytest.mark.parametrize("selector, locator", [("invalid", None)])
+def test_elements_findswait_raises(browser, selector, locator):
+    """TODO: doc method"""
+    with pytest.raises(Exception):
+        browser.Elements.finds_wait(browser.driver, selector, locator=locator)
+
+
+@pytest.mark.dependency(depends=['browser_open'])
+@pytest.mark.parametrize("parent_sel,child_sel,locator", [
+    ("body", "invalid", None)
+])
+def test_elements_findchild_raises(browser, parent_sel, child_sel, locator):
+    """TODO: doc method"""
+    element = browser.Elements.find(browser.driver, parent_sel)
+    with pytest.raises(Exception):
+        browser.Elements.find_child(element, child_sel, locator=locator)
+
+
+@pytest.mark.dependency(depends=['browser_open'])
+@pytest.mark.parametrize("parent_sel,child_sel,locator", [
+    ("body", "invalid", None)
+])
+def test_elements_findchildren_raises(browser, parent_sel, child_sel, locator):
+    """TODO: doc method"""
+    element = browser.Elements.find(browser.driver, parent_sel)
+    with pytest.raises(Exception):
+        browser.Elements.find_children(element, child_sel, locator=locator)
+
+
+@pytest.mark.dependency(depends=['browser_open'])
+@pytest.mark.parametrize("selector, locator", [("invalid", None)])
+def test_elements_findschild_raises(browser, selector, locator):
+    """TODO: doc method"""
+    with pytest.raises(NotImplementedError):
+        browser.Elements.finds_child()
+
+
+@pytest.mark.dependency(depends=['browser_open'])
+@pytest.mark.parametrize("selector, locator", [("invalid", None)])
+def test_elements_findschildren_raises(browser, selector, locator):
+    """TODO: doc method"""
+    with pytest.raises(NotImplementedError):
+        browser.Elements.finds_children()

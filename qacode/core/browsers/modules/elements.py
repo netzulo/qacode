@@ -2,10 +2,6 @@
 """TODO"""
 
 
-from selenium.common.exceptions import (
-    NoSuchElementException,
-    StaleElementReferenceException,
-)
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions as EC
@@ -61,47 +57,41 @@ class ModuleElements(object):
         return driver_wait.until(expectation)
 
     @classmethod
-    def find_child(cls, driver, element, child_selector,
-                   locator=By.CSS_SELECTOR):
+    def find_child(cls, element, child_selector, locator=By.CSS_SELECTOR):
         """TODO: doc method"""
-        if element is None or not isinstance(element, WebElement):
-            raise Exception("Cant find child if not element")
-        try:
-            return element.find_element(locator, child_selector)
-        except (NoSuchElementException, StaleElementReferenceException) as err:
-            # at Java lang exist 1 expected condition
-            # named : visibilityOfNestedElementsLocatedBy
-            # doc : https://selenium-python.readthedocs.io/waits.html
-            # maybe must exist at python too
-            # then, create and use new method named: find_element_child_wait()
-            # raise NotImplementedError("TODO:open an issue at github please")
-            raise Exception(err)
+        if locator is None:
+            raise Exception("finds_wait: Locator can't be None")
+        # Not found: NoSuchElementException, StaleElementReferenceException
+        return element.find_element(locator, child_selector)
 
     @classmethod
-    def find_children(cls, driver, element, child_selector,
-                      locator=By.CSS_SELECTOR):
+    def find_children(cls, element, child_selector, locator=By.CSS_SELECTOR):
         """TODO: doc method"""
-        if element is None or not isinstance(element, WebElement):
-            raise Exception("Cant find children if not element found")
-        try:
-            return element.find_elements(locator, child_selector)
-        except (NoSuchElementException, StaleElementReferenceException) as err:
-            # at Java lang exist 1 expected condition
-            # named : visibilityOfNestedElementsLocatedBy
-            # doc : https://selenium-python.readthedocs.io/waits.html
-            # maybe must exist at python too
-            # then, create and use new method named: find_element_child_wait()
-            # raise NotImplementedError("TODO:open an issue at github please")
-            raise Exception(err)
+        if locator is None:
+            raise Exception("finds_wait: Locator can't be None")
+        # Not found: NoSuchElementException, StaleElementReferenceException
+        return element.find_elements(locator, child_selector)
 
     @classmethod
     def finds_child(cls):
         """TODO: doc method"""
+        # at Java lang exist 1 expected condition
+        # named : visibilityOfNestedElementsLocatedBy
+        # doc : https://selenium-python.readthedocs.io/waits.html
+        # maybe must exist at python too
+        # then, create and use new method named: find_element_child_wait()
+        # raise NotImplementedError("TODO:open an issue at github please")
         raise NotImplementedError("TODO: open an issue at github please")
 
     @classmethod
     def finds_children(cls):
         """TODO: doc method"""
+        # at Java lang exist 1 expected condition
+        # named : visibilityOfNestedElementsLocatedBy
+        # doc : https://selenium-python.readthedocs.io/waits.html
+        # maybe must exist at python too
+        # then, create and use new method named: find_element_child_wait()
+        # raise NotImplementedError("TODO:open an issue at github please")
         raise NotImplementedError("TODO: open an issue at github please")
 
     @classmethod
