@@ -54,42 +54,11 @@ class Assert(object):
             raise AssertionError(actual, expected, _msg)
         return True
 
-    def equals_url(self, actual, expected, msg=None, wait=0):
-        """Allow to compare 2 urls and check if 1st it's equals to 2nd url
-
-        Arguments:
-            actual {type} -- actual value
-            expected {type} -- expected value
-
-        Keyword Arguments:
-            wait {int} -- Wait time on Runtime execution before execute
-                next lane of code (default: {0})
-
-        Raises:
-            AssertionError -- [description]
-        """
-        _msg = self.message(
-            "assert_equals_url", actual, expected, msg=msg)
-        self.sleep(wait)
-        if actual != expected:
-            raise AssertionError(actual, expected, _msg)
-        return True
-
-    def not_equals_url(self, actual, expected, msg=None, wait=0):
-        """Allow to compare 2 urls to check if 1st isn't equals to 2nd url"""
-        _msg = self.message(
-            "assert_not_equals_url", actual, expected, msg=msg)
-        self.sleep(wait)
-        if actual == expected:
-            raise AssertionError(actual, expected, _msg)
-        return True
-
     def contains_url(self, actual, contains, msg=None, wait=0):
         """Allow to compare 2 urls and check if 1st contains 2nd url"""
         _msg = self.message(
             "assert_contains_url", actual, contains, msg=msg)
-        self.sleep(wait)
-        if actual not in contains:
+        if contains not in actual:
             raise AssertionError(actual, contains, _msg)
         return True
 
@@ -97,8 +66,7 @@ class Assert(object):
         """Allow to compare 2 urls and check if 1st not contains 2nd url"""
         _msg = self.message(
             "assert_not_contains_url", actual, contains, msg=msg)
-        self.sleep(wait)
-        if actual in contains:
+        if contains in actual:
             raise AssertionError(actual, contains, _msg)
         return True
 

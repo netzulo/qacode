@@ -3,7 +3,6 @@
 
 
 from selenium.webdriver.common.by import By
-from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions as EC
 
 
@@ -108,15 +107,18 @@ class ModuleElements(object):
     def ele_write(cls, element, text=None):
         """Over element perform send_keys , if not sended will
             write empty over element
+
+        Returns:
+            WebElement -- returns element clicked (to allow chaining)
         """
-        if not isinstance(element, WebElement):
-            raise Exception("Param 'element' it's not WebElement")
-        if text is not None:
-            element.send_keys(text)
+        if not text:
+            # it's neccessary because some fields shows
+            #   validation message and color just after
+            #   try to send empty message
+            element.send_keys('')
         else:
-            # it's neccessary because some fields shows validation message and
-            # color after try to send empty message
-            element.send_keys()
+            element.send_keys(text)
+        return element
 
     @classmethod
     def ele_attribute(cls, element, attr_name):
@@ -126,8 +128,8 @@ class ModuleElements(object):
             returns the value of the attribute with the same name. If there's
             no attribute with that name, None is returned.
         """
-        value = str(element.get_attribute(attr_name))
-        if value is None or value == attr_name:
+        value = element.get_attribute(attr_name)
+        if value is None:
             raise Exception("Attr '{}' not found".format(attr_name))
         return value
 

@@ -6,27 +6,11 @@ import pytest
 from qacode.core.testing.asserts import Assert
 from qacode.utils import settings
 from selenium.webdriver.remote.webelement import WebElement
+from tests.utils import setup_selectors
 
 
 ASSERT = Assert()
 CFG = settings(file_path="qacode/configs/", file_name="settings.json")
-
-
-def setup_selectors():
-    """TODO: doc method"""
-    # setup parent
-    selector = CFG.get('bot').get('controls')[0].get('selector')
-    ASSERT.is_instance(selector, str)
-    ASSERT.greater(len(selector), 0, "invalid empty selector")
-    # setup child
-    child_sel = CFG.get('bot').get('controls')[1].get('selector')
-    ASSERT.is_instance(child_sel, str)
-    ASSERT.greater(len(child_sel), 0, "invalid empty selector")
-    # setup child
-    children_sel = "*"
-    ASSERT.is_instance(child_sel, str)
-    ASSERT.greater(len(child_sel), 0, "invalid empty selector")
-    return {"parent": selector, "child": child_sel, "children": children_sel}
 
 
 @pytest.mark.dependency(name="browser_open")
@@ -99,3 +83,32 @@ def test_elements_findchildren(browser):
     ASSERT.is_instance(children, list)
     for child in children:
         ASSERT.is_instance(child, WebElement)
+
+
+@pytest.mark.dependency(depends=['browser_open'])
+def test_elements_eleclick(browser):
+    """TODO: doc method"""
+    selectors = setup_selectors()
+    element = browser.Elements.find(browser.driver, selectors.get('child'))
+    ele = browser.Elements.ele_click(element)
+    ASSERT.equals(element, ele)
+
+
+@pytest.mark.dependency(depends=['browser_open'])
+@pytest.mark.parametrize("text", [None, "write_something"])
+def test_elements_elewrite(browser, text):
+    """TODO: doc method"""
+    selectors = setup_selectors()
+    element = browser.Elements.find(browser.driver, selectors.get('child'))
+    ele = browser.Elements.ele_write(element, text=text)
+    ASSERT.equals(element, ele)
+
+
+@pytest.mark.dependency(depends=['browser_open'])
+@pytest.mark.parametrize("attr_name", ["id"])
+def test_elements_eleattribute(browser, attr_name):
+    """TODO: doc method"""
+    selectors = setup_selectors()
+    element = browser.Elements.find(browser.driver, selectors.get('child'))
+    attr = browser.Elements.ele_attribute(element, attr_name)
+    ASSERT.is_instance(attr, str)

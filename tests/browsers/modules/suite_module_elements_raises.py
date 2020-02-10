@@ -6,6 +6,7 @@ import pytest
 from qacode.core.testing.asserts import Assert
 from qacode.utils import settings
 from selenium.webdriver.common.by import By
+from tests.utils import setup_selectors
 
 
 ASSERT = Assert()
@@ -92,3 +93,13 @@ def test_elements_findschildren_raises(browser, selector, locator):
     """TODO: doc method"""
     with pytest.raises(NotImplementedError):
         browser.Elements.finds_children()
+
+
+@pytest.mark.dependency(depends=['browser_open'])
+@pytest.mark.parametrize("attr_name", ["doesnotexist"])
+def test_elements_eleattribute_raises(browser, attr_name):
+    """TODO: doc method"""
+    selectors = setup_selectors()
+    element = browser.Elements.find(browser.driver, selectors.get('child'))
+    with pytest.raises(Exception):
+        browser.Elements.ele_attribute(element, attr_name)
