@@ -115,7 +115,7 @@ class ModuleElements(object):
             # it's neccessary because some fields shows
             #   validation message and color just after
             #   try to send empty message
-            element.send_keys('')
+            element.send_keys()
         else:
             element.send_keys(text)
         return element
