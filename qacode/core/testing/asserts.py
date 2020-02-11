@@ -130,13 +130,11 @@ class Assert(object):
             raise AssertionError(actual, pattern, _msg)
         return True
 
-    def regex_url(self, actual, pattern=None, msg=None):
+    def regex_url(self, actual, msg=None):
         """Allow to compare if value match url pattern, can use
             custom pattern
         """
-        if not pattern:
-            pattern = ASSERT_REGEX_URL
-        return self.assert_regex(actual, pattern, msg=msg)
+        return self.regex(actual, ASSERT_REGEX_URL, msg=msg)
 
     def path_exist(self, actual, is_dir=True, msg=None):
         """Allow to check if path exist, can check if is_dir also"""

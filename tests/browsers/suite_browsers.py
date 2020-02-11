@@ -15,7 +15,7 @@ from qacode.utils import settings
 
 
 ASSERT = Assert()
-CFG = settings(file_path="qacode/configs/", file_name="settings.json")
+CFG = settings(path="qacode/configs/", name="settings.json")
 BROWSERS = CFG.get('bot').get('browsers')
 HUB_URL = CFG.get("bot").get("hub_url")
 LOG = Log(**CFG.get('log'))

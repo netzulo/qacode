@@ -28,7 +28,7 @@ class Browser(object):
     def __init__(self, log, **kwargs):
         """TODO: doc method"""
         self._log = log
-        self._config = self.__config__(kwargs)
+        self._config = BrowserConfig(**kwargs)
         self._capabilities = self.__capabilities__()
         self._options = self.__options__()
         self._driver_abs_path = self.__driver_abs_path__()
@@ -38,17 +38,6 @@ class Browser(object):
         self.Elements = ModuleElements
         self.Waits = ModuleWaits
         self.Screenshots = ModuleScreenshots
-
-    def __config__(self, config):
-        """TODO: doc method"""
-        if config is None:
-            raise Exception("Can't create browser without configuration")
-        if isinstance(config, BrowserConfig):
-            return config
-        elif isinstance(config, dict):
-            return BrowserConfig(**config)
-        else:
-            raise Exception("Just accepted types: dict, BrowserConfig")
 
     def __capabilities__(self):
         """TODO: doc method"""
@@ -164,11 +153,6 @@ class Browser(object):
     def config(self):
         """TODO: doc method"""
         return self._config
-
-    @config.setter
-    def config(self, value):
-        """TODO: doc method"""
-        self._config = self.__config__(value)
 
     @property
     def capabilities(self):

@@ -3,7 +3,7 @@
 
 
 import pytest
-from qacode.core.testing.asserts import Assert
+from qacode.core.testing.asserts import (ASSERT_REGEX_URL, Assert)
 
 
 def asserts_create():
@@ -84,46 +84,54 @@ def test_asserts_notinlist():
 @pytest.mark.dependency(depends=['asserts_create'])
 def test_asserts_regex():
     """TODO: doc method"""
-    raise NotImplementedError("WIP: not developed yet")
+    asserts = asserts_create()
+    asserts.regex("https://netzulo.tk:83", ASSERT_REGEX_URL)
 
 
 @pytest.mark.dependency(depends=['asserts_create'])
 def test_asserts_regexurl():
     """TODO: doc method"""
-    raise NotImplementedError("WIP: not developed yet")
+    asserts = asserts_create()
+    asserts.regex_url("https://netzulo.tk:83")
 
 
 @pytest.mark.dependency(depends=['asserts_create'])
 def test_asserts_pathexist():
     """TODO: doc method"""
-    raise NotImplementedError("WIP: not developed yet")
+    asserts = asserts_create()
+    asserts.path_exist("./")
 
 
 @pytest.mark.dependency(depends=['asserts_create'])
 def test_asserts_pathnotexist():
     """TODO: doc method"""
-    raise NotImplementedError("WIP: not developed yet")
+    asserts = asserts_create()
+    asserts.path_not_exist("doesnotexist/")
 
 
 @pytest.mark.dependency(depends=['asserts_create'])
 def test_asserts_true():
     """TODO: doc method"""
-    raise NotImplementedError("WIP: not developed yet")
+    asserts = asserts_create()
+    asserts.true(True)
 
 
 @pytest.mark.dependency(depends=['asserts_create'])
 def test_asserts_false():
     """TODO: doc method"""
-    raise NotImplementedError("WIP: not developed yet")
+    asserts = asserts_create()
+    asserts.false(False)
 
 
 @pytest.mark.dependency(depends=['asserts_create'])
 def test_asserts_none():
     """TODO: doc method"""
-    raise NotImplementedError("WIP: not developed yet")
+    asserts = asserts_create()
+    asserts.none(None)
 
 
 @pytest.mark.dependency(depends=['asserts_create'])
 def test_asserts_notnone():
     """TODO: doc method"""
-    raise NotImplementedError("WIP: not developed yet")
+    asserts = asserts_create()
+    asserts.not_none(":)")

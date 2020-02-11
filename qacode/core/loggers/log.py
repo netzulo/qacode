@@ -24,8 +24,7 @@ class Log(object):
         self._name = kwargs.get('name') or "qacode"
         self._name_file = "{}.log".format(self._name)
         self._path = kwargs.get('path') or './logs/'
-        self._path_join = path_format(
-            file_path=self._path, file_name=self._name_file)
+        self._path_join = path_format(path=self._path, name=self._name_file)
         self._level = kwargs.get('level') or INFO
 
         self._formatter = Formatter(

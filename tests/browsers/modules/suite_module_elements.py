@@ -10,7 +10,7 @@ from tests.utils import setup_selectors
 
 
 ASSERT = Assert()
-CFG = settings(file_path="qacode/configs/", file_name="settings.json")
+CFG = settings(path="qacode/configs/", name="settings.json")
 
 
 @pytest.mark.dependency(name="browser_open")
