@@ -112,3 +112,32 @@ def test_elements_eleattribute(browser, attr_name):
     element = browser.Elements.find(browser.driver, selectors.get('child'))
     attr = browser.Elements.ele_attribute(element, attr_name)
     ASSERT.is_instance(attr, str)
+
+
+@pytest.mark.dependency(depends=['browser_open'])
+@pytest.mark.parametrize("attr_name", ["id"])
+def test_elements_eleinputvalue(browser, attr_name):
+    """TODO: doc method"""
+    selectors = setup_selectors()
+    element = browser.Elements.find(browser.driver, selectors.get('child'))
+    attr_value = browser.Elements.ele_input_value(element)
+    ASSERT.is_instance(attr_value, str)
+
+
+@pytest.mark.dependency(depends=['browser_open'])
+@pytest.mark.parametrize("attr_name", ["id"])
+def test_elements_eleclear(browser, attr_name):
+    """TODO: doc method"""
+    selectors = setup_selectors()
+    element = browser.Elements.find(browser.driver, selectors.get('child'))
+    browser.Elements.ele_clear(element)
+
+
+@pytest.mark.dependency(depends=['browser_open'])
+@pytest.mark.parametrize("attr_name", ["id"])
+def test_elements_elecss(browser, attr_name):
+    """TODO: doc method"""
+    selectors = setup_selectors()
+    element = browser.Elements.find(browser.driver, selectors.get('child'))
+    css_property = browser.Elements.ele_css(element, "margin")
+    ASSERT.is_instance(css_property, str)

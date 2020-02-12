@@ -26,6 +26,5 @@ def test_utils_readfile():
 
 def test_utils_settings():
     """TODO: doc method"""
-    ASSERTS.is_instance(
-        settings(path="qacode/configs/", name="settings.json"),
-        dict)
+    file = settings(path="qacode/configs/", name="settings.json")
+    ASSERTS.is_instance(file, dict)

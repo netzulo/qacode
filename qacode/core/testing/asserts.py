@@ -48,16 +48,14 @@ class Assert(object):
         """Allow to compare 2 value to check if 1st isn't equals to
             2nd value
         """
-        _msg = self.message(
-            "assert_not_equals", actual, expected, msg=msg)
+        _msg = self.message("assert_not_equals", actual, expected, msg=msg)
         if actual == expected:
             raise AssertionError(actual, expected, _msg)
         return True
 
     def contains_url(self, actual, contains, msg=None, wait=0):
         """Allow to compare 2 urls and check if 1st contains 2nd url"""
-        _msg = self.message(
-            "assert_contains_url", actual, contains, msg=msg)
+        _msg = self.message("assert_contains_url", actual, contains, msg=msg)
         if contains not in actual:
             raise AssertionError(actual, contains, _msg)
         return True
@@ -82,24 +80,21 @@ class Assert(object):
 
     def greater(self, actual, greater, msg=None):
         """Allow to encapsulate method assertGreater(a, b, msg=msg)"""
-        _msg = self.message(
-            "assert_greater", actual, greater, msg=msg)
+        _msg = self.message("assert_greater", actual, greater, msg=msg)
         if actual < greater:
             raise AssertionError(actual, greater, _msg)
         return True
 
     def lower(self, actual, lower, msg=None):
         """Allow to encapsulate method assertLower(a, b, msg=msg)"""
-        _msg = self.message(
-            "assert_lower", actual, lower, msg=msg)
+        _msg = self.message("assert_lower", actual, lower, msg=msg)
         if actual > lower:
             raise AssertionError(actual, lower, _msg)
         return True
 
     def in_list(self, actual, valid_values, msg=None):
         """Allow to compare if value it's in to 2nd list of values"""
-        _msg = self.message(
-            "assert_in_list", actual, valid_values, msg=msg)
+        _msg = self.message("assert_in_list", actual, valid_values, msg=msg)
         if actual not in valid_values:
             raise AssertionError(actual, valid_values, _msg)
         return True
@@ -114,8 +109,7 @@ class Assert(object):
 
     def regex(self, actual, pattern, msg=None):
         """Allow to compare if value match pattern"""
-        _msg = self.message(
-            "assert_regex", actual, pattern, msg=msg)
+        _msg = self.message("assert_regex", actual, pattern, msg=msg)
         is_match = re.match(pattern, actual)
         if not is_match:
             raise AssertionError(actual, pattern, _msg)
@@ -123,8 +117,7 @@ class Assert(object):
 
     def not_regex(self, actual, pattern, msg=None):
         """Allow to compare if value not match pattern"""
-        _msg = self.message(
-            "assert_not_regex", actual, pattern, msg=msg)
+        _msg = self.message("assert_not_regex", actual, pattern, msg=msg)
         is_match = re.match(pattern, actual)
         if is_match:
             raise AssertionError(actual, pattern, _msg)
@@ -136,28 +129,19 @@ class Assert(object):
         """
         return self.regex(actual, ASSERT_REGEX_URL, msg=msg)
 
-    def path_exist(self, actual, is_dir=True, msg=None):
+    def path_exist(self, actual, msg=None):
         """Allow to check if path exist, can check if is_dir also"""
-        _msg = self.message(
-            "assert_path_exist",
-            actual,
-            "is_dir={}".format(is_dir),
-            msg=msg)
+        _msg = self.message("assert_path_exist", actual, "", msg=msg)
         if not os.path.exists(actual):
             raise AssertionError(actual, "PATH_NOT_EXIST", _msg)
         _is_dir = os.path.isdir(actual)
-        if is_dir:
-            if not _is_dir:
-                raise AssertionError(actual, "PATH_NOT_DIR", _msg)
-        else:
-            if _is_dir:
-                raise AssertionError(actual, "PATH_IS_DIR_AND_MUST_NOT", _msg)
+        if not _is_dir:
+            raise AssertionError(actual, "PATH_NOT_DIR", _msg)
         return True
 
     def path_not_exist(self, actual, msg=None):
         """Allow to check if path not exist, can check if is_dir also"""
-        _msg = self.message(
-            "assert_path_not_exist", actual, "", msg=msg)
+        _msg = self.message("assert_path_not_exist", actual, "", msg=msg)
         if os.path.exists(actual):
             raise AssertionError(actual, "PATH_EXIST_AND_MUST_NOT", _msg)
         return True
