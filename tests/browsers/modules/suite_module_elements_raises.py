@@ -20,7 +20,7 @@ def test_elements_raises_browser_open(browser):
         browser.open()
     cfg_url = CFG.get('bot').get('pages')[0].get('url')
     ASSERT.not_none(cfg_url)
-    browser.Commons.get_url(browser.driver, cfg_url)
+    browser.commons.get_url(cfg_url)
 
 
 @pytest.mark.dependency(depends=['browser_open'])
@@ -28,7 +28,7 @@ def test_elements_raises_browser_open(browser):
 def test_elements_find_raises(browser, selector, locator):
     """TODO: doc method"""
     with pytest.raises(Exception):
-        browser.Elements.find(browser.driver, selector, locator=locator)
+        browser.elements.find(selector, locator=locator)
 
 
 @pytest.mark.dependency(depends=['browser_open'])
@@ -38,7 +38,7 @@ def test_elements_find_raises(browser, selector, locator):
 def test_elements_finds_raises(browser, selector, locator):
     """TODO: doc method"""
     with pytest.raises(Exception):
-        browser.Elements.finds(browser.driver, selector, locator=locator)
+        browser.elements.finds(selector, locator=locator)
 
 
 @pytest.mark.dependency(depends=['browser_open'])
@@ -46,7 +46,7 @@ def test_elements_finds_raises(browser, selector, locator):
 def test_elements_findwait_raises(browser, selector, locator):
     """TODO: doc method"""
     with pytest.raises(Exception):
-        browser.Elements.find_wait(browser.driver, selector, locator=locator)
+        browser.elements.find_wait(selector, locator=locator)
 
 
 @pytest.mark.dependency(depends=['browser_open'])
@@ -54,7 +54,7 @@ def test_elements_findwait_raises(browser, selector, locator):
 def test_elements_findswait_raises(browser, selector, locator):
     """TODO: doc method"""
     with pytest.raises(Exception):
-        browser.Elements.finds_wait(browser.driver, selector, locator=locator)
+        browser.elements.finds_wait(selector, locator=locator)
 
 
 @pytest.mark.dependency(depends=['browser_open'])
@@ -63,9 +63,9 @@ def test_elements_findswait_raises(browser, selector, locator):
 ])
 def test_elements_findchild_raises(browser, parent_sel, child_sel, locator):
     """TODO: doc method"""
-    element = browser.Elements.find(browser.driver, parent_sel)
+    element = browser.elements.find(parent_sel)
     with pytest.raises(Exception):
-        browser.Elements.find_child(element, child_sel, locator=locator)
+        browser.elements.find_child(element, child_sel, locator=locator)
 
 
 @pytest.mark.dependency(depends=['browser_open'])
@@ -74,9 +74,9 @@ def test_elements_findchild_raises(browser, parent_sel, child_sel, locator):
 ])
 def test_elements_findchildren_raises(browser, parent_sel, child_sel, locator):
     """TODO: doc method"""
-    element = browser.Elements.find(browser.driver, parent_sel)
+    element = browser.elements.find(parent_sel)
     with pytest.raises(Exception):
-        browser.Elements.find_children(element, child_sel, locator=locator)
+        browser.elements.find_children(element, child_sel, locator=locator)
 
 
 @pytest.mark.dependency(depends=['browser_open'])
@@ -84,7 +84,7 @@ def test_elements_findchildren_raises(browser, parent_sel, child_sel, locator):
 def test_elements_findschild_raises(browser, selector, locator):
     """TODO: doc method"""
     with pytest.raises(NotImplementedError):
-        browser.Elements.finds_child()
+        browser.elements.finds_child()
 
 
 @pytest.mark.dependency(depends=['browser_open'])
@@ -92,7 +92,7 @@ def test_elements_findschild_raises(browser, selector, locator):
 def test_elements_findschildren_raises(browser, selector, locator):
     """TODO: doc method"""
     with pytest.raises(NotImplementedError):
-        browser.Elements.finds_children()
+        browser.elements.finds_children()
 
 
 @pytest.mark.dependency(depends=['browser_open'])
@@ -100,6 +100,6 @@ def test_elements_findschildren_raises(browser, selector, locator):
 def test_elements_eleattribute_raises(browser, attr_name):
     """TODO: doc method"""
     selectors = setup_selectors()
-    element = browser.Elements.find(browser.driver, selectors.get('child'))
+    element = browser.elements.find(selectors.get('child'))
     with pytest.raises(Exception):
-        browser.Elements.ele_attribute(element, attr_name)
+        browser.elements.ele_attribute(element, attr_name)

@@ -16,9 +16,9 @@ CFG = settings(path="qacode/configs/", name="settings.json")
 def try_click(browser):
     """TODO: doc method"""
     invisible_sel = setup_input_selectors().get("invisible")
-    ele = browser.Elements.find_wait(browser._driver_wait, invisible_sel)
+    ele = browser.elements.find_wait(invisible_sel)
     try:
-        browser.Elements.ele_click(ele)
+        browser.elements.ele_click(ele)
     except Exception:
         pass
 
@@ -36,7 +36,7 @@ def test_waits_eleinvisible(browser):
     """TODO: doc method"""
     selector = setup_input_selectors().get("invisible")
     try_click(browser)
-    invisible = browser.Waits.ele_invisible(browser._driver_wait, selector)
+    invisible = browser.waits.ele_invisible(selector)
     ASSERT.is_instance(invisible, WebElement)
 
 
@@ -44,9 +44,9 @@ def test_waits_eleinvisible(browser):
 def test_waits_elevisible(browser):
     """TODO: doc method"""
     selector = setup_input_selectors().get("visible")
-    ele = browser.Elements.find_wait(browser._driver_wait, selector)
+    ele = browser.elements.find_wait(selector)
     try_click(browser)
-    visible = browser.Waits.ele_visible(browser._driver_wait, ele)
+    visible = browser.waits.ele_visible(ele)
     ASSERT.is_instance(visible, WebElement)
 
 
@@ -55,7 +55,7 @@ def test_waits_eletext(browser):
     """TODO: doc method"""
     selector = setup_input_selectors().get("title")
     try_click(browser)
-    _is = browser.Waits.ele_text(browser._driver_wait, selector, "Buttonss")
+    _is = browser.waits.ele_text(selector, "Buttonss")
     ASSERT.true(_is)
 
 
@@ -64,5 +64,5 @@ def test_waits_elevalue(browser):
     """TODO: doc method"""
     selector = setup_input_selectors().get("invisible")
     try_click(browser)
-    _is = browser.Waits.ele_value(browser._driver_wait, selector, "bad_text")
+    _is = browser.waits.ele_value(selector, "bad_text")
     ASSERT.true(_is)

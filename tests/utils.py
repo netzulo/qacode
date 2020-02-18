@@ -66,21 +66,21 @@ def setup_input_selectors():
 
 def do_login(browser):
     """TODO: doc method"""
-    browser.Commons.get_maximize_window(browser.driver)
+    browser.commons.get_maximize_window()
     # load urls and elements
     url_login = CFG.get('bot').get('pages')[0].get('url')
     ASSERT.not_none(url_login)
-    browser.Commons.get_url(browser.driver, url_login)
+    browser.commons.get_url(url_login)
     url_logged = CFG.get('bot').get('pages')[2].get('url')
     ASSERT.not_none(url_logged)
     selectors = setup_login_selectors()
-    usr = browser.Elements.find(browser.driver, selectors.get("username"))
-    pwd = browser.Elements.find(browser.driver, selectors.get("password"))
-    submit = browser.Elements.find(browser.driver, selectors.get("submit"))
+    usr = browser.elements.find(selectors.get("username"))
+    pwd = browser.elements.find(selectors.get("password"))
+    submit = browser.elements.find(selectors.get("submit"))
     # Do login
-    browser.Elements.ele_write(usr, "admin")
-    browser.Elements.ele_write(pwd, "admin")
-    browser.Elements.ele_click(submit)
-    curr_url = browser.Commons.get_current_url(browser.driver)
+    browser.elements.ele_write(usr, "admin")
+    browser.elements.ele_write(pwd, "admin")
+    browser.elements.ele_click(submit)
+    curr_url = browser.commons.get_current_url()
     ASSERT.not_none(curr_url)
     ASSERT.equals(curr_url, url_logged)

@@ -5,15 +5,17 @@
 class ModuleScreenshots(object):
     """TODO: doc class"""
 
-    @classmethod
-    def as_base64(cls, driver):
+    def __init__(self, driver):
+        """TODO: doc method"""
+        self._driver = driver
+
+    def as_base64(self):
         """Gets the screenshot of the current window as a base64 encoded string
         which is useful in embedded images in HTML
         """
-        return driver.get_screenshot_as_base64()
+        return self._driver.get_screenshot_as_base64()
 
-    @classmethod
-    def as_file(cls, driver, file_name):
+    def as_file(self, file_name):
         """Gets the screenshot of the current window. Returns False
             if there is any IOError, else returns True. Use full paths
             in your filename.
@@ -25,20 +27,18 @@ class ModuleScreenshots(object):
         Returns:
             list(byte) -- file binary object of screenshot bytes
         """
-        return driver.get_screenshot_as_file(file_name)
+        return self._driver.get_screenshot_as_file(file_name)
 
-    @classmethod
-    def as_png(cls, driver):
+    def as_png(self):
         """Gets the screenshot of the current window as a
             binary data.
 
         Returns:
             File -- file binary object of screenshot with PNG format
         """
-        return driver.get_screenshot_as_png()
+        return self._driver.get_screenshot_as_png()
 
-    @classmethod
-    def save(cls, driver, file_name):
+    def save(self, file_name):
         """Gets the screenshot of the current window. Returns False
             if there is any IOError, else returns True.
             Use full paths in your filename.
@@ -50,4 +50,4 @@ class ModuleScreenshots(object):
         Returns:
             list(byte) -- file binary object of screenshot bytes
         """
-        return driver.save_screenshot(file_name)
+        return self._driver.save_screenshot(file_name)

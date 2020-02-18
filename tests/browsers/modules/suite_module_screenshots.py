@@ -21,24 +21,22 @@ def test_screenshot_browser_open(browser):
 @pytest.mark.dependency(depends=['browser_open'])
 def test_screenshot_asbase64(browser):
     """TODO: doc method"""
-    base64 = browser.Screenshots.as_base64(browser.driver)
-    ASSERT.is_instance(base64, str)
+    ASSERT.is_instance(browser.screenshots.as_base64(), str)
 
 
 @pytest.mark.dependency(depends=['browser_open'])
 def test_screenshot_asfile(browser):
     """TODO: doc method"""
-    ASSERT.true(browser.Screenshots.as_file(browser.driver, "qacode.jpg"))
+    ASSERT.true(browser.screenshots.as_file("qacode.jpg"))
 
 
 @pytest.mark.dependency(depends=['browser_open'])
 def test_screenshot_aspng(browser):
     """TODO: doc method"""
-    _bytes = browser.Screenshots.as_png(browser.driver)
-    ASSERT.is_instance(_bytes, bytes)
+    ASSERT.is_instance(browser.screenshots.as_png(), bytes)
 
 
 @pytest.mark.dependency(depends=['browser_open'])
 def test_screenshot_save(browser):
     """TODO: doc method"""
-    ASSERT.true(browser.Screenshots.save(browser.driver, "qacode.jpeg"))
+    ASSERT.true(browser.screenshots.save("qacode.jpeg"))

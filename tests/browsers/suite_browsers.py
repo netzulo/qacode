@@ -55,10 +55,10 @@ def test_browser_open():
     ASSERT.not_none(browser._driver_wait)
     ASSERT.not_none(browser._driver_actions)
     ASSERT.not_none(browser._driver_touch)
-    ASSERT.equals(browser.Commons, ModuleCommons)
-    ASSERT.equals(browser.Elements, ModuleElements)
-    ASSERT.equals(browser.Screenshots, ModuleScreenshots)
-    ASSERT.equals(browser.Waits, ModuleWaits)
+    ASSERT.is_instance(browser.commons, ModuleCommons)
+    ASSERT.is_instance(browser.elements, ModuleElements)
+    ASSERT.is_instance(browser.screenshots, ModuleScreenshots)
+    ASSERT.is_instance(browser.waits, ModuleWaits)
     browser_close(browser)
 
 
@@ -72,3 +72,7 @@ def test_browser_close():
     ASSERT.none(browser._driver_wait)
     ASSERT.none(browser._driver_actions)
     ASSERT.none(browser._driver_touch)
+    ASSERT.none(browser.commons)
+    ASSERT.none(browser.elements)
+    ASSERT.none(browser.screenshots)
+    ASSERT.none(browser.waits)

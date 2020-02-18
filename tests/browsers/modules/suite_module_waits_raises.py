@@ -24,25 +24,25 @@ def test_waits_browser_open(browser):
 def test_waits_eleinvisible_raises(browser):
     """TODO: doc method"""
     with pytest.raises(Exception):
-        browser.Waits.ele_invisible(browser._driver_wait, None)
+        browser.waits.ele_invisible(None)
 
 
 @pytest.mark.dependency(depends=['browser_open'])
 def test_waits_elevisible(browser):
     """TODO: doc method"""
     with pytest.raises(Exception):
-        browser.Waits.ele_visible(browser._driver_wait, None)
+        browser.waits.ele_visible(None)
 
 
 @pytest.mark.dependency(depends=['browser_open'])
 def test_waits_eletext(browser):
     """TODO: doc method"""
     with pytest.raises(Exception):
-        browser.Waits.ele_text(browser._driver_wait, None, "")
+        browser.waits.ele_text(None, "")
 
 
 @pytest.mark.dependency(depends=['browser_open'])
 def test_waits_elevalue(browser):
     """TODO: doc method"""
     with pytest.raises(Exception):
-        browser.Waits.ele_value(browser._driver_wait, None, "bad_text")
+        browser.waits.ele_value(None, "bad_text")

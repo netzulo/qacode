@@ -32,11 +32,6 @@ class Browser(object):
         self._options = self.__options__()
         self._driver_abs_path = self.__driver_abs_path__()
         self._driver = None
-        # modules
-        self.Commons = ModuleCommons
-        self.Elements = ModuleElements
-        self.Waits = ModuleWaits
-        self.Screenshots = ModuleScreenshots
 
     def __capabilities__(self):
         """TODO: doc method"""
@@ -138,6 +133,11 @@ class Browser(object):
         else:
             raise Exception("Just allowed modes: local, remote")
         self.__drivers_selenium__()
+        # modules
+        self.commons = ModuleCommons(self._driver)
+        self.elements = ModuleElements(self._driver, self._driver_wait)
+        self.waits = ModuleWaits(self._driver_wait)
+        self.screenshots = ModuleScreenshots(self._driver)
 
     def close(self):
         """TODO: doc method"""
@@ -146,6 +146,10 @@ class Browser(object):
         self._driver_wait = None
         self._driver_actions = None
         self._driver_touch = None
+        self.commons = None
+        self.elements = None
+        self.waits = None
+        self.screenshots = None
 
     @property
     def config(self):
