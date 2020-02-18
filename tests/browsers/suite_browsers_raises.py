@@ -40,9 +40,3 @@ def test_browser_create_raises(cfg_update):
     cfg.update()
     with pytest.raises(Exception):
         Browser(LOG, **cfg())
-
-
-@pytest.mark.dependency(name="browser_open", depends=['browser_create'])
-def test_browser_open_raises():
-    """TODO: doc method"""
-    raise NotImplementedError("WIP: not developed yet")

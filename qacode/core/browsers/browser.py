@@ -9,7 +9,6 @@ from qacode.core.browsers.modules.commons import ModuleCommons
 from qacode.core.browsers.modules.elements import ModuleElements
 from qacode.core.browsers.modules.screenshots import ModuleScreenshots
 from qacode.core.browsers.modules.waits import ModuleWaits
-from qacode.core.exceptions.core_exception import CoreException
 # from qacode.core.loggers.log import Log
 from selenium.common.exceptions import SessionNotCreatedException
 from selenium.webdriver import (Chrome, Edge, Firefox, Ie)
@@ -50,8 +49,7 @@ class Browser(object):
                 "edge": DesiredCapabilities.EDGE.copy(),
             }[self._config.browser]
         except KeyError:
-            msg = 'Bad browser selected at load options'
-            raise CoreException(msg, log=self._log)
+            raise Exception('Bad browser selected at load options')
         return capabilities
 
     def __driver_abs_path__(self):
