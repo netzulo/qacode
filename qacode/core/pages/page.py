@@ -16,7 +16,7 @@ class Page(object):
         self._log = self._browser.log
         self._config = PageConfig(**kwargs)
 
-    def go_url(self, url=None, wait_for_load=0):
+    def go_url(self, url=None, wait=0):
         """Go to url, choose url from instance or locator params
 
         Keyword Arguments:
@@ -27,30 +27,15 @@ class Page(object):
         if url is None:
             url = self._config.url
         self._log.debug('page |navigate to url={}'.format(url))
-        self._browser.commons.get_url(url, wait_for_load=wait_for_load)
+        self._browser.commons.get_url(url, wait=wait)
 
-    def is_url(self, url=None, ignore_raises=True):
-        """Allows to check if current selenium visible url it's the same
-            what self.url value
-
-        :Attributes:
-            url: default page url but can be string
-                 value used to verify url
-            ignore_raises: not raise exceptions if enabled
+    def is_url(self, url=None):
+        """Allows to check if current selenium visible url it's
+            the same what self.url value
         """
         if url is None:
             url = self._config.url
-        return self._browser.commons.is_url(url, ignore_raises=ignore_raises)
-
-    @property
-    def browser(self):
-        """TODO: doc method"""
-        return self._browser
-
-    @browser.setter
-    def browser(self, value):
-        """TODO: doc method"""
-        self._browser = value
+        return self._browser.commons.is_url(url)
 
     @property
     def config(self):

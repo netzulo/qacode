@@ -180,3 +180,8 @@ class Browser(object):
     def session_id(self):
         """TODO: doc method"""
         return self._driver.session_id
+
+    @property
+    def log(self):
+        """TODO: doc method"""
+        return self._log
