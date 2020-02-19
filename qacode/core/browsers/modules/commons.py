@@ -58,17 +58,15 @@ class ModuleCommons(object):
         """Get selenium log by name, this depends of
             driver mode and browser what it's using each time
         """
+        if log_name not in ['browser', 'driver', 'client', 'server']:
+            raise Exception("Can't use not valid value to get log")
         try:
-            return {
-                'browser': self._driver.get_log,
-                'driver': self._driver.get_log,
-                'client': self._driver.get_log,
-                'server': self._driver.get_log,
-            }[log_name](log_name)
-        except (KeyError, WebDriverException) as err:
-            if isinstance(err, KeyError):
-                raise Exception("Can't use not valid value to get log")
-        return list()
+            return self._driver.get_log(log_name)
+        except WebDriverException:
+            # silenced error because some browsers got
+            # different errors when no logs or obtaining
+            # server on local driver or client on remote driver
+            return list()
 
     def set_window_size(self, x=800, y=600):
         """Sets the width and height of the current
@@ -90,8 +88,7 @@ class ModuleCommons(object):
         """
         return self._driver.execute_script(script, *args)
 
-    def set_css_rule(self, css_selector, css_prop, css_value,
-                     css_important=False, index=0):
+    def set_css_rule(self, css_selector, css_prop, css_value, **kwargs):
         """Set new value for given CSS property name
         Arguments:
             css_selector {str} -- CSS selector to apply rule
@@ -105,6 +102,8 @@ class ModuleCommons(object):
         Returns:
             str -- JS script returns
         """
+        css_important = kwargs.get("css_important") or False
+        index = kwargs.get("index") or 0
         css_important_text = ''
         if css_important:
             css_important_text = '!important'

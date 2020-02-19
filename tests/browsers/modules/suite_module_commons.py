@@ -115,4 +115,5 @@ def test_common_executejs(browser):
 def test_common_setcssrule(browser, css_important):
     """TODO: doc method"""
     browser.commons.set_css_rule(
-        "body", "background", "1px red solid", css_important)
+        "body", "background", "1px red solid",
+        **{"css_important": css_important})
