@@ -136,7 +136,7 @@ class Browser(object):
         # modules
         self.commons = ModuleCommons(self._driver)
         self.elements = ModuleElements(self._driver, self._driver_wait)
-        self.waits = ModuleWaits(self._driver_wait)
+        self.waits = ModuleWaits(self.driver, self._driver_wait)
         self.screenshots = ModuleScreenshots(self._driver)
 
     def close(self):

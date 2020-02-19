@@ -5,7 +5,7 @@
 import pytest
 from qacode.core.testing.asserts import Assert
 from qacode.utils import settings
-from tests.utils import do_login
+from tests.utils import (do_login, setup_input_selectors)
 
 
 ASSERT = Assert()
@@ -21,10 +21,14 @@ def test_waits_browser_open(browser):
 
 
 @pytest.mark.dependency(depends=['browser_open'])
-def test_waits_eleinvisible_raises(browser):
+@pytest.mark.parametrize("timeout", [0, 1])
+def test_waits_eleinvisible_raises(browser, timeout):
     """TODO: doc method"""
+    selector = None
+    if timeout:
+        selector = setup_input_selectors().get("invisible")
     with pytest.raises(Exception):
-        browser.waits.ele_invisible(None)
+        browser.waits.ele_invisible(selector, timeout=timeout)
 
 
 @pytest.mark.dependency(depends=['browser_open'])

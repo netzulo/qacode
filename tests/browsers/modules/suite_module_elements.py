@@ -110,7 +110,7 @@ def test_elements_eleattribute(browser, attr_name):
     """TODO: doc method"""
     selectors = setup_selectors()
     element = browser.elements.find(selectors.get('child'))
-    attr = browser.elements.ele_attribute(element, attr_name)
+    attr = browser.elements.ele_attr(element, attr_name)
     ASSERT.is_instance(attr, str)
 
 
@@ -134,10 +134,47 @@ def test_elements_eleclear(browser, attr_name):
 
 
 @pytest.mark.dependency(depends=['browser_open'])
-@pytest.mark.parametrize("attr_name", ["id"])
-def test_elements_elecss(browser, attr_name):
+def test_elements_elecss(browser):
     """TODO: doc method"""
     selectors = setup_selectors()
     element = browser.elements.find(selectors.get('child'))
     css_property = browser.elements.ele_css(element, "margin")
     ASSERT.is_instance(css_property, str)
+
+
+@pytest.mark.dependency(depends=['browser_open'])
+def test_elements_eleisdisplayed(browser):
+    """TODO: doc method"""
+    selectors = setup_selectors()
+    element = browser.elements.find(selectors.get('child'))
+    ASSERT.is_instance(element, WebElement)
+    ASSERT.is_instance(browser.elements.ele_is_displayed(element), bool)
+
+
+@pytest.mark.dependency(depends=['browser_open'])
+def test_elements_eleisenabled(browser):
+    """TODO: doc method"""
+    selectors = setup_selectors()
+    element = browser.elements.find(selectors.get('child'))
+    ASSERT.is_instance(element, WebElement)
+    ASSERT.is_instance(browser.elements.ele_is_enabled(element), bool)
+
+
+@pytest.mark.dependency(depends=['browser_open'])
+def test_elements_eleisselected(browser):
+    """TODO: doc method"""
+    selectors = setup_selectors()
+    element = browser.elements.find(selectors.get('child'))
+    ASSERT.is_instance(element, WebElement)
+    ASSERT.is_instance(browser.elements.ele_is_selected(element), bool)
+
+
+@pytest.mark.dependency(depends=['browser_open'])
+@pytest.mark.parametrize("attr_name", ["id"])
+def test_elements_eleattrvalue(browser, attr_name):
+    """TODO: doc method"""
+    selectors = setup_selectors()
+    element = browser.elements.find(selectors.get('child'))
+    ASSERT.is_instance(element, WebElement)
+    ASSERT.is_instance(
+        browser.elements.ele_attr_value(element, attr_name), str)

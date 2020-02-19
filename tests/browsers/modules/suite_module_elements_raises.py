@@ -102,4 +102,4 @@ def test_elements_eleattribute_raises(browser, attr_name):
     selectors = setup_selectors()
     element = browser.elements.find(selectors.get('child'))
     with pytest.raises(Exception):
-        browser.elements.ele_attribute(element, attr_name)
+        browser.elements.ele_attr(element, attr_name)

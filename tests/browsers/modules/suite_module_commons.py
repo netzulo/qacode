@@ -101,3 +101,18 @@ def test_getlog_lognames(browser, log):
 def test_common_setwindowsize(browser):
     """TODO: doc method"""
     browser.commons.set_window_size()
+
+
+@pytest.mark.dependency(depends=['browser_open'])
+def test_common_executejs(browser):
+    """TODO: doc method"""
+    ele = browser.commons.execute_js("return document.querySelector('body')")
+    ASSERT.not_none(ele)
+
+
+@pytest.mark.dependency(depends=['browser_open'])
+@pytest.mark.parametrize("css_important", [False, True])
+def test_common_setcssrule(browser, css_important):
+    """TODO: doc method"""
+    browser.commons.set_css_rule(
+        "body", "background", "1px red solid", css_important)
