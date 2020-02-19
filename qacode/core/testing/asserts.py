@@ -148,15 +148,11 @@ class Assert(object):
 
     def true(self, actual, msg=None):
         """Allow to compare and check if value it's equals to 'True'"""
-        self.is_instance(actual, bool)
-        self.equals(actual, True, msg=msg)
-        return True
+        return self.equals(actual, True, msg=msg)
 
     def false(self, actual, msg=None):
         """Allow to compare and check if value it's equals to 'False'"""
-        self.is_instance(actual, bool)
-        self.equals(actual, False, msg=msg)
-        return True
+        return self.equals(actual, False, msg=msg)
 
     def none(self, actual, msg=None):
         """Allow to compare and check if value it's equals to 'None'"""

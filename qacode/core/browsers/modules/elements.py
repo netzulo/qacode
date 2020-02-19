@@ -14,12 +14,16 @@ class ModuleElements(object):
         self._driver = driver
         self._driver_wait = driver_wait
 
+    def __check_not_none__(self, name, value):
+        """TODO: doc method"""
+        if value is None:
+            raise Exception("Not {} provided".format(name))
+
     def find(self, selector, locator=By.CSS_SELECTOR):
         """Just divided execution ways for search
             web element throught selenium
         """
-        if locator is None:
-            raise Exception("find: Locator can't be None")
+        self.__check_not_none__("locator", locator)
         # Not found: NoSuchElementException, StaleElementReferenceException
         return self._driver.find_element(locator, selector)
 
@@ -28,8 +32,7 @@ class ModuleElements(object):
         """Just divided execution ways for search
             web elements throught selenium
         """
-        if locator is None:
-            raise Exception("finds: Locator can't be None")
+        self.__check_not_none__("locator", locator)
         # Not found: NoSuchElementException, StaleElementReferenceException
         elements = self._driver.find_elements(locator, selector)
         if len(elements) == 0 and raises_zero:
@@ -40,8 +43,7 @@ class ModuleElements(object):
         """Search element using WebDriverWait class
             and ElementConditions presence_of_element_located
         """
-        if locator is None:
-            raise Exception("find_wait: Locator can't be None")
+        self.__check_not_none__("locator", locator)
         # Not found: NoSuchElementException, StaleElementReferenceException
         expectation = EC.presence_of_element_located((locator, selector))
         return self._driver_wait.until(expectation)
@@ -50,23 +52,20 @@ class ModuleElements(object):
         """Search elements using WebDriverWait class
             and ElementConditions presence_of_all_elements_located
         """
-        if locator is None:
-            raise Exception("finds_wait: Locator can't be None")
+        self.__check_not_none__("locator", locator)
         # Not found: NoSuchElementException, StaleElementReferenceException
         expectation = EC.presence_of_all_elements_located((locator, selector))
         return self._driver_wait.until(expectation)
 
     def find_child(self, element, child_selector, locator=By.CSS_SELECTOR):
         """TODO: doc method"""
-        if locator is None:
-            raise Exception("finds_wait: Locator can't be None")
+        self.__check_not_none__("locator", locator)
         # Not found: NoSuchElementException, StaleElementReferenceException
         return element.find_element(locator, child_selector)
 
     def find_children(self, element, child_selector, locator=By.CSS_SELECTOR):
         """TODO: doc method"""
-        if locator is None:
-            raise Exception("finds_wait: Locator can't be None")
+        self.__check_not_none__("locator", locator)
         # Not found: NoSuchElementException, StaleElementReferenceException
         return element.find_elements(locator, child_selector)
 
