@@ -74,10 +74,14 @@ def setup_controls():
 
     btn_visible = CFG.get('bot').get('controls')[8]
     ASSERT.is_instance(btn_visible, dict)
+
+    input_text = CFG.get('bot').get('controls')[9]
+    ASSERT.is_instance(title_buttons, dict)
     return {
         "title": title_buttons,
         "invisible": btn_invisible,
         "visible": btn_visible,
+        "input_text": input_text,
     }
 
 
@@ -101,3 +105,13 @@ def do_login(browser):
     curr_url = browser.commons.get_current_url()
     ASSERT.not_none(curr_url)
     ASSERT.equals(curr_url, url_logged)
+
+
+def try_click(browser):
+    """TODO: doc method"""
+    invisible_sel = setup_input_selectors().get("invisible")
+    ele = browser.elements.find_wait(invisible_sel)
+    try:
+        browser.elements.click(ele)
+    except Exception:
+        pass

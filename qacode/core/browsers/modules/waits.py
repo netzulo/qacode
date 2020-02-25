@@ -34,16 +34,23 @@ class ModuleWaits(Module):
         expectation = EC.visibility_of(element)
         return driver_wait.until(expectation)
 
-    def ele_text(self, selector, text, locator=By.CSS_SELECTOR):
+    def ele_text(self, selector, text, locator=By.CSS_SELECTOR, timeout=None):
         """Wait if the given text is present in the specified element"""
+        driver_wait = self._driver_wait
         self.__check_not_none__("selector", selector)
+        if timeout:
+            driver_wait = WebDriverWait(self._driver, timeout)
         expectation = EC.text_to_be_present_in_element(
             (locator, selector), text)
-        return self._driver_wait.until(expectation)
+        return driver_wait.until(expectation)
 
-    def ele_value(self, selector, value, locator=By.CSS_SELECTOR):
+    def ele_value(self, selector, value, locator=By.CSS_SELECTOR,
+                  timeout=None):
         """Wait if the given value is present in the specified element"""
+        driver_wait = self._driver_wait
         self.__check_not_none__("selector", selector)
+        if timeout:
+            driver_wait = WebDriverWait(self._driver, timeout)
         expectation = EC.text_to_be_present_in_element_value(
             (locator, selector), value)
-        return self._driver_wait.until(expectation)
+        return driver_wait.until(expectation)

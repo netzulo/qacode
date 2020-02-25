@@ -8,7 +8,7 @@ from qacode.core.controls.control_config import ControlConfig
 from qacode.core.testing.asserts import Assert
 from qacode.utils import settings
 from selenium.webdriver.remote.webelement import WebElement
-from tests.utils import (do_login, setup_controls)
+from tests.utils import (do_login, setup_controls, try_click)
 
 
 ASSERT = Assert()
@@ -58,7 +58,6 @@ def test_control_create(browser, cfg):
 @pytest.mark.dependency(depends=["browser_open"])
 def test_control_attr(browser):
     """TODO: doc method"""
-    pytest.skip("WIP")
     cfg = dict(setup_controls()["title"], search=True)
     ctl = Control(browser, **cfg)
     ASSERT.is_instance(ctl.attr("id"), str)
@@ -67,8 +66,7 @@ def test_control_attr(browser):
 @pytest.mark.dependency(depends=["browser_open"])
 def test_control_attrvalue(browser):
     """TODO: doc method"""
-    pytest.skip("WIP")
-    cfg = setup_controls()["title"]
+    cfg = dict(setup_controls()["title"], search=True)
     ctl = Control(browser, **cfg)
     ASSERT.is_instance(ctl.attr_value("id"), str)
 
@@ -76,8 +74,7 @@ def test_control_attrvalue(browser):
 @pytest.mark.dependency(depends=["browser_open"])
 def test_control_css(browser):
     """TODO: doc method"""
-    pytest.skip("WIP")
-    cfg = setup_controls()["title"]
+    cfg = dict(setup_controls()["title"], search=True)
     ctl = Control(browser, **cfg)
     ASSERT.is_instance(ctl.css("background-color"), str)
 
@@ -85,61 +82,62 @@ def test_control_css(browser):
 @pytest.mark.dependency(depends=["browser_open"])
 def test_control_clear(browser):
     """TODO: doc method"""
-    pytest.skip("WIP")
-    cfg = setup_controls()["invisible"]
+    cfg = dict(setup_controls()["input_text"], search=True)
     ctl = Control(browser, **cfg)
     ctl.clear()
 
 
 @pytest.mark.dependency(depends=["browser_open"])
-def test_control_typetext(browser):
+@pytest.mark.parametrize("clear", [False, True])
+def test_control_typetext(browser, clear):
     """TODO: doc method"""
-    pytest.skip("WIP")
-    cfg = setup_controls()["invisible"]
+    cfg = dict(setup_controls()["input_text"], search=True)
     ctl = Control(browser, **cfg)
-    ctl.type_text("text")
+    ctl.type_text("text", clear=clear)
 
 
 @pytest.mark.dependency(depends=["browser_open"])
 def test_control_click(browser):
     """TODO: doc method"""
-    pytest.skip("WIP")
-    cfg = setup_controls()["invisible"]
+    cfg = dict(setup_controls()["input_text"], search=True)
     ctl = Control(browser, **cfg)
     ctl.click()
 
 
-@pytest.mark.dependency(depends=["browser_open"])
+@pytest.mark.dependency(name="wait_invisible", depends=["browser_open"])
 def test_control_waitinvisible(browser):
     """TODO: doc method"""
-    pytest.skip("WIP")
-    cfg = setup_controls()["invisible"]
+    cfg = dict(setup_controls()["invisible"], search=True)
     ctl = Control(browser, **cfg)
-    ctl.wait_invisible()
+    try_click(browser)
+    ctl.wait_invisible(timeout=0)
 
 
-@pytest.mark.dependency(depends=["browser_open"])
+@pytest.mark.dependency(depends=["browser_open", "wait_invisible"])
 def test_control_waitvisible(browser):
     """TODO: doc method"""
-    pytest.skip("WIP")
-    cfg = setup_controls()["invisible"]
+    cfg = dict(setup_controls()["visible"], search=True)
     ctl = Control(browser, **cfg)
+    try_click(browser)
     ctl.wait_visible()
 
 
 @pytest.mark.dependency(depends=["browser_open"])
-def test_control_waittext(browser):
+@pytest.mark.parametrize("ctl_name, expected", [
+    ("title", "Buttonss"), ("invisible", "bad_text")])
+def test_control_waittext(browser, ctl_name, expected):
     """TODO: doc method"""
-    pytest.skip("WIP")
-    cfg = setup_controls()["invisible"]
+    cfg = dict(setup_controls()[ctl_name], search=True)
     ctl = Control(browser, **cfg)
-    ctl.wait_text()
+    try_click(browser)
+    ctl.wait_text(expected, timeout=7)
 
 
 @pytest.mark.dependency(depends=["browser_open"])
 def test_control_waitblink(browser):
     """TODO: doc method"""
-    pytest.skip("WIP")
-    cfg = setup_controls()["invisible"]
+    do_login(browser)
+    cfg = dict(setup_controls()["invisible"], search=True)
     ctl = Control(browser, **cfg)
-    ctl.wait_blink()
+    try_click(browser)
+    ctl.wait_blink(to_invisible=7, to_visible=8)

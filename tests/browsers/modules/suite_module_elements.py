@@ -86,7 +86,7 @@ def test_elements_findchildren(browser):
 
 
 @pytest.mark.dependency(depends=['browser_open'])
-def test_elements_eleclick(browser):
+def test_elements_click(browser):
     """TODO: doc method"""
     selectors = setup_selectors()
     element = browser.elements.find(selectors.get('child'))
@@ -96,7 +96,7 @@ def test_elements_eleclick(browser):
 
 @pytest.mark.dependency(depends=['browser_open'])
 @pytest.mark.parametrize("text", [None, "write_something"])
-def test_elements_elewrite(browser, text):
+def test_elements_write(browser, text):
     """TODO: doc method"""
     selectors = setup_selectors()
     element = browser.elements.find(selectors.get('child'))
@@ -106,7 +106,7 @@ def test_elements_elewrite(browser, text):
 
 @pytest.mark.dependency(depends=['browser_open'])
 @pytest.mark.parametrize("attr_name", ["id"])
-def test_elements_eleattribute(browser, attr_name):
+def test_elements_attribute(browser, attr_name):
     """TODO: doc method"""
     selectors = setup_selectors()
     element = browser.elements.find(selectors.get('child'))
@@ -116,7 +116,7 @@ def test_elements_eleattribute(browser, attr_name):
 
 @pytest.mark.dependency(depends=['browser_open'])
 @pytest.mark.parametrize("attr_name", ["id"])
-def test_elements_eleinputvalue(browser, attr_name):
+def test_elements_inputvalue(browser, attr_name):
     """TODO: doc method"""
     selectors = setup_selectors()
     element = browser.elements.find(selectors.get('child'))
@@ -126,7 +126,7 @@ def test_elements_eleinputvalue(browser, attr_name):
 
 @pytest.mark.dependency(depends=['browser_open'])
 @pytest.mark.parametrize("attr_name", ["id"])
-def test_elements_eleclear(browser, attr_name):
+def test_elements_clear(browser, attr_name):
     """TODO: doc method"""
     selectors = setup_selectors()
     element = browser.elements.find(selectors.get('child'))
@@ -134,7 +134,7 @@ def test_elements_eleclear(browser, attr_name):
 
 
 @pytest.mark.dependency(depends=['browser_open'])
-def test_elements_elecss(browser):
+def test_elements_css(browser):
     """TODO: doc method"""
     selectors = setup_selectors()
     element = browser.elements.find(selectors.get('child'))
@@ -143,7 +143,7 @@ def test_elements_elecss(browser):
 
 
 @pytest.mark.dependency(depends=['browser_open'])
-def test_elements_eleisdisplayed(browser):
+def test_elements_isdisplayed(browser):
     """TODO: doc method"""
     selectors = setup_selectors()
     element = browser.elements.find(selectors.get('child'))
@@ -152,7 +152,7 @@ def test_elements_eleisdisplayed(browser):
 
 
 @pytest.mark.dependency(depends=['browser_open'])
-def test_elements_eleisenabled(browser):
+def test_elements_isenabled(browser):
     """TODO: doc method"""
     selectors = setup_selectors()
     element = browser.elements.find(selectors.get('child'))
@@ -161,7 +161,7 @@ def test_elements_eleisenabled(browser):
 
 
 @pytest.mark.dependency(depends=['browser_open'])
-def test_elements_eleisselected(browser):
+def test_elements_isselected(browser):
     """TODO: doc method"""
     selectors = setup_selectors()
     element = browser.elements.find(selectors.get('child'))
@@ -171,10 +171,29 @@ def test_elements_eleisselected(browser):
 
 @pytest.mark.dependency(depends=['browser_open'])
 @pytest.mark.parametrize("attr_name", ["id"])
-def test_elements_eleattrvalue(browser, attr_name):
+def test_elements_attrvalue(browser, attr_name):
     """TODO: doc method"""
     selectors = setup_selectors()
     element = browser.elements.find(selectors.get('child'))
     ASSERT.is_instance(element, WebElement)
     ASSERT.is_instance(
         browser.elements.attr_value(element, attr_name), str)
+
+
+@pytest.mark.dependency(depends=['browser_open'])
+def test_elements_gettext(browser):
+    """TODO: doc method"""
+    selectors = setup_selectors()
+    element = browser.elements.find(selectors.get('child'))
+    ASSERT.is_instance(element, WebElement)
+    text = browser.elements.get_text(element)
+    ASSERT.is_instance(text, str)
+
+
+@pytest.mark.dependency(depends=['browser_open'])
+def test_elements_tag(browser):
+    """TODO: doc method"""
+    selectors = setup_selectors()
+    element = browser.elements.find(selectors.get('child'))
+    ASSERT.is_instance(element, WebElement)
+    ASSERT.is_instance(browser.elements.tag(element), str)

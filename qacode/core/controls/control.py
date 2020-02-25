@@ -70,12 +70,12 @@ class Control(object):
     def click(self):
         """Click on element"""
         self.__check_element_ready__()
-        self._browser.elements.click(element=self.element)
+        self._browser.elements.click(self._element)
 
     def wait_invisible(self, timeout=1):
         """Wait for invisible element, chaining at returns"""
         self.__check_element_ready__()
-        self.element = self._browser.waits.ele_invisible(
+        self._element = self._browser.waits.ele_invisible(
             self._config.selector,
             locator=self._config.locator,
             timeout=timeout)
@@ -84,21 +84,29 @@ class Control(object):
     def wait_visible(self, timeout=1):
         """Wait for invisible element, chaining at returns"""
         self.__check_element_ready__()
-        self.element = self._browser.waits.ele_visible(
-            self._config.selector,
-            locator=self._config.locator,
+        self._element = self._browser.waits.ele_visible(
+            self._element,
             timeout=timeout)
         return self
 
-    def wait_text(self):
-        """TODO: doc method"""
+    def wait_text(self, text, timeout=1):
+        """Wait if the given text is present in the specified control"""
         self.__check_element_ready__()
-        raise NotImplementedError("WIP")
+        if self.tag == 'input':
+            wait_method = self._browser.waits.ele_value
+        else:
+            wait_method = self._browser.waits.ele_text
+        is_text = wait_method(
+            self._config.selector,
+            text,
+            locator=self._config.locator,
+            timeout=timeout)
+        return is_text
 
-    def wait_blink(self):
-        """TODO: doc method"""
-        self.__check_element_ready__()
-        raise NotImplementedError("WIP")
+    def wait_blink(self, to_visible=1, to_invisible=1):
+        """Wait until control pops and dissapears"""
+        return self.wait_visible(
+            timeout=to_visible).wait_invisible(timeout=to_invisible)
 
     @property
     def config(self):
@@ -116,6 +124,12 @@ class Control(object):
         """TODO: doc method"""
         self.__check_element_ready__()
         return self._browser.elements.get_text(self._element)
+
+    @property
+    def tag(self):
+        """TODO: doc method"""
+        self.__check_element_ready__()
+        return self._browser.elements.tag(self._element)
 
     @property
     def is_displayed(self):

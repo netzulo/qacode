@@ -6,21 +6,11 @@ import pytest
 from qacode.core.testing.asserts import Assert
 from qacode.utils import settings
 from selenium.webdriver.remote.webelement import WebElement
-from tests.utils import (do_login, setup_input_selectors)
+from tests.utils import (do_login, setup_input_selectors, try_click)
 
 
 ASSERT = Assert()
 CFG = settings(path="qacode/configs/", name="settings.json")
-
-
-def try_click(browser):
-    """TODO: doc method"""
-    invisible_sel = setup_input_selectors().get("invisible")
-    ele = browser.elements.find_wait(invisible_sel)
-    try:
-        browser.elements.click(ele)
-    except Exception:
-        pass
 
 
 @pytest.mark.dependency(name="browser_open")

@@ -160,13 +160,13 @@ class ModuleElements(Module):
         """
         return str(self.attr(element, attr_name))
 
-    def get_text(self, element, on_screen=True):
+    def get_text(self, element):
         """TODO: doc method"""
-        if on_screen:
-            return str(element.text)
-        text = self.attr(element, 'innerText')
         if self.is_displayed(element):
-            msg = ("on_screen param must use when"
-                   "element it's not displayed")
-            raise Exception(msg)
-        return text
+            return str(element.text)
+        else:
+            return self.attr(element, 'innerText')
+
+    def tag(self, element):
+        """Returns element.tag_name value"""
+        return element.tag_name
