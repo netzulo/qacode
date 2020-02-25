@@ -64,6 +64,23 @@ def setup_input_selectors():
     }
 
 
+def setup_controls():
+    """TODO: doc method"""
+    title_buttons = CFG.get('bot').get('controls')[6]
+    ASSERT.is_instance(title_buttons, dict)
+
+    btn_invisible = CFG.get('bot').get('controls')[7]
+    ASSERT.is_instance(btn_invisible, dict)
+
+    btn_visible = CFG.get('bot').get('controls')[8]
+    ASSERT.is_instance(btn_visible, dict)
+    return {
+        "title": title_buttons,
+        "invisible": btn_invisible,
+        "visible": btn_visible,
+    }
+
+
 def do_login(browser):
     """TODO: doc method"""
     browser.commons.get_maximize_window()
@@ -78,9 +95,9 @@ def do_login(browser):
     pwd = browser.elements.find(selectors.get("password"))
     submit = browser.elements.find(selectors.get("submit"))
     # Do login
-    browser.elements.ele_write(usr, "admin")
-    browser.elements.ele_write(pwd, "admin")
-    browser.elements.ele_click(submit)
+    browser.elements.write(usr, "admin")
+    browser.elements.write(pwd, "admin")
+    browser.elements.click(submit)
     curr_url = browser.commons.get_current_url()
     ASSERT.not_none(curr_url)
     ASSERT.equals(curr_url, url_logged)

@@ -18,6 +18,7 @@ class Control(object):
         self._log = self._browser.log
         self._config = ControlConfig(**kwargs)
         self._element = None
+        self._id = None
         if self._config.search:
             self.__search__()
 
@@ -26,43 +27,54 @@ class Control(object):
         self._element = self._browser.elements.find(
             self._config.selector, locator=self._config.locator
         )
+        self._id = self._element._id
+
+    def __is_staled__(self):
+        """TODO: doc method"""
+        if not self._element:
+            raise Exception("Not web element, search it first")
+        return self._id != self._element._id
 
     def __check_element_ready__(self):
         """TODO: doc method"""
-        raise NotImplementedError("WIP")
+        if self.__is_staled__():
+            raise Exception("Staled element, disappeared from the DOM")
 
     def attr(self, name):
         """TODO: doc method"""
-        # self.__check_element_ready__()
-        return self._browser.elements.ele_attr(self._element, name)
+        self.__check_element_ready__()
+        return self._browser.elements.attr(self._element, name)
 
     def attr_value(self, name):
         """TODO: doc method"""
-        # self.__check_element_ready__()
-        return self._browser.elements.ele_attr_value(self._element, name)
+        self.__check_element_ready__()
+        return self._browser.elements.attr_value(self._element, name)
 
     def css(self, name):
         """TODO: doc method"""
-        return self._browser.elements.ele_css(self._element, name)
+        self.__check_element_ready__()
+        return self._browser.elements.css(self._element, name)
 
     def clear(self):
         """Clear input element text value"""
-        # self.__check_element_ready__()
-        self._browser.elements.ele_clear(self._element)
+        self.__check_element_ready__()
+        self._browser.elements.clear(self._element)
 
     def type_text(self, text, clear=False):
         """Type text on input element"""
-        # self.__check_element_ready__()
+        self.__check_element_ready__()
         if clear:
             self.clear()
-        self._browser.elements.ele_write(self._element, text)
+        self._browser.elements.write(self._element, text)
 
     def click(self):
         """Click on element"""
-        self.bot.navigation.ele_click(element=self.element)
+        self.__check_element_ready__()
+        self._browser.elements.click(element=self.element)
 
     def wait_invisible(self, timeout=1):
         """Wait for invisible element, chaining at returns"""
+        self.__check_element_ready__()
         self.element = self._browser.waits.ele_invisible(
             self._config.selector,
             locator=self._config.locator,
@@ -71,6 +83,7 @@ class Control(object):
 
     def wait_visible(self, timeout=1):
         """Wait for invisible element, chaining at returns"""
+        self.__check_element_ready__()
         self.element = self._browser.waits.ele_visible(
             self._config.selector,
             locator=self._config.locator,
@@ -79,10 +92,12 @@ class Control(object):
 
     def wait_text(self):
         """TODO: doc method"""
+        self.__check_element_ready__()
         raise NotImplementedError("WIP")
 
     def wait_blink(self):
         """TODO: doc method"""
+        self.__check_element_ready__()
         raise NotImplementedError("WIP")
 
     @property
@@ -91,25 +106,31 @@ class Control(object):
         return self._config
 
     @property
+    def id(self):
+        """TODO: doc method"""
+        self.__check_element_ready__()
+        return self._element._id
+
+    @property
     def text(self):
         """TODO: doc method"""
-        # self.__check_element_ready__()
-        return self._browser.waits.ele_text(self._element)
+        self.__check_element_ready__()
+        return self._browser.elements.get_text(self._element)
 
     @property
     def is_displayed(self):
         """TODO: doc method"""
-        # self.__check_element_ready__()
-        return self._browser.elements.ele_is_displayed(self._element)
+        self.__check_element_ready__()
+        return self._browser.elements.is_displayed(self._element)
 
     @property
     def is_enabled(self):
         """TODO: doc method"""
-        # self.__check_element_ready__()
-        return self._browser.elements.ele_is_enabled(self._element)
+        self.__check_element_ready__()
+        return self._browser.elements.is_enabled(self._element)
 
     @property
     def is_selected(self):
         """TODO: doc method"""
-        # self.__check_element_ready__()
-        return self._browser.elements.ele_is_selected(self._element)
+        self.__check_element_ready__()
+        return self._browser.elements.is_selected(self._element)

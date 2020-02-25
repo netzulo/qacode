@@ -85,7 +85,7 @@ class ModuleElements(Module):
         # raise NotImplementedError("TODO:open an issue at github please")
         raise NotImplementedError("TODO: open an issue at github please")
 
-    def ele_click(self, element):
+    def click(self, element):
         """Perform click webelement with element
 
         Returns:
@@ -94,7 +94,7 @@ class ModuleElements(Module):
         element.click()
         return element
 
-    def ele_write(self, element, text=None):
+    def write(self, element, text=None):
         """Over element perform send_keys , if not sended will
             write empty over element
 
@@ -110,7 +110,7 @@ class ModuleElements(Module):
             element.send_keys(text)
         return element
 
-    def ele_attr(self, element, attr_name):
+    def attr(self, element, attr_name):
         """Returns tuple with (attr, value) if founds
             This method will first try to return the value of a property with
             the given name. If a property with that name doesn't exist, it
@@ -122,34 +122,34 @@ class ModuleElements(Module):
             raise Exception("Attr '{}' not found".format(attr_name))
         return value
 
-    def ele_input_value(self, element):
+    def input_value(self, element):
         """Return value of value attribute, usefull for inputs"""
-        return self.ele_attr(element, 'value')
+        return self.attr(element, 'value')
 
-    def ele_clear(self, element):
+    def clear(self, element):
         """Clear element text"""
         return element.clear()
 
-    def ele_css(self, element, prop_name):
+    def css(self, element, prop_name):
         """Allows to obtain CSS value based on CSS property name"""
         return element.value_of_css_property(prop_name)
 
-    def ele_is_displayed(self, element):
+    def is_displayed(self, element):
         """Whether the element is visible to a user
             Webdriver spec to determine if element it's displayed:
             https://w3c.github.io/webdriver/webdriver-spec.html#widl-WebElement-isDisplayed-boolean
         """
         return element.is_displayed()
 
-    def ele_is_enabled(self, element):
+    def is_enabled(self, element):
         """Returns whether the element is enabled"""
         return element.is_enabled()
 
-    def ele_is_selected(self, element):
+    def is_selected(self, element):
         """Returns whether the element is selected"""
         return element.is_selected()
 
-    def ele_attr_value(self, element, attr_name):
+    def attr_value(self, element, attr_name):
         """Search and attribute name over self.element and get value,
         if attr_value is obtained, then compare and raise if not
         Arguments:
@@ -158,4 +158,15 @@ class ModuleElements(Module):
         Returns:
             str -- value of html attr_name
         """
-        return str(self.ele_attr(element, attr_name))
+        return str(self.attr(element, attr_name))
+
+    def get_text(self, element, on_screen=True):
+        """TODO: doc method"""
+        if on_screen:
+            return str(element.text)
+        text = self.attr(element, 'innerText')
+        if self.is_displayed(element):
+            msg = ("on_screen param must use when"
+                   "element it's not displayed")
+            raise Exception(msg)
+        return text

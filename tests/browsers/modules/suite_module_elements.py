@@ -90,7 +90,7 @@ def test_elements_eleclick(browser):
     """TODO: doc method"""
     selectors = setup_selectors()
     element = browser.elements.find(selectors.get('child'))
-    ele = browser.elements.ele_click(element)
+    ele = browser.elements.click(element)
     ASSERT.equals(element, ele)
 
 
@@ -100,7 +100,7 @@ def test_elements_elewrite(browser, text):
     """TODO: doc method"""
     selectors = setup_selectors()
     element = browser.elements.find(selectors.get('child'))
-    ele = browser.elements.ele_write(element, text=text)
+    ele = browser.elements.write(element, text=text)
     ASSERT.equals(element, ele)
 
 
@@ -110,7 +110,7 @@ def test_elements_eleattribute(browser, attr_name):
     """TODO: doc method"""
     selectors = setup_selectors()
     element = browser.elements.find(selectors.get('child'))
-    attr = browser.elements.ele_attr(element, attr_name)
+    attr = browser.elements.attr(element, attr_name)
     ASSERT.is_instance(attr, str)
 
 
@@ -120,7 +120,7 @@ def test_elements_eleinputvalue(browser, attr_name):
     """TODO: doc method"""
     selectors = setup_selectors()
     element = browser.elements.find(selectors.get('child'))
-    attr_value = browser.elements.ele_input_value(element)
+    attr_value = browser.elements.input_value(element)
     ASSERT.is_instance(attr_value, str)
 
 
@@ -130,7 +130,7 @@ def test_elements_eleclear(browser, attr_name):
     """TODO: doc method"""
     selectors = setup_selectors()
     element = browser.elements.find(selectors.get('child'))
-    browser.elements.ele_clear(element)
+    browser.elements.clear(element)
 
 
 @pytest.mark.dependency(depends=['browser_open'])
@@ -138,7 +138,7 @@ def test_elements_elecss(browser):
     """TODO: doc method"""
     selectors = setup_selectors()
     element = browser.elements.find(selectors.get('child'))
-    css_property = browser.elements.ele_css(element, "margin")
+    css_property = browser.elements.css(element, "margin")
     ASSERT.is_instance(css_property, str)
 
 
@@ -148,7 +148,7 @@ def test_elements_eleisdisplayed(browser):
     selectors = setup_selectors()
     element = browser.elements.find(selectors.get('child'))
     ASSERT.is_instance(element, WebElement)
-    ASSERT.is_instance(browser.elements.ele_is_displayed(element), bool)
+    ASSERT.is_instance(browser.elements.is_displayed(element), bool)
 
 
 @pytest.mark.dependency(depends=['browser_open'])
@@ -157,7 +157,7 @@ def test_elements_eleisenabled(browser):
     selectors = setup_selectors()
     element = browser.elements.find(selectors.get('child'))
     ASSERT.is_instance(element, WebElement)
-    ASSERT.is_instance(browser.elements.ele_is_enabled(element), bool)
+    ASSERT.is_instance(browser.elements.is_enabled(element), bool)
 
 
 @pytest.mark.dependency(depends=['browser_open'])
@@ -166,7 +166,7 @@ def test_elements_eleisselected(browser):
     selectors = setup_selectors()
     element = browser.elements.find(selectors.get('child'))
     ASSERT.is_instance(element, WebElement)
-    ASSERT.is_instance(browser.elements.ele_is_selected(element), bool)
+    ASSERT.is_instance(browser.elements.is_selected(element), bool)
 
 
 @pytest.mark.dependency(depends=['browser_open'])
@@ -177,4 +177,4 @@ def test_elements_eleattrvalue(browser, attr_name):
     element = browser.elements.find(selectors.get('child'))
     ASSERT.is_instance(element, WebElement)
     ASSERT.is_instance(
-        browser.elements.ele_attr_value(element, attr_name), str)
+        browser.elements.attr_value(element, attr_name), str)

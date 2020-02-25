@@ -18,7 +18,7 @@ def try_click(browser):
     invisible_sel = setup_input_selectors().get("invisible")
     ele = browser.elements.find_wait(invisible_sel)
     try:
-        browser.elements.ele_click(ele)
+        browser.elements.click(ele)
     except Exception:
         pass
 
