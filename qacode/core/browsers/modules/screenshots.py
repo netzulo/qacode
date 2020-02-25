@@ -2,7 +2,10 @@
 """TODO"""
 
 
-class ModuleScreenshots(object):
+from qacode.core.browsers.modules.module import Module
+
+
+class ModuleScreenshots(Module):
     """TODO: doc class"""
 
     def __init__(self, driver):

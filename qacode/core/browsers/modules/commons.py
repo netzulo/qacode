@@ -2,10 +2,11 @@
 """TODO"""
 
 
+from qacode.core.browsers.modules.module import Module
 from selenium.common.exceptions import WebDriverException
 
 
-class ModuleCommons(object):
+class ModuleCommons(Module):
     """TODO: doc class"""
 
     def __init__(self, driver):

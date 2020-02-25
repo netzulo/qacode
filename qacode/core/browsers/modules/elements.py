@@ -2,22 +2,18 @@
 """TODO"""
 
 
+from qacode.core.browsers.modules.module import Module
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 
 
-class ModuleElements(object):
+class ModuleElements(Module):
     """TODO: doc class"""
 
     def __init__(self, driver, driver_wait):
         """TODO: doc method"""
         self._driver = driver
         self._driver_wait = driver_wait
-
-    def __check_not_none__(self, name, value):
-        """TODO: doc method"""
-        if value is None:
-            raise Exception("Not {} provided".format(name))
 
     def find(self, selector, locator=By.CSS_SELECTOR):
         """Just divided execution ways for search
