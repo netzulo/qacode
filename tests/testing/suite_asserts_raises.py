@@ -63,6 +63,20 @@ def test_asserts_lower_raises():
 
 
 @pytest.mark.dependency(depends=['asserts_create'])
+def test_asserts_greaterorequals_raises():
+    """TODO: doc method"""
+    with pytest.raises(AssertionError):
+        Assert().greater_or_equals(0, 1)
+
+
+@pytest.mark.dependency(depends=['asserts_create'])
+def test_asserts_lowerorequals_raises():
+    """TODO: doc method"""
+    with pytest.raises(AssertionError):
+        Assert().lower_or_equals(1, 0)
+
+
+@pytest.mark.dependency(depends=['asserts_create'])
 def test_asserts_inlist_raises():
     """TODO: doc method"""
     with pytest.raises(AssertionError):

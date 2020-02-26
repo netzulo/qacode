@@ -92,6 +92,21 @@ class Assert(object):
             raise AssertionError(actual, lower, _msg)
         return True
 
+    def greater_or_equals(self, actual, greater, msg=None):
+        """Allow to compare if A it's greater or equals than B"""
+        _msg = self.message(
+            "assert_greater_or_equals", actual, greater, msg=msg)
+        if actual <= greater:
+            raise AssertionError(actual, greater, _msg)
+        return True
+
+    def lower_or_equals(self, actual, lower, msg=None):
+        """Allow to compare if A it's lower or equals than B"""
+        _msg = self.message("assert_lower_or_equals", actual, lower, msg=msg)
+        if actual >= lower:
+            raise AssertionError(actual, lower, _msg)
+        return True
+
     def in_list(self, actual, valid_values, msg=None):
         """Allow to compare if value it's in to 2nd list of values"""
         _msg = self.message("assert_in_list", actual, valid_values, msg=msg)

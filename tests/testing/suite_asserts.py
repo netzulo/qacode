@@ -44,6 +44,18 @@ def test_asserts_isinstance(class_type):
 
 
 @pytest.mark.dependency(depends=['asserts_create'])
+def test_asserts_greaterorequals():
+    """TODO: doc method"""
+    Assert().greater_or_equals(1, 0)
+
+
+@pytest.mark.dependency(depends=['asserts_create'])
+def test_asserts_lowerorequals():
+    """TODO: doc method"""
+    Assert().lower_or_equals(0, 1)
+
+
+@pytest.mark.dependency(depends=['asserts_create'])
 def test_asserts_greater():
     """TODO: doc method"""
     Assert().greater(1, 0)
