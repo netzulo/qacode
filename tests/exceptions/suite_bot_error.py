@@ -3,24 +3,21 @@
 
 
 import pytest
-from qacode.core.bots.bot import Bot
 from qacode.core.exceptions.bot_error import BotError
+from qacode.core.loggers.log import Log
 from qacode.core.testing.asserts import Assert
 from qacode.utils import settings
 
 
-ASSERT = Assert()
+ASSERTS = Assert()
 CFG = settings(path="qacode/configs/", name="settings.json")
+LOG = Log(**CFG.get('log'))
 
 
-def test_bot_create_raises():
+@pytest.mark.parametrize("message", ["Failed bot"])
+def test_bot_error(bot, message):
     """TODO: doc method"""
-    with pytest.raises(Exception):
-        Bot(None)
-
-
-def test_bot_browser_raises():
-    """TODO: doc method"""
-    bot = Bot(**CFG)
+    exception = BotError(message, bot)
+    ASSERTS.in_list(message, exception.message)
     with pytest.raises(BotError):
-        bot.browser("")
+        raise exception

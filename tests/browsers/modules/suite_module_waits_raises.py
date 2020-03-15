@@ -21,6 +21,25 @@ def test_waits_browser_open(browser):
 
 
 @pytest.mark.dependency(depends=['browser_open'])
+@pytest.mark.parametrize("selector, locator, timeout", [
+    ("invalid", None, 1), ("invalid", "css selector", 1)])
+def test_elements_findwait_raises(browser, selector, locator, timeout):
+    """TODO: doc method"""
+    with pytest.raises(Exception):
+        browser.waits.find_wait(selector, locator=locator, timeout=timeout)
+
+
+@pytest.mark.dependency(depends=['browser_open'])
+@pytest.mark.parametrize("selector, locator, timeout", [
+    ("invalid", None, 1), ("invalid", "css selector", 1)])
+def test_elements_findswait_raises(browser, selector, locator, timeout):
+    """TODO: doc method"""
+    with pytest.raises(Exception):
+        browser.waits.finds_wait(
+            selector, locator=locator, timeout=timeout)
+
+
+@pytest.mark.dependency(depends=['browser_open'])
 @pytest.mark.parametrize("timeout", [0, 1])
 def test_waits_eleinvisible_raises(browser, timeout):
     """TODO: doc method"""

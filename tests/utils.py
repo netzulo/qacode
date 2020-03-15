@@ -110,7 +110,7 @@ def do_login(browser):
 def try_click(browser):
     """TODO: doc method"""
     invisible_sel = setup_input_selectors().get("invisible")
-    ele = browser.elements.find_wait(invisible_sel)
+    ele = browser.waits.find_wait(invisible_sel)
     try:
         browser.elements.click(ele)
     except Exception:

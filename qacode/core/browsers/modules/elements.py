@@ -4,7 +4,6 @@
 
 from qacode.core.browsers.modules.module import Module
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
 
 
 class ModuleElements(Module):
@@ -34,24 +33,6 @@ class ModuleElements(Module):
         if len(elements) == 0 and raises_zero:
             raise Exception("finds: 0 elements found")
         return elements
-
-    def find_wait(self, selector, locator=By.CSS_SELECTOR):
-        """Search element using WebDriverWait class
-            and ElementConditions presence_of_element_located
-        """
-        self.__check_not_none__("locator", locator)
-        # Not found: NoSuchElementException, StaleElementReferenceException
-        expectation = EC.presence_of_element_located((locator, selector))
-        return self._driver_wait.until(expectation)
-
-    def finds_wait(self, selector, locator=By.CSS_SELECTOR):
-        """Search elements using WebDriverWait class
-            and ElementConditions presence_of_all_elements_located
-        """
-        self.__check_not_none__("locator", locator)
-        # Not found: NoSuchElementException, StaleElementReferenceException
-        expectation = EC.presence_of_all_elements_located((locator, selector))
-        return self._driver_wait.until(expectation)
 
     def find_child(self, element, child_selector, locator=By.CSS_SELECTOR):
         """TODO: doc method"""

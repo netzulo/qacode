@@ -4,6 +4,7 @@
 
 from qacode.core.bots.bot_config import BotConfig
 from qacode.core.browsers.browser import Browser
+from qacode.core.exceptions.bot_error import BotError
 from qacode.core.loggers.log import Log
 
 
@@ -21,17 +22,22 @@ class Bot(object):
             "path": self._config.log_path,
             "level": self._config.log_level})
 
+    def __raises__(self, message):
+        """TODO: doc method"""
+        self.log.error(message)
+        raise BotError(message, self)
+
     def start(self):
         """TODO: doc method"""
         for _browser in self._config.browsers:
             self.browser_create(_browser)
 
-#    def browser(self, session_id):
-#        """TODO: doc method"""
-#        for browser in self.browsers:
-#            if browser.session_id == session_id:
-#                return browser
-#        raise Exception("browser not found")
+    def browser(self, session_id):
+        """TODO: doc method"""
+        for browser in self.browsers:
+            if browser.session_id == session_id:
+                return browser
+        self.__raises__("browser not found")
 #
 #    def page(self, url):
 #        """TODO: doc method"""

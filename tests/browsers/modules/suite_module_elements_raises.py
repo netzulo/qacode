@@ -42,22 +42,6 @@ def test_elements_finds_raises(browser, selector, locator):
 
 
 @pytest.mark.dependency(depends=['browser_open'])
-@pytest.mark.parametrize("selector, locator", [("invalid", None)])
-def test_elements_findwait_raises(browser, selector, locator):
-    """TODO: doc method"""
-    with pytest.raises(Exception):
-        browser.elements.find_wait(selector, locator=locator)
-
-
-@pytest.mark.dependency(depends=['browser_open'])
-@pytest.mark.parametrize("selector, locator", [("invalid", None)])
-def test_elements_findswait_raises(browser, selector, locator):
-    """TODO: doc method"""
-    with pytest.raises(Exception):
-        browser.elements.finds_wait(selector, locator=locator)
-
-
-@pytest.mark.dependency(depends=['browser_open'])
 @pytest.mark.parametrize("parent_sel,child_sel,locator", [
     ("body", "invalid", None)
 ])

@@ -22,6 +22,23 @@ def test_waits_browser_open(browser):
 
 
 @pytest.mark.dependency(depends=['browser_open'])
+def test_elements_findwait(browser):
+    """TODO: doc method"""
+    selector = setup_input_selectors().get("visible")
+    element = browser.waits.find_wait(selector)
+    ASSERT.is_instance(element, WebElement)
+
+
+@pytest.mark.dependency(depends=['browser_open'])
+def test_elements_findswait(browser):
+    """TODO: doc method"""
+    elements = browser.waits.finds_wait("body input")
+    ASSERT.is_instance(elements, list)
+    for element in elements:
+        ASSERT.is_instance(element, WebElement)
+
+
+@pytest.mark.dependency(depends=['browser_open'])
 @pytest.mark.parametrize("timeout", [0])
 def test_waits_eleinvisible(browser, timeout):
     """TODO: doc method"""
@@ -36,7 +53,7 @@ def test_waits_eleinvisible(browser, timeout):
 def test_waits_elevisible(browser, timeout):
     """TODO: doc method"""
     selector = setup_input_selectors().get("visible")
-    ele = browser.elements.find_wait(selector)
+    ele = browser.waits.find_wait(selector)
     try_click(browser)
     visible = browser.waits.ele_visible(ele, timeout=timeout)
     ASSERT.is_instance(visible, WebElement)

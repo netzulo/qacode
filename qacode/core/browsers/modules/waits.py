@@ -16,6 +16,30 @@ class ModuleWaits(Module):
         self._driver = driver
         self._driver_wait = driver_wait
 
+    def find_wait(self, selector, locator=By.CSS_SELECTOR, timeout=None):
+        """Search element using WebDriverWait class
+            and ElementConditions presence_of_element_located
+        """
+        driver_wait = self._driver_wait
+        self.__check_not_none__("locator", locator)
+        if timeout:
+            driver_wait = WebDriverWait(self._driver, timeout)
+        # Not found: NoSuchElementException, StaleElementReferenceException
+        expectation = EC.presence_of_element_located((locator, selector))
+        return driver_wait.until(expectation)
+
+    def finds_wait(self, selector, locator=By.CSS_SELECTOR, timeout=None):
+        """Search elements using WebDriverWait class
+            and ElementConditions presence_of_all_elements_located
+        """
+        driver_wait = self._driver_wait
+        self.__check_not_none__("locator", locator)
+        if timeout:
+            driver_wait = WebDriverWait(self._driver, timeout)
+        # Not found: NoSuchElementException, StaleElementReferenceException
+        expectation = EC.presence_of_all_elements_located((locator, selector))
+        return driver_wait.until(expectation)
+
     def ele_invisible(self, selector, locator=By.CSS_SELECTOR, timeout=None):
         """Wait for invisible element (display:none), returns element"""
         driver_wait = self._driver_wait

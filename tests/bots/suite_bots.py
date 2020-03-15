@@ -61,7 +61,7 @@ def test_bot_browser_create():
     ASSERT.equals(browser, bot.browsers[0])
 
 
-@pytest.mark.dependency(name="bot_browser_create", depends=['bot_create'])
+@pytest.mark.dependency(depends=['bot_create'])
 def test_bot_start():
     """TODO: doc method"""
     bot = Bot(**CFG)
@@ -70,3 +70,15 @@ def test_bot_start():
     ASSERT.equals(len(bot.config.browsers), len(bot.browsers))
     for browser in bot.browsers:
         ASSERT.is_instance(browser, Browser)
+
+
+@pytest.mark.dependency(depends=['bot_create'])
+def test_bot_browser():
+    """TODO: doc method"""
+    bot = Bot(**CFG)
+    bot.start()
+    bot.browsers[0].open()
+    _id = bot.browsers[0].session_id
+    _browser = bot.browser(_id)
+    ASSERT.equals(_id, _browser.session_id)
+    bot.browsers[0].close()

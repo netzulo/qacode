@@ -11,6 +11,16 @@ sys.dont_write_bytecode = True
 
 
 @pytest.fixture(scope="session")
+def bot():
+    CFG = settings(path="qacode/configs/", name="settings.json")
+    bot = Bot(**CFG)
+    try:
+        yield bot
+    except Exception as err:
+        raise err
+
+
+@pytest.fixture(scope="session")
 def browser():
     CFG = settings(path="qacode/configs/", name="settings.json")
     bot = Bot(**CFG)

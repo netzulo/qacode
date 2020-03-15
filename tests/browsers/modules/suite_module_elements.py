@@ -45,24 +45,6 @@ def test_elements_finds(browser):
 
 
 @pytest.mark.dependency(depends=['browser_open'])
-def test_elements_findwait(browser):
-    """TODO: doc method"""
-    selector = setup_selectors().get('parent')
-    element = browser.elements.find_wait(selector)
-    ASSERT.is_instance(element, WebElement)
-
-
-@pytest.mark.dependency(depends=['browser_open'])
-def test_elements_findswait(browser):
-    """TODO: doc method"""
-    selector = "{}{}".format(setup_selectors().get('parent'), " input")
-    elements = browser.elements.finds_wait(selector)
-    ASSERT.is_instance(elements, list)
-    for element in elements:
-        ASSERT.is_instance(element, WebElement)
-
-
-@pytest.mark.dependency(depends=['browser_open'])
 def test_elements_findchild(browser):
     """TODO: doc method"""
     selectors = setup_selectors()
