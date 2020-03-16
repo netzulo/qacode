@@ -9,10 +9,9 @@ from selenium.webdriver.common.by import By
 class ModuleElements(Module):
     """TODO: doc class"""
 
-    def __init__(self, driver, driver_wait):
+    def __init__(self, driver):
         """TODO: doc method"""
         self._driver = driver
-        self._driver_wait = driver_wait
 
     def find(self, selector, locator=By.CSS_SELECTOR):
         """Just divided execution ways for search
