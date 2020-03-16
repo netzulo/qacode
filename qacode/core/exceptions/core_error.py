@@ -11,7 +11,6 @@ class CoreError(Exception):
         Arguments:
             message {str} -- Exception message
         """
-        # raise NotImplementedError("WIP: pending refactor all class")
         self._message = message
 
     @property
