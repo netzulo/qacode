@@ -32,6 +32,7 @@
       { "name": "title_buttons", "selector": "#titleButtons", "pages": ["inputs"]},
       { "name": "btn_invisible", "selector": "#btnInvisibleAtTimeout", "pages": ["inputs"]},
       { "name": "btn_visible", "selector": "#btnVisibleAtTimeout", "pages": ["inputs"]},
+      { "name": "input_text", "selector": "#txtTest001", "pages": ["inputs"]},
       { "name": "dd_base", "selector": "#txtTest002", "pages": ["inputs"]},
       { "name": "dd_multiple", "selector": "#txtTest003", "pages": ["inputs"]},
       { "name": "lst_ordered", "selector": "ol:nth-child(1)", "pages": ["lists"]},

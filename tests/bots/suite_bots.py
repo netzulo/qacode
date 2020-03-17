@@ -82,3 +82,15 @@ def test_bot_browser():
     _browser = bot.browser(_id)
     ASSERT.equals(_id, _browser.session_id)
     bot.browsers[0].close()
+
+
+@pytest.mark.dependency(depends=['bot_create'])
+def test_bot_page():
+    """TODO: doc method"""
+    bot = Bot(**CFG)
+    bot.start()
+    bot.browsers[0].open()
+    url = bot.pages[0].config.url
+    page = bot.page(url)
+    ASSERT.equals(url, page.config.url)
+    bot.browsers[0].close()

@@ -24,3 +24,10 @@ def test_bot_browser_raises():
     bot = Bot(**CFG)
     with pytest.raises(BotError):
         bot.browser("")
+
+
+def test_bot_page_raises():
+    """TODO: doc method"""
+    bot = Bot(**CFG)
+    with pytest.raises(BotError):
+        bot.page("")
