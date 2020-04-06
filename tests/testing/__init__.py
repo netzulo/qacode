@@ -1,2 +1,2 @@
 # -*- coding: utf-8 -*-
-"""package qacode.tests.testing"""
+"""package tests.testing"""

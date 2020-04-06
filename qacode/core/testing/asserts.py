@@ -16,15 +16,12 @@ class Assert(object):
     @classmethod
     def message(cls, assert_name, actual, expected, msg=None):
         """Generate assert message for method that calls for it
-
         Arguments:
             assert_name {str} -- Assert method name that call
             actual {any} -- Actual value to compare
             expected {any} -- Expected value to compare
-
         Keyword Arguments:
             msg {[type]} -- [description] (default: {None})
-
         Returns:
             str -- Message to be use on Assert method
         """
@@ -51,21 +48,6 @@ class Assert(object):
         _msg = self.message("assert_not_equals", actual, expected, msg=msg)
         if actual == expected:
             raise AssertionError(actual, expected, _msg)
-        return True
-
-    def contains_url(self, actual, contains, msg=None, wait=0):
-        """Allow to compare 2 urls and check if 1st contains 2nd url"""
-        _msg = self.message("assert_contains_url", actual, contains, msg=msg)
-        if contains not in actual:
-            raise AssertionError(actual, contains, _msg)
-        return True
-
-    def not_contains_url(self, actual, contains, msg=None, wait=0):
-        """Allow to compare 2 urls and check if 1st not contains 2nd url"""
-        _msg = self.message(
-            "assert_not_contains_url", actual, contains, msg=msg)
-        if contains in actual:
-            raise AssertionError(actual, contains, _msg)
         return True
 
     def is_instance(self, instance, class_type, msg=None):

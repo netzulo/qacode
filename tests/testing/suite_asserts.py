@@ -25,18 +25,6 @@ def test_asserts_notequals():
 
 
 @pytest.mark.dependency(depends=['asserts_create'])
-def test_asserts_containsurl():
-    """TODO: doc method"""
-    Assert().contains_url("http://equals.com", "equals.com")
-
-
-@pytest.mark.dependency(depends=['asserts_create'])
-def test_asserts_notcontainsurl():
-    """TODO: doc method"""
-    Assert().not_contains_url("http://equals.com", "notcontains")
-
-
-@pytest.mark.dependency(depends=['asserts_create'])
 @pytest.mark.parametrize("class_type", [str, " "])
 def test_asserts_isinstance(class_type):
     """TODO: doc method"""
