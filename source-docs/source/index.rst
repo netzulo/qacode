@@ -12,7 +12,6 @@ Welcome to qacode's documentation!
 
    bots
    controls
-   enums
    exceptions
    loggers
    pages
