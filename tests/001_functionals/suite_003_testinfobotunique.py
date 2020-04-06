@@ -5,11 +5,13 @@
 import logging
 import pytest
 from qacode.core.bots.bot_base import BotBase
+from qacode.core.testing.asserts import Assert
 from qacode.core.testing.test_info import TestInfoBotUnique
 from qacode.utils import settings
 from qatestlink.core.testlink_manager import TLManager
 
 
+ASSERT = Assert()
 SETTINGS = settings(file_path="qacode/configs/")
 SKIP_BOT_UNIQUE = SETTINGS['tests']['skip']['bot_unique']
 SKIP_BOT_UNIQUE_MSG = 'bot_unique DISABLED by config file'
@@ -30,8 +32,8 @@ class TestTestInfoBotUnique(TestInfoBotUnique):
     def test_unique_bot_multiple_tests(self, run_time):
         """Testcase: test_unique_bot_multiple_tests"""
         self.log.debug("TestInfoBotUnique, test='{}'".format(run_time))
-        self.assert_is_instance(self, object)
-        self.assert_is_instance(self, TestInfoBotUnique)
-        self.assert_is_instance(self.log._logger, logging.Logger)
-        self.assert_is_instance(self.bot, BotBase)
-        self.assert_is_instance(self.tlm, TLManager)
+        ASSERT.is_instance(self, object)
+        ASSERT.is_instance(self, TestInfoBotUnique)
+        ASSERT.is_instance(self.log._logger, logging.Logger)
+        ASSERT.is_instance(self.bot, BotBase)
+        ASSERT.is_instance(self.tlm, TLManager)

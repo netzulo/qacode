@@ -5,10 +5,12 @@
 import pytest
 from qacode.core.bots.bot_base import BotBase
 from qacode.core.loggers.logger_manager import Log
+from qacode.core.testing.asserts import Assert
 from qacode.core.testing.test_info import TestInfoBase
 from qacode.utils import settings
 
 
+ASSERT = Assert()
 SETTINGS = settings(file_path="qacode/configs/")
 SKIP = SETTINGS['tests']['skip']['benchmarks']
 SKIP_MSG = 'benchmarks DISABLED by config file'
@@ -48,12 +50,12 @@ class TestBotBase(TestInfoBase):
         if browser_name == 'iexplorer':
             browser_name = 'internet explorer'
         self.bot = BotBase(**settings)
-        self.assert_is_instance(self.bot, BotBase)
-        self.assert_equals(
+        ASSERT.is_instance(self.bot, BotBase)
+        ASSERT.equals(
             self.bot.settings.get('browser'),
             settings.get('bot').get('browser'))
-        self.assert_equals(self.bot.settings.get('mode'), driver_mode)
-        self.assert_equals(self.bot.curr_caps['browserName'], browser_name)
+        ASSERT.equals(self.bot.settings.get('mode'), driver_mode)
+        ASSERT.equals(self.bot.curr_caps['browserName'], browser_name)
         try:
             if self.bot:
                 self.bot.close()

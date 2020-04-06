@@ -4,6 +4,7 @@
 
 import pytest
 from qacode.core.exceptions.control_exception import ControlException
+from qacode.core.testing.asserts import Assert
 from qacode.core.testing.test_info import TestInfoBotUnique
 from qacode.core.webs.controls.control_dropdown import ControlDropdown
 from qacode.utils import settings
@@ -11,6 +12,7 @@ from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.ui import Select
 
 
+ASSERT = Assert()
 SETTINGS = settings(file_path="qacode/configs/")
 SKIP_CONTROLS = SETTINGS['tests']['skip']['web_controls']['control_dropdown']
 SKIP_CONTROLS_MSG = 'web_controls DISABLED by config file'
@@ -92,19 +94,19 @@ class TestControlDropdown(TestInfoBotUnique):
         })
         # functional testcases
         ctl = ControlDropdown(self.bot, **cfg)
-        self.assert_is_instance(ctl, ControlDropdown)
-        self.assert_equals(ctl.selector, cfg.get('selector'))
-        self.assert_equals(ctl.name, cfg.get('name'))
-        self.assert_equals(ctl.locator, 'css selector')
-        self.assert_equals(
+        ASSERT.is_instance(ctl, ControlDropdown)
+        ASSERT.equals(ctl.selector, cfg.get('selector'))
+        ASSERT.equals(ctl.name, cfg.get('name'))
+        ASSERT.equals(ctl.locator, 'css selector')
+        ASSERT.equals(
             ctl.on_instance_search, cfg.get('on_instance_search'))
-        self.assert_equals(ctl.auto_reload, cfg.get('auto_reload'))
+        ASSERT.equals(ctl.auto_reload, cfg.get('auto_reload'))
         if on_instance_search:
-            self.assert_is_instance(ctl.element, WebElement)
+            ASSERT.is_instance(ctl.element, WebElement)
         if auto_reload is not None:
-            self.assert_none(ctl.dropdown)
+            ASSERT.none(ctl.dropdown)
             ctl.reload(**ctl.settings)
-            self.assert_is_instance(ctl.dropdown, Select)
+            ASSERT.is_instance(ctl.dropdown, Select)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize("auto_reload", [True, False])
@@ -117,15 +119,15 @@ class TestControlDropdown(TestInfoBotUnique):
             "on_instance_search": False,
         })
         ctl = ControlDropdown(self.bot, **cfg)
-        self.assert_equals(ctl.on_instance_search, False)
-        self.assert_none(ctl.element)
-        self.assert_none(ctl.dropdown)
+        ASSERT.equals(ctl.on_instance_search, False)
+        ASSERT.none(ctl.element)
+        ASSERT.none(ctl.dropdown)
         # Real test behaviour
         cfg.update({"on_instance_search": True})
         ctl.reload(**cfg)
-        self.assert_equals(ctl.on_instance_search, True)
-        self.assert_is_instance(ctl.element, WebElement)
-        self.assert_is_instance(ctl.dropdown, Select)
+        ASSERT.equals(ctl.on_instance_search, True)
+        ASSERT.is_instance(ctl.element, WebElement)
+        ASSERT.is_instance(ctl.dropdown, Select)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize("text", ["Link 1.1", "Link 1.2"])
@@ -206,7 +208,7 @@ class TestControlDropdown(TestInfoBotUnique):
         control.select(text)
         control.dropdown = None
         control.deselect(text)
-        self.assert_is_instance(control.dropdown, Select)
+        ASSERT.is_instance(control.dropdown, Select)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize("text", ["Link 1.1"])
@@ -270,4 +272,4 @@ class TestControlDropdown(TestInfoBotUnique):
             control.select(text)
         control.dropdown = None
         control.deselect_all()
-        self.assert_is_instance(control.dropdown, Select)
+        ASSERT.is_instance(control.dropdown, Select)

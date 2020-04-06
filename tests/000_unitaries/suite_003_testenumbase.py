@@ -3,8 +3,12 @@
 
 
 from qacode.core.enums.enum_base import EnumBase
+from qacode.core.testing.asserts import Assert
 from qacode.core.testing.test_info import TestInfoBase
 from qacode.utils import settings
+
+
+ASSERT = Assert()
 
 
 class TestEnum(EnumBase):
@@ -27,19 +31,19 @@ class TestTestInfoBase(TestInfoBase):
 
     def test_001_enums_instance(self):
         """Test: test_001_enums_instance"""
-        self.assert_is_instance(self.test_enum, EnumBase)
-        self.assert_is_instance(self.test_enum, TestEnum)
+        ASSERT.is_instance(self.test_enum, EnumBase)
+        ASSERT.is_instance(self.test_enum, TestEnum)
 
     def test_002_enums_hasproperty(self):
         """Test: test_002_enums_hasproperty"""
-        self.assert_true(self.test_enum.has_property(1))
+        ASSERT.true(self.test_enum.has_property(1))
 
     def test_003_enums_hasntproperty(self):
         """Test: test_003_enums_hasntproperty"""
-        self.assert_false(self.test_enum.has_property(3))
+        ASSERT.false(self.test_enum.has_property(3))
 
     def test_004_enums_getproperties(self):
         """Test: test_004_enums_getproperties"""
-        self.assert_equals(
+        ASSERT.equals(
             self.test_enum.get_properties(),
             self.test_values)

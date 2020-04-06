@@ -3,10 +3,12 @@
 
 
 import pytest
+from qacode.core.testing.asserts import Assert
 from qacode.core.testing.test_info import TestInfoBase
 from qacode.utils import settings
 
 
+ASSERT = Assert()
 SETTINGS = settings(file_path="qacode/configs/")
 MSG_OBSOLETE = "Test obsolete, need new tests for key tests.functionals.pages"
 SKIP_CONFIG = SETTINGS['tests']['skip']['test_configs']
@@ -29,12 +31,12 @@ class TestConfig(TestInfoBase):
     ERR_KEY_EMPTY = "Required key '{}', can't be empty, value='{}'"
     ERR_KEY_REGEX = "Optional key '{}', not provided or not matching regex: {}"
     # Test constants
-    PATH_SETTINGS = "qacode/configs/settings.json"
+    PATH_SETTINGS = "qacode/configs/"
     REGEX_URL = r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+"  # noqa: E501
 
     def test_config_exist(self):
         """Test : test_000_config_exist"""
-        self.assert_path_exist(self.PATH_SETTINGS, is_dir=False)
+        ASSERT.path_exist(self.PATH_SETTINGS)
 
     @pytest.mark.parametrize("key_name", [
         "mode", "browser", "url_hub", "drivers_path",
@@ -47,26 +49,23 @@ class TestConfig(TestInfoBase):
         key_value = self.config['bot'][key_name]
         if key_name == 'mode':
             valid_values = ["local", "remote"]
-            self.assert_in(key_value, valid_values)
+            ASSERT.in_list(key_value, valid_values)
         if key_name == 'browser':
             valid_values = [
                 "firefox", "chrome",
                 "iexplorer", "phantomjs",
                 "edge", "iexplorer"]
-            self.assert_in(key_value, valid_values)
+            ASSERT.in_list(key_value, valid_values)
         if key_name == 'url_hub':
-            self.assert_regex_url(key_value)
+            ASSERT.regex_url(key_value)
         if key_name == 'drivers_path':
-            self.assert_path_exist(key_value)
+            ASSERT.path_exist(key_value)
         if key_name == 'drivers_names':
             drivers_path = '../qadrivers/{}'
-            for value in key_value:
-                driver_path = drivers_path.format(value)
-                self.assert_path_exist(driver_path, is_dir=False)
         if key_name == 'log_name':
-            self.assert_not_equals(key_value, "")
+            ASSERT.not_equals(key_value, "")
         if key_name == 'log_output_file':
-            self.assert_not_equals(key_value, "")
+            ASSERT.not_equals(key_value, "")
 
     @pytest.mark.parametrize("key_name", [
         "skip", "apps"
@@ -77,38 +76,31 @@ class TestConfig(TestInfoBase):
             pytest.skip(msg=SKIP_CONFIG_MSG)
         key_value = self.config['tests'][key_name]
         if key_name == 'skip':
-            self.assert_is_instance(key_value, dict)
-            self.assert_is_instance(
-                key_value.get('test_configs'), bool)
-            self.assert_is_instance(
-                key_value.get('browsers'), dict)
-            self.assert_is_instance(
-                key_value.get('bot_multiple'), bool)
-            self.assert_is_instance(
-                key_value.get('bot_unique'), bool)
-            self.assert_is_instance(
-                key_value.get('web_controls'), dict)
-            self.assert_is_instance(
+            ASSERT.is_instance(key_value, dict)
+            ASSERT.is_instance(key_value.get('test_configs'), bool)
+            ASSERT.is_instance(key_value.get('browsers'), dict)
+            ASSERT.is_instance(key_value.get('bot_multiple'), bool)
+            ASSERT.is_instance(key_value.get('bot_unique'), bool)
+            ASSERT.is_instance(key_value.get('web_controls'), dict)
+            ASSERT.is_instance(
                 key_value.get('web_controls').get('control_base'), bool)
-            self.assert_is_instance(
-                key_value.get('web_pages'), bool)
-            self.assert_is_instance(
-                key_value.get('benchmarks'), bool)
+            ASSERT.is_instance(key_value.get('web_pages'), bool)
+            ASSERT.is_instance(key_value.get('benchmarks'), bool)
         if key_name == 'apps':
-            self.assert_is_instance(key_value, list)
+            ASSERT.is_instance(key_value, list)
             for app_config in key_value:
-                self.assert_is_instance(app_config, dict)
-                self.assert_is_instance(app_config.get('name'), str)
-                self.assert_is_instance(app_config.get('pages'), list)
+                ASSERT.is_instance(app_config, dict)
+                ASSERT.is_instance(app_config.get('name'), str)
+                ASSERT.is_instance(app_config.get('pages'), list)
                 for page_config in app_config.get('pages'):
-                    self.assert_is_instance(page_config.get('name'), str)
-                    self.assert_is_instance(page_config.get('url'), str)
-                    self.assert_is_instance(page_config.get('locator'), str)
-                    self.assert_is_instance(page_config.get('go_url'), bool)
-                    self.assert_is_instance(page_config.get('wait_url'), int)
-                    self.assert_is_instance(page_config.get('maximize'), bool)
-                    self.assert_is_instance(page_config.get('controls'), list)
+                    ASSERT.is_instance(page_config.get('name'), str)
+                    ASSERT.is_instance(page_config.get('url'), str)
+                    ASSERT.is_instance(page_config.get('locator'), str)
+                    ASSERT.is_instance(page_config.get('go_url'), bool)
+                    ASSERT.is_instance(page_config.get('wait_url'), int)
+                    ASSERT.is_instance(page_config.get('maximize'), bool)
+                    ASSERT.is_instance(page_config.get('controls'), list)
                     # TODO: handle control list
                     ctl_configs = page_config.get('controls')
                     for control in ctl_configs:
-                        self.assert_is_instance(control.get('selector'), str)
+                        ASSERT.is_instance(control.get('selector'), str)
