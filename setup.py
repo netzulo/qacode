@@ -97,30 +97,19 @@ README_FILE = read(
     file_name="README.rst")
 
 
-def get_install_requires():
-    """Get a list of pypi python package dependencies
-
-    Returns:
-        list -- list of dependecy package names
-    """
-    if version_info <= (3, 4):
-        INSTALL_REQUIRES.append('enum34')
-    return INSTALL_REQUIRES
-
-
 setup(
     name='qacode',
     version=VERSION,
     license=LICENSE_FILE,
     packages=find_packages(exclude=['tests']),
-    description='Main automation lib',
+    description='Main automation library to wrap selenium and automate webs',
     long_description=README_FILE,
     author='Netzulo Open Source',
     author_email='netzuleando@gmail.com',
     url=GIT_URL,
     download_url=GIT_URL_DOWNLOAD,
     keywords=KEYWORDS,
-    install_requires=get_install_requires(),
+    install_requires=INSTALL_REQUIRES,
     setup_requires=SETUP_REQUIRES,
     tests_require=TESTS_REQUIRE,
     classifiers=[

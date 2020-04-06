@@ -11,11 +11,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 
+- Moved asserts to own class + add greater/lower_or_equals #279
+
 ### Fixed
 
 ### Removed
 
-- [BP] remove ControlForm and StrictRules + tests #305
+- Remove ControlForm and StrictRules + tests #305
+- Enums and inherit classes #312
+- Enum34 dependency just for >py34 versions #312
 
 
 ## [v0.6.3] - 2020-01-29
