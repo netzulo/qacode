@@ -5,11 +5,13 @@
 import logging
 import pytest
 from qacode.core.bots.bot_base import BotBase
+from qacode.core.testing.asserts import Assert
 from qacode.core.testing.test_info import TestInfoBot
 from qacode.utils import settings
 from qatestlink.core.testlink_manager import TLManager
 
 
+ASSERT = Assert()
 SETTINGS = settings(file_path="qacode/configs/")
 SKIP_BOT_MULTIPLE = SETTINGS['tests']['skip']['bot_multiple']
 SKIP_BOT_MULTIPLE_MSG = 'bot_multiple DISABLED by config file'
@@ -28,9 +30,9 @@ class TestTestInfoBot(TestInfoBot):
     def test_multiple_bots(self, run_time):
         """Testcase: test_multiple_bots"""
         self.log.debug("TestInfoBotUnique, test='{}'".format(run_time))
-        self.assert_is_instance(self, object)
-        self.assert_is_instance(self, TestInfoBot)
-        self.assert_is_instance(self.log._logger, logging.Logger)
-        self.assert_is_instance(self.bot, BotBase)
-        self.assert_is_instance(self.config, dict)
-        self.assert_is_instance(self.tlm, TLManager)
+        ASSERT.is_instance(self, object)
+        ASSERT.is_instance(self, TestInfoBot)
+        ASSERT.is_instance(self.log._logger, logging.Logger)
+        ASSERT.is_instance(self.bot, BotBase)
+        ASSERT.is_instance(self.config, dict)
+        ASSERT.is_instance(self.tlm, TLManager)

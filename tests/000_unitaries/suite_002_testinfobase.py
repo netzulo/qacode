@@ -5,9 +5,13 @@
 import logging
 import pytest
 from qacode.core.loggers.logger_manager import Log
+from qacode.core.testing.asserts import Assert
 from qacode.core.testing.test_info import TestInfoBase
 from qacode.utils import settings
 from qatestlink.core.testlink_manager import TLManager
+
+
+ASSERT = Assert()
 
 
 class TestTestInfoBase(TestInfoBase):
@@ -20,12 +24,12 @@ class TestTestInfoBase(TestInfoBase):
 
     def test_log_inheritance(self):
         """Test: test_001_inheritance"""
-        self.assert_is_instance(self, object)
-        self.assert_is_instance(self, TestInfoBase)
-        self.assert_is_instance(self.log._logger, logging.Logger)
-        self.assert_is_instance(self.config, dict)
+        ASSERT.is_instance(self, object)
+        ASSERT.is_instance(self, TestInfoBase)
+        ASSERT.is_instance(self.log._logger, logging.Logger)
+        ASSERT.is_instance(self.config, dict)
         if self.config.get('testlink'):
-            self.assert_is_instance(self.tlm, TLManager)
+            ASSERT.is_instance(self.tlm, TLManager)
 
     @pytest.mark.parametrize("log_level", [
         "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"
@@ -48,6 +52,6 @@ class TestTestInfoBase(TestInfoBase):
     def test_log_notparams(self):
         """Testcase: test_log_notlogname"""
         log = Log(**{})
-        self.assert_equals(log._name, "qacode")
-        self.assert_equals(log._name_file, "qacode.log")
-        self.assert_equals(log._path, "./logs/")
+        ASSERT.equals(log._name, "qacode")
+        ASSERT.equals(log._name_file, "qacode.log")
+        ASSERT.equals(log._path, "./logs/")

@@ -4,12 +4,14 @@
 
 import pytest
 from qacode.core.exceptions.core_exception import CoreException
+from qacode.core.testing.asserts import Assert
 from qacode.core.testing.test_info import TestInfoBotUnique
 from qacode.core.webs.controls.control_base import ControlBase
 from qacode.utils import settings
 from selenium.webdriver.remote.webelement import WebElement
 
 
+ASSERT = Assert()
 SETTINGS = settings(file_path="qacode/configs/")
 SKIP_CONTROLS = SETTINGS['tests']['skip']['web_controls']['control_base']
 SKIP_CONTROLS_MSG = 'web_controls DISABLED by config file'
@@ -112,19 +114,19 @@ class TestControlBase(TestInfoBotUnique):
         }
         # functional testcases
         ctl = ControlBase(self.bot, **cfg)
-        self.assert_is_instance(ctl, ControlBase)
+        ASSERT.is_instance(ctl, ControlBase)
         # main config
-        self.assert_equals(ctl.selector, cfg.get('selector'))
-        self.assert_equals(ctl.name, cfg.get('name'))
-        self.assert_equals(ctl.locator, cfg.get('locator'))
-        self.assert_equals(
+        ASSERT.equals(ctl.selector, cfg.get('selector'))
+        ASSERT.equals(ctl.name, cfg.get('name'))
+        ASSERT.equals(ctl.locator, cfg.get('locator'))
+        ASSERT.equals(
             ctl.on_instance_search, cfg.get('on_instance_search'))
-        self.assert_equals(ctl.auto_reload, cfg.get('auto_reload'))
+        ASSERT.equals(ctl.auto_reload, cfg.get('auto_reload'))
         if on_instance_search:
-            self.assert_is_instance(ctl.element, WebElement)
-            self.assert_equals(ctl.tag, tag_name)
+            ASSERT.is_instance(ctl.element, WebElement)
+            ASSERT.equals(ctl.tag, tag_name)
         else:
-            self.assert_none(ctl.element)
+            ASSERT.none(ctl.element)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_controlbase_instance_raises(self):
@@ -145,7 +147,7 @@ class TestControlBase(TestInfoBotUnique):
         cfg_btn = self.btn_submit.copy()
         cfg_btn.update({"on_instance_search": True})
         control = ControlBase(self.bot, **cfg_btn)
-        self.assert_equals(control.text, 'Login')
+        ASSERT.equals(control.text, 'Login')
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_method_gettext(self):
@@ -153,7 +155,7 @@ class TestControlBase(TestInfoBotUnique):
         cfg_btn = self.btn_submit.copy()
         cfg_btn.update({"on_instance_search": True})
         control = ControlBase(self.bot, **cfg_btn)
-        self.assert_equals(control.get_text(), 'Login')
+        ASSERT.equals(control.get_text(), 'Login')
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_property_attr_id(self):
@@ -161,7 +163,7 @@ class TestControlBase(TestInfoBotUnique):
         cfg_input = self.txt_username.copy()
         cfg_input.update({"on_instance_search": True})
         control = ControlBase(self.bot, **cfg_input)
-        self.assert_not_none(control.attr_id)
+        ASSERT.not_none(control.attr_id)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_property_attr_class(self):
@@ -169,7 +171,7 @@ class TestControlBase(TestInfoBotUnique):
         cfg_form = self.form_login.copy()
         cfg_form.update({"on_instance_search": True})
         control = ControlBase(self.bot, **cfg_form)
-        self.assert_in('ember-view', control.attr_class)
+        ASSERT.in_list('ember-view', control.attr_class)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_method_getattrvalue(self):
@@ -177,7 +179,7 @@ class TestControlBase(TestInfoBotUnique):
         cfg_form = self.form_login.copy()
         cfg_form.update({"on_instance_search": True})
         control = ControlBase(self.bot, **cfg_form)
-        self.assert_not_none(control.get_attr_value('id'))
+        ASSERT.not_none(control.get_attr_value('id'))
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_method_get_attrs(self):
@@ -186,10 +188,10 @@ class TestControlBase(TestInfoBotUnique):
         cfg_form.update({"on_instance_search": True})
         control = ControlBase(self.bot, **cfg_form)
         attrs = control.get_attrs(['id', 'class'])
-        self.assert_equals(attrs[0]['name'], 'id')
-        self.assert_equals(attrs[0]['value'], 'frmLogin')
-        self.assert_equals(attrs[1]['name'], 'class')
-        self.assert_in('ember-view', attrs[1]['value'])
+        ASSERT.equals(attrs[0]['name'], 'id')
+        ASSERT.equals(attrs[0]['value'], 'frmLogin')
+        ASSERT.equals(attrs[1]['name'], 'class')
+        ASSERT.in_list('ember-view', attrs[1]['value'])
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_property_tag(self):
@@ -197,7 +199,7 @@ class TestControlBase(TestInfoBotUnique):
         cfg_form = self.form_login.copy()
         cfg_form.update({"on_instance_search": True})
         control = ControlBase(self.bot, **cfg_form)
-        self.assert_equals(control.tag, 'form')
+        ASSERT.equals(control.tag, 'form')
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize("retry", [False, True])
@@ -222,8 +224,8 @@ class TestControlBase(TestInfoBotUnique):
         ctl_config.update(control_config)
         control = ControlBase(self.bot, **ctl_config)
         control.type_text(text_to_type, clear=clear)
-        self.assert_equals(control.text, text_to_type)
-        self.assert_equals(control.get_attr_value('value'), text_to_type)
+        ASSERT.equals(control.text, text_to_type)
+        ASSERT.equals(control.get_attr_value('value'), text_to_type)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_method_getcssvalue(self):
@@ -231,7 +233,7 @@ class TestControlBase(TestInfoBotUnique):
         cfg_input = self.txt_username.copy()
         cfg_input.update({"on_instance_search": True})
         control = ControlBase(self.bot, **cfg_input)
-        self.assert_equals(
+        ASSERT.equals(
             control.get_css_value('color'),
             'rgba(73, 80, 87, 1)')
 
@@ -243,7 +245,7 @@ class TestControlBase(TestInfoBotUnique):
         control = ControlBase(self.bot, **cfg_input)
         control.type_text('test')
         control.set_css_value('color', 'red')
-        self.assert_equals(
+        ASSERT.equals(
             control.get_css_value('color'),
             'rgba(255, 0, 0, 1)')
 
@@ -256,7 +258,7 @@ class TestControlBase(TestInfoBotUnique):
         control = ControlBase(self.bot, **cfg_btn)
         control.set_css_value('display', 'none')
         text = control.get_text(on_screen=False)
-        self.assert_greater(len(text), 0, msg=msg_err)
+        ASSERT.greater(len(text), 0, msg=msg_err)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize("selector", ["#txtUsername-field"])
@@ -272,13 +274,13 @@ class TestControlBase(TestInfoBotUnique):
             "on_instance_search": False,
         }
         control = ControlBase(self.bot, **cfg_base)
-        self.assert_equals(control.on_instance_search, False)
-        self.assert_none(control.element)
+        ASSERT.equals(control.on_instance_search, False)
+        ASSERT.none(control.element)
         # Real test behaviour
         cfg_base.update({"on_instance_search": True})
         control.reload(**cfg_base)
-        self.assert_equals(control.on_instance_search, True)
-        self.assert_is_instance(control.element, WebElement)
+        ASSERT.equals(control.on_instance_search, True)
+        ASSERT.is_instance(control.element, WebElement)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_method_findchild(self):
@@ -287,8 +289,8 @@ class TestControlBase(TestInfoBotUnique):
         control = ControlBase(self.bot, **self.lst_ordered)
         selector_child = self.lst_ordered_child.get("selector")
         ctl_child = control.find_child(selector_child)
-        self.assert_is_instance(ctl_child, ControlBase)
-        self.assert_is_instance(ctl_child.element, WebElement)
+        ASSERT.is_instance(ctl_child, ControlBase)
+        ASSERT.is_instance(ctl_child.element, WebElement)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_method_findchildren(self):
@@ -297,10 +299,10 @@ class TestControlBase(TestInfoBotUnique):
         control = ControlBase(self.bot, **self.lst_ordered)
         selector_child = self.lst_ordered_child.get("selector")
         children = control.find_children(selector_child)
-        self.assert_lower(len(children), 5)
+        ASSERT.lower(len(children), 5)
         for ctl_child in children:
-            self.assert_is_instance(ctl_child, ControlBase)
-            self.assert_is_instance(ctl_child.element, WebElement)
+            ASSERT.is_instance(ctl_child, ControlBase)
+            ASSERT.is_instance(ctl_child.element, WebElement)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_method_waitinvisible(self):
@@ -310,8 +312,8 @@ class TestControlBase(TestInfoBotUnique):
         ctl = ControlBase(self.bot, **self.btn_click_invisible)
         ctl.click()
         ctl_invisible = ctl.wait_invisible(timeout=7)
-        self.assert_is_instance(ctl_invisible, ControlBase)
-        self.assert_is_instance(ctl_invisible.element, WebElement)
+        ASSERT.is_instance(ctl_invisible, ControlBase)
+        ASSERT.is_instance(ctl_invisible.element, WebElement)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_method_waitvisible(self):
@@ -321,8 +323,8 @@ class TestControlBase(TestInfoBotUnique):
         # end setup
         ctl = ControlBase(self.bot, **self.btn_click_visible)
         ctl_visible = ctl.wait_visible(timeout=7)
-        self.assert_is_instance(ctl_visible, ControlBase)
-        self.assert_is_instance(ctl_visible.element, WebElement)
+        ASSERT.is_instance(ctl_visible, ControlBase)
+        ASSERT.is_instance(ctl_visible.element, WebElement)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_method_waitblink(self):
@@ -332,8 +334,8 @@ class TestControlBase(TestInfoBotUnique):
         ctl.click()
         # end setup
         ctl_blink = ctl.wait_blink(timeout=7)
-        self.assert_is_instance(ctl_blink, ControlBase)
-        self.assert_is_instance(ctl_blink.element, WebElement)
+        ASSERT.is_instance(ctl_blink, ControlBase)
+        ASSERT.is_instance(ctl_blink.element, WebElement)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize(
@@ -351,5 +353,5 @@ class TestControlBase(TestInfoBotUnique):
         # end setup
         ctl = ControlBase(self.bot, **getattr(self, ctl_cfg[0]))
         ctl.reload()
-        self.assert_true(ctl.wait_text(ctl_cfg[1], timeout=7))
-        self.assert_equals(ctl.text, ctl_cfg[1])
+        ASSERT.true(ctl.wait_text(ctl_cfg[1], timeout=7))
+        ASSERT.equals(ctl.text, ctl_cfg[1])

@@ -3,6 +3,7 @@
 
 
 import pytest
+from qacode.core.testing.asserts import Assert
 from qacode.core.testing.test_info import TestInfoBotUnique
 from qacode.core.webs.controls.control_base import ControlBase
 from qacode.core.webs.controls.control_table import ControlTable
@@ -10,6 +11,7 @@ from qacode.utils import settings
 from selenium.webdriver.remote.webelement import WebElement
 
 
+ASSERT = Assert()
 SETTINGS = settings(file_path="qacode/configs/")
 SKIP_CONTROLS = SETTINGS['tests']['skip']['web_controls']['control_table']
 SKIP_CONTROLS_MSG = 'web_controls DISABLED by config file'
@@ -112,30 +114,30 @@ class TestControlTable(TestInfoBotUnique):
         })
         # functional testcases
         ctl = ControlTable(self.bot, **cfg)
-        self.assert_is_instance(ctl, ControlTable)
-        self.assert_equals(ctl.selector, cfg.get('selector'))
-        self.assert_equals(ctl.name, cfg.get('name'))
-        self.assert_equals(ctl.locator, 'css selector')
-        self.assert_equals(
+        ASSERT.is_instance(ctl, ControlTable)
+        ASSERT.equals(ctl.selector, cfg.get('selector'))
+        ASSERT.equals(ctl.name, cfg.get('name'))
+        ASSERT.equals(ctl.locator, 'css selector')
+        ASSERT.equals(
             ctl.on_instance_search, cfg.get('on_instance_search'))
-        self.assert_equals(ctl.auto_reload, cfg.get('auto_reload'))
+        ASSERT.equals(ctl.auto_reload, cfg.get('auto_reload'))
         if on_instance_search:
-            self.assert_is_instance(ctl.element, WebElement)
+            ASSERT.is_instance(ctl.element, WebElement)
         if auto_reload is not None:
-            self.assert_none(ctl.table)
+            ASSERT.none(ctl.table)
             ctl.reload(**ctl.settings)
-            self.assert_is_instance(ctl.table, ControlBase)
-        self.assert_is_instance(ctl.rows, list)
+            ASSERT.is_instance(ctl.table, ControlBase)
+        ASSERT.is_instance(ctl.rows, list)
         # Use case 1. not html5:: TABLE > (TR > TH)+(TR > TD)
         # Use case 2. html5:: TABLE > (THEAD > (TR > TH))+(TBODY > (TR > TH))
         # Use case 3. html5:: TABLE >
         #   (THEAD > (TR > TH))+[(TBODY > (TR > TH))]
-        self.assert_lower(len(ctl.rows), rows)
+        ASSERT.lower(len(ctl.rows), rows)
         for row in ctl.rows:
-            self.assert_is_instance(row, list)
-            self.assert_lower(len(row), cols)
+            ASSERT.is_instance(row, list)
+            ASSERT.lower(len(row), cols)
             for cell in row:
-                self.assert_is_instance(cell, ControlBase)
+                ASSERT.is_instance(cell, ControlBase)
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     @pytest.mark.parametrize("ctl_name", ['tbl_ok', 'tbl_html5_ok'])
@@ -145,10 +147,10 @@ class TestControlTable(TestInfoBotUnique):
         cfg.update({"selector": "span"})
         # functional testcases
         ctl = ControlTable(self.bot, **cfg)
-        self.assert_is_instance(ctl, ControlTable)
-        self.assert_equals(ctl.selector, cfg.get('selector'))
-        self.assert_equals(ctl.name, cfg.get('name'))
-        self.assert_equals(ctl.locator, 'css selector')
+        ASSERT.is_instance(ctl, ControlTable)
+        ASSERT.equals(ctl.selector, cfg.get('selector'))
+        ASSERT.equals(ctl.name, cfg.get('name'))
+        ASSERT.equals(ctl.locator, 'css selector')
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_controltable_internals_ok(self):
@@ -164,5 +166,5 @@ class TestControlTable(TestInfoBotUnique):
         rows_before = len(ctl.rows)
         ctl.table = ctl.element
         rows_after = len(ctl.rows)
-        self.assert_is_instance(ctl.table, ControlBase)
-        self.assert_equals(rows_before, rows_after)
+        ASSERT.is_instance(ctl.table, ControlBase)
+        ASSERT.equals(rows_before, rows_after)

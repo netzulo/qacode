@@ -3,12 +3,14 @@
 
 
 import pytest
+from qacode.core.testing.asserts import Assert
 from qacode.core.testing.test_info import TestInfoBotUnique
 from qacode.core.webs.controls.control_base import ControlBase
 from qacode.core.webs.pages.page_base import PageBase
 from qacode.utils import settings
 
 
+ASSERT = Assert()
 SETTINGS = settings(file_path="qacode/configs/")
 SKIP_PAGES = SETTINGS['tests']['skip']['web_pages']
 SKIP_PAGES_MSG = 'web_pages DISABLED by config file'
@@ -58,8 +60,8 @@ class TestPageBase(TestInfoBotUnique):
             "go_url": True
         })
         page = PageBase(self.bot, **cfg)
-        self.assert_is_instance(page, PageBase)
-        self.assert_equals_url(
+        ASSERT.is_instance(page, PageBase)
+        ASSERT.equals(
             self.bot.curr_driver.current_url,
             self.page.get('url'))
 
@@ -68,29 +70,27 @@ class TestPageBase(TestInfoBotUnique):
         """Testcase: test_002_instance_notgourl"""
         cfg = self.page.copy()
         cfg.update({
-            "go_url": False,
-            "controls": []
+            "go_url": False, "controls": []
         })
         page = PageBase(self.bot, **cfg)
-        self.assert_is_instance(page, PageBase)
-        self.assert_not_equals_url(
-            self.bot.curr_driver.current_url,
-            cfg.get('url'))
+        ASSERT.is_instance(page, PageBase)
+        ASSERT.not_equals(
+            self.bot.curr_driver.current_url, cfg.get('url'))
 
     @pytest.mark.skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
     def test_instance_element(self):
         """Testcase: test_003_instance_element"""
         cfg = self.page.copy()
         page = PageBase(self.bot, **cfg)
-        self.assert_is_instance(page, PageBase)
-        self.assert_equals_url(
+        ASSERT.is_instance(page, PageBase)
+        ASSERT.equals(
             self.bot.curr_driver.current_url,
             cfg.get('url'))
         for control in self.page.get('controls'):
             name = control.get('name')
-            self.assert_in(name, dir(page))
+            ASSERT.in_list(name, dir(page))
             element = page.__dict__[name]
-            self.assert_is_instance(element, ControlBase)
+            ASSERT.is_instance(element, ControlBase)
 
     @pytest.mark.skipIf(SKIP_PAGES, SKIP_PAGES_MSG)
     def test_instance_maximized(self):
@@ -102,8 +102,8 @@ class TestPageBase(TestInfoBotUnique):
             "controls": []
         })
         page = PageBase(self.bot, **cfg)
-        self.assert_is_instance(page, PageBase)
-        self.assert_equals_url(
+        ASSERT.is_instance(page, PageBase)
+        ASSERT.equals(
             self.bot.curr_driver.current_url,
             cfg.get('url'))
 
@@ -112,14 +112,14 @@ class TestPageBase(TestInfoBotUnique):
         """Testcase: test_004_instance_maximized"""
         cfg = self.page.copy()
         page = PageBase(self.bot, **cfg)
-        self.assert_is_instance(page, PageBase)
-        self.assert_equals_url(
+        ASSERT.is_instance(page, PageBase)
+        ASSERT.equals(
             self.bot.curr_driver.current_url,
             cfg.get('url'))
         for config_control in self.page.get('controls'):
             name = config_control.get('name')
             instance_name = config_control.get('instance')
             ctl = page.get_element(config_control)
-            self.assert_in(name, dir(page))
+            ASSERT.in_list(name, dir(page))
             if instance_name == 'ControlBase':
-                self.assert_is_instance(ctl, ControlBase)
+                ASSERT.is_instance(ctl, ControlBase)

@@ -5,11 +5,13 @@
 import pytest
 from qacode.core.bots.modules.nav_base import NavBase
 from qacode.core.exceptions.core_exception import CoreException
+from qacode.core.testing.asserts import Assert
 from qacode.core.testing.test_info import TestInfoBotUnique
 from qacode.utils import settings
 from selenium.webdriver.remote.webelement import WebElement
 
 
+ASSERT = Assert()
 SETTINGS = settings(file_path="qacode/configs/")
 SKIP_NAVS = SETTINGS['tests']['skip']['bot_navigations']
 SKIP_NAVS_MSG = 'bot_navigations DISABLED by config file'
@@ -89,7 +91,7 @@ class TestNavBase(TestInfoBotUnique):
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_navbase_instance(self):
         """Testcase: test_navbase_instance"""
-        self.assert_is_instance(self.bot.navigation, NavBase)
+        ASSERT.is_instance(self.bot.navigation, NavBase)
 
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_gourl_withoutwaits(self):
@@ -105,21 +107,21 @@ class TestNavBase(TestInfoBotUnique):
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_getcurrenturl_ok(self):
         """Testcase: test_getcurrenturl_ok"""
-        self.assert_equals(
+        ASSERT.equals(
             self.bot.navigation.get_current_url(),
             self.page.get('url'))
 
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_isurl_true(self):
         """Testcase: test_isurl_true"""
-        self.assert_true(
+        ASSERT.true(
             self.bot.navigation.is_url(
                 self.bot.navigation.get_current_url()))
 
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_isurl_false(self):
         """Testcase: test_isurl_false"""
-        self.assert_false(self.bot.navigation.is_url(""))
+        ASSERT.false(self.bot.navigation.is_url(""))
 
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_isurl_raiseswhenurlreturnfalse(self):
@@ -146,16 +148,16 @@ class TestNavBase(TestInfoBotUnique):
     def test_getcapabilities_ok(self):
         """Testcase: test_getcapabilities_ok"""
         caps = self.bot.navigation.get_capabilities()
-        self.assert_is_instance(caps, dict)
-        self.assert_is_instance(caps['chrome'], dict)
-        self.assert_equals(caps['browserName'], 'chrome')
+        ASSERT.is_instance(caps, dict)
+        ASSERT.is_instance(caps['chrome'], dict)
+        ASSERT.equals(caps['browserName'], 'chrome')
 
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_getlog_ok(self):
         """Testcase: test_getlog_ok"""
         self.bot.navigation.get_url(self.page.get('url'))
         log_data = self.bot.navigation.get_log()
-        self.assert_not_none(log_data)
+        ASSERT.not_none(log_data)
         self.log.debug("selenium logs, browser={}".format(log_data))
 
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
@@ -169,7 +171,7 @@ class TestNavBase(TestInfoBotUnique):
                 self.bot.navigation.get_log(log_name=log_name)
             return True
         log_data = self.bot.navigation.get_log(log_name=log_name)
-        self.assert_not_none(log_data)
+        ASSERT.not_none(log_data)
         msg = "selenium logs, log_name={}, log_data={}".format(
             log_name, log_data)
         self.log.debug(msg)
@@ -177,7 +179,7 @@ class TestNavBase(TestInfoBotUnique):
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_findelement_ok(self):
         """Testcase: test_findelement_ok"""
-        self.assert_is_instance(
+        ASSERT.is_instance(
             self.bot.navigation.find_element("body"),
             WebElement)
 
@@ -197,7 +199,7 @@ class TestNavBase(TestInfoBotUnique):
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_findelementwait_ok(self):
         """Testcase: test_findelementwait_ok"""
-        self.assert_is_instance(
+        ASSERT.is_instance(
             self.bot.navigation.find_element_wait("body"),
             WebElement)
 
@@ -205,17 +207,17 @@ class TestNavBase(TestInfoBotUnique):
     def test_findelementswait_ok(self):
         """Testcase: test_findelementwait_ok"""
         elements = self.bot.navigation.find_elements_wait("body>*")
-        self.assert_is_instance(elements, list)
+        ASSERT.is_instance(elements, list)
         for element in elements:
-            self.assert_is_instance(element, WebElement)
+            ASSERT.is_instance(element, WebElement)
 
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_findelements_ok(self):
         """Testcase: test_findelement_ok"""
         elements = self.bot.navigation.find_elements("body>*")
-        self.assert_is_instance(elements, list)
+        ASSERT.is_instance(elements, list)
         for element in elements:
-            self.assert_is_instance(element, WebElement)
+            ASSERT.is_instance(element, WebElement)
 
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_findelements_notfound(self):
@@ -233,7 +235,7 @@ class TestNavBase(TestInfoBotUnique):
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_getwindowhandle_ok(self):
         """Testcase: test_getwindowhandle_ok"""
-        self.assert_not_none(
+        ASSERT.not_none(
             self.bot.navigation.get_window_handle())
 
     @pytest.mark.skipIf(
@@ -258,7 +260,7 @@ class TestNavBase(TestInfoBotUnique):
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_getcookies_ok(self):
         """Testcase: test_getcookies_ok"""
-        self.assert_is_instance(
+        ASSERT.is_instance(
             self.bot.navigation.get_cookies(),
             list)
 
@@ -281,13 +283,13 @@ class TestNavBase(TestInfoBotUnique):
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_gettitle_ok(self):
         """Testcase: test_gettitle_ok"""
-        self.assert_not_none(
+        ASSERT.not_none(
             self.bot.navigation.get_title())
 
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_getscreenshotasbase64_ok(self):
         """Testcase: test_getscreenshotasbase64_ok"""
-        self.assert_not_none(
+        ASSERT.not_none(
             self.bot.navigation.get_screenshot_as_base64())
 
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
@@ -343,11 +345,11 @@ class TestNavBase(TestInfoBotUnique):
         self.setup_login_to_data()
         ele_parent = self.bot.navigation.find_element_wait(
             self.lst_ordered.get("selector"))
-        self.assert_is_instance(ele_parent, WebElement)
+        ASSERT.is_instance(ele_parent, WebElement)
         ele_child = self.bot.navigation.find_element_child(
             ele_parent, self.lst_ordered_child.get("selector"))
-        self.assert_is_instance(ele_child, WebElement)
-        self.assert_equals(
+        ASSERT.is_instance(ele_child, WebElement)
+        ASSERT.equals(
             "Item list01", self.bot.navigation.ele_text(ele_child))
 
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
@@ -356,13 +358,13 @@ class TestNavBase(TestInfoBotUnique):
         self.setup_login_to_data()
         ele_parent = self.bot.navigation.find_element_wait(
             self.lst_ordered.get("selector"))
-        self.assert_is_instance(ele_parent, WebElement)
+        ASSERT.is_instance(ele_parent, WebElement)
         ele_children = self.bot.navigation.find_element_children(
             ele_parent, self.lst_ordered_child.get("selector"))
-        self.assert_is_instance(ele_children, list)
-        self.assert_greater(len(ele_children), 1)
-        self.assert_lower(len(ele_children), 5)
-        self.assert_equals(
+        ASSERT.is_instance(ele_children, list)
+        ASSERT.greater(len(ele_children), 1)
+        ASSERT.lower(len(ele_children), 5)
+        ASSERT.equals(
             "Item list01",
             self.bot.navigation.ele_text(ele_children[0]))
 
@@ -375,7 +377,7 @@ class TestNavBase(TestInfoBotUnique):
         ele.click()
         # end setup
         ele = self.bot.navigation.ele_wait_invisible(selector, timeout=7)
-        self.assert_is_instance(ele, WebElement)
+        ASSERT.is_instance(ele, WebElement)
 
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_elewaitvisible_ok(self):
@@ -388,7 +390,7 @@ class TestNavBase(TestInfoBotUnique):
         # end setup
         ele_visible = self.bot.navigation.ele_wait_visible(
             ele_invisible, timeout=7)
-        self.assert_is_instance(ele_visible, WebElement)
+        ASSERT.is_instance(ele_visible, WebElement)
 
     @pytest.mark.skipIf(SKIP_NAVS, SKIP_NAVS_MSG)
     def test_elewaittext_ok(self):
@@ -401,8 +403,8 @@ class TestNavBase(TestInfoBotUnique):
         # end setup
         is_changed = self.bot.navigation.ele_wait_text(
             selector_title, "Buttonss", timeout=12)
-        self.assert_true(is_changed)
-        self.assert_is_instance(
+        ASSERT.true(is_changed)
+        ASSERT.is_instance(
             self.bot.navigation.ele_text(ele_text),
             "Buttonss")
 
@@ -416,7 +418,7 @@ class TestNavBase(TestInfoBotUnique):
         # end setup
         is_changed = self.bot.navigation.ele_wait_value(
             selector, "bad_text", timeout=12)
-        self.assert_true(is_changed)
-        self.assert_is_instance(
+        ASSERT.true(is_changed)
+        ASSERT.is_instance(
             self.bot.navigation.ele_attribute(ele_text, "value"),
             "bad_text")
