@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 
+- [BP] moved asserts to own class + add greater/lower_or_equals #279
+
 ### Fixed
 
 ### Removed
