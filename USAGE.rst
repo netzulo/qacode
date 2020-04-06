@@ -259,26 +259,22 @@ TestInfoBase
   + method **sleep** : Just call to native python time.sleep method
 - Methods for **Asserts**
 
-  + method **assert_equals** : Allow to compare 2 values and check if 1st it's equals to 2nd value
-  + method **assert_not_equals** : Allow to compare 2 value to check if 1st isn't equals to 2nd value
-  + method **assert_equals_url** : Allow to compare 2 urls and check if 1st it's equals to 2nd url
-  + method **assert_not_equals_url** : Allow to compare 2 urls to check if 1st isn't equals to 2nd url
-  + method **assert_contains_url** : Allow to compare 2 urls and check if 1st contains 2nd url
-  + method **assert_not_contains_url** : Allow to compare 2 urls and check if 1st not contains 2nd url
-  + method **assert_is_instance** : Allow to encapsulate method assertIsInstance(obj, cls, msg='')
-  + method **assert_greater** : Allow to encapsulate method assertGreater(a, b, msg=msg)
-  + method **assert_lower** : Allow to encapsulate method assertLower(a, b, msg=msg)
-  + method **assert_in** : Allow to compare if value it's in to 2nd list of values
-  + method **assert_not_in** : Allow to compare if value it's not in to 2nd list of values
-  + method **assert_regex** : Allow to compare if value match pattern
-  + method **assert_not_regex** : Allow to compare if value not match pattern
-  + method **assert_regex_url** : Allow to compare if value match url pattern, can use custom pattern
-  + method **assert_path_exist** : Allow to check if path exist, can check if is_dir also
-  + method **assert_path_not_exist** : Allow to check if path not exist, can check if is_dir also
-  + method **assert_true** : Allow to compare and check if value it's equals to 'True'
-  + method **assert_false** : Allow to compare and check if value it's equals to 'False'
-  + method **assert_none** : Allow to compare and check if value it's equals to 'None'
-  + method **assert_not_none** : Allow to compare and check if value it's not equals to 'None'
+  + method **equals** : Allow to compare 2 values and check if 1st it's equals to 2nd value
+  + method **not_equals** : Allow to compare 2 value to check if 1st isn't equals to 2nd value
+  + method **is_instance** : Allow to encapsulate method assertIsInstance(obj, cls, msg='')
+  + method **greater** : Allow to encapsulate method assertGreater(a, b, msg=msg)
+  + method **lower** : Allow to encapsulate method assertLower(a, b, msg=msg)
+  + method **in_list** : Allow to compare if value it's in to 2nd list of values
+  + method **not_in_list** : Allow to compare if value it's not in to 2nd list of values
+  + method **regex** : Allow to compare if value match pattern
+  + method **not_regex** : Allow to compare if value not match pattern
+  + method **regex_url** : Allow to compare if value match url pattern, can use custom pattern
+  + method **path_exist** : Allow to check if path exist, can check if is_dir also
+  + method **path_not_exist** : Allow to check if path not exist, can check if is_dir also
+  + method **true** : Allow to compare and check if value it's equals to 'True'
+  + method **false** : Allow to compare and check if value it's equals to 'False'
+  + method **none** : Allow to compare and check if value it's equals to 'None'
+  + method **not_none** : Allow to compare and check if value it's not equals to 'None'
 
 
 Example : inherit from TestInfoBase class
@@ -289,7 +285,11 @@ Example : inherit from TestInfoBase class
 
     from qacode.utils import settings
     from qacode.core.bots import BotBase
+    from qacode.core.testing.asserts import Assert
     from qacode.core.testing.test_info import TestInfoBase
+
+
+    ASSERT = Assert()
 
 
     class TestAwesome(TestInfoBase):
@@ -299,7 +299,7 @@ Example : inherit from TestInfoBase class
                 _settings = settings('settings.json')
                 bot = self.bot_open(**_settings)
                 self.log.info("Bot opened for new test method down new test suite")
-                self.assert_is_instance(bot, BotBase)
+                ASSERT.is_instance(bot, BotBase)
             except AssertionError as err:
                 self.log.error("Bot Fails at assert %s", err.message)
 
@@ -319,14 +319,18 @@ Example : inherit from TestInfoBot class
 .. code:: python
 
 
+    from qacode.core.testing.asserts import Assert
     from qacode.core.testing.test_info import TestInfoBot
+
+
+    ASSERT = Assert()
 
 
     class TestAwesome(TestInfoBot):
 
         def test_some_method(self):
             try:
-                self.assert_is_instance(self.bot, BotBase)
+                ASSERT.is_instance(self.bot, BotBase)
             except AssertionError as err:
                 self.log.error("Bot Fails at assert %s", err.message)
 
@@ -349,20 +353,23 @@ Example : inherit from TestInfoBotUnique class
 .. code:: python
 
 
+    from qacode.core.testing.asserts import Assert
     from qacode.core.testing.test_info import TestInfoBotUnique
 
+
+    ASSERT = Assert()
 
     class TestAwesomeUnique(TestInfoBotUnique):
 
         def test_some_method(self):
             try:
-                self.assert_is_instance(self.bot, BotBase)
+                ASSERT.is_instance(self.bot, BotBase)
             except AssertionError as err:
                 self.log.error("Bot Fails at assert %s", err.message)
         
         def test_some_another_method(self):
             try:
                 # Same bot that was used for 'test_some_method' test
-                self.assert_is_instance(self.bot, BotBase)
+                ASSERT.is_instance(self.bot, BotBase)
             except AssertionError as err:
                 self.log.error("Bot Fails at assert %s", err.message)

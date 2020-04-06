@@ -60,8 +60,6 @@ class TestConfig(TestInfoBase):
             ASSERT.regex_url(key_value)
         if key_name == 'drivers_path':
             ASSERT.path_exist(key_value)
-        if key_name == 'drivers_names':
-            drivers_path = '../qadrivers/{}'
         if key_name == 'log_name':
             ASSERT.not_equals(key_value, "")
         if key_name == 'log_output_file':

@@ -50,21 +50,6 @@ class Assert(object):
             raise AssertionError(actual, expected, _msg)
         return True
 
-    def contains_url(self, actual, contains, msg=None, wait=0):
-        """Allow to compare 2 urls and check if 1st contains 2nd url"""
-        _msg = self.message("assert_contains_url", actual, contains, msg=msg)
-        if contains not in actual:
-            raise AssertionError(actual, contains, _msg)
-        return True
-
-    def not_contains_url(self, actual, contains, msg=None, wait=0):
-        """Allow to compare 2 urls and check if 1st not contains 2nd url"""
-        _msg = self.message(
-            "assert_not_contains_url", actual, contains, msg=msg)
-        if contains in actual:
-            raise AssertionError(actual, contains, _msg)
-        return True
-
     def is_instance(self, instance, class_type, msg=None):
         """Allow to encapsulate method assertIsInstance(obj, cls, msg='')"""
         _msg = self.message(

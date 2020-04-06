@@ -28,20 +28,6 @@ def test_asserts_notequals_raises():
 
 
 @pytest.mark.dependency(depends=['asserts_create'])
-def test_asserts_containsurl_raises():
-    """TODO: doc method"""
-    with pytest.raises(AssertionError):
-        Assert().contains_url("http://equals.com", "notcontains")
-
-
-@pytest.mark.dependency(depends=['asserts_create'])
-def test_asserts_notcontainsurl_raises():
-    """TODO: doc method"""
-    with pytest.raises(AssertionError):
-        Assert().not_contains_url("http://equals.com", "equals.com")
-
-
-@pytest.mark.dependency(depends=['asserts_create'])
 def test_asserts_isinstance_raises():
     """TODO: doc method"""
     with pytest.raises(AssertionError):

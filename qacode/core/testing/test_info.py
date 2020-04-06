@@ -2,8 +2,6 @@
 """Base module for inherit new Test Suites"""
 
 
-import os
-import re
 import time
 from qacode.core.bots.bot_base import BotBase
 from qacode.core.exceptions.core_exception import CoreException
