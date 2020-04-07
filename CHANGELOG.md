@@ -9,6 +9,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
+### Changed
+
+### Fixed
+
+### Removed
+
+
+## [v0.6.4] - 2020-04-07
+
+### Added
+
 - Implemented pytests fixture: 1 browser by session #143
 - Check staled elements at control base, wip dev #143
 
@@ -152,7 +163,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Old documentation files
 
 
-[Unreleased]: https://github.com/netzulo/qacode/compare/v0.5.8...HEAD
+[Unreleased]: https://github.com/netzulo/qacode/compare/v0.6.4...HEAD
+[0.6.4]: https://github.com/netzulo/qacode/compare/v0.6.3...v0.6.4
+[0.6.3]: https://github.com/netzulo/qacode/compare/v0.6.2...v0.6.3
+[0.6.2]: https://github.com/netzulo/qacode/compare/v0.6.1...v0.6.2
+[0.6.1]: https://github.com/netzulo/qacode/compare/v0.6.0...v0.6.1
+[0.6.0]: https://github.com/netzulo/qacode/compare/v0.5.9...v0.6.0
+[0.5.9]: https://github.com/netzulo/qacode/compare/v0.5.8...v0.5.9
 [0.5.8]: https://github.com/netzulo/qacode/compare/v0.5.7...v0.5.8
 [0.5.7]: https://github.com/netzulo/qacode/compare/v0.5.6...v0.5.7
 [0.5.6]: https://github.com/netzulo/qacode/compare/v0.5.6...v0.5.6
