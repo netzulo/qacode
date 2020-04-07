@@ -158,22 +158,6 @@ class TestControlBase(TestInfoBotUnique):
         ASSERT.equals(control.get_text(), 'Login')
 
     @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    def test_property_attr_id(self):
-        """Testcase: test_property_attr_id"""
-        cfg_input = self.txt_username.copy()
-        cfg_input.update({"on_instance_search": True})
-        control = ControlBase(self.bot, **cfg_input)
-        ASSERT.not_none(control.attr_id)
-
-    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
-    def test_property_attr_class(self):
-        """Testcase: test_property_attr_class"""
-        cfg_form = self.form_login.copy()
-        cfg_form.update({"on_instance_search": True})
-        control = ControlBase(self.bot, **cfg_form)
-        ASSERT.in_list('ember-view', control.attr_class)
-
-    @pytest.mark.skipIf(SKIP_CONTROLS, SKIP_CONTROLS_MSG)
     def test_method_getattrvalue(self):
         """Testcase: test_method_getattrvalue"""
         cfg_form = self.form_login.copy()

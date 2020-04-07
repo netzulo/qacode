@@ -408,17 +408,12 @@ class ControlBase(object):
         """Show basic properties for this object"""
         return ("{}: name={}, "
                 "bot.browser={}, bot.mode={} \n"
-                "settings={} \n"
-                "is_displayed={}, "
-                "is_enabled={}, is_selected={}").format(
+                "settings={}").format(
             self.__class__.__name__,
             self.name,
             self.bot.settings.get('browser'),
             self.bot.settings.get('mode'),
-            self.settings,
-            self.is_displayed,
-            self.is_enabled,
-            self.is_selected)
+            self.settings)
 
     @property
     def bot(self):
@@ -511,23 +506,19 @@ class ControlBase(object):
     @property
     def text(self):
         """GET for element text attribute"""
-        self.__check_element_ready__()
-        return self._browser.elements.get_text(self._element)
+        return self._text
 
     @property
     def is_displayed(self):
         """TODO: doc method"""
-        self.__check_element_ready__()
-        return self.bot.navigation.ele_is_displayed(self.element)
+        return self.bot.navigation.ele_is_displayed(self.element) or None
 
     @property
     def is_enabled(self):
         """TODO: doc method"""
-        self.__check_element_ready__()
-        return self.bot.navigation.ele_is_enabled(self.element)
+        return self.bot.navigation.ele_is_enabled(self.element) or None
 
     @property
     def is_selected(self):
         """TODO: doc method"""
-        self.__check_element_ready__()
-        return self.bot.navigation.ele_is_selected(self.element)
+        return self.bot.navigation.ele_is_selected(self.element) or None
