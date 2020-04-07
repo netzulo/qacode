@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
+- Implemented pytests fixture: 1 browser by session #143
+- Check staled elements at control base, wip dev #143
+
 ### Changed
 
 - Moved asserts to own class + add greater/lower_or_equals #279

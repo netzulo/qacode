@@ -41,11 +41,7 @@ class ControlBase(object):
         self._auto_reload = None
         # __search__, step 2
         self._text = None
-        self._is_displayed = None
-        self._is_enabled = None
-        self._is_selected = None
-        self._attr_id = None
-        self._attr_class = None
+        self._id = None
         # Raises
         self._info_bot = {}
         self._bot.log.debug(
@@ -127,11 +123,6 @@ class ControlBase(object):
         # Step 2 load minimal properties defined by qacode
         self.bot.log.debug(MSG.CB_PROP_LOADING)
         self._text = self.get_text()
-        self._is_displayed = nav.ele_is_displayed(self.element)
-        self._is_enabled = nav.ele_is_enabled(self.element)
-        self._is_selected = nav.ele_is_selected(self.element)
-        self._attr_id = self.get_attr_value('id')
-        self._attr_class = self.get_attr_value('class').split()
         self.bot.log.debug(MSG.CB_PROP_LOADED)
 
     def __check_reload__(self):
@@ -142,6 +133,17 @@ class ControlBase(object):
             self.reload()
             return True
         return False
+
+    def __is_staled__(self):
+        """TODO: doc method"""
+        if not self._element:
+            raise Exception("Not web element, search it first")
+        return self._id != self._element._id
+
+    def __check_element_ready__(self):
+        """TODO: doc method"""
+        if self.__is_staled__():
+            raise Exception("Staled element, disappeared from the DOM")
 
     def find_child(self, selector, locator=By.CSS_SELECTOR):
         """Find child element using bot with default By.CSS_SELECTOR strategy
@@ -406,17 +408,12 @@ class ControlBase(object):
         """Show basic properties for this object"""
         return ("{}: name={}, "
                 "bot.browser={}, bot.mode={} \n"
-                "settings={} \n"
-                "is_displayed={}, "
-                "is_enabled={}, is_selected={}").format(
+                "settings={}").format(
             self.__class__.__name__,
             self.name,
             self.bot.settings.get('browser'),
             self.bot.settings.get('mode'),
-            self.settings,
-            self.is_displayed,
-            self.is_enabled,
-            self.is_selected)
+            self.settings)
 
     @property
     def bot(self):
@@ -492,6 +489,12 @@ class ControlBase(object):
         return self._auto_reload
 
     @property
+    def id(self):
+        """TODO: doc method"""
+        self.__check_element_ready__()
+        return self._element._id
+
+    @property
     def tag(self):
         """GET for _tag attribute. Returns from Webelement directly"""
         self.bot.log.debug(MSG.CB_GETTAG_LOADING)
@@ -502,30 +505,20 @@ class ControlBase(object):
 
     @property
     def text(self):
-        """GET for _text attribute"""
+        """GET for element text attribute"""
         return self._text
 
     @property
     def is_displayed(self):
-        """GET for _is_displayed attribute"""
-        return self._is_displayed
+        """TODO: doc method"""
+        return self.bot.navigation.ele_is_displayed(self.element) or None
 
     @property
     def is_enabled(self):
-        """GET for _is_enabled attribute"""
-        return self._is_enabled
+        """TODO: doc method"""
+        return self.bot.navigation.ele_is_enabled(self.element) or None
 
     @property
     def is_selected(self):
-        """GET for _is_selected attribute"""
-        return self._is_selected
-
-    @property
-    def attr_id(self):
-        """GET for _attr_id attribute"""
-        return self._attr_id
-
-    @property
-    def attr_class(self):
-        """GET for _attr_class attribute"""
-        return self._attr_class
+        """TODO: doc method"""
+        return self.bot.navigation.ele_is_selected(self.element) or None
