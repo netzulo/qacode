@@ -10,6 +10,18 @@ ASSERT = Assert()
 CFG = settings(path="qacode/configs/", name="settings.json")
 
 
+def config_browser():
+    """TODO: doc method"""
+    cfg = CFG.get('bot').get('browsers')[0].copy()
+    drivers_names = CFG.get("bot").get("drivers_names")
+    cfg.update({
+        "driver_path": CFG.get("bot").get("drivers_path"),
+        "driver_name": drivers_names[cfg.get("browser")],
+        "hub_url": CFG.get("bot").get("hub_url"),
+    })
+    return cfg
+
+
 def setup_selectors():
     """TODO: doc method"""
     # setup parent
@@ -105,6 +117,17 @@ def do_login(browser):
     curr_url = browser.commons.get_current_url()
     ASSERT.not_none(curr_url)
     ASSERT.equals(curr_url, url_logged)
+
+
+def menu_left(browser, item_name):
+    """TODO: doc method"""
+    btn_login = browser.elements.find("[href='/qacode/login']")
+    btn_logout = browser.elements.find("[href='/qacode/logout']")
+    selected = {
+        "login": btn_login,
+        "logout": btn_logout,
+    }[item_name]
+    selected.click()
 
 
 def try_click(browser):

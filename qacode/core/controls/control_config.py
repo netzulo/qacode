@@ -33,6 +33,11 @@ class ControlConfig(object):
         return self._config.get("search") or False
 
     @property
+    def timeout(self):
+        """TODO: doc method"""
+        return self._config.get("timeout") or 0
+
+    @property
     def pages(self):
         """TODO: doc method"""
         return self._config.get("pages") or []

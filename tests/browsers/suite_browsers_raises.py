@@ -4,39 +4,28 @@
 
 import pytest
 from qacode.core.browsers.browser import Browser
+from qacode.core.exceptions.browser_error import BrowserError
 from qacode.core.loggers.log import Log
 from qacode.core.testing.asserts import Assert
 from qacode.utils import settings
+from tests.utils import config_browser
 
 
 ASSERT = Assert()
 CFG = settings(path="qacode/configs/", name="settings.json")
-BROWSERS = CFG.get('bot').get('browsers')
-HUB_URL = CFG.get("bot").get("hub_url")
 LOG = Log(**CFG.get('log'))
 
 
-def config():
+@pytest.mark.parametrize("browser", [("browserinvalidname")])
+def test_browser_create_raises(browser):
     """TODO: doc method"""
-    cfg = BROWSERS[0]
-    cfg.update({"hub_url": HUB_URL})
-    return cfg
+    with pytest.raises(BrowserError):
+        Browser(LOG, **dict(config_browser(), browser=browser))
 
 
-def browser_close(browser):
+@pytest.mark.parametrize("mode", ["hola"])
+def test_browser_open_raises(mode):
     """TODO: doc method"""
-    browser.close()
-
-
-@pytest.mark.dependency(name="browser_create")
-@pytest.mark.parametrize("cfg_update", [
-    {"mode": "doesnotexist"},
-    {"hub_url": "doesnotexist"},
-    {"browser": "doesnotexist"},
-])
-def test_browser_create_raises(cfg_update):
-    """TODO: doc method"""
-    cfg = config().copy()
-    cfg.update()
-    with pytest.raises(Exception):
-        Browser(LOG, **cfg())
+    browser = Browser(LOG, **dict(config_browser(), mode=mode))
+    with pytest.raises(BrowserError):
+        browser.open()

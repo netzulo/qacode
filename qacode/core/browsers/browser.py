@@ -7,9 +7,10 @@ import sys
 from qacode.core.browsers.browser_config import BrowserConfig
 from qacode.core.browsers.modules.commons import ModuleCommons
 from qacode.core.browsers.modules.elements import ModuleElements
+from qacode.core.browsers.modules.js import ModuleJs
 from qacode.core.browsers.modules.screenshots import ModuleScreenshots
 from qacode.core.browsers.modules.waits import ModuleWaits
-# from qacode.core.loggers.log import Log
+from qacode.core.exceptions.browser_error import BrowserError
 from selenium.common.exceptions import SessionNotCreatedException
 from selenium.webdriver import (Chrome, Edge, Firefox, Ie)
 from selenium.webdriver import DesiredCapabilities
@@ -44,7 +45,7 @@ class Browser(object):
                 "edge": DesiredCapabilities.EDGE.copy(),
             }[self._config.browser]
         except KeyError:
-            raise Exception('Bad browser selected at load options')
+            raise BrowserError('Bad browser selected at load options', self)
         return capabilities
 
     def __driver_abs_path__(self):
@@ -131,13 +132,14 @@ class Browser(object):
         elif self._config.mode == "remote":
             self._driver = self.__open_remote__()
         else:
-            raise Exception("Just allowed modes: local, remote")
+            raise BrowserError("Just allowed modes: local, remote", self)
         self.__drivers_selenium__()
         # modules
         self.commons = ModuleCommons(self._driver)
         self.elements = ModuleElements(self._driver)
         self.waits = ModuleWaits(self.driver, self._driver_wait)
         self.screenshots = ModuleScreenshots(self._driver)
+        self.js = ModuleJs(self.driver)
 
     def close(self):
         """TODO: doc method"""
@@ -150,6 +152,7 @@ class Browser(object):
         self.elements = None
         self.waits = None
         self.screenshots = None
+        self.js = None
 
     @property
     def config(self):

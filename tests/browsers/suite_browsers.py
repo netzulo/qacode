@@ -7,25 +7,18 @@ from qacode.core.browsers.browser import Browser
 from qacode.core.browsers.browser_config import BrowserConfig
 from qacode.core.browsers.modules.commons import ModuleCommons
 from qacode.core.browsers.modules.elements import ModuleElements
+from qacode.core.browsers.modules.js import ModuleJs
 from qacode.core.browsers.modules.screenshots import ModuleScreenshots
 from qacode.core.browsers.modules.waits import ModuleWaits
 from qacode.core.loggers.log import Log
 from qacode.core.testing.asserts import Assert
 from qacode.utils import settings
+from tests.utils import config_browser
 
 
 ASSERT = Assert()
 CFG = settings(path="qacode/configs/", name="settings.json")
-BROWSERS = CFG.get('bot').get('browsers')
-HUB_URL = CFG.get("bot").get("hub_url")
 LOG = Log(**CFG.get('log'))
-
-
-def config_browser_remote():
-    """TODO: doc method"""
-    cfg = BROWSERS[0]
-    cfg.update({"hub_url": HUB_URL})
-    return cfg
 
 
 def browser_close(browser):
@@ -36,7 +29,7 @@ def browser_close(browser):
 @pytest.mark.dependency(name="browser_create")
 def test_browser_create():
     """TODO: doc method"""
-    browser = Browser(LOG, **config_browser_remote())
+    browser = Browser(LOG, **config_browser())
     ASSERT.is_instance(browser, Browser)
     ASSERT.is_instance(browser.config, BrowserConfig)
     ASSERT.not_none(browser.capabilities)
@@ -46,9 +39,10 @@ def test_browser_create():
 
 
 @pytest.mark.dependency(name="browser_open", depends=['browser_create'])
-def test_browser_open():
+@pytest.mark.parametrize("mode", ["remote"])
+def test_browser_open(mode):
     """TODO: doc method"""
-    browser = Browser(LOG, **config_browser_remote())
+    browser = Browser(LOG, **dict(config_browser(), mode=mode))
     browser.open()
     ASSERT.not_none(browser.driver)
     ASSERT.is_instance(browser.session_id, str)
@@ -59,13 +53,14 @@ def test_browser_open():
     ASSERT.is_instance(browser.elements, ModuleElements)
     ASSERT.is_instance(browser.screenshots, ModuleScreenshots)
     ASSERT.is_instance(browser.waits, ModuleWaits)
+    ASSERT.is_instance(browser.js, ModuleJs)
     browser_close(browser)
 
 
 @pytest.mark.dependency(name="browser_close", depends=['browser_open'])
 def test_browser_close():
     """TODO: doc method"""
-    browser = Browser(LOG, **config_browser_remote())
+    browser = Browser(LOG, **config_browser())
     browser.open()
     browser.close()
     ASSERT.none(browser.driver)
@@ -76,3 +71,4 @@ def test_browser_close():
     ASSERT.none(browser.elements)
     ASSERT.none(browser.screenshots)
     ASSERT.none(browser.waits)
+    ASSERT.none(browser.js)

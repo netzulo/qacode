@@ -8,7 +8,7 @@ from qacode.core.controls.control_config import ControlConfig
 from qacode.core.testing.asserts import Assert
 from qacode.utils import settings
 from selenium.webdriver.remote.webelement import WebElement
-from tests.utils import (do_login, setup_controls, try_click)
+from tests.utils import (do_login, menu_left, setup_controls, try_click)
 
 
 ASSERT = Assert()
@@ -26,7 +26,8 @@ def test_control_browser_open(browser):
 @pytest.mark.dependency(name="control_create", depends=["browser_open"])
 @pytest.mark.parametrize("cfg", [
     CFG.get('bot').get('controls')[0],
-    dict(CFG.get('bot').get('controls')[6], search=True)
+    dict(CFG.get('bot').get('controls')[6], search=True),
+    dict(CFG.get('bot').get('controls')[6], search=True, timeout=1)
 ])
 def test_control_create(browser, cfg):
     """TODO: doc method"""
@@ -141,3 +142,22 @@ def test_control_waitblink(browser):
     ctl = Control(browser, **cfg)
     try_click(browser)
     ctl.wait_blink(to_invisible=7, to_visible=8)
+
+
+@pytest.mark.dependency(depends=["browser_open"])
+def test_control_reload(browser):
+    """TODO: doc method"""
+    # 1. confirmar una recarga sobre un elemento
+    #   que no la necesita (no estancando)
+    # cfg = dict(setup_controls()["title"], search=True)
+    # ctl = Control(browser, **cfg)
+    # ctl.reload()
+    # 2. confirmar un reload en un cambio de pagina con una modificacion
+    #   de parte de la misma sobre un selector que exista en ambas
+    do_login(browser)
+    menu_left(browser, "login")
+    ele_h4 = Control(browser, **{"selector": ".alert-heading", "search": True})
+    menu_left(browser, "logout")
+    ele_h4.reload()
+    ele_h4.click()
+    # 3. confirmar un reload en un hijo
