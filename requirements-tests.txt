@@ -1,4 +1,4 @@
-coverage==4.3.4
+coverage==5.4
 pytest
 pytest-html==1.22.0
 pytest-dependency
