@@ -11,9 +11,9 @@ ASSERTS = Assert()
 
 
 @pytest.mark.parametrize("message", ["Failed browser"])
-def test_core_error(message):
+def test_browser_error(browser, message):
     """TODO: doc method"""
-    exception = BrowserError(message)
-    ASSERTS.equals(exception.message, message)
+    exception = BrowserError(message, browser)
+    ASSERTS.in_list(message, exception.message)
     with pytest.raises(BrowserError):
         raise exception

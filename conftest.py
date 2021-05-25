@@ -29,4 +29,6 @@ def browser():
     except Exception as err:
         raise err
     finally:
-        bot.browsers[0].close()
+        if bot.browsers[0].driver is not None:
+            bot.browsers[0].close()
+        # else: useless browser, never opened
