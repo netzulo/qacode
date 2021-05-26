@@ -3,7 +3,7 @@
     "path": "logs/", "name": "qacode", "level": "INFO"
   },
   "bot":{
-    "hub_url": "http://netzulo.tk:11000/wd/hub",
+    "hub_url": "http://146.255.103.8:11000/wd/hub",
     "drivers_path": "../qadrivers",
     "drivers_names": {
       "chrome": "chromedriver_64.exe",
@@ -17,10 +17,10 @@
       {"browser": "chrome", "mode": "local", "options": {"headless": false}}
     ],
     "pages": [
-      {"name": "login", "url": "http://netzulo.tk:83/qacode/login"},
-      {"name": "logout", "url": "http://netzulo.tk:83/qacode/logout"},
-      {"name": "inputs", "url": "http://netzulo.tk:83/qacode/forms/inputs"},
-      {"name": "lists", "url": "http://netzulo.tk:83/qacode/data/lists"}
+      {"name": "login", "url": "http://146.255.103.8:83/qacode/login"},
+      {"name": "logout", "url": "http://146.255.103.8:83/qacode/logout"},
+      {"name": "inputs", "url": "http://146.255.103.8:83/qacode/forms/inputs"},
+      {"name": "lists", "url": "http://146.255.103.8:83/qacode/data/lists"}
     ],
     "controls": [
       { "name": "form", "selector": "#frmLogin", "pages": ["login"]},
