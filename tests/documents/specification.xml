@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<requirement-specification>
+<req_spec title="Documentos comunes"  doc_id="COMMONS"  >
+	<revision><![CDATA[1]]></revision>
+	<type><![CDATA[1]]></type>
+	<node_order><![CDATA[0]]></node_order>
+	<total_req><![CDATA[0]]></total_req>
+	<scope><![CDATA[<p>Todos los documentos de especificacion que se pueden referenciar entre diferentes casos de uso</p>]]></scope>
+		</req_spec>
+<req_spec title="Crear un Bot"  doc_id="UC-00001"  >
+	<revision><![CDATA[2]]></revision>
+	<type><![CDATA[1]]></type>
+	<node_order><![CDATA[1]]></node_order>
+	<total_req><![CDATA[0]]></total_req>
+	<scope><![CDATA[<p>Como cliente, quiero poder crear un Bot</p>]]></scope>
+			<requirement>
+		<docid><![CDATA[UC-00001]]></docid>
+		<title><![CDATA[Crear un Bot]]></title>
+		<version>1</version>
+		<revision>1</revision>
+		<node_order>1</node_order>
+		<description><![CDATA[<p>Como cliente quiero poder crear un Bot</p>]]></description>
+		<status><![CDATA[D]]></status>
+		<type><![CDATA[3]]></type>
+		<expected_coverage><![CDATA[1]]></expected_coverage>
+		
+	</requirement>
+	<relation>
+		<source>UC-00002</source>
+		<destination>UC-00001</destination>
+		<type>3</type>
+	</relation>
+	<relation>
+		<source>UC-00001</source>
+		<destination>UC-00003</destination>
+		<type>2</type>
+	</relation>
+	<relation>
+		<source>UC-00001</source>
+		<destination>UC-00004</destination>
+		<type>2</type>
+	</relation>
+</req_spec>
+<req_spec title="Listar navegadores en un Bot"  doc_id="UC-00002"  >
+	<revision><![CDATA[6]]></revision>
+	<type><![CDATA[1]]></type>
+	<node_order><![CDATA[2]]></node_order>
+	<total_req><![CDATA[0]]></total_req>
+	<scope><![CDATA[<p>Como cliente quiero poder listar todos los navegadores en un <strong>Bot</strong></p>]]></scope>
+			<requirement>
+		<docid><![CDATA[UC-00002]]></docid>
+		<title><![CDATA[Listar navegadores en un Bot]]></title>
+		<version>1</version>
+		<revision>2</revision>
+		<node_order>1</node_order>
+		<description><![CDATA[]]></description>
+		<status><![CDATA[D]]></status>
+		<type><![CDATA[3]]></type>
+		<expected_coverage><![CDATA[1]]></expected_coverage>
+		
+	</requirement>
+	<relation>
+		<source>UC-00002</source>
+		<destination>UC-00001</destination>
+		<type>3</type>
+	</relation>
+</req_spec>
+<req_spec title="Listar paginas en un Bot"  doc_id="UC-00003"  >
+	<revision><![CDATA[3]]></revision>
+	<type><![CDATA[1]]></type>
+	<node_order><![CDATA[3]]></node_order>
+	<total_req><![CDATA[0]]></total_req>
+	<scope><![CDATA[<p>Como cliente quiero poder listar todos las p&aacute;ginas en un <strong>Bot</strong></p>]]></scope>
+			<requirement>
+		<docid><![CDATA[UC-00003]]></docid>
+		<title><![CDATA[Listar paginas en un Bot]]></title>
+		<version>1</version>
+		<revision>2</revision>
+		<node_order>1</node_order>
+		<description><![CDATA[]]></description>
+		<status><![CDATA[D]]></status>
+		<type><![CDATA[3]]></type>
+		<expected_coverage><![CDATA[1]]></expected_coverage>
+		
+	</requirement>
+	<relation>
+		<source>UC-00001</source>
+		<destination>UC-00003</destination>
+		<type>2</type>
+	</relation>
+</req_spec>
+<req_spec title="Listar controles en un Bot"  doc_id="UC-00004"  >
+	<revision><![CDATA[4]]></revision>
+	<type><![CDATA[1]]></type>
+	<node_order><![CDATA[4]]></node_order>
+	<total_req><![CDATA[0]]></total_req>
+	<scope><![CDATA[<p>Como cliente quiero poder listar todos los controles en un <strong>Bot</strong></p>]]></scope>
+			<requirement>
+		<docid><![CDATA[UC-00004]]></docid>
+		<title><![CDATA[Listar controles en un Bot]]></title>
+		<version>1</version>
+		<revision>3</revision>
+		<node_order>1</node_order>
+		<description><![CDATA[]]></description>
+		<status><![CDATA[D]]></status>
+		<type><![CDATA[3]]></type>
+		<expected_coverage><![CDATA[1]]></expected_coverage>
+		
+	</requirement>
+	<relation>
+		<source>UC-00001</source>
+		<destination>UC-00004</destination>
+		<type>2</type>
+	</relation>
+</req_spec>
+</requirement-specification>

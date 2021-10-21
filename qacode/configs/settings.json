@@ -1,29 +1,47 @@
-{ "bot": {
-    "log_output_file": "logs/",
-    "log_name": "qacode",
-    "log_level": "INFO",
-    "mode": "remote",
-    "browser": "chrome",
-    "options": { "headless": false },
-    "url_hub": "http://netzulo.tk:11000/wd/hub",
+{
+  "log":{
+    "path": "logs/", "name": "qacode", "level": "INFO"
+  },
+  "bot":{
+    "hub_url": "http://146.255.103.8:11000/wd/hub",
     "drivers_path": "../qadrivers",
-    "drivers_names": [
-      "chromedriver_32.exe",
-      "chromedriver_64.exe",
-      "chromedriver_32",
-      "chromedriver_64",
-      "firefoxdriver_32.exe",
-      "firefoxdriver_64.exe",
-      "firefoxdriver_64",
-      "firefoxdriver_32",
-      "iexplorerdriver_32.exe",
-      "iexplorerdriver_64.exe",
-      "edgedriver_32.exe",
-      "edgedriver_64.exe",
-      "operadriver_32.exe",
-      "operadriver_64.exe",
-      "operadriver_32",
-      "operadriver_64"
+    "drivers_names": {
+      "chrome": "chromedriver_64.exe",
+      "firefox": "firefoxdriver_64.exe",
+      "opera": "operadriver_64.exe",
+      "iexplorer": "iexplorerdriver_64.exe",
+      "edge": "edgedriver_64.exe"
+    },
+    "browsers": [
+      {"browser": "chrome", "mode": "remote", "options": {"headless": false}},
+      {"browser": "chrome", "mode": "local", "options": {"headless": false}}
+    ],
+    "pages": [
+      {"name": "login", "url": "http://146.255.103.8:83/qacode/login"},
+      {"name": "logout", "url": "http://146.255.103.8:83/qacode/logout"},
+      {"name": "inputs", "url": "http://146.255.103.8:83/qacode/forms/inputs"},
+      {"name": "lists", "url": "http://146.255.103.8:83/qacode/data/lists"}
+    ],
+    "controls": [
+      { "name": "form", "selector": "#frmLogin", "pages": ["login"]},
+      { "name": "username", "selector": "#txtUsername-field", "pages": ["login"]},
+      { "name": "password", "selector": "#txtPassword-field", "pages": ["login"]},
+      { "name": "submit", "selector": "#btnLogin", "pages": ["login"]},
+      { "name": "btn_logout", "selector": "a[href='/qacode/logout']", "pages": ["logout"]},
+      { "name": "btn_login", "selector": "a[href='/qacode/login']", "pages": ["logout"]},
+      { "name": "title_buttons", "selector": "#titleButtons", "pages": ["inputs"]},
+      { "name": "btn_invisible", "selector": "#btnInvisibleAtTimeout", "pages": ["inputs"]},
+      { "name": "btn_visible", "selector": "#btnVisibleAtTimeout", "pages": ["inputs"]},
+      { "name": "input_text", "selector": "#txtTest001", "pages": ["inputs"]},
+      { "name": "dd_base", "selector": "#txtTest002", "pages": ["inputs"]},
+      { "name": "dd_multiple", "selector": "#txtTest003", "pages": ["inputs"]},
+      { "name": "lst_ordered", "selector": "ol:nth-child(1)", "pages": ["lists"]},
+      { "name": "lst_ordered_child", "selector": "li", "pages": ["lists"]},
+      { "name": "dd_menu_data", "selector": "#ddData", "pages": ["lists"]},
+      { "name": "dd_menu_data_lists", "selector": "a[href='/qacode/data/lists']", "pages": ["lists"]},
+      { "name": "tbl_ok", "selector": "#tblOk", "pages": ["lists"]},
+      { "name": "tbl_html5_ok", "selector": "#tblHtml5Ok", "pages": ["lists"]},
+      { "name": "tbl_html_tbodies_ok", "selector": "#tblHtml5OkTbodies", "pages": ["lists"]}
     ]
   },
   "testlink": {
@@ -34,96 +52,5 @@
     },
     "dev_key": "1bfd2ef4ceda22b482b12f2b25457495",
     "log_level":"INFO"
-  },
-  "tests": {
-    "skip":{
-      "test_configs": true,
-      "browsers": {
-        "chrome": {"local":true, "remote":false},
-        "firefox": {"local":true, "remote":true},
-        "iexplorer": {"local":true, "remote":true},
-        "edge": {"local":true, "remote":true},
-        "opera": {"local":true, "remote":false}
-      },
-      "bot_multiple": false,
-      "bot_unique": false,
-      "bot_navigations": false,
-      "web_controls": {
-        "control_base": false,
-        "control_form": false,
-        "control_dropdown": false,
-        "control_table": false
-      },
-      "web_pages": false,
-      "benchmarks": true
-    },
-    "apps": [
-      { "name": "qadmin",
-        "pages": [
-          { "name": "qacode_login",
-            "url": "http://netzulo.tk:83/qacode/login",
-            "locator": "css selector",
-            "go_url": false,
-            "wait_url": 0,
-            "maximize": false,
-            "controls": [
-              { "name": "form_login", "selector": "#frmLogin", "on_instance_search": true, "on_instance_load": false },
-              { "name": "txt_username", "selector": "#txtUsername-field", "on_instance_search": true, "on_instance_load": false },
-              { "name": "txt_password", "selector": "#txtPassword-field", "on_instance_search": true, "on_instance_load": false },
-              { "name": "btn_submit", "selector": "#btnLogin", "on_instance_search": true, "on_instance_load": false }
-            ]
-          },
-          { "name": "qacode_lists",
-            "url": "http://netzulo.tk:83/qacode/data/lists",
-            "locator": "css selector",
-            "go_url": false,
-            "wait_url": 0,
-            "maximize": false,
-            "controls": [
-              { "name": "lst_ordered", "selector": "ol:nth-child(1)"},
-              { "name": "lst_ordered_child", "selector": "li"},
-              { "name": "dd_menu_data", "selector": "#ddData"},
-              { "name": "dd_menu_data_lists", "selector": "a[href='/qacode/data/lists']"},
-              { "name": "tbl_ok", "selector": "#tblOk"},
-              { "name": "tbl_html5_ok", "selector": "#tblHtml5Ok"},
-              { "name": "tbl_html_tbodies_ok", "selector": "#tblHtml5OkTbodies"}
-            ]
-          },
-          { "name": "qacode_inputs",
-            "url": "http://netzulo.tk:83/qacode/forms/inputs",
-            "locator": "css selector",
-            "go_url": false,
-            "wait_url": 0,
-            "maximize": false,
-            "controls": [
-              { "name": "dd_base", "selector": "#txtTest002", "instance": "ControlForm",
-                "strict_rules": [
-                  { "tag": "select", "type": "tag", "severity": "hight" }
-                ]
-              },
-              { "name": "dd_multiple", "selector": "#txtTest003", "instance": "ControlForm",
-                "strict_rules": [
-                  { "tag": "select", "type": "tag", "severity": "hight" }
-                ]
-              },
-              { "name": "btn_click_invisible", "selector": "#btnInvisibleAtTimeout" },
-              { "name": "btn_click_visible", "selector": "#btnVisibleAtTimeout" },
-              { "name": "title_buttons", "selector": "#titleButtons" }
-            ]
-          },
-          { "name": "qacode_logout",
-            "url": "http://netzulo.tk:83/qacode/logout",
-            "locator": "css selector",
-            "go_url": true,
-            "wait_url": 0,
-            "maximize": false,
-            "controls": [
-              { "name": "btn_logout", "selector": "a[href='/qacode/logout']" },
-              { "name": "btn_login", "selector": "a[href='/qacode/login']" }
-            ]
-          }
-        ]
-      }
-    ]
   }
 }

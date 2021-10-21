@@ -2,9 +2,15 @@
 """package qacode.core.exceptions"""
 
 
-from qacode.core.exceptions import control_exception
-from qacode.core.exceptions import core_exception
-from qacode.core.exceptions import page_exception
+from qacode.core.exceptions import bot_error
+from qacode.core.exceptions import browser_error
+from qacode.core.exceptions import control_error
+from qacode.core.exceptions import core_error
 
 
-__all__ = ['control_exception', 'core_exception', 'page_exception']
+__all__ = [
+    'bot_error',
+    'browser_error',
+    'control_error',
+    'core_error',
+]

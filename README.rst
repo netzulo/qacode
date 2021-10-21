@@ -122,8 +122,8 @@ Getting Started
     
     
     SETTINGS = settings(
-        file_path="/home/user/config/dir/",
-        file_name="settings.json"
+        path="/home/user/config/dir/",
+        name="settings.json"
     )
     
     

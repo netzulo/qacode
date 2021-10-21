@@ -1,20 +1,20 @@
 include *.in
 include *.md
-include *.pyproj
+include *.py
 include *.rst
+include *.txt
 include *.yml
-include LICENSE
+include .circleci/config.yml
+include source-docs/Makefile
+include source-docs/make.bat
 include pytest.ini
 include tox.ini
-include conftest.py
-include requirements*.txt
+recursive-include docs *.gitkeep
 recursive-include logs *.gitkeep
 recursive-include qacode *.json
+recursive-include qacode *.py
 recursive-include tests *.py
+recursive-include tests *.xml
 recursive-include source-docs *.rst
 recursive-include source-docs *.py
-recursive-include source-docs *.yml
-recursive-include source-docs *.bat
-recursive-include source-docs Makefile
-recursive-include .github *.md
-recursive-include .circleci *.yml
+exclude tests/reports/coverage.xml

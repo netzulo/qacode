@@ -3,10 +3,18 @@
 
 
 from qacode.core import bots
-from qacode.core import exceptions
+from qacode.core import browsers
+from qacode.core import controls
 from qacode.core import loggers
+from qacode.core import pages
 from qacode.core import testing
-from qacode.core import webs
 
 
-__all__ = ['bots', 'exceptions', 'loggers', 'testing', 'webs']
+__all__ = [
+    'bots',
+    'browsers',
+    'controls',
+    'loggers',
+    'pages',
+    'testing',
+]
