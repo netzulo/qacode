@@ -151,6 +151,7 @@ class BotBase(object):
                 "iexplorer": DesiredCapabilities.INTERNETEXPLORER.copy(),
                 "edge": DesiredCapabilities.EDGE.copy(),
             }[browser_name]
+            capabilities['acceptInsecureCerts'] = True
         except KeyError:
             msg = 'Bad browser selected at load options'
             raise CoreException(msg, log=self.log)

@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
+
 ## [Unreleased] - xxxx-xx-xx
 
 ### Added
@@ -15,6 +16,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Removed
 
+## [v0.6.5] - 2020-10-21
+
+### Added
+
+### Changed
+
+### Fixed
+
+- Added capabilities to fix SSL self signed certs
+
+### Removed
 
 ## [v0.6.4] - 2020-04-07
 
